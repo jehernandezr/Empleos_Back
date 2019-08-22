@@ -14,7 +14,7 @@ import javax.persistence.PersistenceContext;
  * @author Santiago Tangarife
  */
 @Stateless
-public class CuentaBancariaPersistence 
+public class CuentaDeCobroPersistence 
 {
 @PersistenceContext(unitName ="empleosPU")
 protected EntityManager em;

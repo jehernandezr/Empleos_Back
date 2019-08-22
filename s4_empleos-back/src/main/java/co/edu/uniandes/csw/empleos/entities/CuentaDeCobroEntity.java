@@ -8,7 +8,6 @@ package co.edu.uniandes.csw.empleos.entities;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -17,17 +16,17 @@ import javax.persistence.TemporalType;
  * @author Santiago Tangarife Rincón
  */
 @Entity
-public class CuentaBancariaEntity extends BaseEntity implements Serializable
+public class CuentaDeCobroEntity extends BaseEntity implements Serializable
 {
     /**
-     * numero de la tarjeta
+     * numeroCuentaDeCobro de la tarjeta
      */
-    private int numero;
+    private int numeroCuentaDeCobro;
     
     /*
-    numero idEstudiante de la tarjeta
+    numeroCuentaDeCobro contratista de la tarjeta
     */
-    private String idEstudiante;
+    private String contratista;
     
     /*
     fecha de Fecha de la tarjeta
@@ -37,7 +36,7 @@ public class CuentaBancariaEntity extends BaseEntity implements Serializable
 
     
     
-    public void CuentaBancariaEntity()
+    public void CuentaDeCobroEntity()
     {
     }
     
@@ -47,35 +46,35 @@ public class CuentaBancariaEntity extends BaseEntity implements Serializable
     
     /**
      * 
-     * @return numero de la tarjeta 
+     * @return numeroCuentaDeCobro de la tarjeta 
      */
-    public int getNumero() {
-        return numero;
+    public int getNumeroCuentaDeCobro() {
+        return numeroCuentaDeCobro;
     }
 
     /**
-     * cambia el numero de la tarjeta al ingresado por parametro
-     * @param numero nuevo numero de la tarjeta
+     * cambia el numeroCuentaDeCobro de la tarjeta al ingresado por parametro
+     * @param numeroCuentaDeCobro nuevo numeroCuentaDeCobro de la tarjeta
      */
-    public void setNumero(int numero) {
-        this.numero = numero;
+    public void setNumeroCuentaDeCobro(int numeroCuentaDeCobro) {
+        this.numeroCuentaDeCobro = numeroCuentaDeCobro;
     }
 
     
     /**
-     * Da el idEstudiante de la tarjeta
-     * @return idEstudiante de la tarjeta
+     * Da el contratista de la tarjeta
+     * @return contratista de la tarjeta
      */
-    public String getIdEstudiante() {
-        return idEstudiante;
+    public String getContratista() {
+        return contratista;
     }
 
     /**
-     * Cambia el idEstudiante de la tarjeta
-     * @param idEstudiante nuevo idEstudiante de la tarjeta
+     * Cambia el contratista de la tarjeta
+     * @param contratista nuevo contratista de la tarjeta
      */
-    public void setIdEstudiante(String idEstudiante) {
-        this.idEstudiante = idEstudiante;
+    public void setContratista(String contratista) {
+        this.contratista = contratista;
     }
 
     /**
