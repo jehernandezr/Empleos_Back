@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.empleos.test.persistence;
 
 import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
@@ -22,7 +17,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
  *
- * @author Estudiante
+ * @author David Dominguez
  */
 @RunWith(Arquillian.class)
 public class EstudiantePersistenceTest {
@@ -44,14 +39,19 @@ public class EstudiantePersistenceTest {
     
     
     @Test
-    public void createTest() {
+    public void crearEstudianteTest() {
         PodamFactory factory = new PodamFactoryImpl();
         EstudianteEntity estudiante = factory.manufacturePojo(EstudianteEntity.class);
         EstudianteEntity result = ep.create(estudiante);
         Assert.assertNotNull(result);
         
         EstudianteEntity e = em.find(EstudianteEntity.class, result.getId());
-        Assert.assertEquals(e.getName(), result.getName());
+        Assert.assertEquals(e.getNombre(), result.getNombre());
         
+    }
+    
+    @Test
+    public void testTest2() {
+        Assert.assertEquals("h", "h");
     }
 }
