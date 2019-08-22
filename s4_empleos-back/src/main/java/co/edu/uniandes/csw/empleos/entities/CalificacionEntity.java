@@ -33,6 +33,15 @@ public class CalificacionEntity extends BaseEntity{
         this.nota = nota;
         this.comentario = comentario;
     }
+    
+     /**
+     * Contrctor de la Clase Calificación para inicualizar los atributos
+     * @param nota Nota de un estudiante. nota>=0.0 && nota<=5.0
+     * @param comentario Comentario asociado a la nota. comentario != null && comentario != "".
+     */
+    public CalificacionEntity( ){
+    }
+
 
     /**
      * Metodo que da el resultado del comentario.
