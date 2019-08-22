@@ -16,15 +16,17 @@ import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
- *
+ *  Test de persistencia de la clase estudiante
  * @author David Dominguez
  */
 @RunWith(Arquillian.class)
 public class TrabajoPersistenceTest {
     
+    // Se relaciona la base de datos con el entitymanager
     @PersistenceContext(unitName = "empleosPU")
     public EntityManager em;
     
+    // Se relaciona Arquilliean con las clases que se pobrarán
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
@@ -34,10 +36,11 @@ public class TrabajoPersistenceTest {
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
     
-    
+    // Atributo que representa al objeto encargado de manejar la persistencia de Estudiante
     @Inject
     TrabajoPersistence tp;
     
+    // Se prueba que se cree y guarde exitosamente el trabajo
     @Test
     public void crearTrabajoTest() {
         PodamFactory factory = new PodamFactoryImpl();
@@ -50,6 +53,7 @@ public class TrabajoPersistenceTest {
         Assert.assertEquals(t.getId(), result.getId());
     }
     
+    // Se prueba que se cree y guarde exitosamente el atributo verificado de un trabajo
     @Test
     public void verificarTest() {
         PodamFactory factory = new PodamFactoryImpl();
@@ -62,6 +66,7 @@ public class TrabajoPersistenceTest {
         Assert.assertEquals(t.isVerificado(), result.isVerificado());
     }
 
+    // Se prueba que se cree y guarde exitosamente el atributo cumplido de un trabajo
     @Test
     public void cumplidoTest () {
         PodamFactory factory = new PodamFactoryImpl();
