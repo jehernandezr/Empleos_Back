@@ -8,8 +8,8 @@ package co.edu.uniandes.csw.empleos.entities;
 import javax.persistence.Entity;
 
 /**
- *Clase que representa un contratista para poder ser guardado en la base de datos
- * @author Estudiante
+ *Clase que representa un contratista para poder ser guardado en la base de datos.
+ * @author je.berdugo10
  */
 @Entity
 public class ContratistaEntity extends BaseEntity {
@@ -28,6 +28,8 @@ public class ContratistaEntity extends BaseEntity {
      * Variable que representa el nombre del contratista.
      */
     private String email;
+    
+    
     
     /**
      * Variable que representa la contraseña del contratista.
@@ -131,7 +133,7 @@ public class ContratistaEntity extends BaseEntity {
     }
     
      /**
-     * Obetener la ruta de la imagen del contratista.
+     * Obtener la ruta de la imagen del contratista.
      * @return ruta de la imagen del contratista
      */ 
      public String getRutaImagen() {

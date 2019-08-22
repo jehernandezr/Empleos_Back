@@ -25,7 +25,7 @@ import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
- * Pruebas de persistencia de Books
+ * Pruebas de persistencia de Contratista
  *
  * @author ISIS2603
  */

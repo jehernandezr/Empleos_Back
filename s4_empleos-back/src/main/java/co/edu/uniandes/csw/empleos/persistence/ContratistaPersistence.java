@@ -17,7 +17,7 @@ import javax.persistence.TypedQuery;
 /**
  * Clase que maneja la persitencia de un contratista. 
  * Manager de javax.persistance con la base de datos SQL.
- * @author Estudiante
+ * @author je.berdugo10
  */
 @Stateless
 public class ContratistaPersistence {
@@ -27,9 +27,9 @@ public class ContratistaPersistence {
     private static final Logger LOGGER = Logger.getLogger(ContratistaPersistence.class.getName());
     
      /**
-     * Busca si hay alguna contratista con el id que se envía de argumento
+     * Busca si hay algun contratista con el id que se envía de argumento
      *
-     * @param id: identificadir correspondiente a la author buscada.
+     * @param id: identificadir correspondiente al contratista buscado.
      * @return un contatista.
      */
     public ContratistaEntity find(Long id){
@@ -52,13 +52,13 @@ public class ContratistaPersistence {
     }
     
      /**
-     * Devuelve todas las contratistas de la base de datos.
+     * Devuelve todos los contratistas de la base de datos.
      *
-     * @return una lista con todas los contratistas que encuentre en la base de
+     * @return una lista con todos los contratistas que encuentre en la base de
      * datos.
      */
     public List<ContratistaEntity> findAll() {
-        LOGGER.log(Level.INFO, "Consultando todos los autores");
+        LOGGER.log(Level.INFO, "Consultando todos los contratistas");
         
         TypedQuery query;
         query = em.createQuery("select u from ContratistaEntity u", ContratistaEntity.class);
@@ -68,26 +68,26 @@ public class ContratistaPersistence {
     
    
     /**
-     * Actualiza una contratista.
+     * Actualiza un contratista.
      *
      * @param contratistaEntity: el contratista que viene con los nuevos cambios. Por
      * ejemplo el nombre pudo cambiar. En ese caso, se haria uso del método
      * update.
-     * @return una contratista con los cambios aplicados.
+     * @return un contratista con los cambios aplicados.
      */
     public ContratistaEntity update(ContratistaEntity contratistaEntity) {
-        LOGGER.log(Level.INFO, "Actualizando el author con id={0}", contratistaEntity.getId());       
+        LOGGER.log(Level.INFO, "Actualizando el contratista con id={0}", contratistaEntity.getId());       
         return em.merge(contratistaEntity);
     }
 
     /**
-     * Borra una contratista de la base de datos recibiendo como argumento el id de
+     * Borra un contratista de la base de datos recibiendo como argumento el id de
      * el contratista
      *
      * @param id: identificador correspondiente al contratista a borrar.
      */
     public void delete(Long id) {
-        LOGGER.log(Level.INFO, "Borrando el author con id={0}", id);        
+        LOGGER.log(Level.INFO, "Borrando el contratista con id={0}", id);        
         ContratistaEntity contratistaEntity = em.find(ContratistaEntity.class, id);        
         em.remove(contratistaEntity);
     }
