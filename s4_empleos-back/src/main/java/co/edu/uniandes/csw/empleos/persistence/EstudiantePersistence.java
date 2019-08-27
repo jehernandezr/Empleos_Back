@@ -34,4 +34,18 @@ public class EstudiantePersistence {
         return e;
     }
     
+    public EstudianteEntity read(long id){
+        return em.find(EstudianteEntity.class, id);
+    }
+    
+    public EstudianteEntity remove(EstudianteEntity e) {
+        em.remove(e);
+        return e;
+    }
+    
+     public EstudianteEntity remove(Long id) {
+        EstudianteEntity e = read(id);
+        em.remove(e);
+        return e;
+    }
 }
