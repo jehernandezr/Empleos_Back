@@ -5,7 +5,7 @@
  */
 package co.edu.uniandes.csw.empleos.persistence;
 
-import co.edu.uniandes.csw.empleos.entities.CuentaBancaria;
+import co.edu.uniandes.csw.empleos.entities.CuentaBancariaEntity;
 
 import java.util.List;
 import javax.ejb.Stateless;
@@ -30,9 +30,9 @@ public class CuentaBancariaPersistance {
      * @param id: id correspondiente al premio buscado.
      * @return un cuenta bancaria.
      */
-    public CuentaBancaria find(Long id) {
+    public CuentaBancariaEntity find(Long id) {
         
-        return em.find(CuentaBancaria.class,id);
+        return em.find(CuentaBancariaEntity.class,id);
     }
     
      /**
@@ -42,9 +42,9 @@ public class CuentaBancariaPersistance {
      * datos, "select u from PrizeEntity u" es como un "select * from
      * PrizeEntity;" - "SELECT * FROM table_name" en SQL.
      */
-    public List<CuentaBancaria> findAll() {
+    public List<CuentaBancariaEntity> findAll() {
         
-        Query q = em.createQuery("select u from CuentaBancaria u");
+        Query q = em.createQuery("select u from CuentaBancariaEntity u");
         return q.getResultList();
     }
 
@@ -54,7 +54,7 @@ public class CuentaBancariaPersistance {
      * @param cuentaBancaria objeto cuentaBancaria que se creará en la base de datos
      * @return devuelve la entidad creada con un id dado por la base de datos.
      */
-    public CuentaBancaria create(CuentaBancaria cuentaBancaria) {
+    public CuentaBancariaEntity create(CuentaBancariaEntity cuentaBancaria) {
       
         em.persist(cuentaBancaria);
         
@@ -67,9 +67,9 @@ public class CuentaBancariaPersistance {
      * @param cuentaBancaria: la cuentaBancaria que viene con los nuevos cambios. Por
      * ejemplo el nombre pudo cambiar. En ese caso, se haria uso del método
      * update.
-     * @return una CuentaBancaria con los cambios aplicados.
+     * @return una CuentaBancariaEntity con los cambios aplicados.
      */
-    public CuentaBancaria update(CuentaBancaria cuentaBancaria) {
+    public CuentaBancariaEntity update(CuentaBancariaEntity cuentaBancaria) {
 
         return em.merge(cuentaBancaria);
     }
@@ -82,7 +82,7 @@ public class CuentaBancariaPersistance {
      * @param id: id correspondiente a la cuentaBancaria a borrar.
      */
     public void delete(Long id) {
-        CuentaBancaria entity = em.find(CuentaBancaria.class, id);
+        CuentaBancariaEntity entity = em.find(CuentaBancariaEntity.class, id);
         em.remove(entity);
     }
     

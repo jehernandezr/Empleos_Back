@@ -13,7 +13,7 @@ import javax.persistence.OneToOne;
  * @author je.hernandezr
  */
 @Entity
-public class CuentaBancaria extends BaseEntity{
+public class CuentaBancariaEntity extends BaseEntity{
 
     
     private int numeroCuenta;
@@ -22,12 +22,12 @@ public class CuentaBancaria extends BaseEntity{
    
     
     
-    public CuentaBancaria()
+    public CuentaBancariaEntity()
     {
         
     }
     
-  public CuentaBancaria(int pNumeroCuenta, String pFecha)
+  public CuentaBancariaEntity(int pNumeroCuenta, String pFecha)
   {
       numeroCuenta=pNumeroCuenta;
       fecha=pFecha;
