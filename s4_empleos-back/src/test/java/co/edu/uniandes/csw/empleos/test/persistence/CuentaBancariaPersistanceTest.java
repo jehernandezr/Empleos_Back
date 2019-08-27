@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -5,7 +6,7 @@
  */
 package co.edu.uniandes.csw.empleos.test.persistence;
 
-import co.edu.uniandes.csw.empleos.entities.CuentaBancaria;
+import co.edu.uniandes.csw.empleos.entities.CuentaBancariaEntity;
 import co.edu.uniandes.csw.empleos.persistence.CuentaBancariaPersistance;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,7 @@ public class CuentaBancariaPersistanceTest {
     @Inject
     UserTransaction utx;
 
-    private List<CuentaBancaria> data = new ArrayList<CuentaBancaria>();
+    private List<CuentaBancariaEntity> data = new ArrayList<CuentaBancariaEntity>();
 
     /**
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
@@ -51,7 +52,7 @@ public class CuentaBancariaPersistanceTest {
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
-                .addPackage(CuentaBancaria.class.getPackage())
+                .addPackage(CuentaBancariaEntity.class.getPackage())
                 .addPackage(CuentaBancariaPersistance.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
@@ -60,11 +61,11 @@ public class CuentaBancariaPersistanceTest {
     @Test
     public void createTest() {
         PodamFactory factory = new PodamFactoryImpl();
-        CuentaBancaria entity = factory.manufacturePojo(CuentaBancaria.class);
-        CuentaBancaria result = cuentaBancariaPersistance.create(entity);
+        CuentaBancariaEntity entity = factory.manufacturePojo(CuentaBancariaEntity.class);
+        CuentaBancariaEntity result = cuentaBancariaPersistance.create(entity);
         Assert.assertNotNull(result);
 
-        CuentaBancaria foundEntity = em.find(CuentaBancaria.class, result.getId());
+        CuentaBancariaEntity foundEntity = em.find(CuentaBancariaEntity.class, result.getId());
         Assert.assertEquals(entity.getNumeroCuenta(), foundEntity.getNumeroCuenta());
     }
 
@@ -89,7 +90,7 @@ public class CuentaBancariaPersistanceTest {
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
-        em.createQuery("delete from CuentaBancaria").executeUpdate();
+        em.createQuery("delete from CuentaBancariaEntity").executeUpdate();
        
     }
 
@@ -100,7 +101,7 @@ public class CuentaBancariaPersistanceTest {
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
-            CuentaBancaria entity = factory.manufacturePojo(CuentaBancaria.class);
+            CuentaBancariaEntity entity = factory.manufacturePojo(CuentaBancariaEntity.class);
             em.persist(entity);
             data.add(entity);
         }
@@ -113,13 +114,13 @@ public class CuentaBancariaPersistanceTest {
     @Test
     public void createCuentaBancariaTest() {
         PodamFactory factory = new PodamFactoryImpl();
-        CuentaBancaria newEntity = factory.manufacturePojo(CuentaBancaria.class);
+        CuentaBancariaEntity newEntity = factory.manufacturePojo(CuentaBancariaEntity.class);
 
-        CuentaBancaria result = cuentaBancariaPersistance.create(newEntity);
+        CuentaBancariaEntity result = cuentaBancariaPersistance.create(newEntity);
 
         Assert.assertNotNull(result);
 
-        CuentaBancaria entity = em.find(CuentaBancaria.class, result.getId());
+        CuentaBancariaEntity entity = em.find(CuentaBancariaEntity.class, result.getId());
 
         Assert.assertEquals(newEntity.getNumeroCuenta(), entity.getNumeroCuenta());
         Assert.assertEquals(newEntity.getFecha(), entity.getFecha());
@@ -131,11 +132,11 @@ public class CuentaBancariaPersistanceTest {
      */
     @Test
     public void getCuentaBancariasTest() {
-        List<CuentaBancaria> list = cuentaBancariaPersistance.findAll();
+        List<CuentaBancariaEntity> list = cuentaBancariaPersistance.findAll();
         Assert.assertEquals(data.size(), list.size());
-        for (CuentaBancaria ent : list) {
+        for (CuentaBancariaEntity ent : list) {
             boolean found = false;
-            for (CuentaBancaria entity : data) {
+            for (CuentaBancariaEntity entity : data) {
                 if (ent.getId().equals(entity.getId())) {
                     found = true;
                 }
@@ -149,8 +150,8 @@ public class CuentaBancariaPersistanceTest {
      */
     @Test
     public void getCuentaBancariaTest() {
-        CuentaBancaria entity = data.get(0);
-        CuentaBancaria newEntity = cuentaBancariaPersistance.find(entity.getId());
+        CuentaBancariaEntity entity = data.get(0);
+        CuentaBancariaEntity newEntity = cuentaBancariaPersistance.find(entity.getId());
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getFecha(), newEntity.getFecha());
         Assert.assertEquals(entity.getNumeroCuenta(), newEntity.getNumeroCuenta());
@@ -161,9 +162,9 @@ public class CuentaBancariaPersistanceTest {
      */
     @Test
     public void deleteCuentaBancariaTest() {
-        CuentaBancaria entity = data.get(0);
+        CuentaBancariaEntity entity = data.get(0);
         cuentaBancariaPersistance.delete(entity.getId());
-        CuentaBancaria deleted = em.find(CuentaBancaria.class, entity.getId());
+        CuentaBancariaEntity deleted = em.find(CuentaBancariaEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
 
@@ -172,15 +173,15 @@ public class CuentaBancariaPersistanceTest {
      */
     @Test
     public void updateCuentaBancariaTest() {
-        CuentaBancaria entity = data.get(0);
+        CuentaBancariaEntity entity = data.get(0);
         PodamFactory factory = new PodamFactoryImpl();
-        CuentaBancaria newEntity = factory.manufacturePojo(CuentaBancaria.class);
+        CuentaBancariaEntity newEntity = factory.manufacturePojo(CuentaBancariaEntity.class);
 
         newEntity.setId(entity.getId());
 
         cuentaBancariaPersistance.update(newEntity);
 
-        CuentaBancaria resp = em.find(CuentaBancaria.class, entity.getId());
+        CuentaBancariaEntity resp = em.find(CuentaBancariaEntity.class, entity.getId());
 
         Assert.assertEquals(newEntity.getNumeroCuenta(), resp.getNumeroCuenta());
         Assert.assertEquals(newEntity.getFecha(), resp.getFecha());
