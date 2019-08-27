@@ -5,48 +5,47 @@
  */
 package co.edu.uniandes.csw.empleos.entities;
 
+import co.edu.uniandes.csw.empleos.podam.DateStrategy;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
  *
  * @author Santiago Tangarife Rincón
  */
 @Entity
-public class CuentaDeCobroEntity extends BaseEntity implements Serializable
-{
+public class CuentaDeCobroEntity extends BaseEntity implements Serializable {
+
     /**
      * numeroCuentaDeCobro de la tarjeta
      */
     private int numeroCuentaDeCobro;
-    
+
     /*
     numeroCuentaDeCobro contratista de la tarjeta
-    */
+     */
     private String contratista;
-    
+
     /*
     fecha de Fecha de la tarjeta
-    */
+     */
     @Temporal(TemporalType.DATE)
+    @PodamStrategyValue(DateStrategy.class)
     private Date fecha;
 
-    
-    
-    public void CuentaDeCobroEntity()
-    {
+    public void CuentaDeCobroEntity() {
     }
-    
+
     //-------------------------------------------------
     //GETTERS & SETTERS
     //-------------------------------------------------
-    
     /**
-     * 
-     * @return numeroCuentaDeCobro de la tarjeta 
+     *
+     * @return numeroCuentaDeCobro de la tarjeta
      */
     public int getNumeroCuentaDeCobro() {
         return numeroCuentaDeCobro;
@@ -54,15 +53,16 @@ public class CuentaDeCobroEntity extends BaseEntity implements Serializable
 
     /**
      * cambia el numeroCuentaDeCobro de la tarjeta al ingresado por parametro
+     *
      * @param numeroCuentaDeCobro nuevo numeroCuentaDeCobro de la tarjeta
      */
     public void setNumeroCuentaDeCobro(int numeroCuentaDeCobro) {
         this.numeroCuentaDeCobro = numeroCuentaDeCobro;
     }
 
-    
     /**
      * Da el contratista de la tarjeta
+     *
      * @return contratista de la tarjeta
      */
     public String getContratista() {
@@ -71,6 +71,7 @@ public class CuentaDeCobroEntity extends BaseEntity implements Serializable
 
     /**
      * Cambia el contratista de la tarjeta
+     *
      * @param contratista nuevo contratista de la tarjeta
      */
     public void setContratista(String contratista) {
@@ -91,5 +92,4 @@ public class CuentaDeCobroEntity extends BaseEntity implements Serializable
         this.fecha = fecha;
     }
 
-    
 }
