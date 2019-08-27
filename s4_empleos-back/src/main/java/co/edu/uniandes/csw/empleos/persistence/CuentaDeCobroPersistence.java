@@ -20,8 +20,6 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class CuentaDeCobroPersistence {
 
-    private static final Logger LOGGER = Logger.getLogger(CuentaDeCobroPersistence.class.getName());
-
     @PersistenceContext(unitName = "empleosPU")
     protected EntityManager em;
 
