@@ -5,7 +5,6 @@
  */
 package co.edu.uniandes.csw.empleos.entities;
 
-import java.util.Objects;
 import javax.persistence.Entity;
 
 /**
@@ -24,16 +23,6 @@ public class CalificacionEntity extends BaseEntity{
      * Atributo que será el comentario a la calificacion puesta.
      */
     private String comentario;
-    
-    /**
-     * Contrctor de la Clase Calificación para inicualizar los atributos
-     * @param nota Nota de un estudiante. nota>=0.0 && nota<=5.0
-     * @param comentario Comentario asociado a la nota. comentario != null && comentario != "".
-     */
-    public CalificacionEntity(Double nota, String comentario) {
-        this.nota = nota;
-        this.comentario = comentario;
-    }
     
      /**
      * Contrctor de la Clase Calificación para inicualizar los atributos
@@ -75,41 +64,5 @@ public class CalificacionEntity extends BaseEntity{
     public void setNota(Double nota) {
         this.nota = nota;
     }
-    
-    
-    @Override
-    @SuppressWarnings({"BoxedValueEquality", "NumberEquality"})
-    public boolean equals (Object obj){
-        boolean resp = super.equals(this);
-        boolean fin = false;
-        final CalificacionEntity otro = (CalificacionEntity)obj;
-        
-        if(!resp)
-        {
-            return fin;
-        }else
-        {
-            if(this.comentario.equalsIgnoreCase(otro.comentario))
-            {
-                fin = true;
-            }else if(this.nota == otro.nota)
-            {
-                fin = true;
-            }
-                
-        }
-        return fin;
-    }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 71 * hash + Objects.hashCode(this.nota);
-        hash = 71 * hash + Objects.hashCode(this.comentario);
-        return hash;
-    }
-    
-  
-    
-    
 }
