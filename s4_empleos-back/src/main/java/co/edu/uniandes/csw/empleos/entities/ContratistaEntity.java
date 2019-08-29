@@ -50,7 +50,7 @@ public class ContratistaEntity extends BaseEntity {
      * Constructor del contratista
      */
     public ContratistaEntity(){
-        
+        //Constructor vacío para evitar fallos en compilacion. Se asignan valores a los parámetros a través de los metodos set
     }
     
       

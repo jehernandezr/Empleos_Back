@@ -37,7 +37,8 @@ public class CuentaDeCobroEntity extends BaseEntity implements Serializable {
     @PodamStrategyValue(DateStrategy.class)
     private Date fecha;
 
-    public void CuentaDeCobroEntity() {
+    public CuentaDeCobroEntity() {
+       //Constructor vacío para evitar fallos en compilacion. Se asignan valores a los parámetros a través de los metodos set
     }
 
     //-------------------------------------------------

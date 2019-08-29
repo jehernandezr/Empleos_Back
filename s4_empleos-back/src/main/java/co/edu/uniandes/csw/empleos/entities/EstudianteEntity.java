@@ -26,7 +26,9 @@ public class EstudianteEntity extends BaseEntity implements Serializable  {
     private int semestre;
     
     // Constructor vacío
-    public EstudianteEntity () {}
+    public EstudianteEntity () {
+        //Constructor vacío para evitar fallos en compilacion. Se asignan valores a los parámetros a través de los metodos set
+    }
 
     /**
      * @return el nombre
