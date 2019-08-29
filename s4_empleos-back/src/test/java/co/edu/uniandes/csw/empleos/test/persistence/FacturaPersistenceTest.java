@@ -5,8 +5,8 @@
  */
 package co.edu.uniandes.csw.empleos.test.persistence;
 
-import co.edu.uniandes.csw.empleos.entities.CalificacionEntity;
-import co.edu.uniandes.csw.empleos.persistence.CalificacionPersistence;
+import co.edu.uniandes.csw.empleos.entities.FacturaEntity;
+import co.edu.uniandes.csw.empleos.persistence.FacturaPersistence;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -25,25 +25,24 @@ import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
- *Clase de los test de que corresponden a las pruebas realizadas sobre los metodos de la Clase CalificacionPersistnence
- * @author Estudiante
+ * Clase que prueba los metodos CRUD implementados en la clase FacturaPersistence
+ * @author n.munar
  */
 @RunWith(Arquillian.class)
-public class CalificacionPersistenceTest {
+public class FacturaPersistenceTest {
     
-       
     @PersistenceContext(unitName = "empleosPU")
     protected EntityManager em;
-     
+ 
     @Inject
-    CalificacionPersistence cp;    
+    FacturaPersistence fp;
     
     @Inject
     UserTransaction utx;
     
-    private List<CalificacionEntity> data = new ArrayList<CalificacionEntity>();
+    private List<FacturaEntity> data = new ArrayList<FacturaEntity>();
     
-      /**
+    /**
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
      * El jar contiene las clases, el descriptor de la base de datos y el
      * archivo beans.xml para resolver la inyección de dependencias.
@@ -51,12 +50,12 @@ public class CalificacionPersistenceTest {
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
-                .addClass(CalificacionEntity.class)
-                .addClass(CalificacionPersistence.class)
+                .addClass(FacturaEntity.class)
+                .addClass(FacturaPersistence.class)
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-     
+    
     /**
      * Configuración inicial de la prueba.
      */
@@ -82,7 +81,7 @@ public class CalificacionPersistenceTest {
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
-        em.createQuery("delete from CalificacionEntity").executeUpdate();     
+        em.createQuery("delete from FacturaEntity").executeUpdate();     
     }
     
     /**
@@ -93,7 +92,7 @@ public class CalificacionPersistenceTest {
         PodamFactory factory = new PodamFactoryImpl();
 
         for (int i = 0; i < 3; i++) {
-            CalificacionEntity entity = factory.manufacturePojo(CalificacionEntity.class);
+            FacturaEntity entity = factory.manufacturePojo(FacturaEntity.class);
                                   
             em.persist(entity);
             data.add(entity);
@@ -106,39 +105,39 @@ public class CalificacionPersistenceTest {
     @Test
     public void createCalificacionTest() {
         PodamFactory factory = new PodamFactoryImpl();
-        CalificacionEntity calificacion = factory.manufacturePojo(CalificacionEntity.class);
-        CalificacionEntity result = cp.create(calificacion);
+        FacturaEntity factura = factory.manufacturePojo(FacturaEntity.class);
+       FacturaEntity result = fp.create(factura);
 
         Assert.assertNotNull(result);
 
-        CalificacionEntity entity = em.find(CalificacionEntity.class, result.getId());
+        FacturaEntity entity = em.find(FacturaEntity.class, result.getId());
 
        /**
-        * Prueba para crear el comentario y encontrarlo
+        * Prueba para crear la fecha y encontrarlo
         */
-        Assert.assertEquals(calificacion.getComentario(), entity.getComentario());
+        Assert.assertEquals(factura.getFecha(), entity.getFecha());
         
         /**
-         * Pueba para crear la nota y enrlacontrarla
+         * Pueba para crear el valor y enrlacontrarlo
          */
-        Assert.assertEquals(calificacion.getNota(), entity.getNota());
- 
+        Assert.assertEquals(factura.getValor(), entity.getValor());
+    
     }
     
     /**
-     * Prueba para consultar una lista de Calificaciones.
+     * Prueba para consultar una lista de Factura.
      */
     @Test
-    public void getCalificacionesTest() {
+    public void getFacturasTest() {
         
         
-        List<CalificacionEntity> list = cp.findAll();
+        List<FacturaEntity> list = fp.findAll();
 
         Assert.assertEquals(data.size(), list.size());
 
-        for(CalificacionEntity ent : list){
+        for(FacturaEntity ent : list){
             boolean found = false;
-            for(CalificacionEntity entity : data){
+            for(FacturaEntity entity : data){
           
             if(ent.getId().equals(entity.getId())){
                 found = true;
@@ -150,44 +149,44 @@ public class CalificacionPersistenceTest {
     }
     
     /**
-     * Prueba para consultar una Calificacion.
+     * Prueba para consultar una Factura.
      */
     @Test
-    public void getCalificacionTest() {
-        CalificacionEntity entity = data.get(0);
-        CalificacionEntity newEntity = cp.find(entity.getId());
+    public void getFacturaTest() {
+        FacturaEntity entity = data.get(0);
+        FacturaEntity newEntity = fp.find(entity.getId());
         Assert.assertNotNull(newEntity);
-        Assert.assertEquals(entity.getNota(), newEntity.getNota());
-        Assert.assertEquals(entity.getComentario(), newEntity.getComentario());
+        Assert.assertEquals(entity.getFecha(), newEntity.getFecha());
+        Assert.assertEquals(entity.getValor(), newEntity.getValor());
     }
     
     /**
-     * Prueba para eliminar una Calificacion.
+     * Prueba para eliminar una Factura.
      */
     @Test
-    public void deleteCalificaionTest() {
-        CalificacionEntity entity = data.get(0);
-        cp.delete(entity.getId());
-        CalificacionEntity deleted = em.find(CalificacionEntity.class, entity.getId());
+    public void deleteFacturaTest() {
+        FacturaEntity entity = data.get(0);
+        fp.delete(entity.getId());
+        FacturaEntity deleted = em.find(FacturaEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
     
     /**
-     * Prueba para actualizar una Calificacion.
+     * Prueba para actualizar una Factura.
      */
     @Test
-    public void updateCalificacionTest() {
-        CalificacionEntity entity = data.get(0);
+    public void updateFacturaTest() {
+        FacturaEntity entity = data.get(0);
         PodamFactory factory = new PodamFactoryImpl();
-        CalificacionEntity newEntity = factory.manufacturePojo(CalificacionEntity.class);
+        FacturaEntity newEntity = factory.manufacturePojo(FacturaEntity.class);
 
         newEntity.setId(entity.getId());
 
-        cp.update(newEntity);
+        fp.update(newEntity);
 
-        CalificacionEntity resp = em.find(CalificacionEntity.class, entity.getId());
+        FacturaEntity resp = em.find(FacturaEntity.class, entity.getId());
 
-        Assert.assertEquals(newEntity.getNota(), resp.getNota());
-        Assert.assertEquals(newEntity.getComentario(), resp.getComentario());
+        Assert.assertEquals(newEntity.getFecha(), resp.getFecha());
+        Assert.assertEquals(newEntity.getValor(), resp.getValor());
     }
 }

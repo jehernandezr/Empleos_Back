@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.empleos.entities;
 
+import java.util.Objects;
 import javax.persistence.Entity;
 
 /**
@@ -76,7 +77,39 @@ public class CalificacionEntity extends BaseEntity{
     }
     
     
+    @Override
+    @SuppressWarnings({"BoxedValueEquality", "NumberEquality"})
+    public boolean equals (Object obj){
+        boolean resp = super.equals(this);
+        boolean fin = false;
+        final CalificacionEntity otro = (CalificacionEntity)obj;
+        
+        if(!resp)
+        {
+            return fin;
+        }else
+        {
+            if(this.comentario.equalsIgnoreCase(otro.comentario))
+            {
+                fin = true;
+            }else if(this.nota == otro.nota)
+            {
+                fin = true;
+            }
+                
+        }
+        return fin;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 71 * hash + Objects.hashCode(this.nota);
+        hash = 71 * hash + Objects.hashCode(this.comentario);
+        return hash;
+    }
     
+  
     
     
 }
