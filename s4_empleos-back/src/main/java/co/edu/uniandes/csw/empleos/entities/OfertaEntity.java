@@ -86,6 +86,14 @@ public class OfertaEntity extends BaseEntity{
      */
     private String rutaImagen;
     
+    
+     /**
+     * Constructor de la oferta
+     */
+    public OfertaEntity(){
+        
+    }
+    
     /**
      * Devuelve el tipoDeOferta del contratista.
      * @return 1 si es NORMAL o 2 si es EXPRESS
