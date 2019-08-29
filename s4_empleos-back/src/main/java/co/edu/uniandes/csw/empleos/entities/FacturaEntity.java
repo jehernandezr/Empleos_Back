@@ -63,28 +63,5 @@ public class FacturaEntity extends BaseEntity{
     public void setValor(Integer valor) {
         this.valor = valor;
     }
-    
-      @Override
-    @SuppressWarnings({"BoxedValueEquality", "NumberEquality"})
-    public boolean equals (Object obj){
-        boolean resp = super.equals(this);
-        boolean fin = false;
-        final FacturaEntity otro = (FacturaEntity)obj;
-        
-        if(!resp)
-        {
-            return fin;
-        }else
-        {
-            if(this.fecha.equalsIgnoreCase(otro.fecha))
-            {
-                fin = true;
-            }if(this.valor == otro.valor)
-            {
-                fin = true;
-            }
-                
-        }
-        return fin;
-    }
+      
 }
