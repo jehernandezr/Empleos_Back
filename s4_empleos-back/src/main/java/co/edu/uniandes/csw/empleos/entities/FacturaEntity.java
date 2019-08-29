@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.empleos.entities;
 
+import java.util.Objects;
 import javax.persistence.Entity;
 
 /**
@@ -64,6 +65,35 @@ public class FacturaEntity extends BaseEntity{
         this.valor = valor;
     }
     
-      
-    
+      @Override
+    @SuppressWarnings({"BoxedValueEquality", "NumberEquality"})
+    public boolean equals (Object obj){
+        boolean resp = super.equals(this);
+        boolean fin = false;
+        final FacturaEntity otro = (FacturaEntity)obj;
+        
+        if(!resp)
+        {
+            return fin;
+        }else
+        {
+            if(this.fecha.equalsIgnoreCase(otro.fecha))
+            {
+                fin = true;
+            }else if(this.valor == otro.valor)
+            {
+                fin = true;
+            }
+                
+        }
+        return fin;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 37 * hash + Objects.hashCode(this.fecha);
+        hash = 37 * hash + Objects.hashCode(this.valor);
+        return hash;
+    }
 }

@@ -7,8 +7,6 @@
 package co.edu.uniandes.csw.empleos.entities;
 
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-
 
 /**
  * @author je.hernandezr
