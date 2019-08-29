@@ -53,21 +53,7 @@ public class ContratistaEntity extends BaseEntity {
         
     }
     
-    /**
-     * Constructor del contratista
-     * @param esExterno si es unidad externa o interna
-     * @param nombre del contratista
-     * @param email del contratisa
-     * @param contrasena del contratista
-     * @param rutaImagen
-     */
-   public ContratistaEntity(boolean esExterno, String nombre, String email, String contrasena, String rutaImagen){
-       this.esExterno=esExterno;
-       this.nombre=nombre;
-       this.email=email;
-       this.contrasena=contrasena;
-       this.rutaImagen=rutaImagen;
-   }
+    
    
    /**
      * Devuelve el nombre del contratista.

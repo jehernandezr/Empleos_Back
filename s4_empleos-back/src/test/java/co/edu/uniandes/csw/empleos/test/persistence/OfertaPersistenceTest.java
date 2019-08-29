@@ -128,6 +128,9 @@ public class OfertaPersistenceTest {
         Assert.assertEquals(newEntity.getRutaImagen(), entity.getRutaImagen());
         Assert.assertEquals(newEntity.getTiempoMaximoAplicacion(), entity.getTiempoMaximoAplicacion());
         Assert.assertEquals(newEntity.getTipoOferta(), entity.getTipoOferta());
+        
+        
+        
     }
 
     /**
