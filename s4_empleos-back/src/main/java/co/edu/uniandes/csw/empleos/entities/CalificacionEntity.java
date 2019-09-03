@@ -30,6 +30,7 @@ public class CalificacionEntity extends BaseEntity{
      * @param comentario Comentario asociado a la nota. comentario != null && comentario != "".
      */
     public CalificacionEntity( ){
+        //Constructor vacío para evitar fallos en compilacion. Se asignan valores a los parámetros a través de los metodos set
     }
 
 

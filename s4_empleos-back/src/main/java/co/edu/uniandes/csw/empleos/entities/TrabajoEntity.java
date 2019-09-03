@@ -16,7 +16,9 @@ public class TrabajoEntity extends BaseEntity implements Serializable {
     private boolean verificado;
     
     //Constructor vacío.
-    public TrabajoEntity() {}
+    public TrabajoEntity() {
+        //Constructor vacío para evitar fallos en compilacion. Se asignan valores a los parámetros a través de los metodos set
+    }
 
     /**
      * @return the cumplido

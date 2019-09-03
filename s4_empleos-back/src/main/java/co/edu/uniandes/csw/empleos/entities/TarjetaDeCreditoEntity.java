@@ -19,13 +19,9 @@ public class TarjetaDeCreditoEntity extends BaseEntity implements Serializable {
     
     public TarjetaDeCreditoEntity()
     {
-        
+        //Constructor vacío para evitar fallos en compilacion. Se asignan valores a los parámetros a través de los metodos set
     }
-    
-    public TarjetaDeCreditoEntity(String pNumero)
-    {
-        this.numero = pNumero;
-    }
+   
     
     /**
      * @Return el nnmero de la tarjeta de credito.
