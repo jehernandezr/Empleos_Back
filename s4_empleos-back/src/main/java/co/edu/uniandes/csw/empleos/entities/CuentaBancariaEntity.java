@@ -6,6 +6,7 @@
  */
 package co.edu.uniandes.csw.empleos.entities;
 
+import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
@@ -34,6 +35,7 @@ public class CuentaBancariaEntity extends BaseEntity{
       fecha=pFecha;
   }
    
+ 
     /**
      * @return the numeroCuenta
      */
