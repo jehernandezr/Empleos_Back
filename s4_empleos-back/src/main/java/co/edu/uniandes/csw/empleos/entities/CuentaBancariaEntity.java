@@ -8,8 +8,6 @@ package co.edu.uniandes.csw.empleos.entities;
 
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-
 
 /**
  * @author je.hernandezr
@@ -26,14 +24,10 @@ public class CuentaBancariaEntity extends BaseEntity{
     
     public CuentaBancariaEntity()
     {
-        
+        //Constructor vacío para evitar fallos en compilacion. Se asignan valores a los parámetros a través de los metodos set
     }
     
-  public CuentaBancariaEntity(int pNumeroCuenta, String pFecha)
-  {
-      numeroCuenta=pNumeroCuenta;
-      fecha=pFecha;
-  }
+ 
    
  
     /**
