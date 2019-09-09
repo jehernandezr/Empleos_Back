@@ -5,7 +5,12 @@
  */
 package co.edu.uniandes.csw.empleos.entities;
 
+import co.edu.uniandes.csw.empleos.podam.DateStrategy;
+import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
  *
@@ -17,7 +22,9 @@ public class FacturaEntity extends BaseEntity{
     /**
      * La fecha que se le atribuirá a una factura. De esta manera se tiene un control por fechas
      */
-    private String fecha;
+    @Temporal(TemporalType.DATE)
+    @PodamStrategyValue(DateStrategy.class)
+    private Date fecha;
     
     /**
      * Valor que se registrará a una factura.
@@ -36,7 +43,7 @@ public class FacturaEntity extends BaseEntity{
      * Este metodo da el valor de la fecha que está asociada a una factura
      * @return Fecha Un valor en un formato acordado. fecha != null && != fecha""
      */
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
@@ -52,7 +59,7 @@ public class FacturaEntity extends BaseEntity{
      * Se asigna un valor nuevo a la fecha de la factura creada
      * @param fecha Nueva fecha por la cual se quiere modificar el valor de la actual.
      */
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
