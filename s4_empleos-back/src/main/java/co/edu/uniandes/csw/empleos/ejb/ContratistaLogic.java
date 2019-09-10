@@ -31,21 +31,21 @@ public class ContratistaLogic {
      * @return Objeto de ContratistaEntity con los datos nuevos y su ID.
      */
     public ContratistaEntity createContratista(ContratistaEntity contratistaEntity) {
-        LOGGER.log(Level.INFO, "Inicia proceso de creación del autor");
+        LOGGER.log(Level.INFO, "Inicia proceso de creación del contratista");
         ContratistaEntity newContratistaEntity = persistence.create(contratistaEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de creación del autor");
+        LOGGER.log(Level.INFO, "Termina proceso de creación del contratista");
         return newContratistaEntity;
     }
 
     /**
-     * Obtiene la lista de los registros de Author.
+     * Obtiene la lista de los registros de contratista.
      *
-     * @return Colección de objetos de AuthorEntity.
+     * @return Colección de objetos de ContratistaEntity.
      */
-    public List<ContratistaEntity> getAuthors() {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los autores");
+    public List<ContratistaEntity> getContratistass() {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los contratistas");
         List<ContratistaEntity> lista = persistence.findAll();
-        LOGGER.log(Level.INFO, "Termina proceso de consultar todos los autores");
+        LOGGER.log(Level.INFO, "Termina proceso de consultar todos los contratistas");
         return lista;
     }
 
@@ -53,7 +53,7 @@ public class ContratistaLogic {
      * Obtiene los datos de una instancia de Contratista a partir de su ID.
      *
      * @param contratistaId Identificador de la instancia a consultar
-     * @return Instancia de ContratistaEntity con los datos del Author consultado.
+     * @return Instancia de ContratistaEntity con los datos del Contratista consultado.
      * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException 
      */
     public ContratistaEntity getContratista(Long contratistaId) throws BusinessLogicException {
@@ -62,8 +62,34 @@ public class ContratistaLogic {
         if (contratistaEntity == null) {
             throw new BusinessLogicException("No existe el contratista con el id "+contratistaId);
         }
-        LOGGER.log(Level.INFO, "Termina proceso de consultar el autor con id = {0}", contratistaId);
+        LOGGER.log(Level.INFO, "Termina proceso de consultar del contratista con id = {0}", contratistaId);
         return contratistaEntity;
+    }
+    
+    /**
+     * Actualiza la información de una instancia de Contratista.
+     *
+     * @param contratistaId Identificador de la instancia a actualizar
+     * @param contratistaEntity Instancia de ContratistaEntity con los nuevos datos.
+     * @return Instancia de ContratistaEntity con los datos actualizados.
+     */
+    public ContratistaEntity updateContratista(Long contratistaId, ContratistaEntity contratistaEntity) {
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar el contratista con id = {0}", contratistaId);
+        ContratistaEntity newContratistaEntity = persistence.update(contratistaEntity);
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar el contratista con id = {0}", contratistaId);
+        return newContratistaEntity;
+    }
+
+    /**
+     * Elimina una instancia de Contratista de la base de datos.
+     *
+     * @param contratistaId Identificador de la instancia a eliminar.
+     */
+    public void deleteContratista(Long contratistaId)  {
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar el autor con id = {0}", contratistaId);
+       
+        persistence.delete(contratistaId);
+        LOGGER.log(Level.INFO, "Termina proceso de borrar el autor con id = {0}", contratistaId);
     }
 
 }
