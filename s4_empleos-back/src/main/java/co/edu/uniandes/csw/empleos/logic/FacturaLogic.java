@@ -91,7 +91,7 @@ public class FacturaLogic {
     }
     
     /**
-     * Eliminar un libro por Id
+     * Eliminar una factura por Id
      * @param facturaId El ID de la factura a borrar.
      */
     public void deleteFactura(Long facturaId)
