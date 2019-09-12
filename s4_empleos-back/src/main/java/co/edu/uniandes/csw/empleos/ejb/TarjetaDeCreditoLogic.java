@@ -15,25 +15,19 @@ import javax.inject.Inject;
  *
  * @author Miguel Angel Ramos Hurtado
  */
-
 @Stateless
 public class TarjetaDeCreditoLogic {
-    
+
     @Inject
     private TarjetaDeCreditoPersistence persistence;
-    
-    
-    public TarjetaDeCreditoEntity createTarjetaDeCredito(TarjetaDeCreditoEntity tarjetaCredito) throws BusinessLogicException
-    {
-        if ( tarjetaCredito.getNumero() == null )
-        {
-            throw new BusinessLogicException ("El número de la tarjeta de crédito no puede ser vacío.");
+
+    public TarjetaDeCreditoEntity createTarjetaDeCredito(TarjetaDeCreditoEntity tarjetaCredito) throws BusinessLogicException {
+        if (tarjetaCredito.getNumero() == null) {
+            throw new BusinessLogicException("El número de la tarjeta de crédito no puede ser vacío.");
         }
-        
+
         tarjetaCredito = persistence.create(tarjetaCredito);
         return tarjetaCredito;
     }
-    
-    
-    
+
 }

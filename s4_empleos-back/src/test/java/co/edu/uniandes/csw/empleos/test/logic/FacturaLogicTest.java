@@ -5,7 +5,7 @@
  */
 package co.edu.uniandes.csw.empleos.test.logic;
 
-import co.edu.uniandes.csw.empleos.logic.FacturaLogic;
+import co.edu.uniandes.csw.empleos.ejb.FacturaLogic;
 import co.edu.uniandes.csw.empleos.entities.FacturaEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.empleos.persistence.FacturaPersistence;

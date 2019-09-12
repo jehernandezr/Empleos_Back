@@ -28,46 +28,44 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class TarjetaDeCreditoLogicTest {
-    
-    
+
     @PersistenceContext
-   private EntityManager em;
-    
+    private EntityManager em;
+
     private PodamFactory factory = new PodamFactoryImpl();
-    
+
     @Inject
     private TarjetaDeCreditoLogic tarjetaCreditoLogic;
-    
+
     /**
-    * @return Devuelve el jar Arquillian va a desplegar en Payara embebido.
-    */
-   @Deployment
-   public static JavaArchive createDeployment()
-   {
-       return ShrinkWrap.create(JavaArchive.class)
-               .addPackage(TarjetaDeCreditoEntity.class.getPackage())
-               .addPackage(TarjetaDeCreditoLogic.class.getPackage())
-               .addPackage(TarjetaDeCreditoPersistence.class.getPackage())
-               .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
-               .addAsManifestResource("META-INF/beans.xml", "beans.xml");
-   }
-   
-   @Test
-   public void createTarjetaDeCredito() throws BusinessLogicException {
-       TarjetaDeCreditoEntity newEntity = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
-       TarjetaDeCreditoEntity result = tarjetaCreditoLogic.createTarjetaDeCredito(newEntity);
-       Assert.assertNotNull(result);
-       
-       TarjetaDeCreditoEntity entity = em.find(TarjetaDeCreditoEntity.class, result.getId());
-       Assert.assertEquals(entity.getNumero(), result.getNumero());
-               
-   }
-   
-   @Test (expected = BusinessLogicException.class )
-   public void createTarjetaDeCreditoNumeroNull () throws BusinessLogicException {
-       TarjetaDeCreditoEntity newEntity = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
-       newEntity.setNumero(null);
-       TarjetaDeCreditoEntity result = tarjetaCreditoLogic.createTarjetaDeCredito(newEntity); 
-   }
-   
+     * @return Devuelve el jar Arquillian va a desplegar en Payara embebido.
+     */
+    @Deployment
+    public static JavaArchive createDeployment() {
+        return ShrinkWrap.create(JavaArchive.class)
+                .addPackage(TarjetaDeCreditoEntity.class.getPackage())
+                .addPackage(TarjetaDeCreditoLogic.class.getPackage())
+                .addPackage(TarjetaDeCreditoPersistence.class.getPackage())
+                .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
+                .addAsManifestResource("META-INF/beans.xml", "beans.xml");
+    }
+
+    @Test
+    public void createTarjetaDeCredito() throws BusinessLogicException {
+        TarjetaDeCreditoEntity newEntity = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
+        TarjetaDeCreditoEntity result = tarjetaCreditoLogic.createTarjetaDeCredito(newEntity);
+        Assert.assertNotNull(result);
+
+        TarjetaDeCreditoEntity entity = em.find(TarjetaDeCreditoEntity.class, result.getId());
+        Assert.assertEquals(entity.getNumero(), result.getNumero());
+
+    }
+
+    @Test(expected = BusinessLogicException.class)
+    public void createTarjetaDeCreditoNumeroNull() throws BusinessLogicException {
+        TarjetaDeCreditoEntity newEntity = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
+        newEntity.setNumero(null);
+        TarjetaDeCreditoEntity result = tarjetaCreditoLogic.createTarjetaDeCredito(newEntity);
+    }
+
 }
