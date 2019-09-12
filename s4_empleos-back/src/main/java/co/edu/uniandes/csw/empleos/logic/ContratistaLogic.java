@@ -6,11 +6,14 @@
 package co.edu.uniandes.csw.empleos.ejb;
 
 import co.edu.uniandes.csw.empleos.entities.ContratistaEntity;
+import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.empleos.persistence.ContratistaPersistence;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 
 /**
  *
@@ -29,22 +32,30 @@ public class ContratistaLogic {
      * @param contratistaEntity Objeto de ContratistaEntity con los datos nuevos
      * @return Objeto de ContratistaEntity con los datos nuevos y su ID.
      */
-    public ContratistaEntity createContratista(ContratistaEntity contratistaEntity) {
-        LOGGER.log(Level.INFO, "Inicia proceso de creación del autor");
+    public ContratistaEntity createContratista(ContratistaEntity contratistaEntity) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de creación del contratista");
+        validarEmail(contratistaEntity.getEmail());
+        validarContrasena(contratistaEntity.getContrasena());
+        if (contratistaEntity.getNombre() == null || contratistaEntity.getNombre().trim().equals("")) {
+            throw new BusinessLogicException("El nombre del contratista está vacío");
+        }
+        
+        
+        
         ContratistaEntity newContratistaEntity = persistence.create(contratistaEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de creación del autor");
+        LOGGER.log(Level.INFO, "Termina proceso de creación del contratista");
         return newContratistaEntity;
     }
 
     /**
-     * Obtiene la lista de los registros de Author.
+     * Obtiene la lista de los registros de contratista.
      *
-     * @return Colección de objetos de AuthorEntity.
+     * @return Colección de objetos de ContratistaEntity.
      */
-    public List<ContratistaEntity> getAuthors() {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los autores");
+    public List<ContratistaEntity> getContratistas() {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los contratistas");
         List<ContratistaEntity> lista = persistence.findAll();
-        LOGGER.log(Level.INFO, "Termina proceso de consultar todos los autores");
+        LOGGER.log(Level.INFO, "Termina proceso de consultar todos los contratistas");
         return lista;
     }
 
@@ -52,50 +63,88 @@ public class ContratistaLogic {
      * Obtiene los datos de una instancia de Contratista a partir de su ID.
      *
      * @param contratistaId Identificador de la instancia a consultar
-     * @return Instancia de ContratistaEntity con los datos del Author consultado.
+     * @return Instancia de ContratistaEntity con los datos del Contratista consultado.
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException 
      */
-    public ContratistaEntity getContratista(Long contratistaId) throws BussinessLogicException {
+    public ContratistaEntity getContratista(Long contratistaId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar el contratista con id = {0}", contratistaId);
         ContratistaEntity contratistaEntity = persistence.find(contratistaId);
         if (contratistaEntity == null) {
-            
+            throw new BusinessLogicException("No existe el contratista con el id "+contratistaId);
         }
-        LOGGER.log(Level.INFO, "Termina proceso de consultar el autor con id = {0}", contratistaId);
+        LOGGER.log(Level.INFO, "Termina proceso de consultar del contratista con id = {0}", contratistaId);
         return contratistaEntity;
     }
-
+    
     /**
-     * Actualiza la información de una instancia de Author.
+     * Valida el email que llega por parametro.
      *
-     * @param authorsId Identificador de la instancia a actualizar
-     * @param authorEntity Instancia de AuthorEntity con los nuevos datos.
-     * @return Instancia de AuthorEntity con los datos actualizados.
+     * @return si un correo es valido.
+     * @param email email a validar.
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
      */
-    public AuthorEntity updateAuthor(Long authorsId, AuthorEntity authorEntity) {
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar el autor con id = {0}", authorsId);
-        AuthorEntity newAuthorEntity = persistence.update(authorEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de actualizar el autor con id = {0}", authorsId);
-        return newAuthorEntity;
-    }
-
-    /**
-     * Elimina una instancia de Author de la base de datos.
-     *
-     * @param authorsId Identificador de la instancia a eliminar.
-     * @throws BusinessLogicException si el autor tiene libros asociados.
-     */
-    public void deleteAuthor(Long authorsId) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "Inicia proceso de borrar el autor con id = {0}", authorsId);
-        List<BookEntity> books = getAuthor(authorsId).getBooks();
-        if (books != null && !books.isEmpty()) {
-            throw new BusinessLogicException("No se puede borrar el autor con id = " + authorsId + " porque tiene books asociados");
+    public static boolean validarEmail(String email) throws BusinessLogicException {
+        boolean result = true;
+        try {
+            InternetAddress emailAddr = new InternetAddress(email);
+            emailAddr.validate();
+        } catch (AddressException ex) {
+            result = false;
+             throw new BusinessLogicException("El correo no es valido ");
         }
-        List<PrizeEntity> prizes = getAuthor(authorsId).getPrizes();
-        if (prizes != null && !prizes.isEmpty()) {
-            throw new BusinessLogicException("No se puede borrar el autor con id = " + authorsId + " porque tiene premios asociados");
-        }
-        persistence.delete(authorsId);
-        LOGGER.log(Level.INFO, "Termina proceso de borrar el autor con id = {0}", authorsId);
+        return result;
     }
     
+    
+     /**
+     * Valida la contrasena que llega por parametro.
+     *
+     * @param contrasena contraseña a validar.
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
+     */
+    public void validarContrasena(String contrasena) throws BusinessLogicException {
+        boolean valida=true;
+        if(contrasena == null || contrasena.trim().equals("")) {
+            
+            throw new BusinessLogicException("No puede estar vacia la contraseña"); 
+            
+        }
+        if(contrasena.length()<6) {
+            
+            throw new BusinessLogicException("La contraseña es muy corta");    
+        }
+        if(contrasena.length()>12) {
+            
+            throw new BusinessLogicException("La contraseña es muy larga");    
+        }
+        
+         
+    }
+    
+    /**
+     * Actualiza la información de una instancia de Contratista.
+     *
+     * @param contratistaId Identificador de la instancia a actualizar
+     * @param contratistaEntity Instancia de ContratistaEntity con los nuevos datos.
+     * @return Instancia de ContratistaEntity con los datos actualizados.
+     */
+    public ContratistaEntity updateContratista(Long contratistaId, ContratistaEntity contratistaEntity) {
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar el contratista con id = {0}", contratistaId);
+        ContratistaEntity newContratistaEntity = persistence.update(contratistaEntity);
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar el contratista con id = {0}", contratistaId);
+        return newContratistaEntity;
+    }
+
+    /**
+     * Elimina una instancia de Contratista de la base de datos.
+     *
+     * @param contratistaId Identificador de la instancia a eliminar.
+     */
+    public void deleteContratista(Long contratistaId)  {
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar el contratista con id = {0}", contratistaId);
+       
+        persistence.delete(contratistaId);
+        LOGGER.log(Level.INFO, "Termina proceso de borrar el contratista con id = {0}", contratistaId);
+    }
+
 }
