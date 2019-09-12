@@ -132,6 +132,7 @@ public class ContratistaEntity extends BaseEntity {
     public void setRutaImagen(String rutaImagen) {
         this.rutaImagen = rutaImagen;
     }
-            
+    
+   
     
 }
