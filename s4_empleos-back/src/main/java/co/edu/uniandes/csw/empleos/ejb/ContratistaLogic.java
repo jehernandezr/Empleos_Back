@@ -42,7 +42,7 @@ public class ContratistaLogic {
      *
      * @return Colección de objetos de ContratistaEntity.
      */
-    public List<ContratistaEntity> getContratistass() {
+    public List<ContratistaEntity> getContratistas() {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los contratistas");
         List<ContratistaEntity> lista = persistence.findAll();
         LOGGER.log(Level.INFO, "Termina proceso de consultar todos los contratistas");
@@ -86,10 +86,10 @@ public class ContratistaLogic {
      * @param contratistaId Identificador de la instancia a eliminar.
      */
     public void deleteContratista(Long contratistaId)  {
-        LOGGER.log(Level.INFO, "Inicia proceso de borrar el autor con id = {0}", contratistaId);
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar el contratista con id = {0}", contratistaId);
        
         persistence.delete(contratistaId);
-        LOGGER.log(Level.INFO, "Termina proceso de borrar el autor con id = {0}", contratistaId);
+        LOGGER.log(Level.INFO, "Termina proceso de borrar el contratista con id = {0}", contratistaId);
     }
 
 }
