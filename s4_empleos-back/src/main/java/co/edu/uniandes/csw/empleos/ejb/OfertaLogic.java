@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 
 /**
  *
@@ -33,12 +35,37 @@ public class OfertaLogic {
      * @param ofertaEntity Objeto de OfertaEntity con los datos nuevos
      * @return Objeto de OfertaEntity con los datos nuevos y su ID.
      */
-    public OfertaEntity createOferta(OfertaEntity ofertaEntity) {
+    public OfertaEntity createOferta(OfertaEntity ofertaEntity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de creación del oferta");
+        if (ofertaEntity.getNombre() == null || ofertaEntity.getNombre().trim().equals("")) {
+            throw new BusinessLogicException("El nombre de la oferta está vacío");
+        }
+        if (ofertaEntity.getCategoria()== null || ofertaEntity.getCategoria().trim().equals("")) {
+            throw new BusinessLogicException("la categoria de la oferta está vacía");
+        }
+        
+        if (ofertaEntity.getDescripcion()== null || ofertaEntity.getDescripcion().trim().equals("")) {
+            throw new BusinessLogicException("la descripcion de la oferta está vacía");
+        }
+        
+        if ( ofertaEntity.getHorasDeTrabajo()< 1) {
+            throw new BusinessLogicException("las horas de trabajo de la oferta debe ser un numero positivo");
+        }
+        if (ofertaEntity.getNumeroDeVacantes()< 1) {
+            throw new BusinessLogicException("las horas de trabajo de la oferta debe ser un numero positivo");
+        }
+         if (ofertaEntity.getPagoPorHora()< 3500) {
+            throw new BusinessLogicException("El pago por hora debe ser minimo el SMLV");
+        }
+          if (ofertaEntity.getTipoOferta()< 1||ofertaEntity.getTipoOferta()> 2) {
+            throw new BusinessLogicException("La oferta debe ser o estandar o express");
+        }
         OfertaEntity newOfertaEntity = persistence.create(ofertaEntity);
         LOGGER.log(Level.INFO, "Termina proceso de creación del oferta");
         return newOfertaEntity;
     }
+    
+     
 
     /**
      * Obtiene la lista de los registros de oferta.

@@ -49,7 +49,7 @@ public class OfertaLogicTest {
     @Inject
     private UserTransaction utx;
 
-    private List<OfertaEntity> data = new ArrayList<>();
+    private final List<OfertaEntity> data = new ArrayList<>();
 
     /**
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
@@ -114,8 +114,14 @@ public class OfertaLogicTest {
      * Prueba para crear un Oferta.
      */
     @Test
-    public void createOfertaTest() {
+    public void createOfertaTest() throws BusinessLogicException {
         OfertaEntity newEntity = factory.manufacturePojo(OfertaEntity.class);
+        newEntity.setHorasDeTrabajo(3.0);
+        newEntity.setPagoPorHora(5000.0);
+        newEntity.setNumeroDeVacantes(2);
+        newEntity.setTipoOferta(1);
+        
+        
         OfertaEntity result = ofertaLogic.createOferta(newEntity);
         Assert.assertNotNull(result);
         OfertaEntity entity = em.find(OfertaEntity.class, result.getId());
@@ -134,7 +140,82 @@ public class OfertaLogicTest {
         Assert.assertEquals(newEntity.getTiempoMaximoAplicacion(), entity.getTiempoMaximoAplicacion());
         Assert.assertEquals(newEntity.getTipoOferta(), entity.getTipoOferta());
     }
+    
+    /**
+     * Prueba para verificar la generacion de la excepcion al crear una oferta con un nombre nulo.
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createOfertaNombreNullTest() throws BusinessLogicException {
+        OfertaEntity newEntity = factory.manufacturePojo(OfertaEntity.class);
+        newEntity.setNombre(null);
+         ofertaLogic.createOferta(newEntity);
+    }
+    /**
+     * Prueba para verificar la generacion de la excepcion al crear una oferta con una categoria nula.
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createOfertaCategoriaNullTest() throws BusinessLogicException {
+        OfertaEntity newEntity = factory.manufacturePojo(OfertaEntity.class);
+        newEntity.setCategoria(null);
+         ofertaLogic.createOferta(newEntity);
+    }
+    
+     /**
+     * Prueba para verificar la generacion de la excepcion al crear una oferta con una descripcion nula.
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createOfertaDescripcionNullTest() throws BusinessLogicException {
+        OfertaEntity newEntity = factory.manufacturePojo(OfertaEntity.class);
+        newEntity.setDescripcion(null);
+         ofertaLogic.createOferta(newEntity);
+    }
+    
+     /**
+     * Prueba para verificar la generacion de la excepcion al crear una oferta con unas horas de trabajo invalidas.
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createOfertaHorasDeTrabajoInvalidaTest() throws BusinessLogicException {
+        OfertaEntity newEntity = factory.manufacturePojo(OfertaEntity.class);
+        newEntity.setHorasDeTrabajo(0.0);
+         ofertaLogic.createOferta(newEntity);
+    }
+    
+     /**
+     * Prueba para verificar la generacion de la excepcion al crear una oferta con unas horas de trabajo invalidas.
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createOfertaNumeroDeVacantesInvalidaTest() throws BusinessLogicException {
+        OfertaEntity newEntity = factory.manufacturePojo(OfertaEntity.class);
+        newEntity.setNumeroDeVacantes(0);
+         ofertaLogic.createOferta(newEntity);
+    }
 
+     /**
+     * Prueba para verificar la generacion de la excepcion al crear una oferta con pago por hora invalido.
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createOfertaPagoPorHoraInvalidoTest() throws BusinessLogicException {
+        OfertaEntity newEntity = factory.manufacturePojo(OfertaEntity.class);
+        newEntity.setPagoPorHora(2000.0);
+         ofertaLogic.createOferta(newEntity);
+    }
+    
+    /**
+     * Prueba para verificar la generacion de la excepcion al crear una oferta con un tipo invalido.
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createOfertaTipoInvalidoTest() throws BusinessLogicException {
+        OfertaEntity newEntity = factory.manufacturePojo(OfertaEntity.class);
+        newEntity.setTipoOferta(10);
+         ofertaLogic.createOferta(newEntity);
+    }
     /**
      * Prueba para consultar la lista de Ofertas.
      */

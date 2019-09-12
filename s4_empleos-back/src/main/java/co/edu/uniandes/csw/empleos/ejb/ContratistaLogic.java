@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 
 /**
  *
@@ -30,8 +32,16 @@ public class ContratistaLogic {
      * @param contratistaEntity Objeto de ContratistaEntity con los datos nuevos
      * @return Objeto de ContratistaEntity con los datos nuevos y su ID.
      */
-    public ContratistaEntity createContratista(ContratistaEntity contratistaEntity) {
+    public ContratistaEntity createContratista(ContratistaEntity contratistaEntity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de creación del contratista");
+        validarEmail(contratistaEntity.getEmail());
+        validarContrasena(contratistaEntity.getContrasena());
+        if (contratistaEntity.getNombre() == null || contratistaEntity.getNombre().trim().equals("")) {
+            throw new BusinessLogicException("El nombre del contratista está vacío");
+        }
+        
+        
+        
         ContratistaEntity newContratistaEntity = persistence.create(contratistaEntity);
         LOGGER.log(Level.INFO, "Termina proceso de creación del contratista");
         return newContratistaEntity;
@@ -64,6 +74,51 @@ public class ContratistaLogic {
         }
         LOGGER.log(Level.INFO, "Termina proceso de consultar del contratista con id = {0}", contratistaId);
         return contratistaEntity;
+    }
+    
+    /**
+     * Valida el email que llega por parametro.
+     *
+     * @return si un correo es valido.
+     * @param email email a validar.
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
+     */
+    public static boolean validarEmail(String email) throws BusinessLogicException {
+        boolean result = true;
+        try {
+            InternetAddress emailAddr = new InternetAddress(email);
+            emailAddr.validate();
+        } catch (AddressException ex) {
+            result = false;
+             throw new BusinessLogicException("El correo no es valido ");
+        }
+        return result;
+    }
+    
+    
+     /**
+     * Valida la contrasena que llega por parametro.
+     *
+     * @param contrasena contraseña a validar.
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
+     */
+    public void validarContrasena(String contrasena) throws BusinessLogicException {
+        boolean valida=true;
+        if(contrasena == null || contrasena.trim().equals("")) {
+            
+            throw new BusinessLogicException("No puede estar vacia la contraseña"); 
+            
+        }
+        if(contrasena.length()<6) {
+            
+            throw new BusinessLogicException("La contraseña es muy corta");    
+        }
+        if(contrasena.length()>12) {
+            
+            throw new BusinessLogicException("La contraseña es muy larga");    
+        }
+        
+         
     }
     
     /**

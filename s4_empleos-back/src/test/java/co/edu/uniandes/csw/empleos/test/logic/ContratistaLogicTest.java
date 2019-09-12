@@ -114,9 +114,12 @@ public class ContratistaLogicTest {
      * Prueba para crear un Contratista.
      */
     @Test
-    public void createContratistaTest() {
+    public void createContratistaTest() throws BusinessLogicException {
         ContratistaEntity newEntity = factory.manufacturePojo(ContratistaEntity.class);
+        newEntity.setEmail("jek@hotmail.com");
         ContratistaEntity result = contratistaLogic.createContratista(newEntity);
+        result.setEmail("jek@hotmail.com");
+        
         Assert.assertNotNull(result);
         ContratistaEntity entity = em.find(ContratistaEntity.class, result.getId());
         Assert.assertEquals(newEntity.getId(), entity.getId());
@@ -127,6 +130,47 @@ public class ContratistaLogicTest {
         Assert.assertEquals(newEntity.getRutaImagen(), entity.getRutaImagen());
     }
 
+    /**
+     * Prueba para verificar la generacion de la excepcion al crear un contratista con nombre nulo.
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createContratistaNombreNullTest() throws BusinessLogicException {
+        ContratistaEntity newEntity = factory.manufacturePojo(ContratistaEntity.class);
+        newEntity.setNombre(null);
+         contratistaLogic.createContratista(newEntity);
+    }
+    
+      /**
+     * Prueba para verificar la generacion de la excepcion al crear un contratista con una contraseña menor a 5 caracteres.
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createContratistaContrasenaCortaTest() throws BusinessLogicException {
+        ContratistaEntity newEntity = factory.manufacturePojo(ContratistaEntity.class);
+        newEntity.setContrasena("asd");
+         contratistaLogic.createContratista(newEntity);
+    }
+    /**
+     * Prueba para verificar la generacion de la excepcion al crear un contratista con una contraseña mayor a 5 caracteres.
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createContratistaContrasenaLargaTest() throws BusinessLogicException {
+        ContratistaEntity newEntity = factory.manufacturePojo(ContratistaEntity.class);
+        newEntity.setContrasena("asdfghjklzxcvb");
+         contratistaLogic.createContratista(newEntity);
+    }
+    /**
+     * Prueba para verificar la generacion de la excepcion al crear un contratista con una contraseña mayor a 5 caracteres.
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createContratistaCorreoInvalidoTest() throws BusinessLogicException {
+        ContratistaEntity newEntity = factory.manufacturePojo(ContratistaEntity.class);
+        newEntity.setEmail("asdfghj");
+         contratistaLogic.createContratista(newEntity);
+    }
     /**
      * Prueba para consultar la lista de Contratistas.
      */
