@@ -106,7 +106,7 @@ public class FacturaPersistenceTest {
     public void createCalificacionTest() {
         PodamFactory factory = new PodamFactoryImpl();
         FacturaEntity factura = factory.manufacturePojo(FacturaEntity.class);
-       FacturaEntity result = fp.create(factura);
+        FacturaEntity result = fp.create(factura);
 
         Assert.assertNotNull(result);
 
