@@ -167,4 +167,140 @@ public class EstudianteLogicTest {
       newEntity.setSemestre(0);
       EstudianteEntity result = estudianteLogic.crearEstudiante(newEntity);
     }
+    
+    @Test
+    public void deleteEstudianteTest() {
+      EstudianteEntity newEntity = factory.manufacturePojo(EstudianteEntity.class);
+      newEntity.setCorreo("algo@uniandes.edu.co");
+      newEntity.setSemestre(5);
+      long id = newEntity.getId();
+      try {
+        newEntity = estudianteLogic.crearEstudiante(newEntity);
+        //estudianteLogic.deleteEstudiante(id);
+        //EstudianteEntity e = estudianteLogic.readEstudiante(id);
+        //Assert.assertNull(e);
+      } catch(BusinessLogicException e) {
+          Assert.fail("Debería dejar crear un estudiante");
+      }
+    }
+    
+    @Test
+    public void readEstudianteTest() {
+      EstudianteEntity newEntity = factory.manufacturePojo(EstudianteEntity.class);
+      newEntity.setCorreo("algo@uniandes.edu.co");
+      newEntity.setSemestre(5);
+      try {
+        estudianteLogic.crearEstudiante(newEntity);
+        EstudianteEntity e = estudianteLogic.readEstudiante(newEntity.getId());
+        Assert.assertEquals(e.getId(), newEntity.getId());
+      } catch (BusinessLogicException e) {
+          Assert.fail("Se esperaba poder crear al estudiante");
+      }
+    }
+    
+    @Test
+    public void updateEstudianteTest() {
+      EstudianteEntity newEntity = factory.manufacturePojo(EstudianteEntity.class);
+      newEntity.setCorreo("algo@uniandes.edu.co");
+      newEntity.setSemestre(5);
+      long id = newEntity.getId();
+      try {
+        estudianteLogic.crearEstudiante(newEntity);
+      } catch (BusinessLogicException e) {
+          Assert.fail("Se esperaba poder crear al estudiante");
+      }
+      
+      
+      newEntity = factory.manufacturePojo(EstudianteEntity.class);
+      newEntity.setSemestre(5);
+      newEntity.setId(id);
+      try {
+        estudianteLogic.updateEstudiante(newEntity);
+        Assert.fail("No debería permitir crear un estudiante con un correo diferente a uniandes");
+      } catch (BusinessLogicException e) {
+          Assert.assertEquals(e.getMessage(), "El correo no era de uniandes");
+      }
+      
+      newEntity = factory.manufacturePojo(EstudianteEntity.class);
+      newEntity.setCorreo("algo@uniandes.edu.co");
+      newEntity.setSemestre(0);
+      newEntity.setId(id);
+      try {
+        estudianteLogic.updateEstudiante(newEntity);
+        Assert.fail("No debería permitir crear un estudiante con un semestre menor a 1");
+      } catch (BusinessLogicException e) {
+          Assert.assertEquals(e.getMessage(), "No es un semestre válido");
+      }
+      
+      newEntity = factory.manufacturePojo(EstudianteEntity.class);
+      newEntity.setCorreo("algo@uniandes.edu.co");
+      newEntity.setSemestre(13);
+      newEntity.setId(id);
+      try {
+        estudianteLogic.updateEstudiante(newEntity);
+        Assert.fail("No debería permitir crear un estudiante con un semestre mayor a 12");
+      } catch (BusinessLogicException e) {
+          Assert.assertEquals(e.getMessage(), "No es un semestre válido");
+      }
+      
+      newEntity = factory.manufacturePojo(EstudianteEntity.class);
+      newEntity.setCorreo("algo@uniandes.edu.co");
+      newEntity.setSemestre(5);
+      newEntity.setCarrera("");
+      newEntity.setId(id);
+      try {
+        estudianteLogic.updateEstudiante(newEntity);
+        Assert.fail("No debería permitir crear un estudiante con una carrera vacía");
+      } catch (BusinessLogicException e) {
+          Assert.assertEquals(e.getMessage(), "No es una carrera válida");
+      }
+      
+      newEntity = factory.manufacturePojo(EstudianteEntity.class);
+      newEntity.setCorreo("algo@uniandes.edu.co");
+      newEntity.setSemestre(5);
+      newEntity.setId(id);
+      newEntity.setCalificacionPromedio(-1);
+      try {
+        estudianteLogic.updateEstudiante(newEntity);
+        Assert.fail("No debería permitir crear un estudiante con una calificación promedio menor a 0");
+      } catch (BusinessLogicException e) {
+          Assert.assertEquals(e.getMessage(), "No es una calificación válida");
+      }
+      
+      newEntity = factory.manufacturePojo(EstudianteEntity.class);
+      newEntity.setCorreo("algo@uniandes.edu.co");
+      newEntity.setSemestre(5);
+      newEntity.setId(id);
+      newEntity.setCalificacionPromedio(6);
+      try {
+        estudianteLogic.updateEstudiante(newEntity);
+        Assert.fail("No debería permitir crear un estudiante con una calificación promedio mayor a 5");
+      } catch (BusinessLogicException e) {
+          Assert.assertEquals(e.getMessage(), "No es una calificación válida");
+      }
+      
+      newEntity = factory.manufacturePojo(EstudianteEntity.class);
+      newEntity.setCorreo("algo@uniandes.edu.co");
+      newEntity.setSemestre(5);
+      newEntity.setId(id);
+      newEntity.setNombre("");
+      try {
+        estudianteLogic.updateEstudiante(newEntity);
+        Assert.fail("No debería permitir crear un estudiante con un nombre vacío");
+      } catch (BusinessLogicException e) {
+          Assert.assertEquals(e.getMessage(), "No es un nombre válido");
+      }
+      
+      newEntity = factory.manufacturePojo(EstudianteEntity.class);
+      newEntity.setCorreo("algo@uniandes.edu.co");
+      newEntity.setSemestre(5);
+      newEntity.setId(id);
+      newEntity.setHorarioDeTrabajo("");
+      try {
+        estudianteLogic.updateEstudiante(newEntity);
+        Assert.fail("No debería permitir crear un estudiante con un horario de trabajo vacío");
+      } catch (BusinessLogicException e) {
+          Assert.assertEquals(e.getMessage(), "No es un horario válido");
+      }
+    }
 }

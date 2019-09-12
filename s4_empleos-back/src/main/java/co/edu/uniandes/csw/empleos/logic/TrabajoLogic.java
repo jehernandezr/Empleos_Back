@@ -5,7 +5,6 @@
  */
 package co.edu.uniandes.csw.empleos.logic;
 import co.edu.uniandes.csw.empleos.entities.TrabajoEntity;
-import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.empleos.persistence.TrabajoPersistence;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -20,8 +19,24 @@ public class TrabajoLogic {
     @Inject
     private TrabajoPersistence persistence;
     
-    public TrabajoEntity crearTrabajo(TrabajoEntity entity) throws BusinessLogicException {
+    //No hay reglas de negocio para esta clase
+    
+    
+    public TrabajoEntity crearTrabajo(TrabajoEntity entity) {
         entity = persistence.create(entity);
         return entity;
+    }
+    
+    public TrabajoEntity updateTrabajo(TrabajoEntity entity) {
+        entity = persistence.update(entity);
+        return entity;
+    }
+    
+    public TrabajoEntity deleteTrabajo(long id) {
+        return persistence.delete(id);
+    }
+    
+    public TrabajoEntity readTrabajo(long id) {
+        return persistence.read(id);
     }
 }

@@ -61,6 +61,7 @@ public class FacturaLogicTest {
     @Test
     public void createCalificacion()throws BusinessLogicException{
       FacturaEntity newEntity = factory.manufacturePojo(FacturaEntity.class);  
+      newEntity.setValor(Math.abs(newEntity.getValor()));
       FacturaEntity result = facturaLogic.createFactura(newEntity);
       Assert.assertNotNull(result);
       

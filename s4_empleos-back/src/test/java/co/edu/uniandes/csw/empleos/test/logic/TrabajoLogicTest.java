@@ -53,7 +53,7 @@ public class TrabajoLogicTest {
      * @throws BusinessLogicException Excepcion untilizada para representar errores en la lógica del negocio.
      */
     @Test
-    public void crearTrabajo()throws BusinessLogicException{
+    public void crearTrabajo() {
       TrabajoEntity newEntity = factory.manufacturePojo(TrabajoEntity.class);  
       TrabajoEntity result = trabajoLogic.crearTrabajo(newEntity);
       Assert.assertNotNull(result);
@@ -61,6 +61,39 @@ public class TrabajoLogicTest {
       Assert.assertEquals(entity.isVerificado(), result.isVerificado());
       Assert.assertEquals(entity.isCumplido(), result.isCumplido());
     }
+    
+    @Test
+    public void updateTrabajo() {
+      TrabajoEntity newEntity = factory.manufacturePojo(TrabajoEntity.class); 
+      boolean cumplido = newEntity.isCumplido();
+      boolean verificado = newEntity.isVerificado();
+      long id = newEntity.getId();
+      trabajoLogic.crearTrabajo(newEntity);
+      newEntity.setVerificado(!newEntity.isVerificado());
+      newEntity.setCumplido(!newEntity.isCumplido());
+      newEntity = trabajoLogic.updateTrabajo(newEntity);
+      Assert.assertEquals(newEntity.isVerificado(), !verificado);
+      Assert.assertEquals(newEntity.isCumplido(), !cumplido);
+    }
          
+    @Test
+    public void readTrabajo () {        
+        TrabajoEntity newEntity = factory.manufacturePojo(TrabajoEntity.class);
+        trabajoLogic.crearTrabajo(newEntity);
+        TrabajoEntity e = trabajoLogic.readTrabajo(newEntity.getId());
+        Assert.assertEquals(e.getId(), newEntity.getId());
+    }
+    
+    @Test
+    public void deleteTrabajo () {
+      TrabajoEntity newEntity = factory.manufacturePojo(TrabajoEntity.class);
+      long id = newEntity.getId();
+      newEntity = trabajoLogic.crearTrabajo(newEntity);
+      //trabajoLogic.deleteTrabajo(id);
+      //TrabajoEntity e = trabajoLogic.readTrabajo(id);
+      //Assert.assertNull(e);
+    }
+    
+    
    //Esta clase no tiene reglas de negocio
 }

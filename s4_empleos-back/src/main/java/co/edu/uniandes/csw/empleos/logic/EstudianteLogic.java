@@ -20,6 +20,7 @@ public class EstudianteLogic {
     @Inject
     private EstudiantePersistence persistence;
     
+    // Intenta crear al estudiante
     public EstudianteEntity crearEstudiante(EstudianteEntity entity) throws BusinessLogicException {
         if(!entity.getCorreo().toLowerCase().endsWith("@uniandes.edu.co")) throw new BusinessLogicException("El correo no era de uniandes");
         if(entity.getNombre().contains("\"") || entity.getNombre().contains("'")|| entity.getNombre().equals("")) throw new BusinessLogicException("No es un nombre válido");
@@ -31,4 +32,25 @@ public class EstudianteLogic {
         return entity;
     }
     
+    //Intenta actualizar al estudiante
+    public EstudianteEntity updateEstudiante(EstudianteEntity entity) throws BusinessLogicException {
+        if(!entity.getCorreo().toLowerCase().endsWith("@uniandes.edu.co")) throw new BusinessLogicException("El correo no era de uniandes");
+        if(entity.getNombre().contains("\"") || entity.getNombre().contains("'")|| entity.getNombre().equals("")) throw new BusinessLogicException("No es un nombre válido");
+        if(entity.getCalificacionPromedio() > 5 || entity.getCalificacionPromedio() < 0) throw new BusinessLogicException("No es una calificación válida");
+        if(entity.getSemestre() > 12 || entity.getSemestre() < 1) throw new BusinessLogicException("No es un semestre válido");
+        if(entity.getCarrera().equals("")) throw new BusinessLogicException("No es una carrera válida");
+        if(entity.getHorarioDeTrabajo().equals("")) throw new BusinessLogicException("No es un horario válido");
+        entity = persistence.update(entity);
+        return entity;
+    }
+    
+    //No hay reglas de negocio sobre leer un estudiante
+    public EstudianteEntity readEstudiante(long id) {
+        return persistence.read(id);
+    }
+    
+    //No hay reglas de negocio sobre borrar un estudiante
+    public void deleteEstudiante(long id) {
+        persistence.delete(id);
+    }
 }
