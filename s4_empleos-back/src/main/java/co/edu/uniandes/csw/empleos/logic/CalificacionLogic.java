@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.edu.uniandes.csw.empleos.ejb;
+package co.edu.uniandes.csw.empleos.logic;
 
 import co.edu.uniandes.csw.empleos.entities.CalificacionEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
