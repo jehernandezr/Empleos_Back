@@ -91,7 +91,7 @@ public class CuentaBancariaPersistanceTest {
      */
     private void clearData() {
         em.createQuery("delete from CuentaBancariaEntity").executeUpdate();
-       
+
     }
 
     /**
@@ -123,12 +123,15 @@ public class CuentaBancariaPersistanceTest {
         CuentaBancariaEntity entity = em.find(CuentaBancariaEntity.class, result.getId());
 
         Assert.assertEquals(newEntity.getNumeroCuenta(), entity.getNumeroCuenta());
-        Assert.assertEquals(newEntity.getFecha(), entity.getFecha());
+
+        Assert.assertEquals(newEntity.getNombreBanco(), entity.getNombreBanco());
+
+        Assert.assertEquals(newEntity.getTipoCuenta(), entity.getTipoCuenta());
 
     }
 
     /**
-     * Prueba para consultar la lista de premios.
+     * Prueba para consultar la lista de cuentas bancarias.
      */
     @Test
     public void getCuentaBancariasTest() {
@@ -146,19 +149,18 @@ public class CuentaBancariaPersistanceTest {
     }
 
     /**
-     * Prueba para consultar un Prize.
+     * Prueba para consultar una cuentaBancaria.
      */
     @Test
     public void getCuentaBancariaTest() {
         CuentaBancariaEntity entity = data.get(0);
         CuentaBancariaEntity newEntity = cuentaBancariaPersistance.find(entity.getId());
         Assert.assertNotNull(newEntity);
-        Assert.assertEquals(entity.getFecha(), newEntity.getFecha());
         Assert.assertEquals(entity.getNumeroCuenta(), newEntity.getNumeroCuenta());
     }
 
     /**
-     * Prueba para eliminar un Prize.
+     * Prueba para eliminar una cuentaBancaria.
      */
     @Test
     public void deleteCuentaBancariaTest() {
@@ -169,7 +171,7 @@ public class CuentaBancariaPersistanceTest {
     }
 
     /**
-     * Prueba para actualizar un Prize.
+     * Prueba para actualizar una cuentaBancaria.
      */
     @Test
     public void updateCuentaBancariaTest() {
@@ -184,7 +186,10 @@ public class CuentaBancariaPersistanceTest {
         CuentaBancariaEntity resp = em.find(CuentaBancariaEntity.class, entity.getId());
 
         Assert.assertEquals(newEntity.getNumeroCuenta(), resp.getNumeroCuenta());
-        Assert.assertEquals(newEntity.getFecha(), resp.getFecha());
+
+        Assert.assertEquals(newEntity.getNombreBanco(), resp.getNombreBanco());
+
+        Assert.assertEquals(newEntity.getTipoCuenta(), resp.getTipoCuenta());
 
     }
 
