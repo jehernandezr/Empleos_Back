@@ -1,7 +1,9 @@
 package co.edu.uniandes.csw.empleos.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
 /**
  * Esta clase modela la entidad Estudiante.
@@ -25,6 +27,25 @@ public class EstudianteEntity extends BaseEntity implements Serializable  {
     // Atributo que representa el semestre que cursa el estudiante
     private int semestre;
     
+
+    // Atributo que representa las ofertas a las que ha aplicado el estudiante 
+    @javax.persistence.ManyToMany(
+        mappedBy = "estudiante",
+        fetch = javax.persistence.FetchType.LAZY
+    )
+    Collection<OfertaEntity> ofertas;
+
+    // Atributo que representa las calificaciones que tiene el estudiante 
+    @javax.persistence.OneToMany(
+        mappedBy = "estudiante",
+        fetch = javax.persistence.FetchType.LAZY
+    )
+    Collection<CalificacionEntity> calificaciones;
+
+    // Atributo que representa la cuenta bancaria que tiene el estudiante 
+    @OneToOne(optional=false)
+    private CuentaBancariaEntity cuentaBancaria; 
+
     // Constructor vacío
     public EstudianteEntity () {
         //Constructor vacío para evitar fallos en compilacion. Se asignan valores a los parámetros a través de los metodos set
@@ -126,6 +147,48 @@ public class EstudianteEntity extends BaseEntity implements Serializable  {
      */
     public void setSemestre(int semestre) {
         this.semestre = semestre;
+    }
+
+    /**
+     * @return the ofertas
+     */
+    public Collection<OfertaEntity> getOfertas() {
+        return ofertas;
+    }
+
+    /**
+     * @param ofertas the ofertas to set
+     */
+    public void setOfertas(Collection<OfertaEntity> ofertas) {
+        this.ofertas = ofertas;
+    }
+
+    /**
+     * @return the calificaciones
+     */
+    public Collection<CalificacionEntity> getCalificaciones() {
+        return calificaciones;
+    }
+
+    /**
+     * @param calificaciones the calificaciones to set
+     */
+    public void setCalificaciones(Collection<CalificacionEntity> calificaciones) {
+        this.calificaciones = calificaciones;
+    }
+
+    /**
+     * @return the cuentaBancaria
+     */
+    public CuentaBancariaEntity getCuentaBancaria() {
+        return cuentaBancaria;
+    }
+
+    /**
+     * @param cuentaBancaria the cuentaBancaria to set
+     */
+    public void setCuentaBancaria(CuentaBancariaEntity cuentaBancaria) {
+        this.cuentaBancaria = cuentaBancaria;
     }
     
 }
