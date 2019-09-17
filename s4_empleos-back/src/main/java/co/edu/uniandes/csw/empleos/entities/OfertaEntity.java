@@ -1,7 +1,9 @@
 
 package co.edu.uniandes.csw.empleos.entities;
 
+import java.util.Collection;
 import javax.persistence.Entity;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *Clase que representa una oferta para poder ser guardado en la base de datos.
@@ -86,6 +88,13 @@ public class OfertaEntity extends BaseEntity{
      */
     private String rutaImagen;
     
+    // Atributo que representa las ofertas a las que ha aplicado el estudiante 
+    @PodamExclude
+    @javax.persistence.ManyToMany(
+        mappedBy = "ofertas",
+        fetch = javax.persistence.FetchType.LAZY
+    )
+    Collection<EstudianteEntity> estudiantes;
     
      /**
      * Constructor de la oferta

@@ -7,7 +7,9 @@ package co.edu.uniandes.csw.empleos.test.logic;
 
 import co.edu.uniandes.csw.empleos.ejb.CuentaBancariaLogic;
 import co.edu.uniandes.csw.empleos.entities.CuentaBancariaEntity;
+import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
+import co.edu.uniandes.csw.empleos.logic.EstudianteLogic;
 import co.edu.uniandes.csw.empleos.persistence.CuentaBancariaPersistance;
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -45,8 +47,9 @@ public class CuentaBancariaLogicTest {
 
     @Inject
     private CuentaBancariaLogic cuentaBancariaLogic;
-    
-    
+
+    @Inject
+    private EstudianteLogic estudianteLogic;
 
     private List<CuentaBancariaEntity> data = new ArrayList<CuentaBancariaEntity>();
 
@@ -110,6 +113,9 @@ public class CuentaBancariaLogicTest {
         int numero = Math.abs(num.nextInt(3) + 2);
         String cuenta = numero == 2 ? "Ahorros" : "Corriente";
         newEntity.setTipoCuenta(cuenta);
+        EstudianteEntity newEstudiante = factory.manufacturePojo(EstudianteEntity.class);
+        newEstudiante = estudianteLogic.crearEstudiante(newEstudiante);
+        newEntity.setEstudiante(newEstudiante);
         CuentaBancariaEntity result = cuentaBancariaLogic.createCuentaBancaria(newEntity);
         Assert.assertNotNull(result);
 

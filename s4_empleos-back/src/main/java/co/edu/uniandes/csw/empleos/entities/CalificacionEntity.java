@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.empleos.entities;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -24,6 +25,12 @@ public class CalificacionEntity extends BaseEntity{
      */
     private String comentario;
     
+    @ManyToOne(
+        
+        fetch = javax.persistence.FetchType.LAZY
+    )
+    
+    private EstudianteEntity estudiante;
      /**
      * Contrctor de la Clase Calificación para inicualizar los atributos
      * @param nota Nota de un estudiante. nota>=0.0 && nota<=5.0

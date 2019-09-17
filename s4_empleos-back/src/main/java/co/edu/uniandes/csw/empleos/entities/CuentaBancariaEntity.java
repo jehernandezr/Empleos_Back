@@ -10,6 +10,7 @@ import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.empleos.podam.NumeroStringStrategy;
 import co.edu.uniandes.csw.empleos.podam.TipoCuentaStrategy;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 import uk.co.jemos.podam.common.PodamExclude;
 import uk.co.jemos.podam.common.PodamStrategyValue;
@@ -21,19 +22,18 @@ import uk.co.jemos.podam.common.PodamStrategyValue;
 public class CuentaBancariaEntity extends BaseEntity {
 
     private final static int CUENTA_AHORROS = 2;
-    
+
     private final static int CUENTA_CORRIENTE = 3;
 
     @PodamStrategyValue(NumeroStringStrategy.class)
     private String numeroCuenta;
 
     private String nombreBanco;
-    
-    
-   @PodamExclude
-    @OneToOne(mappedBy = "cuentaBancaria")
+
+    @PodamExclude
+    @OneToOne(mappedBy = "cuentaBancaria", fetch = FetchType.LAZY)
     private EstudianteEntity estudiante;
-    
+
     @PodamStrategyValue(TipoCuentaStrategy.class)
     private int tipoCuenta;
 
@@ -59,7 +59,7 @@ public class CuentaBancariaEntity extends BaseEntity {
      * @return the estudiante
      */
     public EstudianteEntity getEstudiante() {
-       return estudiante;
+        return estudiante;
     }
 
     /**

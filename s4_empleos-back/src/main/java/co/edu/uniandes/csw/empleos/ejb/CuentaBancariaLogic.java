@@ -6,8 +6,10 @@
 package co.edu.uniandes.csw.empleos.ejb;
 
 import co.edu.uniandes.csw.empleos.entities.CuentaBancariaEntity;
+import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.empleos.persistence.CuentaBancariaPersistance;
+import co.edu.uniandes.csw.empleos.persistence.EstudiantePersistence;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -22,6 +24,9 @@ public class CuentaBancariaLogic {
     @Inject
     private CuentaBancariaPersistance persistence;
 
+    @Inject
+    private EstudiantePersistence estudiantePersistence;
+
     /**
      * Se encarga de crear un Author en la base de datos.
      *
@@ -34,6 +39,13 @@ public class CuentaBancariaLogic {
             throw new BusinessLogicException("El numero de cuenta está vacío");
         } else if (cuentaBancaria.getEstudiante() == null) {
             throw new BusinessLogicException("La cuenta bancaria no contiene un estudiante");
+        }
+        EstudianteEntity estudianteEntity = estudiantePersistence.read(cuentaBancaria.getEstudiante().getId());
+        if (estudianteEntity == null) {
+            throw new BusinessLogicException("El estudiante  es inválido");
+        }
+        if (estudianteEntity.getCuentaBancaria() != null) {
+            throw new BusinessLogicException("La organizacion ya tiene premio");
         } else if (cuentaBancaria.getNumeroCuenta().contains(",") || cuentaBancaria.getNumeroCuenta().contains(".") || cuentaBancaria.getNumeroCuenta().contains("-")) {
             throw new BusinessLogicException("El numero de cuenta no puede contener caracteres diferentes  a un numero entero.");
         } else if (Long.parseLong(cuentaBancaria.getNumeroCuenta()) < 0) {
@@ -47,6 +59,9 @@ public class CuentaBancariaLogic {
         } else if (cuentaBancaria.getTipoCuenta() == 0) {
             throw new BusinessLogicException("El tipo de cuenta debe ser Ahorros o Corriente");
         }
+
+        cuentaBancaria.setEstudiante(estudianteEntity);
+        estudianteEntity.setCuentaBancaria(cuentaBancaria);
         cuentaBancaria = persistence.create(cuentaBancaria);
         return cuentaBancaria;
 

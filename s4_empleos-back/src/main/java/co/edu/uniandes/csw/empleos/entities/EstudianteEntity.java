@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  * Esta clase modela la entidad Estudiante.
@@ -26,28 +27,29 @@ public class EstudianteEntity extends BaseEntity implements Serializable  {
     private String horarioDeTrabajo;
     // Atributo que representa el semestre que cursa el estudiante
     private int semestre;
-    @OneToOne
-    private CuentaBancariaEntity cuentaBancaria;
+    
     
     
     
 
     // Atributo que representa las ofertas a las que ha aplicado el estudiante 
+    @PodamExclude
     @javax.persistence.ManyToMany(
-        mappedBy = "estudiante",
+       
         fetch = javax.persistence.FetchType.LAZY
     )
     Collection<OfertaEntity> ofertas;
 
     // Atributo que representa las calificaciones que tiene el estudiante 
     @javax.persistence.OneToMany(
-        mappedBy = "estudiante",
+         mappedBy = "estudiante",
         fetch = javax.persistence.FetchType.LAZY
     )
     Collection<CalificacionEntity> calificaciones;
 
-    // Atributo que representa la cuenta bancaria que tiene el estudiante 
-    @OneToOne(optional=false)
+    // Atributo que representa la cuenta bancaria que tiene el estudiante
+    @PodamExclude
+    @OneToOne
     private CuentaBancariaEntity cuentaBancaria; 
 
     // Constructor vacío
