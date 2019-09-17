@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.edu.uniandes.csw.empleos.logic;
+package co.edu.uniandes.csw.empleos.ejb;
 import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
+import co.edu.uniandes.csw.empleos.persistence.CuentaBancariaPersistence;
 import co.edu.uniandes.csw.empleos.persistence.EstudiantePersistence;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -19,7 +20,8 @@ public class EstudianteLogic {
     
     @Inject
     private EstudiantePersistence persistence;
-    
+    @Inject
+    private CuentaBancariaPersistence cuentaBancariaPersistence;
     // Intenta crear al estudiante
     public EstudianteEntity crearEstudiante(EstudianteEntity entity) throws BusinessLogicException {
         if(!entity.getCorreo().toLowerCase().endsWith("@uniandes.edu.co")) throw new BusinessLogicException("El correo no era de uniandes");

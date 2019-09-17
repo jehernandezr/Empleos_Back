@@ -8,7 +8,7 @@ package co.edu.uniandes.csw.empleos.ejb;
 import co.edu.uniandes.csw.empleos.entities.CuentaBancariaEntity;
 import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
-import co.edu.uniandes.csw.empleos.persistence.CuentaBancariaPersistance;
+import co.edu.uniandes.csw.empleos.persistence.CuentaBancariaPersistence;
 import co.edu.uniandes.csw.empleos.persistence.EstudiantePersistence;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -22,7 +22,7 @@ import javax.inject.Inject;
 public class CuentaBancariaLogic {
 
     @Inject
-    private CuentaBancariaPersistance persistence;
+    private CuentaBancariaPersistence persistence;
 
     @Inject
     private EstudiantePersistence estudiantePersistence;
@@ -137,6 +137,7 @@ public class CuentaBancariaLogic {
      */
     public void delete(Long id) throws BusinessLogicException {
 
+       
         persistence.delete(id);
     }
 

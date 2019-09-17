@@ -63,10 +63,10 @@ public class CuentaBancariaEntity extends BaseEntity {
     }
 
     /**
-     * @param estudiante the estudiante to set
+     * @param pEstudiante estudiante to set
      */
-    public void setEstudiante(EstudianteEntity estudiante) {
-        this.estudiante = estudiante;
+      public void setEstudiante(EstudianteEntity pEstudiante) {
+        this.estudiante = pEstudiante;
     }
 
     /**
@@ -107,5 +107,7 @@ public class CuentaBancariaEntity extends BaseEntity {
     public void setNombreBanco(String nombreBanco) {
         this.nombreBanco = nombreBanco;
     }
+
+    
 
 }

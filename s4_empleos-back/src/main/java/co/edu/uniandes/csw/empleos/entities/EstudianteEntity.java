@@ -40,6 +40,7 @@ public class EstudianteEntity extends BaseEntity implements Serializable  {
     )
     Collection<OfertaEntity> ofertas;
 
+    @PodamExclude
     // Atributo que representa las calificaciones que tiene el estudiante 
     @javax.persistence.OneToMany(
          mappedBy = "estudiante",

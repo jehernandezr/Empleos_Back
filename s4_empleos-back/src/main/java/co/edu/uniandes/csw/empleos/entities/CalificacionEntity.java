@@ -26,11 +26,14 @@ public class CalificacionEntity extends BaseEntity{
      * Atributo que será el comentario a la calificacion puesta.
      */
     private String comentario;
-  
+
+    
     @PodamExclude
-    @javax.persistence.ManyToOne(
-    optional = false, cascade  = CascadeType.PERSIST,
-    fetch = javax.persistence.FetchType.LAZY)
+    @ManyToOne(
+        optional = false, cascade = CascadeType.PERSIST,
+        fetch = javax.persistence.FetchType.LAZY
+    )
+    
     private EstudianteEntity estudiante;
     
      /**

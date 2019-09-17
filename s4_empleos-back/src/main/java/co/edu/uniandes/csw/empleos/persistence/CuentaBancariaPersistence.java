@@ -19,7 +19,7 @@ import javax.persistence.Query;
  * @author je.hernandezr
  */
 @Stateless
-public class CuentaBancariaPersistance {
+public class CuentaBancariaPersistence {
 
     @PersistenceContext(unitName = "empleosPU")
     protected EntityManager em;
