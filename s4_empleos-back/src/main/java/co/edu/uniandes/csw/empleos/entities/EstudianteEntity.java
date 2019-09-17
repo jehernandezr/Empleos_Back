@@ -2,6 +2,7 @@ package co.edu.uniandes.csw.empleos.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
 /**
  * Esta clase modela la entidad Estudiante.
@@ -24,6 +25,10 @@ public class EstudianteEntity extends BaseEntity implements Serializable  {
     private String horarioDeTrabajo;
     // Atributo que representa el semestre que cursa el estudiante
     private int semestre;
+    @OneToOne
+    private CuentaBancariaEntity cuentaBancaria;
+    
+    
     
     // Constructor vacío
     public EstudianteEntity () {

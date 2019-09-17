@@ -7,7 +7,9 @@
 package co.edu.uniandes.csw.empleos.test.persistence;
 
 import co.edu.uniandes.csw.empleos.entities.CuentaBancariaEntity;
+import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
 import co.edu.uniandes.csw.empleos.persistence.CuentaBancariaPersistance;
+import co.edu.uniandes.csw.empleos.persistence.EstudiantePersistence;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -35,6 +37,9 @@ public class CuentaBancariaPersistanceTest {
 
     @Inject
     private CuentaBancariaPersistance cuentaBancariaPersistance;
+
+    @Inject
+    private EstudiantePersistence estudiantePersistance;
 
     @PersistenceContext
     private EntityManager em;
@@ -115,9 +120,10 @@ public class CuentaBancariaPersistanceTest {
     public void createCuentaBancariaTest() {
         PodamFactory factory = new PodamFactoryImpl();
         CuentaBancariaEntity newEntity = factory.manufacturePojo(CuentaBancariaEntity.class);
-
+        EstudianteEntity newEstudiante = factory.manufacturePojo(EstudianteEntity.class);
+        newEstudiante = estudiantePersistance.create(newEstudiante);
+        newEntity.setEstudiante(newEstudiante);
         CuentaBancariaEntity result = cuentaBancariaPersistance.create(newEntity);
-
         Assert.assertNotNull(result);
 
         CuentaBancariaEntity entity = em.find(CuentaBancariaEntity.class, result.getId());

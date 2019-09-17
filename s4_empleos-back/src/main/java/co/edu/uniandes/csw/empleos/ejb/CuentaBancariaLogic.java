@@ -32,10 +32,12 @@ public class CuentaBancariaLogic {
     public CuentaBancariaEntity createCuentaBancaria(CuentaBancariaEntity cuentaBancaria) throws BusinessLogicException {
         if (cuentaBancaria.getNumeroCuenta() == null) {
             throw new BusinessLogicException("El numero de cuenta está vacío");
-        } else if (Long.parseLong(cuentaBancaria.getNumeroCuenta()) < 0) {
-            throw new BusinessLogicException("El numero de cuenta no puede ser negativo");
+        } else if (cuentaBancaria.getEstudiante() == null) {
+            throw new BusinessLogicException("La cuenta bancaria no contiene un estudiante");
         } else if (cuentaBancaria.getNumeroCuenta().contains(",") || cuentaBancaria.getNumeroCuenta().contains(".") || cuentaBancaria.getNumeroCuenta().contains("-")) {
             throw new BusinessLogicException("El numero de cuenta no puede contener caracteres diferentes  a un numero entero.");
+        } else if (Long.parseLong(cuentaBancaria.getNumeroCuenta()) < 0) {
+            throw new BusinessLogicException("El numero de cuenta no puede ser negativo");
         } else if (cuentaBancaria.getNumeroCuenta().length() < 9 && cuentaBancaria.getNumeroCuenta().length() > 20) {
             throw new BusinessLogicException("El numero de cuenta no cumple con la longitud de una cuenta");
         } else if (cuentaBancaria.getNombreBanco() == null) {
@@ -90,10 +92,13 @@ public class CuentaBancariaLogic {
 
         if (cuentaBancaria.getNumeroCuenta() == null) {
             throw new BusinessLogicException("El numero de cuenta está vacío");
-        } else if (Long.parseLong(cuentaBancaria.getNumeroCuenta()) < 0) {
-            throw new BusinessLogicException("El numero de cuenta no puede ser negativo");
+        } else if (cuentaBancaria.getEstudiante() == null) {
+            throw new BusinessLogicException("La cuenta bancaria no contiene un estudiante");
         } else if (cuentaBancaria.getNumeroCuenta().contains(",") || cuentaBancaria.getNumeroCuenta().contains(".") || cuentaBancaria.getNumeroCuenta().contains("-")) {
             throw new BusinessLogicException("El numero de cuenta no puede contener caracteres diferentes  a un numero entero.");
+        } else if (Long.parseLong(cuentaBancaria.getNumeroCuenta()) < 0) {
+            throw new BusinessLogicException("El numero de cuenta no puede ser negativo");
+
         } else if (cuentaBancaria.getNumeroCuenta().length() < 9 && cuentaBancaria.getNumeroCuenta().length() > 20) {
             throw new BusinessLogicException("El numero de cuenta no cumple con la longitud de una cuenta");
         } else if (cuentaBancaria.getNombreBanco() == null) {
