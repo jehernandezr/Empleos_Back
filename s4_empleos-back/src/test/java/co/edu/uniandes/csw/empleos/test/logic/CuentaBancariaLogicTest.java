@@ -36,23 +36,23 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class CuentaBancariaLogicTest {
-    
+
     @PersistenceContext
     private EntityManager em;
-    
+
     @Inject
     private UserTransaction utx;
-    
+
     private PodamFactory factory = new PodamFactoryImpl();
-    
+
     @Inject
     private CuentaBancariaLogic cuentaBancariaLogic;
-    
+
     @Inject
     private EstudianteLogic estudianteLogic;
-    
+
     private List<CuentaBancariaEntity> data = new ArrayList<CuentaBancariaEntity>();
-    
+
     @Deployment
     public static JavaArchive createDeploytment() {
         return ShrinkWrap.create(JavaArchive.class)
@@ -74,7 +74,7 @@ public class CuentaBancariaLogicTest {
             clearData();
             insertData();
             utx.commit();
-            
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -86,7 +86,7 @@ public class CuentaBancariaLogicTest {
     private void clearData() {
         em.createQuery("delete from EstudianteEntity").executeUpdate();
         em.createQuery("delete from CuentaBancariaEntity").executeUpdate();
-        
+
     }
 
     /**
@@ -115,7 +115,7 @@ public class CuentaBancariaLogicTest {
     public void createCuentaBancariaTest() throws BusinessLogicException {
         CuentaBancariaEntity newEntity = factory.manufacturePojo(CuentaBancariaEntity.class);
         SecureRandom num = new SecureRandom();
-        
+
         int numero = Math.abs(num.nextInt(3) + 2);
         String cuenta = numero == 2 ? "Ahorros" : "Corriente";
         newEntity.setTipoCuenta(cuenta);
@@ -123,13 +123,13 @@ public class CuentaBancariaLogicTest {
         newEstudiante.setCorreo("algo@uniandes.edu.co");
         newEstudiante.setSemestre(1);
         newEstudiante = estudianteLogic.crearEstudiante(newEstudiante);
-        
+
         newEntity.setEstudiante(newEstudiante);
         CuentaBancariaEntity result = cuentaBancariaLogic.createCuentaBancaria(newEntity);
         Assert.assertNotNull(result);
-        
+
         CuentaBancariaEntity entity = em.find(CuentaBancariaEntity.class, result.getId());
-        
+
         Assert.assertEquals(newEntity.getNumeroCuenta(), entity.getNumeroCuenta());
         data.add(entity);
     }
@@ -191,10 +191,37 @@ public class CuentaBancariaLogicTest {
      */
     @Test(expected = BusinessLogicException.class)
     public void createCuentaBancariaNumeroNoNaturalTest() throws BusinessLogicException {
-        
+
         CuentaBancariaEntity newEntity = factory.manufacturePojo(CuentaBancariaEntity.class);
-        
-        newEntity.setNumeroCuenta(newEntity.getNumeroCuenta().replaceFirst(1 + "", ","));
+        char[] c = newEntity.getNumeroCuenta().toCharArray();
+        String cadena = ",";
+
+        for (int i = 1; i < c.length; i++) {
+            cadena += c[i];
+
+        }
+        newEntity.setNumeroCuenta(cadena);
+        CuentaBancariaEntity result = cuentaBancariaLogic.createCuentaBancaria(newEntity);
+    }
+
+    /**
+     * Pruba la verificacion de una regla de negocio
+     *
+     * @throws BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createCuentaBancariaNumeroNoNatural2Test() throws BusinessLogicException {
+
+        CuentaBancariaEntity newEntity = factory.manufacturePojo(CuentaBancariaEntity.class);
+        char[] c = newEntity.getNumeroCuenta().toCharArray();
+        String cadena = "-";
+
+        for (int i = 1; i < c.length - 1; i++) {
+            cadena += c[i];
+
+        }
+        cadena += ".";
+        newEntity.setNumeroCuenta(cadena);
         CuentaBancariaEntity result = cuentaBancariaLogic.createCuentaBancaria(newEntity);
     }
 
@@ -255,27 +282,27 @@ public class CuentaBancariaLogicTest {
     public void updateCuentaBancariaTest() throws BusinessLogicException {
         CuentaBancariaEntity entity = data.get(0);
         CuentaBancariaEntity pojoEntity = factory.manufacturePojo(CuentaBancariaEntity.class);
-        
+
         EstudianteEntity newEstudiante = factory.manufacturePojo(EstudianteEntity.class);
         newEstudiante.setCorreo("algo@uniandes.edu.co");
         newEstudiante.setSemestre(1);
         newEstudiante = estudianteLogic.crearEstudiante(newEstudiante);
-        
+
         pojoEntity.setEstudiante(newEstudiante);
-        
+
         pojoEntity.setId(entity.getId());
         SecureRandom num = new SecureRandom();
         int numero = Math.abs(num.nextInt(3) + 2);
         String cuenta = numero == 2 ? "Ahorros" : "Corriente";
         pojoEntity.setTipoCuenta(cuenta);
         cuentaBancariaLogic.updateCuentaBancaria(pojoEntity.getId(), pojoEntity);
-        
+
         CuentaBancariaEntity resp = em.find(CuentaBancariaEntity.class, entity.getId());
-        
+
         Assert.assertEquals(pojoEntity.getNumeroCuenta(), resp.getNumeroCuenta());
-        
+
         Assert.assertEquals(pojoEntity.getNombreBanco(), resp.getNombreBanco());
-        
+
         Assert.assertEquals(pojoEntity.getTipoCuenta(), resp.getTipoCuenta());
     }
 
@@ -289,9 +316,9 @@ public class CuentaBancariaLogicTest {
         CuentaBancariaEntity entity = data.get(0);
         CuentaBancariaEntity pojoEntity = factory.manufacturePojo(CuentaBancariaEntity.class);
         pojoEntity.setId(entity.getId());
-        
+
         cuentaBancariaLogic.updateCuentaBancaria(pojoEntity.getId(), pojoEntity);
-        
+
     }
 
     /**
@@ -306,7 +333,7 @@ public class CuentaBancariaLogicTest {
         pojoEntity.setId(entity.getId());
         pojoEntity.setNumeroCuenta(null);
         cuentaBancariaLogic.updateCuentaBancaria(pojoEntity.getId(), pojoEntity);
-        
+
     }
 
     /**
@@ -321,7 +348,7 @@ public class CuentaBancariaLogicTest {
         pojoEntity.setId(entity.getId());
         pojoEntity.setNumeroCuenta("0");
         cuentaBancariaLogic.updateCuentaBancaria(pojoEntity.getId(), pojoEntity);
-        
+
     }
 
     /**
@@ -336,7 +363,7 @@ public class CuentaBancariaLogicTest {
         pojoEntity.setId(entity.getId());
         pojoEntity.setNumeroCuenta("-" + pojoEntity.getNumeroCuenta());
         cuentaBancariaLogic.updateCuentaBancaria(pojoEntity.getId(), pojoEntity);
-        
+
     }
 
     /**
@@ -353,7 +380,7 @@ public class CuentaBancariaLogicTest {
         int numero = Math.abs(num.nextInt());
         pojoEntity.setNumeroCuenta(numero + "");
         cuentaBancariaLogic.updateCuentaBancaria(pojoEntity.getId(), pojoEntity);
-        
+
     }
 
     /**
@@ -368,15 +395,38 @@ public class CuentaBancariaLogicTest {
         pojoEntity.setId(entity.getId());
         char[] c = pojoEntity.getNumeroCuenta().toCharArray();
         String cadena = ",";
-        
+
         for (int i = 1; i < c.length; i++) {
             cadena += c[i];
-            
+
         }
-        
+
         pojoEntity.setNumeroCuenta(cadena);
         cuentaBancariaLogic.updateCuentaBancaria(pojoEntity.getId(), pojoEntity);
-        
+
+    }
+
+    /**
+     * Pruba la verificacion de una regla de negocio
+     *
+     * @throws BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void updateCuentaBancariaNumeroNonatural2Test() throws BusinessLogicException {
+        CuentaBancariaEntity entity = data.get(0);
+        CuentaBancariaEntity pojoEntity = factory.manufacturePojo(CuentaBancariaEntity.class);
+        pojoEntity.setId(entity.getId());
+        char[] c = pojoEntity.getNumeroCuenta().toCharArray();
+        String cadena = "-";
+
+        for (int i = 1; i < c.length - 2; i++) {
+            cadena += c[i];
+
+        }
+        cadena += ",.";
+        pojoEntity.setNumeroCuenta(cadena);
+        cuentaBancariaLogic.updateCuentaBancaria(pojoEntity.getId(), pojoEntity);
+
     }
 
     /**
@@ -391,7 +441,7 @@ public class CuentaBancariaLogicTest {
         pojoEntity.setId(entity.getId());
         pojoEntity.setNombreBanco(null);
         cuentaBancariaLogic.updateCuentaBancaria(pojoEntity.getId(), pojoEntity);
-        
+
     }
 
     /**
@@ -406,7 +456,7 @@ public class CuentaBancariaLogicTest {
         pojoEntity.setId(entity.getId());
         pojoEntity.setNombreBanco("");
         cuentaBancariaLogic.updateCuentaBancaria(pojoEntity.getId(), pojoEntity);
-        
+
     }
 
     /**
@@ -421,14 +471,14 @@ public class CuentaBancariaLogicTest {
         pojoEntity.setId(entity.getId());
         pojoEntity.setEstudiante(null);
         cuentaBancariaLogic.updateCuentaBancaria(pojoEntity.getId(), pojoEntity);
-        
+
     }
 
     /**
      * Prueba para consultar la lista de cuentas de Bancos.
      */
     @Test
-    public void getAuthorsTest() {
+    public void getCuentasBancariasTest() {
         List<CuentaBancariaEntity> list = cuentaBancariaLogic.getCuentasBancarias();
         Assert.assertEquals(data.size(), list.size());
         for (CuentaBancariaEntity entity : list) {
@@ -456,6 +506,14 @@ public class CuentaBancariaLogicTest {
         Assert.assertEquals(entity.getNumeroCuenta(), resultEntity.getNumeroCuenta());
     }
 
+    @Test(expected = BusinessLogicException.class)
+    public void getCuentaBancariaIDMalTest() throws BusinessLogicException {
+        CuentaBancariaEntity entity = data.get(0);
+        CuentaBancariaEntity resultEntity = cuentaBancariaLogic.getCuentaBancaria(entity.getId() * 2);
+        Assert.assertNull(resultEntity);
+
+    }
+
     /**
      * Prueba para eliminar una Cuentabancaria
      *
@@ -463,10 +521,10 @@ public class CuentaBancariaLogicTest {
      */
     @Test
     public void deleteCuentabancariaTest() throws BusinessLogicException {
-        
+
         CuentaBancariaEntity entity = data.get(0);
         EstudianteEntity est = estudianteLogic.readEstudiante(cuentaBancariaLogic.getCuentaBancaria(entity.getId()).getEstudiante().getId());
-        
+
         estudianteLogic.deleteEstudiante(est.getId());
         cuentaBancariaLogic.delete(entity.getId());
         CuentaBancariaEntity deleted = em.find(CuentaBancariaEntity.class, entity.getId());
