@@ -122,6 +122,7 @@ public class CalificacionPersistenceTest {
          * Pueba para crear la nota y enrlacontrarla
          */
         Assert.assertEquals(calificacion.getNota(), entity.getNota());
+//        Assert.assertEquals(calificacion.getEstudiante(),entity.getEstudiante());
  
     }
     
@@ -159,6 +160,7 @@ public class CalificacionPersistenceTest {
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getNota(), newEntity.getNota());
         Assert.assertEquals(entity.getComentario(), newEntity.getComentario());
+        //Assert.assertEquals(entity.getEstudiante(), newEntity.getEstudiante());
     }
     
     /**
@@ -189,5 +191,6 @@ public class CalificacionPersistenceTest {
 
         Assert.assertEquals(newEntity.getNota(), resp.getNota());
         Assert.assertEquals(newEntity.getComentario(), resp.getComentario());
+        //Assert.assertEquals(newEntity.getEstudiante(), resp.getEstudiante());
     }
 }
