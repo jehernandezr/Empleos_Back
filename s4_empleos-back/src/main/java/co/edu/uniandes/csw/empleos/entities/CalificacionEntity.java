@@ -5,8 +5,10 @@
  */
 package co.edu.uniandes.csw.empleos.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -25,8 +27,9 @@ public class CalificacionEntity extends BaseEntity{
      */
     private String comentario;
     
+    @PodamExclude
     @ManyToOne(
-        
+        optional = false, cascade = CascadeType.PERSIST,
         fetch = javax.persistence.FetchType.LAZY
     )
     

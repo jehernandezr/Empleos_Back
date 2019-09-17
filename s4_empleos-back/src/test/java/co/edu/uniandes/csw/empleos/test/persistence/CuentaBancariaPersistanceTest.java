@@ -63,17 +63,6 @@ public class CuentaBancariaPersistanceTest {
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
 
-    @Test
-    public void createTest() {
-        PodamFactory factory = new PodamFactoryImpl();
-        CuentaBancariaEntity entity = factory.manufacturePojo(CuentaBancariaEntity.class);
-        CuentaBancariaEntity result = cuentaBancariaPersistance.create(entity);
-        Assert.assertNotNull(result);
-
-        CuentaBancariaEntity foundEntity = em.find(CuentaBancariaEntity.class, result.getId());
-        Assert.assertEquals(entity.getNumeroCuenta(), foundEntity.getNumeroCuenta());
-    }
-
     /**
      * Configuración inicial de la prueba.
      */
@@ -95,6 +84,7 @@ public class CuentaBancariaPersistanceTest {
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
+        em.createQuery("delete from EstudianteEntity").executeUpdate();
         em.createQuery("delete from CuentaBancariaEntity").executeUpdate();
 
     }
@@ -107,7 +97,11 @@ public class CuentaBancariaPersistanceTest {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
             CuentaBancariaEntity entity = factory.manufacturePojo(CuentaBancariaEntity.class);
+            EstudianteEntity estudianteEntity = factory.manufacturePojo(EstudianteEntity.class);
+
+            estudianteEntity.setCuentaBancaria(entity);
             em.persist(entity);
+            em.persist(estudianteEntity);
             data.add(entity);
         }
     }
@@ -171,6 +165,11 @@ public class CuentaBancariaPersistanceTest {
     @Test
     public void deleteCuentaBancariaTest() {
         CuentaBancariaEntity entity = data.get(0);
+
+        CuentaBancariaEntity x = cuentaBancariaPersistance.find(entity.getId());
+
+        estudiantePersistance.delete(x.getEstudiante().getId());
+
         cuentaBancariaPersistance.delete(entity.getId());
         CuentaBancariaEntity deleted = em.find(CuentaBancariaEntity.class, entity.getId());
         Assert.assertNull(deleted);

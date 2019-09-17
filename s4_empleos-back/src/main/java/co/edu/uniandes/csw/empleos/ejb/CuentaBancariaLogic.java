@@ -137,6 +137,7 @@ public class CuentaBancariaLogic {
      */
     public void delete(Long id) throws BusinessLogicException {
 
+       
         persistence.delete(id);
     }
 
