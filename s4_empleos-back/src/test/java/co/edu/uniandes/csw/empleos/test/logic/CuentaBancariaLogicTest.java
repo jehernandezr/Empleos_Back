@@ -10,7 +10,7 @@ import co.edu.uniandes.csw.empleos.entities.CuentaBancariaEntity;
 import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.empleos.ejb.EstudianteLogic;
-import co.edu.uniandes.csw.empleos.persistence.CuentaBancariaPersistance;
+import co.edu.uniandes.csw.empleos.persistence.CuentaBancariaPersistence;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +58,7 @@ public class CuentaBancariaLogicTest {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(CuentaBancariaEntity.class.getPackage())
                 .addPackage(CuentaBancariaLogic.class.getPackage())
-                .addPackage(CuentaBancariaPersistance.class.getPackage())
+                .addPackage(CuentaBancariaPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }

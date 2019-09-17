@@ -8,7 +8,7 @@ package co.edu.uniandes.csw.empleos.test.persistence;
 
 import co.edu.uniandes.csw.empleos.entities.CuentaBancariaEntity;
 import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
-import co.edu.uniandes.csw.empleos.persistence.CuentaBancariaPersistance;
+import co.edu.uniandes.csw.empleos.persistence.CuentaBancariaPersistence;
 import co.edu.uniandes.csw.empleos.persistence.EstudiantePersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +33,10 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author Estudiante
  */
 @RunWith(Arquillian.class)
-public class CuentaBancariaPersistanceTest {
+public class CuentaBancariaPersistenceTest {
 
     @Inject
-    private CuentaBancariaPersistance cuentaBancariaPersistance;
+    private CuentaBancariaPersistence cuentaBancariaPersistance;
 
     @Inject
     private EstudiantePersistence estudiantePersistance;
@@ -58,7 +58,7 @@ public class CuentaBancariaPersistanceTest {
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(CuentaBancariaEntity.class.getPackage())
-                .addPackage(CuentaBancariaPersistance.class.getPackage())
+                .addPackage(CuentaBancariaPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
