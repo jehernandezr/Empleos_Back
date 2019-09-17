@@ -3,16 +3,18 @@ package co.edu.uniandes.csw.empleos.entities;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  * Esta clase modela la entidad Estudiante.
+ *
  * @author David Dominguez
  */
 @Entity
-public class EstudianteEntity extends BaseEntity implements Serializable  {
-    
+public class EstudianteEntity extends BaseEntity implements Serializable {
+
     // Atributo que representa el nombre del estudiante
     private String nombre;
     // Atributo que representa el ID del medio de pago del estudiante
@@ -27,30 +29,29 @@ public class EstudianteEntity extends BaseEntity implements Serializable  {
     private String horarioDeTrabajo;
     // Atributo que representa el semestre que cursa el estudiante
     private int semestre;
-    
+
     // Atributo que representa las ofertas a las que ha aplicado el estudiante 
     @PodamExclude
     @javax.persistence.ManyToMany(
-       
-        fetch = javax.persistence.FetchType.LAZY
+            fetch = javax.persistence.FetchType.LAZY
     )
     Collection<OfertaEntity> ofertas;
 
     @PodamExclude
     // Atributo que representa las calificaciones que tiene el estudiante 
     @javax.persistence.OneToMany(
-         mappedBy = "estudiante",
-        fetch = javax.persistence.FetchType.LAZY
+            mappedBy = "estudiante",
+            fetch = javax.persistence.FetchType.LAZY
     )
     Collection<CalificacionEntity> calificaciones;
 
     // Atributo que representa la cuenta bancaria que tiene el estudiante
     @PodamExclude
-    @OneToOne
-    private CuentaBancariaEntity cuentaBancaria; 
+    @OneToOne(fetch = FetchType.LAZY)
+    private CuentaBancariaEntity cuentaBancaria;
 
     // Constructor vacío
-    public EstudianteEntity () {
+    public EstudianteEntity() {
         //Constructor vacío para evitar fallos en compilacion. Se asignan valores a los parámetros a través de los metodos set
     }
 
@@ -62,7 +63,7 @@ public class EstudianteEntity extends BaseEntity implements Serializable  {
     }
 
     /**
-     * @param name the name to set
+     * @param nombre
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
@@ -193,5 +194,5 @@ public class EstudianteEntity extends BaseEntity implements Serializable  {
     public void setCuentaBancaria(CuentaBancariaEntity cuentaBancaria) {
         this.cuentaBancaria = cuentaBancaria;
     }
-    
+
 }
