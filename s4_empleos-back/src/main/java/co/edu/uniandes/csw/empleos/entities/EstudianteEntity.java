@@ -28,10 +28,6 @@ public class EstudianteEntity extends BaseEntity implements Serializable  {
     // Atributo que representa el semestre que cursa el estudiante
     private int semestre;
     
-    
-    
-    
-
     // Atributo que representa las ofertas a las que ha aplicado el estudiante 
     @PodamExclude
     @javax.persistence.ManyToMany(
