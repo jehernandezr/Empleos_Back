@@ -105,13 +105,13 @@ public class FacturaLogicTest {
      * @throws BusinessLogicException Excepcion untilizada para representar errores en la lógica del negocio.
      */
     @Test
+
     public void createFactura()throws BusinessLogicException{
       FacturaEntity newEntity = factory.manufacturePojo(FacturaEntity.class);
       if(newEntity.getValor()<0)
       {
           newEntity.setValor(newEntity.getValor()*-1);
       }
-      
       FacturaEntity result = facturaLogic.createFactura(newEntity);
       Assert.assertNotNull(result);
       
