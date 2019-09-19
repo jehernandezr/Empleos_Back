@@ -5,7 +5,14 @@
  */
 package co.edu.uniandes.csw.empleos.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *Clase que representa un contratista para poder ser guardado en la base de datos.
@@ -13,6 +20,18 @@ import javax.persistence.Entity;
  */
 @Entity
 public class ContratistaEntity extends BaseEntity {
+    
+    
+   
+    
+         
+     @PodamExclude
+    @OneToMany(mappedBy = "contratista")
+    private List<OfertaEntity> ofertas = new ArrayList<OfertaEntity>();
+
+    
+     
+             
     
     /**
      * Variable que representa si el contratista es externo.
@@ -124,6 +143,17 @@ public class ContratistaEntity extends BaseEntity {
      public String getRutaImagen() {
         return rutaImagen;
     }
+     
+     
+    
+    public List<OfertaEntity> getOfertas() {
+        return ofertas;
+    }
+
+    public void setOfertas(List<OfertaEntity> ofertas) {
+        this.ofertas = ofertas;
+    }
+   
 
      /**
      * Actualiza la ruta de la imagen del contratista.
