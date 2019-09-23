@@ -7,7 +7,6 @@ package co.edu.uniandes.csw.empleos.test.persistence;
 
 import co.edu.uniandes.csw.empleos.entities.CuentaDeCobroEntity;
 import co.edu.uniandes.csw.empleos.persistence.CuentaDeCobroPersistence;
-import static java.util.Collections.list;
 import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
@@ -61,6 +60,9 @@ public class CuentaDeCobroPersistenceTest {
         Assert.assertEquals(entity.getNumeroCuentaDeCobro(), cu.getNumeroCuentaDeCobro());
         Assert.assertEquals(entity.getContratista(), cu.getContratista());
         Assert.assertEquals(entity.getFecha(), cu.getFecha());
+        Assert.assertEquals(entity.getConcepto(), cu.getConcepto());
+        Assert.assertEquals(entity.getNombreEstudiante(), cu.getNombreEstudiante());
+        Assert.assertEquals(entity.getValor(), cu.getValor());
     }
 
     /**
@@ -86,6 +88,9 @@ public class CuentaDeCobroPersistenceTest {
         Assert.assertEquals(cu.getContratista(), esta.getContratista());
         Assert.assertEquals(cu.getNumeroCuentaDeCobro(), esta.getNumeroCuentaDeCobro());
         Assert.assertEquals(cu.getFecha(), esta.getFecha());
+        Assert.assertEquals(esta.getConcepto(), cu.getConcepto());
+        Assert.assertEquals(esta.getNombreEstudiante(), cu.getNombreEstudiante());
+        Assert.assertEquals(esta.getValor(), cu.getValor());
     }
 
     /**
@@ -115,16 +120,25 @@ public class CuentaDeCobroPersistenceTest {
                 Assert.assertEquals(esta.getContratista(), c1.getContratista());
                 Assert.assertEquals(esta.getNumeroCuentaDeCobro(), c1.getNumeroCuentaDeCobro());
                 Assert.assertEquals(esta.getFecha(), c1.getFecha());
+                Assert.assertEquals(esta.getConcepto(), c1.getConcepto());
+                Assert.assertEquals(esta.getNombreEstudiante(), c1.getNombreEstudiante());
+                Assert.assertEquals(esta.getValor(), c1.getValor());
             }
             else if (esta.getId().equals(c2.getId())) {
                 Assert.assertEquals(esta.getContratista(), c2.getContratista());
                 Assert.assertEquals(esta.getNumeroCuentaDeCobro(), c2.getNumeroCuentaDeCobro());
                 Assert.assertEquals(esta.getFecha(), c2.getFecha());
+                Assert.assertEquals(esta.getConcepto(), c2.getConcepto());
+                Assert.assertEquals(esta.getNombreEstudiante(), c2.getNombreEstudiante());
+                Assert.assertEquals(esta.getValor(), c2.getValor());
             }
             else if (esta.getId().equals(c3.getId())) {
                 Assert.assertEquals(esta.getContratista(), c3.getContratista());
                 Assert.assertEquals(esta.getNumeroCuentaDeCobro(), c3.getNumeroCuentaDeCobro());
                 Assert.assertEquals(esta.getFecha(), c3.getFecha());
+                Assert.assertEquals(esta.getConcepto(), c3.getConcepto());
+                Assert.assertEquals(esta.getNombreEstudiante(), c3.getNombreEstudiante());
+                Assert.assertEquals(esta.getValor(), c3.getValor());
             }
         }
     }
@@ -152,6 +166,9 @@ public class CuentaDeCobroPersistenceTest {
         Assert.assertEquals(cn.getContratista(), cn2.getContratista());
         Assert.assertEquals(cn.getFecha(), cn2.getFecha());
         Assert.assertEquals(cn.getNumeroCuentaDeCobro(), cn2.getNumeroCuentaDeCobro());
+        Assert.assertEquals(cn.getConcepto(), cn2.getConcepto());
+        Assert.assertEquals(cn.getNombreEstudiante(), cn2.getNombreEstudiante());
+        Assert.assertEquals(cn.getValor(), cn2.getValor());
     }
     
     /**
