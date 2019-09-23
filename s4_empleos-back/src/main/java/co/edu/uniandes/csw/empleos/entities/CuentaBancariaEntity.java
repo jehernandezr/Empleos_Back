@@ -6,60 +6,84 @@
  */
 package co.edu.uniandes.csw.empleos.entities;
 
+import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
+import co.edu.uniandes.csw.empleos.podam.NumeroStringStrategy;
+import co.edu.uniandes.csw.empleos.podam.TipoCuentaStrategy;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-
+import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
  * @author je.hernandezr
  */
 @Entity
-public class CuentaBancariaEntity extends BaseEntity{
+public class CuentaBancariaEntity extends BaseEntity {
 
-    
-    private int numeroCuenta;
-    
-    private String fecha;
-   
-    
-    
-    public CuentaBancariaEntity()
-    {
-        
+    private final static int CUENTA_AHORROS = 2;
+    private final static int CUENTA_CORRIENTE = 3;
+
+    @PodamStrategyValue(NumeroStringStrategy.class)
+    private String numeroCuenta;
+
+    private String nombreBanco;
+
+    @PodamStrategyValue(TipoCuentaStrategy.class)
+    private int tipoCuenta;
+
+    public CuentaBancariaEntity() {
+        //Constructor vacío para evitar fallos en compilacion. Se asignan valores a los parámetros a través de los metodos set
     }
-    
-  public CuentaBancariaEntity(int pNumeroCuenta, String pFecha)
-  {
-      numeroCuenta=pNumeroCuenta;
-      fecha=pFecha;
-  }
-   
+
     /**
      * @return the numeroCuenta
      */
-    public int getNumeroCuenta() {
+    public String getNumeroCuenta() {
         return numeroCuenta;
     }
 
     /**
      * @param numeroCuenta the numeroCuenta to set
      */
-    public void setNumeroCuenta(int numeroCuenta) {
+    public void setNumeroCuenta(String numeroCuenta) {
         this.numeroCuenta = numeroCuenta;
     }
 
     /**
-     * @return the fecha
+     * @return the tipoCuenta
      */
-    public String getFecha() {
-        return fecha;
+    public int getTipoCuenta() {
+        return tipoCuenta;
     }
 
     /**
-     * @param fecha the fecha to set
+     * @param pTipoCuenta the tipoCuenta to set
      */
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
+    public void setTipoCuenta(String pTipoCuenta) {
+
+        if (pTipoCuenta != null) {
+            if (pTipoCuenta.equalsIgnoreCase("Ahorros")) {
+                tipoCuenta = CUENTA_AHORROS;
+            } else if (pTipoCuenta.equalsIgnoreCase("Corriente")) {
+                tipoCuenta = CUENTA_CORRIENTE;
+            } else {
+                tipoCuenta = 0;
+            }
+
+        }
+
+    }
+
+    /**
+     * @return the nombreBanco
+     */
+    public String getNombreBanco() {
+        return nombreBanco;
+    }
+
+    /**
+     * @param nombreBanco the nombreBanco to set
+     */
+    public void setNombreBanco(String nombreBanco) {
+        this.nombreBanco = nombreBanco;
     }
 
 }

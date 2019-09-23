@@ -16,16 +16,14 @@ import javax.persistence.Entity;
 public class TarjetaDeCreditoEntity extends BaseEntity implements Serializable {
     
     private String numero;
+    private String cvc;
+    private String fecha;
     
     public TarjetaDeCreditoEntity()
     {
-        
+        //Constructor vacío para evitar fallos en compilacion. Se asignan valores a los parámetros a través de los metodos set
     }
-    
-    public TarjetaDeCreditoEntity(String pNumero)
-    {
-        this.numero = pNumero;
-    }
+   
     
     /**
      * @Return el nnmero de la tarjeta de credito.
@@ -41,6 +39,34 @@ public class TarjetaDeCreditoEntity extends BaseEntity implements Serializable {
        numero = pNumero;
    }
    
+   /**
+    * @Return el cvc de la tarjeta de credito.
+    */
+   public String getCVC(){
+       return cvc;
+   }
+   
+   /**
+    * @param pCVC es el cvc a establecer.
+    */
+   public void setCVC(String pCVC){
+       cvc = pCVC;
+   }
+   /**
+    * @return retorna la fecha de la tarjeta de crédito.
+    */
+   public String getFecha()
+   {
+       return fecha;
+   }
+   /**
+    * @param pDia es el día de vencimiento de la tarjeta.
+    * @param pAño es el año de vencimiento de la tarjeta.
+    */
+   public void setFecha(String pFecha)
+   {
+       fecha = pFecha;
+   }
    
     
     
