@@ -111,10 +111,42 @@ public class CuentaDeCobroLogicTest {
     @Test
     public void createCuentaDeCobroTest() throws BusinessLogicException {
         CuentaDeCobroEntity newEntity = factory.manufacturePojo(CuentaDeCobroEntity.class);
-        newEntity.setValor(1);
+        newEntity.setValor(8);
+        //Comprueba que la cuenta de cobro creada por podam no sea nula ni sus atributos
+        Assert.assertNotNull(newEntity);
+        Assert.assertNotNull(newEntity.getConcepto());
+        Assert.assertNotNull(newEntity.getContratista());
+        Assert.assertNotNull(newEntity.getFecha());
+        Assert.assertNotNull(newEntity.getNombreEstudiante());
+        Assert.assertNotNull(newEntity.getNumeroCuentaDeCobro());
+        Assert.assertNotNull(newEntity.getValor());
+        //Comprueba que los atributos de la cuenta de cobro creada por podam no sean invalidos
+        Assert.assertFalse("La cuenta de cobro creada tiene un contratista invalido", newEntity.getContratista().equals(" ")||newEntity.getContratista()==null);
+        Assert.assertFalse("La cuenta de cobro creada tiene un concepto invalido", newEntity.getConcepto().equals(" ")||newEntity.getConcepto()==null);
+        Assert.assertFalse("La cuenta de cobro creada tiene una fecha invalida", newEntity.getFecha()==null);
+        Assert.assertFalse("La cuenta de cobro creada tiene un nombre de estudiante invalido", newEntity.getNombreEstudiante().equals(" ")||newEntity.getNombreEstudiante()==null);
+        Assert.assertFalse("La cuenta de cobro creada tiene un número invalido", newEntity.getNumeroCuentaDeCobro()<=0);
+        Assert.assertFalse("La cuenta de cobro creada tiene un valor invalido", newEntity.getValor()<=0);
+       
         CuentaDeCobroEntity result = logic.createCuentaDeCobro(newEntity);
+        //Comprueba que la cuenta de cobro retornada del create no sea nula ni sus atributos
         Assert.assertNotNull(result);
+        Assert.assertNotNull(result.getConcepto());
+        Assert.assertNotNull(result.getContratista());
+        Assert.assertNotNull(result.getFecha());
+        Assert.assertNotNull(result.getNombreEstudiante());
+        Assert.assertNotNull(result.getNumeroCuentaDeCobro());
+        Assert.assertNotNull(result.getValor());
+        //Comprueba que los atributos de la cuenta de cobro retornada del create no sean invalidos
+        Assert.assertFalse("La cuenta de cobro creada tiene un contratista invalido", result.getContratista().equals(" ")||result.getContratista()==null);
+        Assert.assertFalse("La cuenta de cobro creada tiene un concepto invalido", result.getConcepto().equals(" ")||result.getConcepto()==null);
+        Assert.assertFalse("La cuenta de cobro creada tiene una fecha invalida", result.getFecha()==null);
+        Assert.assertFalse("La cuenta de cobro creada tiene un nombre de estudiante invalido", result.getNombreEstudiante().equals(" ")||result.getNombreEstudiante()==null);
+        Assert.assertFalse("La cuenta de cobro creada tiene un número invalido", result.getNumeroCuentaDeCobro()<=0);
+        Assert.assertFalse("La cuenta de cobro creada tiene un valor invalido", result.getValor()<=0);
+        
         CuentaDeCobroEntity entity = em.find(CuentaDeCobroEntity.class, result.getId());
+        //Comprueba que los valores sean iguales despues de crearla
         Assert.assertEquals(newEntity.getId(), entity.getId());
         Assert.assertEquals(newEntity.getConcepto(), entity.getConcepto());
         Assert.assertEquals(newEntity.getContratista(), entity.getContratista());
