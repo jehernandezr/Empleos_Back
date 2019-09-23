@@ -72,4 +72,10 @@ public class EstudiantePersistence {
         TypedQuery query = em.createQuery("select u from EstudianteEntity u", EstudianteEntity.class);
         return query.getResultList();
     }
+     
+     
+      public EstudianteEntity find(Long id) {
+        LOGGER.log(Level.INFO, "Obteniendo estudiante");
+        return em.find(EstudianteEntity.class, id);
+    }
 }
