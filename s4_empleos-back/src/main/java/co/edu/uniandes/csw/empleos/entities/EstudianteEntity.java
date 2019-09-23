@@ -1,8 +1,11 @@
 package co.edu.uniandes.csw.empleos.entities;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import uk.co.jemos.podam.common.PodamExclude;
 
@@ -16,17 +19,17 @@ public class EstudianteEntity extends BaseEntity implements Serializable  {
     // Atributo que representa el nombre del estudiante
     private String nombre;
     // Atributo que representa el ID del medio de pago del estudiante
-    private long idMedioDepago;
+    private Long idMedioDepago;
     // Atributo que representa la carrera que el estudiante cursa
     private String carrera;
     // Atributo que representa el correo del estudiante
     private String correo;
     // Atributo que representa la calificación promedio del estudiante en lso trabajos que ha hecho
-    private double calificacionPromedio;
+    private Double calificacionPromedio;
     // Atributo que representa el horario de trabajo disponible del estudiante
     private String horarioDeTrabajo;
     // Atributo que representa el semestre que cursa el estudiante
-    private int semestre;
+    private Integer semestre;
     
     // Atributo que representa las ofertas a las que ha aplicado el estudiante 
     @PodamExclude
@@ -34,19 +37,16 @@ public class EstudianteEntity extends BaseEntity implements Serializable  {
        
         fetch = javax.persistence.FetchType.LAZY
     )
-    Collection<OfertaEntity> ofertas;
+    private List<OfertaEntity> ofertas;
 
-    @PodamExclude
     // Atributo que representa las calificaciones que tiene el estudiante 
-    @javax.persistence.OneToMany(
-         mappedBy = "estudiante",
-        fetch = javax.persistence.FetchType.LAZY
-    )
-    Collection<CalificacionEntity> calificaciones;
+    @PodamExclude
+    @OneToMany(mappedBy = "estudiante")
+    private List<CalificacionEntity> calificaciones = new ArrayList<CalificacionEntity>();
 
     // Atributo que representa la cuenta bancaria que tiene el estudiante
     @PodamExclude
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private CuentaBancariaEntity cuentaBancaria; 
 
     // Constructor vacío
@@ -155,28 +155,28 @@ public class EstudianteEntity extends BaseEntity implements Serializable  {
     /**
      * @return the ofertas
      */
-    public Collection<OfertaEntity> getOfertas() {
+    public List<OfertaEntity> getOfertas() {
         return ofertas;
     }
 
     /**
      * @param ofertas the ofertas to set
      */
-    public void setOfertas(Collection<OfertaEntity> ofertas) {
+    public void setOfertas(List<OfertaEntity> ofertas) {
         this.ofertas = ofertas;
     }
 
     /**
      * @return the calificaciones
      */
-    public Collection<CalificacionEntity> getCalificaciones() {
+    public List<CalificacionEntity> getCalificaciones() {
         return calificaciones;
     }
 
     /**
      * @param calificaciones the calificaciones to set
      */
-    public void setCalificaciones(Collection<CalificacionEntity> calificaciones) {
+    public void setCalificaciones(List<CalificacionEntity> calificaciones) {
         this.calificaciones = calificaciones;
     }
 

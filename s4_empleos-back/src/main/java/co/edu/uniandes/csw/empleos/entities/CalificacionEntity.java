@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.empleos.entities;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import uk.co.jemos.podam.common.PodamExclude;
 
@@ -29,11 +30,7 @@ public class CalificacionEntity extends BaseEntity{
 
     
     @PodamExclude
-    @ManyToOne(
-        optional = false, cascade = CascadeType.PERSIST,
-        fetch = javax.persistence.FetchType.LAZY
-    )
-    
+    @ManyToOne(fetch = FetchType.LAZY)
     private EstudianteEntity estudiante;
     
      /**
@@ -65,12 +62,12 @@ public class CalificacionEntity extends BaseEntity{
     /**
      * Metodo que retorna al estudiante correspondiente
      * @return Estudiante al que le pertenece la calificai
-     *
+     */
     public EstudianteEntity getEstudiante(){
         return estudiante;
     }
     
-    */
+   
     
     /**
      * Metodo que permite modificar el comentario asignado a la nota.
@@ -91,9 +88,9 @@ public class CalificacionEntity extends BaseEntity{
     /**
      * Metodo que permite modicar el estudainte al cual se le asigno la calificación
      * @param e  Estudiante a asiganr la calificacion
-     *
+     */
     public void setEstudiante(EstudianteEntity e){
         this.estudiante = e;
     }
-    */
+    
 }
