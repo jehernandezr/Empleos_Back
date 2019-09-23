@@ -6,7 +6,6 @@
  */
 package co.edu.uniandes.csw.empleos.entities;
 
-import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.empleos.podam.NumeroStringStrategy;
 import co.edu.uniandes.csw.empleos.podam.TipoCuentaStrategy;
 import javax.persistence.Entity;
@@ -18,6 +17,7 @@ import uk.co.jemos.podam.common.PodamStrategyValue;
 /**
  * @author je.hernandezr
  */
+
 @Entity
 public class CuentaBancariaEntity extends BaseEntity {
 

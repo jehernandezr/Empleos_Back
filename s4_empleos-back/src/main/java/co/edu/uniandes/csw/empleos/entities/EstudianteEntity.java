@@ -11,11 +11,12 @@ import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  * Esta clase modela la entidad Estudiante.
+ *
  * @author David Dominguez
  */
 @Entity
-public class EstudianteEntity extends BaseEntity implements Serializable  {
-    
+public class EstudianteEntity extends BaseEntity implements Serializable {
+
     // Atributo que representa el nombre del estudiante
     private String nombre;
     // Atributo que representa el ID del medio de pago del estudiante
@@ -29,28 +30,32 @@ public class EstudianteEntity extends BaseEntity implements Serializable  {
     // Atributo que representa el horario de trabajo disponible del estudiante
     private String horarioDeTrabajo;
     // Atributo que representa el semestre que cursa el estudiante
+
     private Integer semestre;
-    
+
     // Atributo que representa las ofertas a las que ha aplicado el estudiante 
     @PodamExclude
     @javax.persistence.ManyToMany(
-       
-        fetch = javax.persistence.FetchType.LAZY
+            fetch = javax.persistence.FetchType.LAZY
     )
     private List<OfertaEntity> ofertas;
 
     // Atributo que representa las calificaciones que tiene el estudiante 
+
     @PodamExclude
     @OneToMany(mappedBy = "estudiante")
     private List<CalificacionEntity> calificaciones = new ArrayList<CalificacionEntity>();
 
+
     // Atributo que representa la cuenta bancaria que tiene el estudiante
     @PodamExclude
     @OneToOne(fetch = FetchType.LAZY)
+
     private CuentaBancariaEntity cuentaBancaria; 
 
+
     // Constructor vacío
-    public EstudianteEntity () {
+    public EstudianteEntity() {
         //Constructor vacío para evitar fallos en compilacion. Se asignan valores a los parámetros a través de los metodos set
     }
 
@@ -62,7 +67,7 @@ public class EstudianteEntity extends BaseEntity implements Serializable  {
     }
 
     /**
-     * @param name the name to set
+     * @param nombre
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
@@ -193,5 +198,5 @@ public class EstudianteEntity extends BaseEntity implements Serializable  {
     public void setCuentaBancaria(CuentaBancariaEntity cuentaBancaria) {
         this.cuentaBancaria = cuentaBancaria;
     }
-    
+
 }
