@@ -524,7 +524,7 @@ public class CuentaBancariaLogicTest {
     public void deleteCuentabancariaTest() throws BusinessLogicException {
 
         CuentaBancariaEntity entity = data.get(0);
-        EstudianteEntity est = estudianteLogic.readEstudiante(cuentaBancariaLogic.getCuentaBancaria(entity.getId()).getEstudiante().getId());
+        EstudianteEntity est = estudianteLogic.getEstudiante(cuentaBancariaLogic.getCuentaBancaria(entity.getId()).getEstudiante().getId());
 
         estudianteLogic.deleteEstudiante(est.getId());
         cuentaBancariaLogic.delete(entity.getId());
