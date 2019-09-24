@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.empleos.dtos;
 
+import co.edu.uniandes.csw.empleos.entities.CalificacionEntity;
 import java.io.Serializable;
 
 /**
@@ -13,7 +14,7 @@ import java.io.Serializable;
  */
 public class CalificacionDTO implements Serializable{
     
-    private Integer id;
+    private Long id;
     
     private Double nota;
     
@@ -24,17 +25,47 @@ public class CalificacionDTO implements Serializable{
         //Constructor vacio
     }
     
+        /**
+     * Constructor a partir de la entidad
+     *
+     * @param calificacionEntity La entidad del libro
+     */
+    public CalificacionDTO(CalificacionEntity tarjetaEntity) {
+        
+        if (tarjetaEntity != null) {
+            this.id = tarjetaEntity.getId();
+            this.comentario = tarjetaEntity.getComentario();
+            this.nota = tarjetaEntity.getNota();
+       }
+    }
+    
+    /**
+     * Método para transformar el DTO a una entidad.
+     *
+     * @return La entidad del libro asociado.
+     */
+    public CalificacionEntity toEntity() {
+        
+        CalificacionEntity calificacionEntity = new CalificacionEntity();
+        calificacionEntity.setId(this.id);
+        calificacionEntity.setNota(this.getNota());
+        calificacionEntity.setComentario(this.getComentario());
+        
+        
+        return calificacionEntity;
+    }
+    
     /**
      * @return the id
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -65,6 +96,7 @@ public class CalificacionDTO implements Serializable{
     public void setComentario(String comentario) {
         this.comentario = comentario;
     }
+
     
     
 }

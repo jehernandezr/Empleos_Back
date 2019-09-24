@@ -56,3 +56,4 @@ public class DateStrategy implements AttributeStrategy<Date> {
         return c.getTime();
     }
 }
+
