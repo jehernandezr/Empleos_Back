@@ -7,7 +7,7 @@ package co.edu.uniandes.csw.empleos.resources;
 
 import co.edu.uniandes.csw.empleos.dtos.CalificacionDTO;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
-import co.edu.uniandes.csw.empleos.logic.CalificacionLogic;
+import co.edu.uniandes.csw.empleos.ejb.CalificacionLogic;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
