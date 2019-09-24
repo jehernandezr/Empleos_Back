@@ -4,9 +4,11 @@ package co.edu.uniandes.csw.empleos.entities;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+
+
+
+
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
@@ -104,6 +106,13 @@ public class OfertaEntity extends BaseEntity{
      */
     private String rutaImagen;
     
+    // Atributo que representa las ofertas a las que ha aplicado el estudiante 
+    @PodamExclude
+    @javax.persistence.ManyToMany(
+        mappedBy = "ofertas",
+        fetch = javax.persistence.FetchType.LAZY
+    )
+    ArrayList<EstudianteEntity> estudiantes;
     
      /**
      * Constructor de la oferta

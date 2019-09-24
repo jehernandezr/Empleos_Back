@@ -7,7 +7,9 @@
 package co.edu.uniandes.csw.empleos.test.persistence;
 
 import co.edu.uniandes.csw.empleos.entities.CuentaBancariaEntity;
-import co.edu.uniandes.csw.empleos.persistence.CuentaBancariaPersistance;
+import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
+import co.edu.uniandes.csw.empleos.persistence.CuentaBancariaPersistence;
+import co.edu.uniandes.csw.empleos.persistence.EstudiantePersistence;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -31,10 +33,13 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author Estudiante
  */
 @RunWith(Arquillian.class)
-public class CuentaBancariaPersistanceTest {
+public class CuentaBancariaPersistenceTest {
 
     @Inject
-    private CuentaBancariaPersistance cuentaBancariaPersistance;
+    private CuentaBancariaPersistence cuentaBancariaPersistance;
+
+    @Inject
+    private EstudiantePersistence estudiantePersistance;
 
     @PersistenceContext
     private EntityManager em;
@@ -53,20 +58,9 @@ public class CuentaBancariaPersistanceTest {
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(CuentaBancariaEntity.class.getPackage())
-                .addPackage(CuentaBancariaPersistance.class.getPackage())
+                .addPackage(CuentaBancariaPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
-    }
-
-    @Test
-    public void createTest() {
-        PodamFactory factory = new PodamFactoryImpl();
-        CuentaBancariaEntity entity = factory.manufacturePojo(CuentaBancariaEntity.class);
-        CuentaBancariaEntity result = cuentaBancariaPersistance.create(entity);
-        Assert.assertNotNull(result);
-
-        CuentaBancariaEntity foundEntity = em.find(CuentaBancariaEntity.class, result.getId());
-        Assert.assertEquals(entity.getNumeroCuenta(), foundEntity.getNumeroCuenta());
     }
 
     /**
@@ -90,6 +84,7 @@ public class CuentaBancariaPersistanceTest {
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
+        em.createQuery("delete from EstudianteEntity").executeUpdate();
         em.createQuery("delete from CuentaBancariaEntity").executeUpdate();
 
     }
@@ -102,7 +97,11 @@ public class CuentaBancariaPersistanceTest {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
             CuentaBancariaEntity entity = factory.manufacturePojo(CuentaBancariaEntity.class);
+            EstudianteEntity estudianteEntity = factory.manufacturePojo(EstudianteEntity.class);
+
+            estudianteEntity.setCuentaBancaria(entity);
             em.persist(entity);
+            em.persist(estudianteEntity);
             data.add(entity);
         }
     }
@@ -115,9 +114,10 @@ public class CuentaBancariaPersistanceTest {
     public void createCuentaBancariaTest() {
         PodamFactory factory = new PodamFactoryImpl();
         CuentaBancariaEntity newEntity = factory.manufacturePojo(CuentaBancariaEntity.class);
-
+        EstudianteEntity newEstudiante = factory.manufacturePojo(EstudianteEntity.class);
+        newEstudiante = estudiantePersistance.create(newEstudiante);
+        newEntity.setEstudiante(newEstudiante);
         CuentaBancariaEntity result = cuentaBancariaPersistance.create(newEntity);
-
         Assert.assertNotNull(result);
 
         CuentaBancariaEntity entity = em.find(CuentaBancariaEntity.class, result.getId());
@@ -165,6 +165,11 @@ public class CuentaBancariaPersistanceTest {
     @Test
     public void deleteCuentaBancariaTest() {
         CuentaBancariaEntity entity = data.get(0);
+
+        CuentaBancariaEntity x = cuentaBancariaPersistance.find(entity.getId());
+
+        estudiantePersistance.delete(x.getEstudiante().getId());
+
         cuentaBancariaPersistance.delete(entity.getId());
         CuentaBancariaEntity deleted = em.find(CuentaBancariaEntity.class, entity.getId());
         Assert.assertNull(deleted);
