@@ -6,8 +6,12 @@
 package co.edu.uniandes.csw.empleos.resources;
 
 import co.edu.uniandes.csw.empleos.dtos.CalificacionDTO;
-import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.empleos.ejb.CalificacionLogic;
+import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
+<<<<<<< HEAD
+import co.edu.uniandes.csw.empleos.ejb.CalificacionLogic;
+=======
+>>>>>>> a0b440650815e3226b27a3bb9f6b5fa8a0996b1f
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
