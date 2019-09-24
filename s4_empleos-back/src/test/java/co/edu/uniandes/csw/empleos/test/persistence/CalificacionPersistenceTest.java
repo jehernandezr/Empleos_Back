@@ -6,6 +6,9 @@
 package co.edu.uniandes.csw.empleos.test.persistence;
 
 import co.edu.uniandes.csw.empleos.entities.CalificacionEntity;
+import co.edu.uniandes.csw.empleos.entities.CuentaBancariaEntity;
+import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
+import co.edu.uniandes.csw.empleos.entities.OfertaEntity;
 import co.edu.uniandes.csw.empleos.persistence.CalificacionPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +55,9 @@ public class CalificacionPersistenceTest {
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addClass(CalificacionEntity.class)
+                 .addClass(EstudianteEntity.class)
+                 .addClass(CuentaBancariaEntity.class)
+                .addClass(OfertaEntity.class)
                 .addClass(CalificacionPersistence.class)
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
@@ -122,7 +128,7 @@ public class CalificacionPersistenceTest {
          * Pueba para crear la nota y enrlacontrarla
          */
         Assert.assertEquals(calificacion.getNota(), entity.getNota());
-//        Assert.assertEquals(calificacion.getEstudiante(),entity.getEstudiante());
+        //Assert.assertEquals(calificacion.getEstudiante(),entity.getEstudiante());
  
     }
     
