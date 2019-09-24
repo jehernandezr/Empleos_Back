@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class EstudianteDetailDTO extends EstudianteDTO implements Serializable{
     
-    private List<CalificacionDTO> califics;
+    private List<CalificacionDTO> calificacioness;
     
     public EstudianteDetailDTO()
     {
@@ -24,15 +24,15 @@ public class EstudianteDetailDTO extends EstudianteDTO implements Serializable{
     /**
      * @return the califics
      */
-    public List<CalificacionDTO> getCalifics() {
-        return califics;
+    public List<CalificacionDTO> getCalificaciones() {
+        return calificacioness;
     }
 
     /**
      * @param califics the califics to set
      */
-    public void setCalifics(List<CalificacionDTO> califics) {
-        this.califics = califics;
+    public void setCalificaciones(List<CalificacionDTO> calificacioness) {
+        this.calificacioness = calificacioness;
     }
     
 }

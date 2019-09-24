@@ -1,34 +1,18 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package co.edu.uniandes.csw.empleos.dtos;
 
-package co.edu.uniandes.csw.empleos.entities;
-
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-
-
-
-
-import uk.co.jemos.podam.common.PodamExclude;
+import co.edu.uniandes.csw.empleos.entities.OfertaEntity;
+import java.io.Serializable;
 
 /**
- *Clase que representa una oferta para poder ser guardado en la base de datos.
- * @author je.berdugo10
+ *
+ * @oferta Estudiante
  */
-@Entity
-public class OfertaEntity extends BaseEntity{
-    
-    /**
-     * Contratista que creo la oferta.
-     */
-    @PodamExclude
-     @ManyToOne()
-    private ContratistaEntity contratista;
-
-   
-     
-
-    
+public class OfertaDTO implements Serializable {
     
     /**
      * Variable que representa el tipo de oferta (Normal o Express).
@@ -106,256 +90,255 @@ public class OfertaEntity extends BaseEntity{
      */
     private String rutaImagen;
     
-    // Atributo que representa las ofertas a las que ha aplicado el estudiante 
-    @PodamExclude
-    @javax.persistence.ManyToMany(
-        mappedBy = "ofertas",
-        fetch = javax.persistence.FetchType.LAZY
-    )
-    ArrayList<EstudianteEntity> estudiantes;
+    public OfertaDTO(){
+        
+    }
+
+  
     
      /**
-     * Constructor de la oferta
+     * Convierte un objeto OfertaDTO a OfertaEntity.
+     *
+     * @return Nueva objeto OfertaEntity.
+     *
      */
-    public OfertaEntity(){
-        
+    public OfertaEntity toEntity() {
+        OfertaEntity ofertaEntity = new OfertaEntity();
+        ofertaEntity.setId(this.getId());
+        ofertaEntity.setNombre(this.getNombre());
+        ofertaEntity.setCategoria(this.getCategoria());
+        ofertaEntity.setDescripcion(this.descripcion);
+        ofertaEntity.setEstaAbierta(this.isEstaAbierta());
+        ofertaEntity.setHorario(this.getHorario());
+        ofertaEntity.setHorasDeTrabajo(this.getHorasDeTrabajo());
+        ofertaEntity.setNumeroDeVacantes(this.getNumeroDeVacantes());
+        ofertaEntity.setPagoPorHora(this.getPagoPorHora());
+        ofertaEntity.setPorcentajePagoAdicional(this.getPorcentajePagoAdicional());
+        ofertaEntity.setRequisitos(this.getRequisitos());
+        ofertaEntity.setRutaImagen(this.getRutaImagen());
+        ofertaEntity.setTiempoMaximoAplicacion(this.getTiempoMaximoAplicacion());
+        ofertaEntity.setTipoOferta(this.getTipoOferta());
+        return ofertaEntity;
+    }
+    
+      /**
+     * Crea un objeto AuthorDTO a partir de un objeto AuthorEntity.
+     *
+     * @param ofertaEntity Entidad AuthorEntity desde la cual se va a crear el
+     * nuevo objeto.
+     *
+     */
+    public OfertaDTO(OfertaEntity ofertaEntity) {
+        if (ofertaEntity != null) {
+            this.id = ofertaEntity.getId();
+            this.nombre = ofertaEntity.getNombre();
+            this.categoria = ofertaEntity.getCategoria();
+            this.descripcion = ofertaEntity.getDescripcion();
+            this.estaAbierta = ofertaEntity.getEstaAbierta();
+            this.horario = ofertaEntity.getHorario();
+            this.horasDeTrabajo = ofertaEntity.getHorasDeTrabajo();
+            this.numeroDeVacantes = ofertaEntity.getNumeroDeVacantes();
+            this.pagoPorHora = ofertaEntity.getPagoPorHora();
+            this.porcentajePagoAdicional = ofertaEntity.getPorcentajePagoAdicional();
+            this.requisitos = ofertaEntity.getRequisitos();
+            this.rutaImagen = ofertaEntity.getRutaImagen();
+            this.tiempoMaximoAplicacion = ofertaEntity.getTiempoMaximoAplicacion();
+            this.tipoOferta = ofertaEntity.getTipoOferta();
+             
+        }
+    }
+
+    private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
     
     /**
-     * Devuelve el tipoDeOferta del contratista.
-     * @return 1 si es NORMAL o 2 si es EXPRESS
+     * @return the tipoOferta
      */
     public int getTipoOferta() {
         return tipoOferta;
     }
 
     /**
-     * Actualiza lel tipo de la oferta.
-     * @param tipoOferta ruta de la imagen a modificar
+     * @param tipoOferta the tipoOferta to set
      */
     public void setTipoOferta(int tipoOferta) {
         this.tipoOferta = tipoOferta;
     }
-     public ContratistaEntity getContratista() {
-        return contratista;
-    }
-
-    public void setContratista(ContratistaEntity contratista) {
-        this.contratista = contratista;
-    }
-    /*
-    public List<EstudianteEntity> getAspirantes() {
-        return aspirantes;
-    }
-
-    public void setAspirantes(List<EstudianteEntity> aspirantes) {
-        this.aspirantes = aspirantes;
-    }
-
-    public List<TrabajoEntity> getTrabajos() {
-        return trabajos;
-    }
-
-    public void setTrabajos(List<TrabajoEntity> trabajos) {
-        this.trabajos = trabajos;
-    }
-    
-   
-     */
-    
 
     /**
-     * Devuelve numero de vacantes disponibles en el momento.
-     * @return el numero de vanates disponibles.
+     * @return the numeroDeVacantes
      */
     public int getNumeroDeVacantes() {
         return numeroDeVacantes;
     }
 
     /**
-     * Actualiza el numero de vacantes de la oferta.
-     * @param rutaImagen ruta de la imagen a modificar
+     * @param numeroDeVacantes the numeroDeVacantes to set
      */
     public void setNumeroDeVacantes(int numeroDeVacantes) {
         this.numeroDeVacantes = numeroDeVacantes;
     }
 
     /**
-     * Devuelve el pago por hora en pesos de la oferta.
-     * @return el pago por hora de la oferta.
+     * @return the pagoPorHora
      */
     public Double getPagoPorHora() {
         return pagoPorHora;
     }
 
     /**
-     * Actualiza el pago por hora de la oferta.
-     * @param rutaImagen ruta de la imagen a modificar
+     * @param pagoPorHora the pagoPorHora to set
      */
     public void setPagoPorHora(Double pagoPorHora) {
         this.pagoPorHora = pagoPorHora;
     }
 
     /**
-     * Devuelve el nombre de la oferta.
-     * @return true si el contratista es externo y false si es interno.
+     * @return the nombre
      */
     public String getNombre() {
         return nombre;
     }
 
     /**
-     * Actualiza el nombre de la oferta.
-     * @param nombre ruta de la imagen a modificar
+     * @param nombre the nombre to set
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
     /**
-     * Devuelve la descripcion de la oferta.
-     * @return la descripcion de la oferta.
+     * @return the descripcion
      */
     public String getDescripcion() {
         return descripcion;
     }
 
     /**
-     * Actualiza la descripcion de la oferta.
-     * @param descripcion ruta de la imagen a modificar
+     * @param descripcion the descripcion to set
      */
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
     /**
-     * Devuelve la categoria de la oferta.
-     * @return la categoria de la oferta.
+     * @return the categoria
      */
     public String getCategoria() {
         return categoria;
     }
 
     /**
-     * Actualiza la categoria de la oferta.
-     * @param categoria ruta de la imagen a modificar
+     * @param categoria the categoria to set
      */
     public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
 
     /**
-     * Devuelve el tiempo maximo de aplicacion de una oferta Express.
-     * @return el tiempo maximo de aplicacion de una oferta Express.
+     * @return the tiempoMaximoAplicacion
      */
     public int getTiempoMaximoAplicacion() {
         return tiempoMaximoAplicacion;
     }
 
     /**
-     * Actualiza el tiempo maximo de aplicacion de una oferta Express.
-     * @param tiempoMaximoAplicacion el tiempo maximo de aplicacion de una oferta Express.
+     * @param tiempoMaximoAplicacion the tiempoMaximoAplicacion to set
      */
     public void setTiempoMaximoAplicacion(int tiempoMaximoAplicacion) {
         this.tiempoMaximoAplicacion = tiempoMaximoAplicacion;
     }
 
     /**
-     * Devuelve el porcentaje de pago adicional de una oferta Express.
-     * @return el tiempo maximo de aplicacion de una oferta Express.
+     * @return the porcentajePagoAdicional
      */
     public int getPorcentajePagoAdicional() {
         return porcentajePagoAdicional;
     }
 
     /**
-     * Actualiza el porcentaje de pago adicional de una oferta Express.
-     * @param porcentajePagoAdicional el porcentaje de pago adicional de una oferta Express.
+     * @param porcentajePagoAdicional the porcentajePagoAdicional to set
      */
     public void setPorcentajePagoAdicional(int porcentajePagoAdicional) {
         this.porcentajePagoAdicional = porcentajePagoAdicional;
     }
 
-     /**
-     * Devuelve el estado de una oferta.
-     * @return estado de la oferta.
+    /**
+     * @return the estaAbierta
      */
-    public boolean getEstaAbierta() {
+    public boolean isEstaAbierta() {
         return estaAbierta;
     }
-    
-   /**
-     * Actualiza el estado de una oferta.
-     * @param estaAbierta estado a modificar
+
+    /**
+     * @param estaAbierta the estaAbierta to set
      */
     public void setEstaAbierta(boolean estaAbierta) {
         this.estaAbierta = estaAbierta;
     }
 
     /**
-     * Devuelve los requisitos de una oferta.
-     * @return requisitos de la oferta.
+     * @return the requisitos
      */
     public String getRequisitos() {
         return requisitos;
     }
 
     /**
-     * Actualiza los requisitos de una oferta.
-     * @param requisitos  a modificar
+     * @param requisitos the requisitos to set
      */
     public void setRequisitos(String requisitos) {
         this.requisitos = requisitos;
     }
 
     /**
-     * Devuelve el horario de una oferta.
-     * @return horario de la oferta.
+     * @return the horario
      */
     public String getHorario() {
         return horario;
     }
 
     /**
-     * Actualiza el horario de una oferta.
-     * @param horario  a modificar
+     * @param horario the horario to set
      */
     public void setHorario(String horario) {
         this.horario = horario;
     }
 
     /**
-     * Devuelve el numero de horas de trabajo de una oferta.
-     * @return estado de la oferta.
+     * @return the horasDeTrabajo
      */
     public Double getHorasDeTrabajo() {
         return horasDeTrabajo;
     }
 
     /**
-     * Actualiza las horas de trabajo de la oferta.
-     * @param horasDeTrabajo horas de trabajo a modificar
+     * @param horasDeTrabajo the horasDeTrabajo to set
      */
     public void setHorasDeTrabajo(Double horasDeTrabajo) {
         this.horasDeTrabajo = horasDeTrabajo;
     }
 
     /**
-     * Obtener la ruta de la imagen de la oferta.
-     * @return ruta de la imagen del contratista
+     * @return the rutaImagen
      */
     public String getRutaImagen() {
         return rutaImagen;
     }
 
     /**
-     * Actualiza la ruta de la imagen dela oferta.
-     * @param rutaImagen ruta de la imagen a modificar
+     * @param rutaImagen the rutaImagen to set
      */
     public void setRutaImagen(String rutaImagen) {
         this.rutaImagen = rutaImagen;
     }
-    
     
     
 }
