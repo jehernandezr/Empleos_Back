@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -32,16 +32,15 @@ import javax.ws.rs.Produces;
 @RequestScoped
 public class OfertaResource {
     
-    @Inject
-    private OfertaLogic ofertaLogic;
+   
      private static final Logger LOGGER = Logger.getLogger(OfertaResource.class.getName());
      
      @POST
-     public OfertaDTO crearOferta(OfertaDTO oferta) throws BusinessLogicException{
+     public void crearOferta(OfertaDTO oferta) throws BusinessLogicException{
         LOGGER.log(Level.INFO, "OfertaResource createOferta: input: {0}", oferta);
-        OfertaDTO ofertaDTO = new OfertaDTO(ofertaLogic.createOferta(oferta.toEntity()));
-        LOGGER.log(Level.INFO, "OfertaResource createOferta: output: {0}", ofertaDTO);
-        return ofertaDTO;
+        
+        
+        
     }
 
     /**
@@ -51,11 +50,10 @@ public class OfertaResource {
      * aplicación. Si no hay ninguno retorna una lista vacía.
      */
     @GET
-    public List<OfertaDetailDTO> getOfertas() {
-        LOGGER.info("OfertaResource getOfertas: input: void");
-        List<OfertaDetailDTO> listaOfertas = listEntity2DTO(ofertaLogic.getOfertas());
-        LOGGER.log(Level.INFO, "OfertaResource getOfertas: output: {0}", listaOfertas);
-        return listaOfertas;
+    public String getOfertas() {
+        
+        return "hola";
+        
     }
     
      /**
