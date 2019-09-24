@@ -5,7 +5,7 @@
  */
 package co.edu.uniandes.csw.empleos.resources;
 
-import co.edu.uniandes.csw.empleos.dtos.CalificacionDTO;
+import co.edu.uniandes.csw.empleos.dtos.FacturaDTO;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Consumes;
@@ -15,17 +15,18 @@ import javax.ws.rs.Produces;
 
 /**
  *
- * @author Nicolas Munar */
-@Path("calificaciones")
+ * @author Nicolas Munar
+ */
+@Path("facturas")
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
-public class CalificacionResource {
-    private static final Logger LOOGER =Logger.getLogger(CalificacionResource.class.getName());
+public class FacturaResource {
+    private static final Logger LOOGER =Logger.getLogger(FacturaResource.class.getName());
     
     @POST
-    public CalificacionDTO createCalificacion(CalificacionDTO calificacion)
+    public FacturaDTO createFactura(FacturaDTO factura)
     {
-        return calificacion;
+        return factura;
     }
 }
