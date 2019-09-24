@@ -55,8 +55,8 @@ public class CalificacionPersistenceTest {
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addClass(CalificacionEntity.class)
-                 .addClass(EstudianteEntity.class)
-                 .addClass(CuentaBancariaEntity.class)
+                .addClass(EstudianteEntity.class)
+                .addClass(CuentaBancariaEntity.class)
                 .addClass(OfertaEntity.class)
                 .addClass(CalificacionPersistence.class)
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
