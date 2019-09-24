@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -28,20 +29,22 @@ public class CuentaBancariaPersistence {
      /**
      * Busca si hay alguna cuentaBancaria con el id que se envía de argumento
      *
-     * @param id: id correspondiente al premio buscado.
+     * @param estudianteId
+     * @param cuentaId
      * @return un cuenta bancaria.
      */
-    public CuentaBancariaEntity find(Long id) {
+    public CuentaBancariaEntity find( Long cuentaId) {
+      
+        return em.find(CuentaBancariaEntity.class, cuentaId);
         
-        return em.find(CuentaBancariaEntity.class,id);
     }
-    
+  
      /**
      * Devuelve todas las cuentas Bancarias de la base de datos.
      *
      * @return una lista con todos las cuentas bancarias Entities que encuentre en la base de
-     * datos, "select u from PrizeEntity u" es como un "select * from
-     * PrizeEntity;" - "SELECT * FROM table_name" en SQL.
+     * datos, "select u from CuentaBancariaEntity u" es como un "select * from
+     * CuentaBancariaEntity;" - "SELECT * FROM table_name" en SQL.
      */
     public List<CuentaBancariaEntity> findAll() {
         
@@ -53,7 +56,7 @@ public class CuentaBancariaPersistence {
     /**
      * Método para persisitir la entidad en la base de datos.
      *
-     * @param cuentaBancaria objeto cuentaBancaria que se creará en la base de datos
+     * @param cuentaBancariaEntity
      * @return devuelve la entidad creada con un id dado por la base de datos.
      */
     public CuentaBancariaEntity create(CuentaBancariaEntity cuentaBancariaEntity) {

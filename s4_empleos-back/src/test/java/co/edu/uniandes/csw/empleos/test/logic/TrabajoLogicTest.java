@@ -2,7 +2,7 @@ package co.edu.uniandes.csw.empleos.test.logic;
 
 import co.edu.uniandes.csw.empleos.entities.TrabajoEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
-import co.edu.uniandes.csw.empleos.logic.TrabajoLogic;
+import co.edu.uniandes.csw.empleos.ejb.TrabajoLogic;
 import co.edu.uniandes.csw.empleos.persistence.TrabajoPersistence;
 import java.util.ArrayList;
 import java.util.List;

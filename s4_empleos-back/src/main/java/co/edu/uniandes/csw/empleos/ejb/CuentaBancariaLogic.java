@@ -99,11 +99,11 @@ public class CuentaBancariaLogic {
     /**
      * Actualiza la información de una instancia de Author.
      *
-     * @param authorsId Identificador de la instancia a actualizar
-     * @param authorEntity Instancia de AuthorEntity con los nuevos datos.
+     * @param cuentaBancoEntity
      * @return Instancia de AuthorEntity con los datos actualizados.
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
      */
-    public CuentaBancariaEntity updateCuentaBancaria(Long cuentaBancariaId, CuentaBancariaEntity cuentaBancoEntity) throws BusinessLogicException {
+    public CuentaBancariaEntity updateCuentaBancaria( Long cuentaId, CuentaBancariaEntity cuentaBancoEntity) throws BusinessLogicException {
 
         if (cuentaBancoEntity.getNumeroCuenta() == null) {
             throw new BusinessLogicException("El numero de cuenta está vacío");
@@ -123,9 +123,7 @@ public class CuentaBancariaLogic {
         }
         if (Long.parseLong(cuentaBancoEntity.getNumeroCuenta()) < 0) {
             throw new BusinessLogicException("El numero de cuenta no puede ser negativo");
-
         }
-
         if (cuentaBancoEntity.getTipoCuenta() == 0) {
             throw new BusinessLogicException("El tipo de cuenta debe ser Ahorros o Corriente");
         }
@@ -135,7 +133,7 @@ public class CuentaBancariaLogic {
         if (cuentaBancoEntity.getNombreBanco().equals("")) {
             throw new BusinessLogicException("el nombre de banco no puede ser vacío");
         }
-
+      
         CuentaBancariaEntity newCuentaBancariaEntity = persistence.update(cuentaBancoEntity);
 
         return newCuentaBancariaEntity;
@@ -146,11 +144,14 @@ public class CuentaBancariaLogic {
      * Borra una cuenta bancaria de la base de datos recibiendo como argumento
      * el id del premio
      *
-     * @param id: id correspondiente a la cuentaBancaria a borrar.
+     * @param estudianteId
+     * @param cuentaId
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
      */
-    public void delete(Long id) throws BusinessLogicException {
+    public void delete( Long cuentaId) throws BusinessLogicException {
 
-        persistence.delete(id);
+        
+        persistence.delete(cuentaId);
     }
 
 }

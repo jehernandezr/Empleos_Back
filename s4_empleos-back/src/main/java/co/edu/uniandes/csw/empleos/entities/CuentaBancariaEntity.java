@@ -8,6 +8,8 @@ package co.edu.uniandes.csw.empleos.entities;
 
 import co.edu.uniandes.csw.empleos.podam.NumeroStringStrategy;
 import co.edu.uniandes.csw.empleos.podam.TipoCuentaStrategy;
+import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
@@ -17,13 +19,12 @@ import uk.co.jemos.podam.common.PodamStrategyValue;
 /**
  * @author je.hernandezr
  */
-
 @Entity
 public class CuentaBancariaEntity extends BaseEntity {
 
-    private final static int CUENTA_AHORROS = 2;
+    private static final int CUENTA_AHORROS = 2;
 
-    private final static int CUENTA_CORRIENTE = 3;
+    private static final int CUENTA_CORRIENTE = 3;
 
     @PodamStrategyValue(NumeroStringStrategy.class)
     private String numeroCuenta;
@@ -65,7 +66,7 @@ public class CuentaBancariaEntity extends BaseEntity {
     /**
      * @param pEstudiante estudiante to set
      */
-      public void setEstudiante(EstudianteEntity pEstudiante) {
+    public void setEstudiante(EstudianteEntity pEstudiante) {
         this.estudiante = pEstudiante;
     }
 
@@ -81,15 +82,12 @@ public class CuentaBancariaEntity extends BaseEntity {
      */
     public void setTipoCuenta(String pTipoCuenta) {
 
-        if (pTipoCuenta != null) {
-            if (pTipoCuenta.equalsIgnoreCase("Ahorros")) {
-                tipoCuenta = CUENTA_AHORROS;
-            } else if (pTipoCuenta.equalsIgnoreCase("Corriente")) {
-                tipoCuenta = CUENTA_CORRIENTE;
-            } else {
-                tipoCuenta = 0;
-            }
-
+        if (pTipoCuenta.equalsIgnoreCase("Ahorros")) {
+            tipoCuenta = CUENTA_AHORROS;
+        } else if (pTipoCuenta.equalsIgnoreCase("Corriente")) {
+            tipoCuenta = CUENTA_CORRIENTE;
+        } else {
+            tipoCuenta = 0;
         }
 
     }
@@ -108,6 +106,19 @@ public class CuentaBancariaEntity extends BaseEntity {
         this.nombreBanco = nombreBanco;
     }
 
-    
+   @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final CuentaBancariaEntity other = (CuentaBancariaEntity)obj;
+        return Objects.equals(this.numeroCuenta, other.getNumeroCuenta());
+    }
 
 }
