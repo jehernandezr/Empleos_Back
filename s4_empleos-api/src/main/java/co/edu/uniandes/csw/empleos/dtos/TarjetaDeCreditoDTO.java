@@ -77,7 +77,7 @@ public class TarjetaDeCreditoDTO implements Serializable {
     /**
      * Constructor a partir de la entidad
      *
-     * @param bookEntity La entidad del libro
+     * @param tarjetaEntity La entidad del libro
      */
     public TarjetaDeCreditoDTO(TarjetaDeCreditoEntity tarjetaEntity) {
         

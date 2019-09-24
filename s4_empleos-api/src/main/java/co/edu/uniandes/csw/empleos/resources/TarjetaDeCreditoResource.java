@@ -11,7 +11,6 @@ import co.edu.uniandes.csw.empleos.entities.TarjetaDeCreditoEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -26,7 +25,7 @@ import javax.ws.rs.WebApplicationException;
 
 /**
  *
- * @author Estudiante
+ * @author Miguel Angel Ramos
  */
 @Path("tarjetas")
 @Produces("application/json")
