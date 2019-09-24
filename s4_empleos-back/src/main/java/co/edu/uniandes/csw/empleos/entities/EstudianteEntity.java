@@ -49,15 +49,10 @@ public class EstudianteEntity extends BaseEntity implements Serializable {
 
     // Atributo que representa la cuenta bancaria que tiene el estudiante
     @PodamExclude
-<<<<<<< HEAD
     @javax.persistence.OneToOne(fetch = FetchType.LAZY)
     private CuentaBancariaEntity cuentaBancaria;
-=======
-    @OneToOne(fetch = FetchType.LAZY)
 
-    private CuentaBancariaEntity cuentaBancaria; 
-
->>>>>>> edca3a2944f064f15622ff11e8c6d9c4576d8ff3
+  
 
     // Constructor vacío
     public EstudianteEntity() {
