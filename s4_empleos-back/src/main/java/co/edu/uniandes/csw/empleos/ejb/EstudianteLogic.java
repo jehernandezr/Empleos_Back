@@ -69,4 +69,5 @@ public class EstudianteLogic {
     public void deleteEstudiante(long id) {
         persistence.delete(id);
     }
+
 }
