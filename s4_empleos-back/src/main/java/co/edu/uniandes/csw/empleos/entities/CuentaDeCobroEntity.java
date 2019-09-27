@@ -30,8 +30,8 @@ public class CuentaDeCobroEntity extends BaseEntity implements Serializable {
     private int numeroCuentaDeCobro;
 
     /**
-    * nombre del Contratista
-     */
+    *Contratista de la cuenta de cobro
+    */
     @PodamExclude
     @ManyToOne
     private ContratistaEntity contratista;
