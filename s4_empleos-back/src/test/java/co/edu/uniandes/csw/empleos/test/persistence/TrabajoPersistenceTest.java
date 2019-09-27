@@ -1,6 +1,7 @@
 package co.edu.uniandes.csw.empleos.test.persistence;
 
 import co.edu.uniandes.csw.empleos.entities.FacturaEntity;
+import co.edu.uniandes.csw.empleos.entities.OfertaEntity;
 import co.edu.uniandes.csw.empleos.entities.TrabajoEntity;
 import co.edu.uniandes.csw.empleos.persistence.TrabajoPersistence;
 import java.util.ArrayList;
@@ -174,7 +175,7 @@ public class TrabajoPersistenceTest {
     }
 
     @Test
-    public void verificarAsociaciones() {
+    public void verificarAsociacionesFactura() {
         try {
             u.begin();
             em.joinTransaction();
@@ -203,4 +204,33 @@ public class TrabajoPersistenceTest {
         }
     }
 
+    @Test
+    public void verificarAsociacionesOferta() {
+        try {
+            u.begin();
+            em.joinTransaction();
+            PodamFactory factory = new PodamFactoryImpl();
+            TrabajoEntity trabajo = factory.manufacturePojo(TrabajoEntity.class);
+            long id = trabajo.getId();
+            OfertaEntity oferta = factory.manufacturePojo(OfertaEntity.class);
+            trabajo.setOferta(oferta);
+            em.persist(oferta);
+            em.persist(trabajo);
+            TrabajoEntity result = tp.create(trabajo);
+
+            TrabajoEntity e = tp.read(id);
+            Assert.assertEquals(e.getOferta().getCategoria(), oferta.getCategoria());
+            Assert.assertEquals(e.getOferta().getCategoria(), oferta.getCategoria());
+            Assert.assertEquals(e.getOferta().getCategoria(), oferta.getCategoria());
+            u.commit();
+        } catch (Exception exx) {
+            Assert.fail("No debería haber lanzado excepción");
+            exx.printStackTrace();
+            try {
+                u.rollback();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
 }
