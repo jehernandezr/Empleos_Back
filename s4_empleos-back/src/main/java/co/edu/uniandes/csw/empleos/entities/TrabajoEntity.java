@@ -21,6 +21,9 @@ public class TrabajoEntity extends BaseEntity implements Serializable {
     @OneToOne
     private FacturaEntity factura;   
    
+    @PodamExclude
+    @OneToOne
+    private OfertaEntity oferta;
     
     //Constructor vacío.
     public TrabajoEntity() {
@@ -67,6 +70,20 @@ public class TrabajoEntity extends BaseEntity implements Serializable {
      */
     public void setFactura(FacturaEntity factura) {
         this.factura = factura;
+    }
+
+    /**
+     * @return the oferta
+     */
+    public OfertaEntity getOferta() {
+        return oferta;
+    }
+
+    /**
+     * @param oferta the oferta to set
+     */
+    public void setOferta(OfertaEntity oferta) {
+        this.oferta = oferta;
     }
     
 }
