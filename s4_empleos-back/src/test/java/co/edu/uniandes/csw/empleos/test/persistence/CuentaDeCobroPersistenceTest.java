@@ -156,7 +156,7 @@ public class CuentaDeCobroPersistenceTest {
         Assert.assertNotNull(cu);
         //se hace una copia y se la modifica
         CuentaDeCobroEntity cn= cu;
-        cn.setContratista("Losarig");
+        
         cn.setFecha(new Date());
         cn.setNumeroCuentaDeCobro(51920);
         //Se la actualiza
