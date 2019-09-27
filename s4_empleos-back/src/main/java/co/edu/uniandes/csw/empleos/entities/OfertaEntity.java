@@ -114,6 +114,13 @@ public class OfertaEntity extends BaseEntity{
     )
     ArrayList<EstudianteEntity> estudiantes;
     
+    
+   @javax.persistence.OneToMany(
+        mappedBy = "oferta",
+        fetch = javax.persistence.FetchType.LAZY
+    )
+    ArrayList<TrabajoEntity> trabajos;
+    
      /**
      * Constructor de la oferta
      */
