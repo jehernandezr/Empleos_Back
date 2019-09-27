@@ -4,7 +4,9 @@ package co.edu.uniandes.csw.empleos.entities;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 
 
@@ -26,10 +28,6 @@ public class OfertaEntity extends BaseEntity{
     private ContratistaEntity contratista;
 
    
-     
-
-    
-    
     /**
      * Variable que representa el tipo de oferta (Normal o Express).
      */
@@ -115,11 +113,12 @@ public class OfertaEntity extends BaseEntity{
     ArrayList<EstudianteEntity> estudiantes;
     
     
-   @javax.persistence.OneToMany(
+    @PodamExclude  
+    @OneToOne(
         mappedBy = "oferta",
-        fetch = javax.persistence.FetchType.LAZY
+    	fetch = FetchType.LAZY
     )
-    private ArrayList<TrabajoEntity> trabajos;
+    private TrabajoEntity trabajo;
     
      /**
      * Constructor de la oferta
@@ -366,15 +365,15 @@ public class OfertaEntity extends BaseEntity{
     /**
      * @return the trabajos
      */
-    public ArrayList<TrabajoEntity> getTrabajos() {
-        return trabajos;
+    public TrabajoEntity getTrabajo() {
+        return trabajo;
     }
 
     /**
      * @param trabajos the trabajos to set
      */
-    public void setTrabajos(ArrayList<TrabajoEntity> trabajos) {
-        this.trabajos = trabajos;
+    public void setTrabajos(TrabajoEntity ptrabajo) {
+        this.trabajo = ptrabajo;
     }
     
     

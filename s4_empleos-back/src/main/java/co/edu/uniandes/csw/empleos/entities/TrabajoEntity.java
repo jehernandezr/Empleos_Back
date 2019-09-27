@@ -24,7 +24,7 @@ public class TrabajoEntity extends BaseEntity implements Serializable {
     private FacturaEntity factura;   
    
     @PodamExclude
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne
     private OfertaEntity oferta;
     
     //Constructor vacío.
