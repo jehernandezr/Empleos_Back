@@ -17,6 +17,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 /**
@@ -40,19 +41,22 @@ public class TrabajoResource {
         return nuevaCalificacionDTO;
     }
     
+    
+    
     @GET
     @Path("getAll")
     public List<TrabajoDTO> getAllTrabajos() {
         ArrayList<TrabajoDTO> trabajos = new ArrayList<>();
         for(TrabajoEntity e : trabajoLogic.getTrabajos()) {
             trabajos.add(new TrabajoDTO(e));
+            System.out.println(e);
         }
         return trabajos;
     }
     
     @GET
-    @Path("getAll")
-    public TrabajoDTO getTrabajo(long id) {
+    @Path("id/{id: \\d+}")
+    public TrabajoDTO getTrabajo(@PathParam("id") Long id) {
         TrabajoEntity e = trabajoLogic.getTrabajo(id);
         return new TrabajoDTO(e);
     }

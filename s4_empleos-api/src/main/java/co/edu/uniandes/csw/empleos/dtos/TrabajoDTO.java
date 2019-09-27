@@ -16,6 +16,7 @@ public class TrabajoDTO implements Serializable {
 
     private boolean verificado;
     private boolean cumplido;
+    private long id;
 
     public TrabajoDTO() {
         //Constructor vacío
@@ -24,6 +25,15 @@ public class TrabajoDTO implements Serializable {
     public TrabajoDTO(TrabajoEntity e) {
         verificado = e.isVerificado();
         cumplido = e.isCumplido();
+        id = e.getId();
+    }
+    
+    public long getId() {
+        return id;
+    }
+    
+    public void setId(long id) {
+        this.id = id;
     }
 
     public boolean isVerificado() {
