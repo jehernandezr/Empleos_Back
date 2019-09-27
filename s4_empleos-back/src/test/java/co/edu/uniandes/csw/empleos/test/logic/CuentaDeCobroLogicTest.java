@@ -168,7 +168,6 @@ public class CuentaDeCobroLogicTest {
         entity.setValor(-1);
         logic.createCuentaDeCobro(entity);//Crea una cuenta con valores nulos e incorrectos
         entity.setConcepto("");
-        entity.setContratista("");
         entity.setNombreEstudiante("");
         logic.createCuentaDeCobro(entity);//crea una cuenta con cadenas de texto vacias
     }
