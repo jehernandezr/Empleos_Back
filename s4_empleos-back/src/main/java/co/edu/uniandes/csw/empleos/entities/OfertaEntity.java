@@ -119,7 +119,7 @@ public class OfertaEntity extends BaseEntity{
         mappedBy = "oferta",
         fetch = javax.persistence.FetchType.LAZY
     )
-    ArrayList<TrabajoEntity> trabajos;
+    private ArrayList<TrabajoEntity> trabajos;
     
      /**
      * Constructor de la oferta
@@ -361,6 +361,20 @@ public class OfertaEntity extends BaseEntity{
      */
     public void setRutaImagen(String rutaImagen) {
         this.rutaImagen = rutaImagen;
+    }
+
+    /**
+     * @return the trabajos
+     */
+    public ArrayList<TrabajoEntity> getTrabajos() {
+        return trabajos;
+    }
+
+    /**
+     * @param trabajos the trabajos to set
+     */
+    public void setTrabajos(ArrayList<TrabajoEntity> trabajos) {
+        this.trabajos = trabajos;
     }
     
     
