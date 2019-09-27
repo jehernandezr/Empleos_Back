@@ -8,8 +8,11 @@ package co.edu.uniandes.csw.empleos.entities;
 import co.edu.uniandes.csw.empleos.podam.DateStrategy;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import uk.co.jemos.podam.common.PodamExclude;
 import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
@@ -25,6 +28,13 @@ public class FacturaEntity extends BaseEntity{
     @Temporal(TemporalType.DATE)
     @PodamStrategyValue(DateStrategy.class)
     private Date fecha;
+    
+   @PodamExclude  
+    @OneToOne(
+        mappedBy = "factura",
+    	fetch = FetchType.LAZY
+    )
+    private TrabajoEntity trabajo;
     
     /**
      * Valor que se registrará a una factura.

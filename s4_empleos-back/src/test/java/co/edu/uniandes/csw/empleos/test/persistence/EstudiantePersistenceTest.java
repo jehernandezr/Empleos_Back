@@ -1,6 +1,9 @@
 package co.edu.uniandes.csw.empleos.test.persistence;
 
+import co.edu.uniandes.csw.empleos.entities.CalificacionEntity;
+import co.edu.uniandes.csw.empleos.entities.CuentaBancariaEntity;
 import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
+import co.edu.uniandes.csw.empleos.entities.OfertaEntity;
 import co.edu.uniandes.csw.empleos.persistence.EstudiantePersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +42,9 @@ public class EstudiantePersistenceTest {
         return ShrinkWrap.create(JavaArchive.class)
                 .addClass(EstudianteEntity.class)
                 .addClass(EstudiantePersistence.class)
+                .addClass(CuentaBancariaEntity.class)
+                .addClass(OfertaEntity.class)
+                .addClass(CalificacionEntity.class)
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }

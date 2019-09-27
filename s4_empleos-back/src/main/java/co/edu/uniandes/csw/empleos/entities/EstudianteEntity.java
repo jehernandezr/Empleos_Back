@@ -1,32 +1,61 @@
 package co.edu.uniandes.csw.empleos.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  * Esta clase modela la entidad Estudiante.
+ *
  * @author David Dominguez
  */
 @Entity
-public class EstudianteEntity extends BaseEntity implements Serializable  {
-    
+public class EstudianteEntity extends BaseEntity implements Serializable {
+
     // Atributo que representa el nombre del estudiante
     private String nombre;
     // Atributo que representa el ID del medio de pago del estudiante
-    private long idMedioDepago;
+    private Long idMedioDepago;
     // Atributo que representa la carrera que el estudiante cursa
     private String carrera;
     // Atributo que representa el correo del estudiante
     private String correo;
     // Atributo que representa la calificación promedio del estudiante en lso trabajos que ha hecho
-    private double calificacionPromedio;
+    private Double calificacionPromedio;
     // Atributo que representa el horario de trabajo disponible del estudiante
     private String horarioDeTrabajo;
     // Atributo que representa el semestre que cursa el estudiante
-    private int semestre;
-    
+
+    private Integer semestre;
+
+    // Atributo que representa las ofertas a las que ha aplicado el estudiante 
+    @PodamExclude
+    @javax.persistence.ManyToMany(
+            fetch = javax.persistence.FetchType.LAZY
+    )
+    private List<OfertaEntity> ofertas;
+
+    // Atributo que representa las calificaciones que tiene el estudiante 
+
+    @PodamExclude
+    @OneToMany(mappedBy = "estudiante")
+    private List<CalificacionEntity> calificaciones = new ArrayList<CalificacionEntity>();
+
+
+    // Atributo que representa la cuenta bancaria que tiene el estudiante
+    @PodamExclude
+    @OneToOne(fetch = FetchType.LAZY)
+
+    private CuentaBancariaEntity cuentaBancaria; 
+
+
     // Constructor vacío
-    public EstudianteEntity () {
+    public EstudianteEntity() {
         //Constructor vacío para evitar fallos en compilacion. Se asignan valores a los parámetros a través de los metodos set
     }
 
@@ -38,7 +67,7 @@ public class EstudianteEntity extends BaseEntity implements Serializable  {
     }
 
     /**
-     * @param name the name to set
+     * @param nombre
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
@@ -127,5 +156,47 @@ public class EstudianteEntity extends BaseEntity implements Serializable  {
     public void setSemestre(int semestre) {
         this.semestre = semestre;
     }
-    
+
+    /**
+     * @return the ofertas
+     */
+    public List<OfertaEntity> getOfertas() {
+        return ofertas;
+    }
+
+    /**
+     * @param ofertas the ofertas to set
+     */
+    public void setOfertas(List<OfertaEntity> ofertas) {
+        this.ofertas = ofertas;
+    }
+
+    /**
+     * @return the calificaciones
+     */
+    public List<CalificacionEntity> getCalificaciones() {
+        return calificaciones;
+    }
+
+    /**
+     * @param calificaciones the calificaciones to set
+     */
+    public void setCalificaciones(List<CalificacionEntity> calificaciones) {
+        this.calificaciones = calificaciones;
+    }
+
+    /**
+     * @return the cuentaBancaria
+     */
+    public CuentaBancariaEntity getCuentaBancaria() {
+        return cuentaBancaria;
+    }
+
+    /**
+     * @param cuentaBancaria the cuentaBancaria to set
+     */
+    public void setCuentaBancaria(CuentaBancariaEntity cuentaBancaria) {
+        this.cuentaBancaria = cuentaBancaria;
+    }
+
 }

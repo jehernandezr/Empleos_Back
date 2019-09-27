@@ -6,8 +6,10 @@
 package co.edu.uniandes.csw.empleos.ejb;
 
 import co.edu.uniandes.csw.empleos.entities.CuentaBancariaEntity;
+import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
-import co.edu.uniandes.csw.empleos.persistence.CuentaBancariaPersistance;
+import co.edu.uniandes.csw.empleos.persistence.CuentaBancariaPersistence;
+import co.edu.uniandes.csw.empleos.persistence.EstudiantePersistence;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -20,7 +22,10 @@ import javax.inject.Inject;
 public class CuentaBancariaLogic {
 
     @Inject
-    private CuentaBancariaPersistance persistence;
+    private CuentaBancariaPersistence persistence;
+
+    @Inject
+    private EstudiantePersistence estudiantePersistence;
 
     /**
      * Se encarga de crear un Author en la base de datos.
@@ -32,10 +37,19 @@ public class CuentaBancariaLogic {
     public CuentaBancariaEntity createCuentaBancaria(CuentaBancariaEntity cuentaBancaria) throws BusinessLogicException {
         if (cuentaBancaria.getNumeroCuenta() == null) {
             throw new BusinessLogicException("El numero de cuenta está vacío");
-        } else if (Long.parseLong(cuentaBancaria.getNumeroCuenta()) < 0) {
-            throw new BusinessLogicException("El numero de cuenta no puede ser negativo");
+        } else if (cuentaBancaria.getEstudiante() == null) {
+            throw new BusinessLogicException("La cuenta bancaria no contiene un estudiante");
+        }
+        EstudianteEntity estudianteEntity = estudiantePersistence.read(cuentaBancaria.getEstudiante().getId());
+        if (estudianteEntity == null) {
+            throw new BusinessLogicException("El estudiante  es inválido");
+        }
+        if (estudianteEntity.getCuentaBancaria() != null) {
+            throw new BusinessLogicException("La organizacion ya tiene premio");
         } else if (cuentaBancaria.getNumeroCuenta().contains(",") || cuentaBancaria.getNumeroCuenta().contains(".") || cuentaBancaria.getNumeroCuenta().contains("-")) {
             throw new BusinessLogicException("El numero de cuenta no puede contener caracteres diferentes  a un numero entero.");
+        } else if (Long.parseLong(cuentaBancaria.getNumeroCuenta()) < 0) {
+            throw new BusinessLogicException("El numero de cuenta no puede ser negativo");
         } else if (cuentaBancaria.getNumeroCuenta().length() < 9 && cuentaBancaria.getNumeroCuenta().length() > 20) {
             throw new BusinessLogicException("El numero de cuenta no cumple con la longitud de una cuenta");
         } else if (cuentaBancaria.getNombreBanco() == null) {
@@ -45,6 +59,9 @@ public class CuentaBancariaLogic {
         } else if (cuentaBancaria.getTipoCuenta() == 0) {
             throw new BusinessLogicException("El tipo de cuenta debe ser Ahorros o Corriente");
         }
+
+        cuentaBancaria.setEstudiante(estudianteEntity);
+        estudianteEntity.setCuentaBancaria(cuentaBancaria);
         cuentaBancaria = persistence.create(cuentaBancaria);
         return cuentaBancaria;
 
@@ -86,24 +103,40 @@ public class CuentaBancariaLogic {
      * @param authorEntity Instancia de AuthorEntity con los nuevos datos.
      * @return Instancia de AuthorEntity con los datos actualizados.
      */
-    public CuentaBancariaEntity updateCuentaBancaria(Long cuentaBancariaId, CuentaBancariaEntity cuentaBancaria) throws BusinessLogicException {
+    public CuentaBancariaEntity updateCuentaBancaria(Long cuentaBancariaId, CuentaBancariaEntity cuentaBancoEntity) throws BusinessLogicException {
 
-        if (cuentaBancaria.getNumeroCuenta() == null) {
+        if (cuentaBancoEntity.getNumeroCuenta() == null) {
             throw new BusinessLogicException("El numero de cuenta está vacío");
-        } else if (Long.parseLong(cuentaBancaria.getNumeroCuenta()) < 0) {
-            throw new BusinessLogicException("El numero de cuenta no puede ser negativo");
-        } else if (cuentaBancaria.getNumeroCuenta().contains(",") || cuentaBancaria.getNumeroCuenta().contains(".") || cuentaBancaria.getNumeroCuenta().contains("-")) {
-            throw new BusinessLogicException("El numero de cuenta no puede contener caracteres diferentes  a un numero entero.");
-        } else if (cuentaBancaria.getNumeroCuenta().length() < 9 && cuentaBancaria.getNumeroCuenta().length() > 20) {
+        }
+        if (cuentaBancoEntity.getEstudiante() == null) {
+            throw new BusinessLogicException("La cuenta bancaria no contiene un estudiante");
+        }
+
+        if (cuentaBancoEntity.getNumeroCuenta().contains(".")) {
+            throw new BusinessLogicException("El numero de cuenta no puede contener puntos.");
+        }
+        if (cuentaBancoEntity.getNumeroCuenta().length() < 9 && cuentaBancoEntity.getNumeroCuenta().length() > 20) {
             throw new BusinessLogicException("El numero de cuenta no cumple con la longitud de una cuenta");
-        } else if (cuentaBancaria.getNombreBanco() == null) {
-            throw new BusinessLogicException("el nombre de banco no puede ser null");
-        } else if (cuentaBancaria.getNombreBanco().equals("")) {
-            throw new BusinessLogicException("el nombre de banco no puede ser vacío");
-        } else if (cuentaBancaria.getTipoCuenta() == 0) {
+        }
+        if (cuentaBancoEntity.getNumeroCuenta().contains(",") || cuentaBancoEntity.getNumeroCuenta().contains("-")) {
+            throw new BusinessLogicException("El numero de cuenta no puede contener caracteres diferentes  a un numero entero.");
+        }
+        if (Long.parseLong(cuentaBancoEntity.getNumeroCuenta()) < 0) {
+            throw new BusinessLogicException("El numero de cuenta no puede ser negativo");
+
+        }
+
+        if (cuentaBancoEntity.getTipoCuenta() == 0) {
             throw new BusinessLogicException("El tipo de cuenta debe ser Ahorros o Corriente");
         }
-        CuentaBancariaEntity newCuentaBancariaEntity = persistence.update(cuentaBancaria);
+        if (cuentaBancoEntity.getNombreBanco() == null) {
+            throw new BusinessLogicException("el nombre de banco no puede ser null");
+        }
+        if (cuentaBancoEntity.getNombreBanco().equals("")) {
+            throw new BusinessLogicException("el nombre de banco no puede ser vacío");
+        }
+
+        CuentaBancariaEntity newCuentaBancariaEntity = persistence.update(cuentaBancoEntity);
 
         return newCuentaBancariaEntity;
     }

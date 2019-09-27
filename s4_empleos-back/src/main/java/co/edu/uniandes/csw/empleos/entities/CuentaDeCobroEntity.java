@@ -21,24 +21,42 @@ import uk.co.jemos.podam.common.PodamStrategyValue;
 public class CuentaDeCobroEntity extends BaseEntity implements Serializable {
 
     /**
-     * numeroCuentaDeCobro de la tarjeta
+     * numeroCuentaDeCobro
      */
     private int numeroCuentaDeCobro;
 
-    /*
-    numeroCuentaDeCobro contratista de la tarjeta
+    /**
+    * nombre del Contratista
      */
     private String contratista;
 
-    /*
-    fecha de Fecha de la tarjeta
+    /**
+    *fecha de la cuenta de cobro
      */
     @Temporal(TemporalType.DATE)
     @PodamStrategyValue(DateStrategy.class)
     private Date fecha;
 
-    public CuentaDeCobroEntity() {       //Constructor vacío para evitar fallos en compilacion. Se asignan valores a los parámetros a través de los metodos set
-
+    /**
+     * Valor que de debe.
+     */
+    private int valor;
+    
+    /**
+     * Nombre del nombreEstudiante a quien se le debe el valor
+     */
+    private String nombreEstudiante;
+    
+    /**
+     *Concepto  
+     */
+    private String concepto;
+    
+    /**
+     * Constructor
+     */
+    public CuentaDeCobroEntity() {
+       //Constructor vacío para evitar fallos en compilacion. Se asignan valores a los parámetros a través de los metodos set
     }
 
     //-------------------------------------------------
@@ -93,4 +111,47 @@ public class CuentaDeCobroEntity extends BaseEntity implements Serializable {
         this.fecha = fecha;
     }
 
+    /**
+     * @return el valor de la cuenta de cobro 
+     */
+    public int getValor() {
+        return valor;
+    }
+
+    /**
+     * @return nombreEstudiante de la cuenta de cobro
+     */
+    public String getNombreEstudiante() {
+        return nombreEstudiante;
+    }
+
+    /**
+     * @return concepto de la cuenta de cobro
+     */
+    public String getConcepto() {
+        return concepto;
+    }
+
+    /**
+     * @param valor de la cuenta de cobro
+     */
+    public void setValor(int valor) {
+        this.valor = valor;
+    }
+
+    /**
+     * @param nombreEstudiante de la cuenta de cobro
+     */
+    public void setNombreEstudiante(String nombreEstudiante) {
+        this.nombreEstudiante = nombreEstudiante;
+    }
+
+    /**
+     * @param concepto de la cuenta de cobro
+     */
+    public void setConcepto(String concepto) {
+        this.concepto = concepto;
+    }
+
+    
 }

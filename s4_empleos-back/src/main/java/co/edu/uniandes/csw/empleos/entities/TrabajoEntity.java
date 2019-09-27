@@ -2,6 +2,8 @@ package co.edu.uniandes.csw.empleos.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  * Esta clase modela la entidad de trabajo, que será guardada en la base de datos.
@@ -14,6 +16,11 @@ public class TrabajoEntity extends BaseEntity implements Serializable {
     private boolean cumplido;
     //Atributo que representa si un trabajo ya ha sido "aprobado" por el contratista
     private boolean verificado;
+
+    @PodamExclude
+    @OneToOne
+    private FacturaEntity factura;   
+   
     
     //Constructor vacío.
     public TrabajoEntity() {
@@ -46,6 +53,20 @@ public class TrabajoEntity extends BaseEntity implements Serializable {
      */
     public void setVerificado(boolean verificado) {
         this.verificado = verificado;
+    }
+
+    /**
+     * @return the factura
+     */
+    public FacturaEntity getFactura() {
+        return factura;
+    }
+
+    /**
+     * @param factura the factura to set
+     */
+    public void setFactura(FacturaEntity factura) {
+        this.factura = factura;
     }
     
 }

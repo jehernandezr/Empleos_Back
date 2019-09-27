@@ -5,7 +5,11 @@
  */
 package co.edu.uniandes.csw.empleos.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -23,6 +27,11 @@ public class CalificacionEntity extends BaseEntity{
      * Atributo que será el comentario a la calificacion puesta.
      */
     private String comentario;
+
+    
+    @PodamExclude
+    @ManyToOne(fetch = FetchType.LAZY)
+    private EstudianteEntity estudiante;
     
      /**
      * Contrctor de la Clase Calificación para inicualizar los atributos
@@ -51,6 +60,16 @@ public class CalificacionEntity extends BaseEntity{
     }
 
     /**
+     * Metodo que retorna al estudiante correspondiente
+     * @return Estudiante al que le pertenece la calificai
+     */
+    public EstudianteEntity getEstudiante(){
+        return estudiante;
+    }
+    
+   
+    
+    /**
      * Metodo que permite modificar el comentario asignado a la nota.
      * @param comentario Es el nuevo mensaje por el cual se va a reemplzar el atributo inicializado previamente.
      */
@@ -66,4 +85,12 @@ public class CalificacionEntity extends BaseEntity{
         this.nota = nota;
     }
 
+    /**
+     * Metodo que permite modicar el estudainte al cual se le asigno la calificación
+     * @param e  Estudiante a asiganr la calificacion
+     */
+    public void setEstudiante(EstudianteEntity e){
+        this.estudiante = e;
+    }
+    
 }
