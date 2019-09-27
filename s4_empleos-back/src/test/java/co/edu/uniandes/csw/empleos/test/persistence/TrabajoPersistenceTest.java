@@ -40,9 +40,8 @@ public class TrabajoPersistenceTest {
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
-                .addClass(TrabajoEntity.class)
-                .addClass(TrabajoPersistence.class)
-                .addClass(FacturaEntity.class)
+                .addPackage(TrabajoEntity.class.getPackage())
+                .addPackage(TrabajoPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
