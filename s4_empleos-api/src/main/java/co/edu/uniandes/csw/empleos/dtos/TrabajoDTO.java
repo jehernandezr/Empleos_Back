@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.empleos.dtos;
 
+import co.edu.uniandes.csw.empleos.entities.TrabajoEntity;
 import java.io.Serializable;
 
 /**
@@ -15,9 +16,24 @@ public class TrabajoDTO implements Serializable {
 
     private boolean verificado;
     private boolean cumplido;
+    private long id;
 
     public TrabajoDTO() {
         //Constructor vacío
+    }
+    
+    public TrabajoDTO(TrabajoEntity e) {
+        verificado = e.isVerificado();
+        cumplido = e.isCumplido();
+        id = e.getId();
+    }
+    
+    public long getId() {
+        return id;
+    }
+    
+    public void setId(long id) {
+        this.id = id;
     }
 
     public boolean isVerificado() {
@@ -36,4 +52,10 @@ public class TrabajoDTO implements Serializable {
         this.cumplido = cumplido;
     }
 
+    public TrabajoEntity toEntity() {
+        TrabajoEntity e = new TrabajoEntity();
+        e.setCumplido(cumplido);
+        e.setVerificado(verificado);
+        return e;
+    }
 }

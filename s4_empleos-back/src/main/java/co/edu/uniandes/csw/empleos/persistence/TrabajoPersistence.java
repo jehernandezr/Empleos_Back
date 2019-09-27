@@ -67,4 +67,5 @@ public class TrabajoPersistence {
         TypedQuery query = em.createQuery("select u from TrabajoEntity u", TrabajoEntity.class);
         return query.getResultList();
     }
+     
 }

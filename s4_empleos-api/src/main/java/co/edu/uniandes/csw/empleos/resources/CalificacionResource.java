@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.empleos.resources;
 import co.edu.uniandes.csw.empleos.dtos.CalificacionDTO;
 import co.edu.uniandes.csw.empleos.ejb.CalificacionLogic;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
+import co.edu.uniandes.csw.empleos.ejb.CalificacionLogic;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -34,7 +35,6 @@ public class CalificacionResource {
     
     @POST
     public CalificacionDTO createCalificacion(CalificacionDTO calificacion) throws BusinessLogicException {
-        
         CalificacionDTO nuevaCalificacionDTO = new CalificacionDTO(calificacionLogic.createCalificacion(calificacion.toEntity()));
         return nuevaCalificacionDTO;
     }
