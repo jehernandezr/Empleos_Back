@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.empleos.resources;
 import co.edu.uniandes.csw.empleos.dtos.OfertaDTO;
 import co.edu.uniandes.csw.empleos.dtos.OfertaDetailDTO;
 import co.edu.uniandes.csw.empleos.ejb.OfertaLogic;
+
 import co.edu.uniandes.csw.empleos.entities.OfertaEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import java.util.ArrayList;
@@ -15,12 +16,15 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 
 /**
  *
@@ -32,16 +36,11 @@ import javax.ws.rs.Produces;
 @RequestScoped
 public class OfertaResource {
     
-   
+   @Inject
+    private OfertaLogic logic;
      private static final Logger LOGGER = Logger.getLogger(OfertaResource.class.getName());
      
-     @POST
-     public void crearOferta(OfertaDTO oferta) throws BusinessLogicException{
-        LOGGER.log(Level.INFO, "OfertaResource createOferta: input: {0}", oferta);
-        
-        
-        
-    }
+    
 
     /**
      * Busca y devuelve todos los autores que existen en la aplicacion.
@@ -54,6 +53,38 @@ public class OfertaResource {
         
         return "hola";
         
+    }
+    
+    /**
+     *
+     * @param oferta
+     *
+     * @return
+     * @throws BusinessLogicException
+     */
+    @POST
+    public OfertaDTO crearOferta(OfertaDTO oferta) throws BusinessLogicException {
+        OfertaEntity ofertaEntity = oferta.toEntity();
+        ofertaEntity = logic.createOferta(ofertaEntity);
+        return new OfertaDTO(ofertaEntity);
+    }
+
+    
+    /**
+     *
+     * @param id
+     * @return
+     * @throws BusinessLogicException
+     */
+    @GET
+    @Path("{id: \\d+}")
+    public OfertaDTO getCuntaBancaria(@PathParam("id") Long idOferta) throws BusinessLogicException {
+        OfertaEntity ofertaEntity = logic.getOferta(idOferta);
+        if (ofertaEntity == null) {
+            throw new WebApplicationException("El recurso /oferta/" + idOferta + " no existe.", 404);
+        }
+        OfertaDTO cuentaDTO = new OfertaDTO(ofertaEntity);
+        return cuentaDTO;
     }
     
      /**
