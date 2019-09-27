@@ -23,30 +23,30 @@ public class TarjetaDeCreditoLogic {
 
     public TarjetaDeCreditoEntity createTarjetaDeCredito(TarjetaDeCreditoEntity tarjetaCredito) throws BusinessLogicException {
         
-        if (tarjetaCredito.getNumero() == null) {
+        if (tarjetaCredito.getNumero() == null ) {
             throw new BusinessLogicException("El número de la tarjeta de crédito no puede ser vacío.");
         }
-        if (tarjetaCredito.getNumero().length() != 16)
+        else if (tarjetaCredito.getNumero().length() != 16)
         {
             throw new BusinessLogicException("La tarjeta de credito debe contener 16 números");
-        }
-        if(tarjetaCredito.getCVC() == null )
+        }        
+        else if(tarjetaCredito.getCVC() == null  )
         {
             throw new BusinessLogicException("El cvc no debe estar vacío.");
         }
-        if(tarjetaCredito.getCVC().length() != 3)
+        else if(tarjetaCredito.getCVC().length() != 3)
         {
             throw new BusinessLogicException("El cvc debe contener 3 digitos");
-        }
-        if(tarjetaCredito.getFecha() == null )
+        }    
+        else if(tarjetaCredito.getFecha() == null  )
         {
             throw new BusinessLogicException("La fecha no debe estar vacía.");
         }
-        if(tarjetaCredito.getFecha().charAt(2) != '/')
+        else if(tarjetaCredito.getFecha().charAt(2) != '/')
         {
             throw new BusinessLogicException("El formato de la fecha debe ser dd/aa.");
         }
-        if(tarjetaCredito.getFecha().length() != 5 )
+        else if(tarjetaCredito.getFecha().length() != 5 )
         {
             throw new BusinessLogicException("La fecha debe contener el día y el año en el formato dd/aa");
         }

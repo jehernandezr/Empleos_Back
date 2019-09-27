@@ -25,55 +25,6 @@ public class TarjetaDeCreditoDTO implements Serializable {
     {
         //Constructor vacío para evitar fallos en compilacion. Se asignan valores a los parámetros a través de los metodos set
     }
-   
-    
-    /**
-     * @Return el nnmero de la tarjeta de credito.
-     */
-   public String getNumero(){
-       return numero;
-   }
-    
-    /**
-     * @param pNumero el numero a poner.
-     */
-   public void setNumero(String pNumero){
-       numero = pNumero;
-   }
-   
-   /**
-    * @Return el cvc de la tarjeta de credito.
-    */
-   public String getCVC(){
-       return cvc;
-   }
-   
-   /**
-    * @param pCVC es el cvc a establecer.
-    */
-   public void setCVC(String pCVC){
-       cvc = pCVC;
-   }
-   /**
-    * @return retorna la fecha de la tarjeta de crédito.
-    */
-   public String getFecha()
-   {
-       return fecha;
-   }
-   /**
-    * @param pDia es el día de vencimiento de la tarjeta.
-    * @param pAño es el año de vencimiento de la tarjeta.
-    */
-   public void setFecha(String pFecha)
-   {
-       fecha = pFecha;
-   }
-   
-    
-
-    
-
     /**
      * Constructor a partir de la entidad
      *
@@ -106,26 +57,45 @@ public class TarjetaDeCreditoDTO implements Serializable {
         return tarjetaEntity;
     }
 
-    /**
-     * Devuelve el ID del libro
-     *
-     * @return the id
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * Modifica el ID del libro.
-     *
-     * @param id the id to set
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    public String getCvc() {
+        return cvc;
+    }
+
+    public void setCvc(String cvc) {
+        this.cvc = cvc;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+    
+    
+    
+    
+    
 }
