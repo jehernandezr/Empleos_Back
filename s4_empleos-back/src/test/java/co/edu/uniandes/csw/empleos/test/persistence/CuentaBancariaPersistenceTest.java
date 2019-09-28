@@ -48,7 +48,7 @@ public class CuentaBancariaPersistenceTest {
     UserTransaction utx;
 
     private List<CuentaBancariaEntity> data = new ArrayList<CuentaBancariaEntity>();
-
+    private List<EstudianteEntity> dataEst = new ArrayList<EstudianteEntity>();
     /**
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
      * El jar contiene las clases, el descriptor de la base de datos y el
@@ -100,9 +100,11 @@ public class CuentaBancariaPersistenceTest {
             EstudianteEntity estudianteEntity = factory.manufacturePojo(EstudianteEntity.class);
 
             estudianteEntity.setCuentaBancaria(entity);
+           entity.setEstudiante(estudianteEntity);
             em.persist(entity);
             em.persist(estudianteEntity);
             data.add(entity);
+            dataEst.add(estudianteEntity);
         }
     }
 
@@ -157,6 +159,7 @@ public class CuentaBancariaPersistenceTest {
         CuentaBancariaEntity newEntity = cuentaBancariaPersistance.find(entity.getId());
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getNumeroCuenta(), newEntity.getNumeroCuenta());
+        
     }
 
     /**
@@ -166,7 +169,7 @@ public class CuentaBancariaPersistenceTest {
     public void deleteCuentaBancariaTest() {
         CuentaBancariaEntity entity = data.get(0);
 
-        CuentaBancariaEntity x = cuentaBancariaPersistance.find(entity.getId());
+        CuentaBancariaEntity x = em.find(CuentaBancariaEntity.class,entity.getId());
 
         estudiantePersistance.delete(x.getEstudiante().getId());
 

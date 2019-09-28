@@ -9,8 +9,12 @@ import co.edu.uniandes.csw.empleos.podam.DateStrategy;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import uk.co.jemos.podam.common.PodamExclude;
+import uk.co.jemos.podam.common.PodamLongValue;
 import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
@@ -23,12 +27,16 @@ public class CuentaDeCobroEntity extends BaseEntity implements Serializable {
     /**
      * numeroCuentaDeCobro
      */
+    @PodamLongValue(minValue = 1)
     private int numeroCuentaDeCobro;
 
+
     /**
-    * nombre del Contratista
-     */
-    private String contratista;
+    *Contratista de la cuenta de cobro
+    */
+    @PodamExclude
+    @ManyToOne
+    private ContratistaEntity contratista;
 
     /**
     *fecha de la cuenta de cobro
@@ -40,6 +48,7 @@ public class CuentaDeCobroEntity extends BaseEntity implements Serializable {
     /**
      * Valor que de debe.
      */
+    @PodamLongValue(minValue = 1)
     private int valor;
     
     /**
@@ -78,25 +87,7 @@ public class CuentaDeCobroEntity extends BaseEntity implements Serializable {
     public void setNumeroCuentaDeCobro(int numeroCuentaDeCobro) {
         this.numeroCuentaDeCobro = numeroCuentaDeCobro;
     }
-
-    /**
-     * Da el contratista de la tarjeta
-     *
-     * @return contratista de la tarjeta
-     */
-    public String getContratista() {
-        return contratista;
-    }
-
-    /**
-     * Cambia el contratista de la tarjeta
-     *
-     * @param contratista nuevo contratista de la tarjeta
-     */
-    public void setContratista(String contratista) {
-        this.contratista = contratista;
-    }
-
+    
     /**
      * @return the Fecha
      */
@@ -151,6 +142,20 @@ public class CuentaDeCobroEntity extends BaseEntity implements Serializable {
      */
     public void setConcepto(String concepto) {
         this.concepto = concepto;
+    }
+
+    /**
+     * @return the contratista
+     */
+    public ContratistaEntity getContratista() {
+        return contratista;
+    }
+
+    /**
+     * @param contratista the contratista to set
+     */
+    public void setContratista(ContratistaEntity contratista) {
+        this.contratista = contratista;
     }
 
     

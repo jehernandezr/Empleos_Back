@@ -8,6 +8,7 @@ import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.empleos.persistence.CuentaBancariaPersistence;
 import co.edu.uniandes.csw.empleos.persistence.EstudiantePersistence;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -22,37 +23,51 @@ public class EstudianteLogic {
     private EstudiantePersistence persistence;
     @Inject
     private CuentaBancariaPersistence cuentaBancariaPersistence;
-    // Intenta crear al estudiante
-    public EstudianteEntity crearEstudiante(EstudianteEntity entity) throws BusinessLogicException {
+    
+    private void verificarReglasNegocio(EstudianteEntity entity) throws BusinessLogicException{
         if(!entity.getCorreo().toLowerCase().endsWith("@uniandes.edu.co")) throw new BusinessLogicException("El correo no era de uniandes");
         if(entity.getNombre().contains("\"") || entity.getNombre().contains("'")|| entity.getNombre().equals("")) throw new BusinessLogicException("No es un nombre válido");
         if(entity.getCalificacionPromedio() > 5 || entity.getCalificacionPromedio() < 0) throw new BusinessLogicException("No es una calificación válida");
         if(entity.getSemestre() > 12 || entity.getSemestre() < 1) throw new BusinessLogicException("No es un semestre válido");
         if(entity.getCarrera().equals("")) throw new BusinessLogicException("No es una carrera válida");
         if(entity.getHorarioDeTrabajo().equals("")) throw new BusinessLogicException("No es un horario válido");
-        entity = persistence.create(entity);
-        return entity;
+    }
+    
+    // Intenta crear al estudiante
+    public EstudianteEntity crearEstudiante(EstudianteEntity entity) throws BusinessLogicException {
+        try {
+            verificarReglasNegocio(entity);
+            entity = persistence.create(entity);
+            return entity;
+        } catch(BusinessLogicException ex) {
+            throw ex;
+        }
     }
     
     //Intenta actualizar al estudiante
     public EstudianteEntity updateEstudiante(EstudianteEntity entity) throws BusinessLogicException {
-        if(!entity.getCorreo().toLowerCase().endsWith("@uniandes.edu.co")) throw new BusinessLogicException("El correo no era de uniandes");
-        if(entity.getNombre().contains("\"") || entity.getNombre().contains("'")|| entity.getNombre().equals("")) throw new BusinessLogicException("No es un nombre válido");
-        if(entity.getCalificacionPromedio() > 5 || entity.getCalificacionPromedio() < 0) throw new BusinessLogicException("No es una calificación válida");
-        if(entity.getSemestre() > 12 || entity.getSemestre() < 1) throw new BusinessLogicException("No es un semestre válido");
-        if(entity.getCarrera().equals("")) throw new BusinessLogicException("No es una carrera válida");
-        if(entity.getHorarioDeTrabajo().equals("")) throw new BusinessLogicException("No es un horario válido");
-        entity = persistence.update(entity);
-        return entity;
+         try {
+            verificarReglasNegocio(entity);
+            entity = persistence.update(entity);
+            return entity;
+        } catch(BusinessLogicException ex) {
+            throw ex;
+        }
     }
     
     //No hay reglas de negocio sobre leer un estudiante
-    public EstudianteEntity readEstudiante(long id) {
+    public EstudianteEntity getEstudiante(long id) {
         return persistence.read(id);
+    }
+    
+    //No hay reglas de negocio sobre leer un estudiante
+    public List<EstudianteEntity> getEstudiantes() {
+        return persistence.findAll();
     }
     
     //No hay reglas de negocio sobre borrar un estudiante
     public void deleteEstudiante(long id) {
         persistence.delete(id);
     }
+
 }

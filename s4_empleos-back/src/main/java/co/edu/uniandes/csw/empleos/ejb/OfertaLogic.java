@@ -6,14 +6,12 @@
 package co.edu.uniandes.csw.empleos.ejb;
 
 import co.edu.uniandes.csw.empleos.entities.OfertaEntity;
-import co.edu.uniandes.csw.empleos.entities.OfertaEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.empleos.persistence.OfertaPersistence;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
 /**

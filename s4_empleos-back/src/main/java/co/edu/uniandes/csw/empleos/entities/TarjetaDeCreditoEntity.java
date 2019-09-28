@@ -7,7 +7,9 @@ package co.edu.uniandes.csw.empleos.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+
 import javax.persistence.FetchType;
+
 import javax.persistence.OneToOne;
 import uk.co.jemos.podam.common.PodamExclude;
 
@@ -22,6 +24,7 @@ public class TarjetaDeCreditoEntity extends BaseEntity implements Serializable {
     private String cvc;
     private String fecha;
     
+
     @PodamExclude
     @OneToOne(mappedBy = "tarjetaCredito", fetch = FetchType.LAZY)
     private ContratistaEntity contratista;
@@ -74,6 +77,20 @@ public class TarjetaDeCreditoEntity extends BaseEntity implements Serializable {
    {
        fecha = pFecha;
    }
+
+    /**
+     * @return the contratista
+     */
+    public ContratistaEntity getContratista() {
+        return contratista;
+    }
+
+    /**
+     * @param contratista the contratista to set
+     */
+    public void setContratista(ContratistaEntity contratista) {
+        this.contratista = contratista;
+    }
    
     
     

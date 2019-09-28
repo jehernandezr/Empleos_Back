@@ -23,7 +23,7 @@ public class CuentaDeCobroLogic {
 
     public CuentaDeCobroEntity createCuentaDeCobro(CuentaDeCobroEntity cuentaDeCobro) throws BusinessLogicException {
         if (cuentaDeCobro != null) {
-            if (cuentaDeCobro.getContratista() == null || cuentaDeCobro.getContratista().equals(""))
+            if (cuentaDeCobro.getContratista() == null)
                 throw new BusinessLogicException("La cuenta de cobro no tiene contratista.");
             if(cuentaDeCobro.getConcepto()==null||cuentaDeCobro.getConcepto().equals(""))
                 throw new BusinessLogicException("La cuenta de cobro no tiene concepto.");

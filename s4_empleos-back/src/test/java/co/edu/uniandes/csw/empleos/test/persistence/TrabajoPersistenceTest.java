@@ -1,6 +1,7 @@
 package co.edu.uniandes.csw.empleos.test.persistence;
 
 import co.edu.uniandes.csw.empleos.entities.FacturaEntity;
+import co.edu.uniandes.csw.empleos.entities.OfertaEntity;
 import co.edu.uniandes.csw.empleos.entities.TrabajoEntity;
 import co.edu.uniandes.csw.empleos.persistence.TrabajoPersistence;
 import java.util.ArrayList;
@@ -21,37 +22,37 @@ import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
- *  Test de persistencia de la clase estudiante
+ * Test de persistencia de la clase estudiante
+ *
  * @author David Dominguez
  */
 @RunWith(Arquillian.class)
 public class TrabajoPersistenceTest {
-    
+
     // Se relaciona la base de datos con el entitymanager
     @PersistenceContext(unitName = "empleosPU")
     public EntityManager em;
-    
-     //Guarda la lista de trabajos que Podam genere
+
+    //Guarda la lista de trabajos que Podam genere
     private ArrayList<TrabajoEntity> trabajos;
-    
+
     // Se relaciona Arquilliean con las clases que se pobrarán
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
-                .addClass(TrabajoEntity.class)
-                .addClass(TrabajoPersistence.class)
-                .addClass(FacturaEntity.class)
+                .addPackage(TrabajoEntity.class.getPackage())
+                .addPackage(TrabajoPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-    
+
     // Atributo que representa al objeto encargado de manejar la persistencia de Estudiante
     @Inject
     TrabajoPersistence tp;
-    
+
     @Inject
     UserTransaction u;
-    
+
     @Before
     public void setup() {
         try {
@@ -75,21 +76,20 @@ public class TrabajoPersistenceTest {
             }
         }
     }
-    
+
     // Se prueba que se cree y guarde exitosamente el trabajo
     @Test
     public void crearTrabajoTest() {
         PodamFactory factory = new PodamFactoryImpl();
         TrabajoEntity trabajo = factory.manufacturePojo(TrabajoEntity.class);
         TrabajoEntity result = tp.create(trabajo);
-        
+
         Assert.assertNotNull(result);
-        
+
         TrabajoEntity t = em.find(TrabajoEntity.class, result.getId());
         Assert.assertEquals(t.getId(), result.getId());
     }
-    
-    
+
     // Se prueba que se actualice un trabajo
     @Test
     public void updateTest() {
@@ -102,7 +102,7 @@ public class TrabajoPersistenceTest {
         Assert.assertEquals(nuevoTrabajo.isVerificado(), resp.isVerificado());
         Assert.assertEquals(nuevoTrabajo.isCumplido(), resp.isCumplido());
     }
-    
+
     // Se prueba que se obtengan todos los trabajos
     @Test
     public void findAllTest() {
@@ -123,7 +123,7 @@ public class TrabajoPersistenceTest {
      * Se prueba que se obtenga un trabajo
      */
     @Test
-    public void getContratistaTest() {
+    public void getTrabajoTest() {
         TrabajoEntity resp = trabajos.get(2);
         TrabajoEntity nuevoTrabajo = tp.read(resp.getId());
         Assert.assertNotNull(nuevoTrabajo);
@@ -140,37 +140,96 @@ public class TrabajoPersistenceTest {
         tp.delete(entity.getId());
         TrabajoEntity deleted = em.find(TrabajoEntity.class, entity.getId());
         Assert.assertNull(deleted);
-        
+
         TrabajoEntity entity2 = trabajos.get(0);
         tp.delete(entity2);
         TrabajoEntity deleted2 = em.find(TrabajoEntity.class, entity2.getId());
         Assert.assertNull(deleted2);
     }
-    
+
     // Se prueba que se cree y guarde exitosamente el atributo verificado de un trabajo
     @Test
     public void verificarTest() {
         PodamFactory factory = new PodamFactoryImpl();
         TrabajoEntity trabajo = factory.manufacturePojo(TrabajoEntity.class);
         TrabajoEntity result = tp.create(trabajo);
-        
+
         Assert.assertNotNull(result);
-        
+
         TrabajoEntity t = em.find(TrabajoEntity.class, result.getId());
         Assert.assertEquals(t.isVerificado(), result.isVerificado());
     }
 
     // Se prueba que se cree y guarde exitosamente el atributo cumplido de un trabajo
     @Test
-    public void cumplidoTest () {
+    public void cumplidoTest() {
         PodamFactory factory = new PodamFactoryImpl();
         TrabajoEntity trabajo = factory.manufacturePojo(TrabajoEntity.class);
         TrabajoEntity result = tp.create(trabajo);
-        
+
         Assert.assertNotNull(result);
-        
+
         TrabajoEntity t = em.find(TrabajoEntity.class, result.getId());
         Assert.assertEquals(t.isCumplido(), result.isCumplido());
     }
-    
+
+    @Test
+    public void verificarAsociacionesFactura() {
+        try {
+            u.begin();
+            em.joinTransaction();
+            PodamFactory factory = new PodamFactoryImpl();
+            TrabajoEntity trabajo = factory.manufacturePojo(TrabajoEntity.class);
+            long id = trabajo.getId();
+            FacturaEntity factura = factory.manufacturePojo(FacturaEntity.class);
+            trabajo.setFactura(factura);
+            em.persist(factura);
+            em.persist(trabajo);
+            TrabajoEntity result = tp.create(trabajo);
+
+            TrabajoEntity e = tp.read(id);
+            Assert.assertEquals(e.getFactura().getValor(), factura.getValor());
+            Assert.assertEquals(e.getFactura().getFecha(), factura.getFecha());
+            Assert.assertEquals(e.getFactura().getId(), factura.getId());
+            u.commit();
+        } catch (Exception exx) {
+            Assert.fail("No debería haber lanzado excepción");
+            exx.printStackTrace();
+            try {
+                u.rollback();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
+
+    @Test
+    public void verificarAsociacionesOferta() {
+        try {
+            u.begin();
+            em.joinTransaction();
+            PodamFactory factory = new PodamFactoryImpl();
+            TrabajoEntity trabajo = factory.manufacturePojo(TrabajoEntity.class);
+            long id = trabajo.getId();
+            OfertaEntity oferta = factory.manufacturePojo(OfertaEntity.class);
+            trabajo.setOferta(oferta);
+            em.persist(oferta);
+            em.persist(trabajo);
+            TrabajoEntity result = tp.create(trabajo);
+
+            TrabajoEntity e = tp.read(id);
+            Assert.assertEquals(e.getOferta().getCategoria(), oferta.getCategoria());
+            Assert.assertEquals(e.getOferta().getCategoria(), oferta.getCategoria());
+            Assert.assertEquals(e.getOferta().getCategoria(), oferta.getCategoria());
+            u.commit();
+        } catch (Exception exx) {
+            Assert.fail("No debería haber lanzado excepción");
+            exx.printStackTrace();
+            try {
+                u.rollback();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
 }

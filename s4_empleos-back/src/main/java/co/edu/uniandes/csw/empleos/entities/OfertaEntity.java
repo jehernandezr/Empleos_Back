@@ -1,8 +1,16 @@
 
 package co.edu.uniandes.csw.empleos.entities;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
+
+
+
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
@@ -12,6 +20,14 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Entity
 public class OfertaEntity extends BaseEntity{
     
+    /**
+     * Contratista que creo la oferta.
+     */
+    @PodamExclude
+     @ManyToOne()
+    private ContratistaEntity contratista;
+
+   
     /**
      * Variable que representa el tipo de oferta (Normal o Express).
      */
@@ -94,7 +110,15 @@ public class OfertaEntity extends BaseEntity{
         mappedBy = "ofertas",
         fetch = javax.persistence.FetchType.LAZY
     )
-    Collection<EstudianteEntity> estudiantes;
+    ArrayList<EstudianteEntity> estudiantes;
+    
+    
+    @PodamExclude  
+    @OneToOne(
+        mappedBy = "oferta",
+    	fetch = FetchType.LAZY
+    )
+    private TrabajoEntity trabajo;
     
      /**
      * Constructor de la oferta
@@ -118,6 +142,33 @@ public class OfertaEntity extends BaseEntity{
     public void setTipoOferta(int tipoOferta) {
         this.tipoOferta = tipoOferta;
     }
+     public ContratistaEntity getContratista() {
+        return contratista;
+    }
+
+    public void setContratista(ContratistaEntity contratista) {
+        this.contratista = contratista;
+    }
+    /*
+    public List<EstudianteEntity> getAspirantes() {
+        return aspirantes;
+    }
+
+    public void setAspirantes(List<EstudianteEntity> aspirantes) {
+        this.aspirantes = aspirantes;
+    }
+
+    public List<TrabajoEntity> getTrabajos() {
+        return trabajos;
+    }
+
+    public void setTrabajos(List<TrabajoEntity> trabajos) {
+        this.trabajos = trabajos;
+    }
+    
+   
+     */
+    
 
     /**
      * Devuelve numero de vacantes disponibles en el momento.
@@ -309,6 +360,20 @@ public class OfertaEntity extends BaseEntity{
      */
     public void setRutaImagen(String rutaImagen) {
         this.rutaImagen = rutaImagen;
+    }
+
+    /**
+     * @return the trabajos
+     */
+    public TrabajoEntity getTrabajo() {
+        return trabajo;
+    }
+
+    /**
+     * @param trabajos the trabajos to set
+     */
+    public void setTrabajos(TrabajoEntity ptrabajo) {
+        this.trabajo = ptrabajo;
     }
     
     

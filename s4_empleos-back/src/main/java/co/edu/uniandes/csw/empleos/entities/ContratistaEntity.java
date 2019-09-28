@@ -5,10 +5,18 @@
  */
 package co.edu.uniandes.csw.empleos.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 import uk.co.jemos.podam.common.PodamExclude;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import uk.co.jemos.podam.common.PodamExclude;
+import uk.co.jemos.podam.common.PodamStringValue;
+
 
 /**
  *Clase que representa un contratista para poder ser guardado en la base de datos.
@@ -16,6 +24,27 @@ import uk.co.jemos.podam.common.PodamExclude;
  */
 @Entity
 public class ContratistaEntity extends BaseEntity {
+    
+    
+   
+    
+         
+     @PodamExclude
+    @OneToMany(mappedBy = "contratista")
+    private List<OfertaEntity> ofertas = new ArrayList<OfertaEntity>();
+     
+     @PodamExclude
+    @OneToOne(mappedBy = "contratista", orphanRemoval = true)
+    private List<TarjetaDeCreditoEntity> tarjetaDeCredito = new ArrayList<TarjetaDeCreditoEntity>();
+     
+     @PodamExclude
+    @OneToOne(mappedBy = "contratista", orphanRemoval = true)
+    private List<CuentaDeCobroEntity> cuentaDeCobro = new ArrayList<CuentaDeCobroEntity>();
+
+
+    
+     
+             
     
     /**
      * Variable que representa si el contratista es externo.
@@ -25,6 +54,7 @@ public class ContratistaEntity extends BaseEntity {
     /**
      * Variable que representa el nombre del contratista.
      */
+ 
     private String nombre;
     
     /**
@@ -129,6 +159,17 @@ public class ContratistaEntity extends BaseEntity {
      public String getRutaImagen() {
         return rutaImagen;
     }
+     
+     
+    
+    public List<OfertaEntity> getOfertas() {
+        return ofertas;
+    }
+
+    public void setOfertas(List<OfertaEntity> ofertas) {
+        this.ofertas = ofertas;
+    }
+   
 
      /**
      * Actualiza la ruta de la imagen del contratista.
@@ -136,6 +177,34 @@ public class ContratistaEntity extends BaseEntity {
      */
     public void setRutaImagen(String rutaImagen) {
         this.rutaImagen = rutaImagen;
+    }
+
+    /**
+     * @return the tarjetaDeCredito
+     */
+    public List<TarjetaDeCreditoEntity> getTarjetaDeCredito() {
+        return tarjetaDeCredito;
+    }
+
+    /**
+     * @param tarjetaDeCredito the tarjetaDeCredito to set
+     */
+    public void setTarjetaDeCredito(List<TarjetaDeCreditoEntity> tarjetaDeCredito) {
+        this.tarjetaDeCredito = tarjetaDeCredito;
+    }
+
+    /**
+     * @return the cuentaDeCobro
+     */
+    public List<CuentaDeCobroEntity> getCuentaDeCobro() {
+        return cuentaDeCobro;
+    }
+
+    /**
+     * @param cuentaDeCobro the cuentaDeCobro to set
+     */
+    public void setCuentaDeCobro(List<CuentaDeCobroEntity> cuentaDeCobro) {
+        this.cuentaDeCobro = cuentaDeCobro;
     }
     
    
