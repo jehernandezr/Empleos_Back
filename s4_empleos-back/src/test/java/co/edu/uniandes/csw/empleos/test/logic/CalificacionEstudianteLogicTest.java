@@ -9,8 +9,6 @@ import co.edu.uniandes.csw.empleos.ejb.CalificacionEstudianteLogic;
 import co.edu.uniandes.csw.empleos.ejb.CalificacionLogic;
 import co.edu.uniandes.csw.empleos.entities.CalificacionEntity;
 import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
-import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
-import co.edu.uniandes.csw.empleos.persistence.CalificacionPersistence;
 import co.edu.uniandes.csw.empleos.persistence.EstudiantePersistence;
 import java.util.ArrayList;
 import java.util.List;

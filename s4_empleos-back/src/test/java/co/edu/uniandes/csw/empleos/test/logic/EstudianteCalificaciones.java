@@ -11,6 +11,7 @@ import co.edu.uniandes.csw.empleos.ejb.EstudianteLogic;
 import co.edu.uniandes.csw.empleos.entities.CalificacionEntity;
 import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
+import co.edu.uniandes.csw.empleos.persistence.CalificacionPersistence;
 import co.edu.uniandes.csw.empleos.persistence.EstudiantePersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,18 +20,22 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
+
 
 /**
  *
  * @author Nicolàs Munar
  */
+@RunWith(Arquillian.class)
 public class EstudianteCalificaciones {
     
        private PodamFactory factory = new PodamFactoryImpl();
@@ -45,7 +50,7 @@ public class EstudianteCalificaciones {
 
     @PersistenceContext
     private EntityManager em;
-
+    
     @Inject
     private UserTransaction utx;
 
@@ -59,12 +64,16 @@ public class EstudianteCalificaciones {
      */
     @Deployment
     public static JavaArchive createDeployment() {
+
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(EstudianteEntity.class.getPackage())
-                .addPackage(EstudianteLogic.class.getPackage())
+                .addPackage(EstudianteCalificacionesLogic.class.getPackage())
+                 .addPackage(EstudianteLogic.class.getPackage())
                 .addPackage(EstudiantePersistence.class.getPackage())
+
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
+
     }
 
     /**
@@ -91,8 +100,8 @@ public class EstudianteCalificaciones {
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
-        em.createQuery("delete from EstudianteEntity").executeUpdate();
         em.createQuery("delete from CalificacionEntity").executeUpdate();
+        em.createQuery("delete from EstudianteEntity").executeUpdate();
     }
 
     /**
@@ -106,6 +115,8 @@ public class EstudianteCalificaciones {
             EstudianteEntity entity = factory.manufacturePojo(EstudianteEntity.class);
             em.persist(entity);
             data.add(entity);
+            
+            System.err.println("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
             if (i == 0) {
                 caldata.get(i).setEstudiante(entity);
             }
@@ -116,6 +127,7 @@ public class EstudianteCalificaciones {
             em.persist(calificaciones);
             caldata.add(calificaciones);
         }
+
     }
     
      /**
@@ -124,7 +136,7 @@ public class EstudianteCalificaciones {
     @Test
     public void addCalificacionesTest() {
         EstudianteEntity entity = data.get(0);
-        CalificacionEntity calificacionEntity = caldata.get(1);
+        CalificacionEntity calificacionEntity = caldata.get(0);
         CalificacionEntity response = estudianteCalificacionesLogic.addCalificacion(calificacionEntity.getId(), entity.getId());
 
         Assert.assertNotNull(response);
@@ -138,7 +150,6 @@ public class EstudianteCalificaciones {
     @Test
     public void getCalificaionesTest() {
         List<CalificacionEntity> list = estudianteCalificacionesLogic.getCalificaciones(data.get(0).getId());
-
         Assert.assertEquals(1, list.size());
     }
     
@@ -169,7 +180,7 @@ public class EstudianteCalificaciones {
     @Test(expected = BusinessLogicException.class)
     public void getCalificacionNoAsociadaTest() throws BusinessLogicException {
         EstudianteEntity entity = data.get(0);
-        CalificacionEntity calEntity = caldata.get(1);
+        CalificacionEntity calEntity = caldata.get(0);
         estudianteCalificacionesLogic.getCalificacion(entity.getId(), calEntity.getId());
     }
     
