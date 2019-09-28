@@ -20,17 +20,30 @@ public class TarjetaDeCreditoLogic {
 
     @Inject
     private TarjetaDeCreditoPersistence persistence;
-
+    
     public TarjetaDeCreditoEntity createTarjetaDeCredito(TarjetaDeCreditoEntity tarjetaCredito) throws BusinessLogicException {
         
-        if (tarjetaCredito.getNumero() == null ) {
+        if (tarjetaCredito.getNumero() == null ) 
+        {
+            throw new BusinessLogicException("El número de la tarjeta de crédito no puede ser vacío.");
+        }
+        else if (tarjetaCredito.getNumero().equals(""))
+        {
             throw new BusinessLogicException("El número de la tarjeta de crédito no puede ser vacío.");
         }
         else if (tarjetaCredito.getNumero().length() != 16)
         {
             throw new BusinessLogicException("La tarjeta de credito debe contener 16 números");
-        }        
+        }
+        else if( !tarjetaCredito.getNumero().startsWith("4") && !tarjetaCredito.getNumero().startsWith("5") )
+        {      
+            throw new BusinessLogicException("Ingrese un número valido para una tarjeta MasterCard o VISA ");
+        }
         else if(tarjetaCredito.getCVC() == null  )
+        {
+            throw new BusinessLogicException("El cvc no debe estar vacío.");
+        }
+        else if(tarjetaCredito.getCVC().equals(""))
         {
             throw new BusinessLogicException("El cvc no debe estar vacío.");
         }
@@ -42,6 +55,10 @@ public class TarjetaDeCreditoLogic {
         {
             throw new BusinessLogicException("La fecha no debe estar vacía.");
         }
+        else if(tarjetaCredito.getFecha().equals(""))
+        {
+            throw new BusinessLogicException("La fecha no debe estar vacía.");
+        }
         else if(tarjetaCredito.getFecha().charAt(2) != '/')
         {
             throw new BusinessLogicException("El formato de la fecha debe ser dd/aa.");
@@ -50,6 +67,7 @@ public class TarjetaDeCreditoLogic {
         {
             throw new BusinessLogicException("La fecha debe contener el día y el año en el formato dd/aa");
         }
+        
         
         tarjetaCredito = persistence.create(tarjetaCredito);
         return tarjetaCredito;

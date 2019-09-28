@@ -6,6 +6,9 @@
 package co.edu.uniandes.csw.empleos.entities;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToOne;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *Clase que representa un contratista para poder ser guardado en la base de datos.
@@ -41,7 +44,9 @@ public class ContratistaEntity extends BaseEntity {
      */
     private String rutaImagen;
 
-   
+    @PodamExclude
+    @OneToOne(fetch = FetchType.LAZY)
+    private TarjetaDeCreditoEntity tarjetaCredito; 
 
     
 
