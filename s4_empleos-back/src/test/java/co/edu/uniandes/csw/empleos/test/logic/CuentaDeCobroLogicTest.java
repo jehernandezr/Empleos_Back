@@ -117,10 +117,11 @@ public class CuentaDeCobroLogicTest {
     public void createCuentaDeCobroTest() throws BusinessLogicException {
         CuentaDeCobroEntity newEntity = factory.manufacturePojo(CuentaDeCobroEntity.class);
         ContratistaEntity contratista = factory.manufacturePojo(ContratistaEntity.class);
+        contratista.setEmail(contratista.getEmail()+"@hotmail.com");
         ContratistaEntity contratistaGuardado= contratistaLogic.createContratista(contratista);
         newEntity.setContratista(contratistaGuardado);
+        newEntity.setValor(Math.abs(newEntity.getValor()));
         CuentaDeCobroEntity result = logic.createCuentaDeCobro(newEntity);
-        
         //Comprueba que la cuenta de cobro retornada del create no sea nula ni sus atributos
         Assert.assertNotNull(result);
         Assert.assertNotNull(result.getConcepto());
