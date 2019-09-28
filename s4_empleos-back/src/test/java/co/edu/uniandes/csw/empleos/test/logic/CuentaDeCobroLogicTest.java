@@ -12,6 +12,7 @@ import co.edu.uniandes.csw.empleos.entities.CuentaDeCobroEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.empleos.persistence.CuentaDeCobroPersistence;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -116,6 +117,11 @@ public class CuentaDeCobroLogicTest {
     @Test
     public void createCuentaDeCobroTest() throws BusinessLogicException {
         CuentaDeCobroEntity newEntity = factory.manufacturePojo(CuentaDeCobroEntity.class);
+        newEntity.setValor(22);
+        newEntity.setConcepto("pago");
+        newEntity.setFecha(new Date(2019, 9, 28));
+        newEntity.setNombreEstudiante("pepito");
+        newEntity.setNumeroCuentaDeCobro(322);
         ContratistaEntity contratista = factory.manufacturePojo(ContratistaEntity.class);
         contratista.setEmail("fff@uniandes.edu.co");
         ContratistaEntity contratistaGuardado= contratistaLogic.createContratista(contratista);
