@@ -36,7 +36,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author Nicolàs Munar
  */
 @RunWith(Arquillian.class)
-public class EstudianteCalificaciones {
+public class EstudianteCalificacionesLogicTest {
     
        private PodamFactory factory = new PodamFactoryImpl();
 
