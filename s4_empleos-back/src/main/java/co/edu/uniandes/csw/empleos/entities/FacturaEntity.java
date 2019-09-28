@@ -80,5 +80,19 @@ public class FacturaEntity extends BaseEntity{
     public void setValor(Integer valor) {
         this.valor = valor;
     }
+
+    /**
+     * @return the trabajo
+     */
+    public TrabajoEntity getTrabajo() {
+        return trabajo;
+    }
+
+    /**
+     * @param trabajo the trabajo to set
+     */
+    public void setTrabajo(TrabajoEntity trabajo) {
+        this.trabajo = trabajo;
+    }
       
 }
