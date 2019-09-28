@@ -12,7 +12,6 @@ import co.edu.uniandes.csw.empleos.entities.CuentaDeCobroEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.empleos.persistence.CuentaDeCobroPersistence;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -117,17 +116,12 @@ public class CuentaDeCobroLogicTest {
     @Test
     public void createCuentaDeCobroTest() throws BusinessLogicException {
         CuentaDeCobroEntity newEntity = factory.manufacturePojo(CuentaDeCobroEntity.class);
-        newEntity.setValor(22);
-        newEntity.setConcepto("pago");
-        newEntity.setFecha(new Date(2019, 9, 28));
-        newEntity.setNombreEstudiante("pepito");
-        newEntity.setNumeroCuentaDeCobro(322);
         ContratistaEntity contratista = factory.manufacturePojo(ContratistaEntity.class);
-        contratista.setEmail("fff@uniandes.edu.co");
+        contratista.setEmail(contratista.getEmail()+"@hotmail.com");
         ContratistaEntity contratistaGuardado= contratistaLogic.createContratista(contratista);
         newEntity.setContratista(contratistaGuardado);
+        newEntity.setValor(Math.abs(newEntity.getValor()));
         CuentaDeCobroEntity result = logic.createCuentaDeCobro(newEntity);
-        
         //Comprueba que la cuenta de cobro retornada del create no sea nula ni sus atributos
         Assert.assertNotNull(result);
         Assert.assertNotNull(result.getConcepto());
