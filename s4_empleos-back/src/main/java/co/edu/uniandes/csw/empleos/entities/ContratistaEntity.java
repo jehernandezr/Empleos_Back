@@ -10,9 +10,13 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.OneToOne;
+import uk.co.jemos.podam.common.PodamExclude;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import uk.co.jemos.podam.common.PodamExclude;
+import uk.co.jemos.podam.common.PodamStringValue;
+
 
 /**
  *Clase que representa un contratista para poder ser guardado en la base de datos.
@@ -50,6 +54,7 @@ public class ContratistaEntity extends BaseEntity {
     /**
      * Variable que representa el nombre del contratista.
      */
+ 
     private String nombre;
     
     /**
@@ -69,7 +74,9 @@ public class ContratistaEntity extends BaseEntity {
      */
     private String rutaImagen;
 
-   
+    @PodamExclude
+    @OneToOne(fetch = FetchType.LAZY)
+    private TarjetaDeCreditoEntity tarjetaCredito; 
 
     
 

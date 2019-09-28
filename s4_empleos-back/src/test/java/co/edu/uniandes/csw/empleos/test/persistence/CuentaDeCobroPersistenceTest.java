@@ -154,9 +154,13 @@ public class CuentaDeCobroPersistenceTest {
         
         CuentaDeCobroEntity cu= persistance.create(cuenta);
         Assert.assertNotNull(cu);
-        //se hace una copia y se la modifica
-        CuentaDeCobroEntity cn= cu;
         
+       //se hace una copia y se la modifica
+        CuentaDeCobroEntity cn= cu;
+
+        cn.setConcepto("Trabajo nuevo");
+        cn.setNombreEstudiante("Losarig");
+        cn.setValor(875643);
         cn.setFecha(new Date());
         cn.setNumeroCuentaDeCobro(51920);
         //Se la actualiza

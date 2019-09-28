@@ -82,7 +82,7 @@ public class TarjetaDeCreditoLogicTest {
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
-        em.createQuery("delete from CuentaBancariaEntity").executeUpdate();
+        em.createQuery("delete from TarjetaDeCreditoEntity").executeUpdate();
 
     }
     
@@ -102,7 +102,7 @@ public class TarjetaDeCreditoLogicTest {
     @Test
     public void createTarjetaDeCredito() throws BusinessLogicException {
         TarjetaDeCreditoEntity newEntity = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
-        newEntity.setNumero("1234567891234567");
+        newEntity.setNumero("4234567891234567");
         newEntity.setCVC("123");
         newEntity.setFecha("12/12");
         TarjetaDeCreditoEntity result = tarjetaCreditoLogic.createTarjetaDeCredito(newEntity);
@@ -111,6 +111,13 @@ public class TarjetaDeCreditoLogicTest {
         TarjetaDeCreditoEntity entity = em.find(TarjetaDeCreditoEntity.class, result.getId());
         Assert.assertEquals(entity.getNumero(), result.getNumero());
 
+    }
+    
+    @Test(expected = BusinessLogicException.class)
+    public void createTarjetaDeCreditoNoVisaNoMaster() throws BusinessLogicException {
+        TarjetaDeCreditoEntity newEntity = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
+        newEntity.setNumero("0234567890123456");
+        TarjetaDeCreditoEntity result = tarjetaCreditoLogic.createTarjetaDeCredito(newEntity);
     }
 
     @Test(expected = BusinessLogicException.class)
@@ -123,14 +130,21 @@ public class TarjetaDeCreditoLogicTest {
     @Test (expected = BusinessLogicException.class)
     public void createTarjetaDeCreditoLenght() throws BusinessLogicException {
         TarjetaDeCreditoEntity newEntity = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
-        newEntity.setNumero("12345678912345677");
+        newEntity.setNumero("42345678912345677");
+        TarjetaDeCreditoEntity result = tarjetaCreditoLogic.createTarjetaDeCredito(newEntity);
+    }
+    
+    @Test (expected = BusinessLogicException.class)
+    public void createTarjetaDeCreditoNumeroVacio() throws BusinessLogicException {
+        TarjetaDeCreditoEntity newEntity = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
+        newEntity.setNumero("");
         TarjetaDeCreditoEntity result = tarjetaCreditoLogic.createTarjetaDeCredito(newEntity);
     }
     
     @Test 
     public void createTarjetaDeCreditoCVC() throws BusinessLogicException{
         TarjetaDeCreditoEntity newEntity = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
-        newEntity.setNumero("1234567890123456");
+        newEntity.setNumero("5234567890123456");
         newEntity.setCVC("132");
         newEntity.setFecha("12/12");
         TarjetaDeCreditoEntity result = tarjetaCreditoLogic.createTarjetaDeCredito(newEntity);
@@ -154,10 +168,17 @@ public class TarjetaDeCreditoLogicTest {
         TarjetaDeCreditoEntity result = tarjetaCreditoLogic.createTarjetaDeCredito(newEntity);
     }
     
+    @Test (expected = BusinessLogicException.class)
+    public void createTarjetaDeCreditoVacioCVC() throws BusinessLogicException {
+        TarjetaDeCreditoEntity newEntity = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
+        newEntity.setCVC("");
+        TarjetaDeCreditoEntity result = tarjetaCreditoLogic.createTarjetaDeCredito(newEntity);
+    }
+    
     @Test
     public void createTarjetaDeCreditoFecha() throws BusinessLogicException {
         TarjetaDeCreditoEntity newEntity = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
-        newEntity.setNumero("1234567890123456");
+        newEntity.setNumero("4234567890123456");
         newEntity.setCVC("123");
         newEntity.setFecha("12/12");
         TarjetaDeCreditoEntity result = tarjetaCreditoLogic.createTarjetaDeCredito(newEntity);
@@ -171,9 +192,16 @@ public class TarjetaDeCreditoLogicTest {
     public void createTarjetaDeCreditoFechaNull() throws BusinessLogicException
     {
         TarjetaDeCreditoEntity newEntity = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
+        newEntity.setFecha(null);
+        TarjetaDeCreditoEntity result = tarjetaCreditoLogic.createTarjetaDeCredito(newEntity);
+    }
+    
+    @Test (expected = BusinessLogicException.class)
+    public void createTarjetaDeCreditoFechaVacia() throws BusinessLogicException
+    {
+        TarjetaDeCreditoEntity newEntity = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
         newEntity.setFecha("");
         TarjetaDeCreditoEntity result = tarjetaCreditoLogic.createTarjetaDeCredito(newEntity);
-        
     }
     
     @Test (expected = BusinessLogicException.class)
@@ -195,7 +223,6 @@ public class TarjetaDeCreditoLogicTest {
         Assert.assertEquals(entity.getNumero(), resultEntity.getNumero());
         Assert.assertEquals(entity.getCVC(), resultEntity.getCVC());
         Assert.assertEquals(entity.getFecha(), resultEntity.getFecha());
-                
     }
     
     @Test 

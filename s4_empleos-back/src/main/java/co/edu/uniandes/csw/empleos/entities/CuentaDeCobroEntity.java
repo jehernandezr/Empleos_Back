@@ -9,10 +9,12 @@ import co.edu.uniandes.csw.empleos.podam.DateStrategy;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import uk.co.jemos.podam.common.PodamExclude;
+import uk.co.jemos.podam.common.PodamLongValue;
 import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
@@ -22,16 +24,19 @@ import uk.co.jemos.podam.common.PodamStrategyValue;
 @Entity
 public class CuentaDeCobroEntity extends BaseEntity implements Serializable {
 
-    
-    @PodamExclude
-    @OneToOne()
-    private ContratistaEntity contratista;
     /**
      * numeroCuentaDeCobro
      */
+    @PodamLongValue(minValue = 1)
     private int numeroCuentaDeCobro;
 
-  
+
+    /**
+    *Contratista de la cuenta de cobro
+    */
+    @PodamExclude
+    @ManyToOne
+    private ContratistaEntity contratista;
 
     /**
     *fecha de la cuenta de cobro
@@ -43,6 +48,7 @@ public class CuentaDeCobroEntity extends BaseEntity implements Serializable {
     /**
      * Valor que de debe.
      */
+    @PodamLongValue(minValue = 1)
     private int valor;
     
     /**
@@ -81,9 +87,7 @@ public class CuentaDeCobroEntity extends BaseEntity implements Serializable {
     public void setNumeroCuentaDeCobro(int numeroCuentaDeCobro) {
         this.numeroCuentaDeCobro = numeroCuentaDeCobro;
     }
-
     
-
     /**
      * @return the Fecha
      */
