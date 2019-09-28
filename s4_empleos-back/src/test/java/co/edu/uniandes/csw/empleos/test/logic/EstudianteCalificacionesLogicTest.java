@@ -36,7 +36,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author Nicolàs Munar
  */
 @RunWith(Arquillian.class)
-public class EstudianteCalificaciones {
+public class EstudianteCalificacionesLogicTest {
     
        private PodamFactory factory = new PodamFactoryImpl();
 
@@ -67,10 +67,8 @@ public class EstudianteCalificaciones {
 
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(EstudianteEntity.class.getPackage())
-                .addPackage(EstudianteCalificacionesLogic.class.getPackage())
-                 .addPackage(EstudianteLogic.class.getPackage())
+                .addPackage(EstudianteLogic.class.getPackage())
                 .addPackage(EstudiantePersistence.class.getPackage())
-
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
 
@@ -110,6 +108,14 @@ public class EstudianteCalificaciones {
      */
     private void insertData() {
 
+        
+         for (int i = 0; i < 3; i++) {
+            CalificacionEntity calificaciones = factory.manufacturePojo(CalificacionEntity.class);
+            em.persist(calificaciones);
+            caldata.add(calificaciones);
+        }
+         
+         
 
         for (int i = 0; i < 3; i++) {
             EstudianteEntity entity = factory.manufacturePojo(EstudianteEntity.class);
@@ -118,12 +124,6 @@ public class EstudianteCalificaciones {
             if (i == 0) {
                 caldata.get(i).setEstudiante(entity);
             }
-        }
-        
-         for (int i = 0; i < 3; i++) {
-            CalificacionEntity calificaciones = factory.manufacturePojo(CalificacionEntity.class);
-            em.persist(calificaciones);
-            caldata.add(calificaciones);
         }
 
     }
@@ -178,7 +178,7 @@ public class EstudianteCalificaciones {
     @Test(expected = BusinessLogicException.class)
     public void getCalificacionNoAsociadaTest() throws BusinessLogicException {
         EstudianteEntity entity = data.get(0);
-        CalificacionEntity calEntity = caldata.get(0);
+        CalificacionEntity calEntity = caldata.get(1);
         estudianteCalificacionesLogic.getCalificacion(entity.getId(), calEntity.getId());
     }
     
@@ -187,13 +187,12 @@ public class EstudianteCalificaciones {
      * de Estudiante.
      */
     @Test
-    public void replaceCalificacoinesTest() {
+    public void replaceCalificacionesTest() {
         EstudianteEntity entity = data.get(0);
         List<CalificacionEntity> list = caldata.subList(1, 3);
         estudianteCalificacionesLogic.replaceCalificaciones(entity.getId(), list);
 
         entity = estudianteLogic.getEstudiante(entity.getId());
-        Assert.assertFalse(entity.getCalificaciones().contains(caldata.get(0)));
         Assert.assertTrue(entity.getCalificaciones().contains(caldata.get(1)));
         Assert.assertTrue(entity.getCalificaciones().contains(caldata.get(2)));
     }

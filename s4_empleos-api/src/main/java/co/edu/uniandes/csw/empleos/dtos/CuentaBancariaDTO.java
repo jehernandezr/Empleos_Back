@@ -22,7 +22,8 @@ public class CuentaBancariaDTO implements Serializable {
 
     private int tipoCuenta;
 
-   //private EstudianteDTO estudiante;
+   private EstudianteDTO estudiante;
+   
     public CuentaBancariaDTO() {
     }
 
@@ -104,12 +105,26 @@ public class CuentaBancariaDTO implements Serializable {
         cuentaBancaria.setNumeroCuenta(this.getNumeroCuenta());
         cuentaBancaria.setTipoCuenta(this.getTipoCuenta() == 2 ? "ahorros" : this.getTipoCuenta() == 3 ? "corriente" : "fff");
         
-       // if(this.estudiante!=null)
-       // {
-          //  cuentaBancaria.setEstudiante(this.estudiante.toEntity());
-        //}
+        if(this.getEstudiante()!=null)
+        {
+           cuentaBancaria.setEstudiante(this.getEstudiante().toEntity());
+        }
         
         return cuentaBancaria;
-    //}
+    
      }
+
+    /**
+     * @return the estudiante
+     */
+    public EstudianteDTO getEstudiante() {
+        return estudiante;
+    }
+
+    /**
+     * @param estudiante the estudiante to set
+     */
+    public void setEstudiante(EstudianteDTO estudiante) {
+        this.estudiante = estudiante;
+    }
 }

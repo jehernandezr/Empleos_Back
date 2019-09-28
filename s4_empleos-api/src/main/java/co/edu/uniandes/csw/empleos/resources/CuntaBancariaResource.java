@@ -67,7 +67,7 @@ public class CuntaBancariaResource {
  
     public  CuentaBancariaDTO updateCuenta(@PathParam("cuentaId") Long cuentaId,  CuentaBancariaDTO cuenta) throws BusinessLogicException {
         
-        if (cuentaId.equals(cuenta.getId())) {
+        if (!cuentaId.equals(cuenta.getId())) {
             throw new BusinessLogicException("La id de la cuenta no coincide.");
         }
         CuentaBancariaEntity entity = logic.getCuentaBancaria(cuentaId);
