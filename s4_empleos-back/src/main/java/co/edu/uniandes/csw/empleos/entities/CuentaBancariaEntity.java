@@ -8,8 +8,6 @@ package co.edu.uniandes.csw.empleos.entities;
 
 import co.edu.uniandes.csw.empleos.podam.NumeroStringStrategy;
 import co.edu.uniandes.csw.empleos.podam.TipoCuentaStrategy;
-import java.util.Objects;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
@@ -104,21 +102,6 @@ public class CuentaBancariaEntity extends BaseEntity {
      */
     public void setNombreBanco(String nombreBanco) {
         this.nombreBanco = nombreBanco;
-    }
-
-   @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final CuentaBancariaEntity other = (CuentaBancariaEntity)obj;
-        return Objects.equals(this.numeroCuenta, other.getNumeroCuenta());
     }
 
 }
