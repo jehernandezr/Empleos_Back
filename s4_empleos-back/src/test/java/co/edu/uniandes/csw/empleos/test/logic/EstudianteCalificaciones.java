@@ -115,8 +115,6 @@ public class EstudianteCalificaciones {
             EstudianteEntity entity = factory.manufacturePojo(EstudianteEntity.class);
             em.persist(entity);
             data.add(entity);
-            
-            System.err.println("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
             if (i == 0) {
                 caldata.get(i).setEstudiante(entity);
             }
