@@ -372,7 +372,7 @@ public class OfertaEntity extends BaseEntity{
     /**
      * @param trabajos the trabajos to set
      */
-    public void setTrabajos(TrabajoEntity ptrabajo) {
+    public void setTrabajo(TrabajoEntity ptrabajo) {
         this.trabajo = ptrabajo;
     }
     
