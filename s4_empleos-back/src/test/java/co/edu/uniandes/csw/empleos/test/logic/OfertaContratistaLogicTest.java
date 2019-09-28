@@ -58,7 +58,7 @@ public class OfertaContratistaLogicTest {
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(ContratistaEntity.class.getPackage())
-                .addPackage(OfertaContratistaLogic.class.getPackage())
+                .addPackage(OfertaLogic.class.getPackage())
                 .addPackage(ContratistaPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
@@ -89,8 +89,9 @@ public class OfertaContratistaLogicTest {
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
-        em.createQuery("delete from ContratistaEntity").executeUpdate();
         em.createQuery("delete from OfertaEntity").executeUpdate();
+        em.createQuery("delete from ContratistaEntity").executeUpdate();
+        
         
     }
 
@@ -114,21 +115,24 @@ public class OfertaContratistaLogicTest {
         }
     }
 
+   
     /**
-     * Prueba para remplazar las instancias de Books asociadas a una instancia
-     * de Editorial.
+     * Prueba para obtener una colección de instancias de ofertas asociadas a
+     * una instancia Contratista.
+     *
      * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
      */
     @Test
     public void replaceContratistaTest() throws BusinessLogicException {
         OfertaEntity entity = ofertasData.get(0);
+        System.out.println(entity.getDescripcion());
         ofertaContratistaLogic.replaceContratista(entity.getId(), data.get(0).getId());
         entity = ofertaLogic.getOferta(entity.getId());
         Assert.assertEquals(entity.getContratista(), data.get(0));
     }
 
     /**
-     * Prueba para desasociar un Book existente de un Editorial existente
+     * Prueba para desasociar una oferta existente de un Contratista existente
      *
      * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
      */

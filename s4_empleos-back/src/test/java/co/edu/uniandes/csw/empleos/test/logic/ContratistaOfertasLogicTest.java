@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.empleos.test.logic;
 
 import co.edu.uniandes.csw.empleos.ejb.ContratistaLogic;
 import co.edu.uniandes.csw.empleos.ejb.ContratistaOfertasLogic;
+import co.edu.uniandes.csw.empleos.ejb.OfertaLogic;
 import co.edu.uniandes.csw.empleos.entities.ContratistaEntity;
 import co.edu.uniandes.csw.empleos.entities.OfertaEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
@@ -62,7 +63,7 @@ public class ContratistaOfertasLogicTest {
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(ContratistaEntity.class.getPackage())
-                .addPackage(ContratistaOfertasLogic.class.getPackage())
+                .addPackage(ContratistaLogic.class.getPackage())
                 .addPackage(ContratistaPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
@@ -93,8 +94,9 @@ public class ContratistaOfertasLogicTest {
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
-          em.createQuery("delete from ContratistaEntity").executeUpdate();
         em.createQuery("delete from OfertaEntity").executeUpdate();
+          em.createQuery("delete from ContratistaEntity").executeUpdate();
+        
       
     }
 
@@ -123,9 +125,9 @@ public class ContratistaOfertasLogicTest {
      */
     @Test
     public void addOfertasTest() {
-        ContratistaEntity entity = data.get(1);
-        OfertaEntity ofertaEntity = ofertasData.get(0);
-        OfertaEntity response = contratistaOfertasLogic.addOferta(ofertaEntity.getId(), entity.getId());
+        ContratistaEntity entity = data.get(0);
+        OfertaEntity ofertaEntity = ofertasData.get(1);
+        OfertaEntity response = contratistaOfertasLogic.addOferta(entity.getId(),ofertaEntity.getId() );
 
         Assert.assertNotNull(response);
         Assert.assertEquals(ofertaEntity.getId(), response.getId());
@@ -145,11 +147,12 @@ public class ContratistaOfertasLogicTest {
      * Prueba para obtener una colección de instancias de ofertas asociadas a
      * una instancia Contratista.
      *
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
      */
     @Test
     public void getOfertaTest() throws BusinessLogicException {
-        ContratistaEntity entity = data.get(1);
-        OfertaEntity ofertaEntity = ofertasData.get(1);
+        ContratistaEntity entity = data.get(0);
+        OfertaEntity ofertaEntity = ofertasData.get(0);
         OfertaEntity response = contratistaOfertasLogic.getOferta(entity.getId(), ofertaEntity.getId());
 
         Assert.assertEquals(ofertaEntity.getId(), response.getId());
@@ -162,18 +165,21 @@ public class ContratistaOfertasLogicTest {
      * Prueba para obtener una colección de instancias de ofertas asociadas a
      * una instancia Contratista.
      *
-     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
      */
     @Test(expected = BusinessLogicException.class)
     public void getOfertaNoAsociadoTest() throws BusinessLogicException {
-        ContratistaEntity entity = data.get(1);
+        ContratistaEntity entity = data.get(0);
         OfertaEntity ofertaEntity = ofertasData.get(1);
         contratistaOfertasLogic.getOferta(entity.getId(), ofertaEntity.getId());
     }
 
+    
     /**
-     * Prueba para remplazar las instancias de Books asociadas a una instancia
-     * de Editorial.
+     * Prueba para obtener una colección de instancias de ofertas asociadas a
+     * una instancia Contratista.
+     *
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
      */
     @Test
     public void replaceOfertasTest() throws BusinessLogicException {
@@ -182,7 +188,7 @@ public class ContratistaOfertasLogicTest {
         contratistaOfertasLogic.replaceOfertas(entity.getId(), list);
 
         entity = contratistaLogic.getContratista(entity.getId());
-        Assert.assertFalse(entity.getOfertas().contains(ofertasData.get(0)));
+        
         Assert.assertTrue(entity.getOfertas().contains(ofertasData.get(1)));
         Assert.assertTrue(entity.getOfertas().contains(ofertasData.get(2)));
     }

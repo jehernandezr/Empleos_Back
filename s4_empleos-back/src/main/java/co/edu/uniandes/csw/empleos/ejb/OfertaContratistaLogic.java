@@ -47,7 +47,10 @@ public class OfertaContratistaLogic {
         OfertaEntity ofertaEntity = ofertaPerssitance.find(ofertaId);
         ContratistaEntity contratistaEntity = contratistaPersistence.find(ofertaEntity.getContratista().getId());
         ofertaEntity.setContratista(null);
+        ofertaPerssitance.update(ofertaEntity);
         contratistaEntity.getOfertas().remove(ofertaEntity);
+        contratistaPersistence.update(contratistaEntity);
+                
         
     }
 }
