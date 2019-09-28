@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.empleos.dtos;
 
+import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -118,6 +119,10 @@ class EstudianteDTO implements Serializable{
      */
     public void setHorarioDeTrabajo(Date horarioDeTrabajo) {
         this.horarioDeTrabajo = horarioDeTrabajo;
+    }
+
+    EstudianteEntity toEntity() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
