@@ -31,14 +31,13 @@ import org.junit.runner.RunWith;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
-
 /**
  *
  * @author David Domínguez
  */
 @RunWith(Arquillian.class)
 public class TrabajoOfertasLogicTest {
-    
+
     private PodamFactory factory = new PodamFactoryImpl();
 
     @Inject
@@ -51,7 +50,7 @@ public class TrabajoOfertasLogicTest {
 
     @PersistenceContext
     private EntityManager em;
-    
+
     @Inject
     private UserTransaction utx;
 
@@ -112,8 +111,11 @@ public class TrabajoOfertasLogicTest {
      * pruebas.
      */
     private void insertData() {
-
-
+        for (int i = 0; i < 3; i++) {
+            TrabajoEntity trabajos = factory.manufacturePojo(TrabajoEntity.class);
+            em.persist(trabajos);
+            caldata.add(trabajos);
+        }
         for (int i = 0; i < 3; i++) {
             OfertaEntity entity = factory.manufacturePojo(OfertaEntity.class);
             em.persist(entity);
@@ -122,25 +124,31 @@ public class TrabajoOfertasLogicTest {
                 caldata.get(i).setOferta(entity);
             }
         }
-        
-         for (int i = 0; i < 3; i++) {
-            TrabajoEntity trabajos = factory.manufacturePojo(TrabajoEntity.class);
-            em.persist(trabajos);
-            caldata.add(trabajos);
-        }
 
     }
-    
+
     /**
      * Prueba para remplazar las instancias de Books asociadas a una instancia
      * de Editorial.
      */
     @Test
-    public void replaceOfertaTest() {
-        TrabajoEntity entity = caldata.get(0);
-        trabajoOfertaLogic.replaceOferta(entity.getId(), data.get(1).getId());
-        entity = trabajoLogic.getTrabajo(entity.getId());
-        Assert.assertEquals(entity.getOferta(), data.get(1));
+    public void replaceOfertaTest() throws BusinessLogicException {
+        try {
+            utx.begin();
+            em.joinTransaction();
+            TrabajoEntity entity = caldata.get(0);
+            trabajoOfertaLogic.replaceOferta(entity.getId(), data.get(0).getId());
+            entity = trabajoLogic.getTrabajo(entity.getId());
+            Assert.assertEquals(entity.getOferta().getId(), data.get(0).getId());
+        } catch (Exception exx) {
+            Assert.fail("No debería haber lanzado excepción");
+            exx.printStackTrace();
+            try {
+                utx.rollback();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
     }
-    
+
 }

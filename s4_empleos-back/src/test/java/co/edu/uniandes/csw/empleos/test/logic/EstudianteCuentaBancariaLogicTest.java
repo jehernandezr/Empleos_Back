@@ -25,14 +25,13 @@ import org.junit.runner.RunWith;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
-
 /**
  *
  * @author David Dominguez
  */
 @RunWith(Arquillian.class)
 public class EstudianteCuentaBancariaLogicTest {
-    
+
     private PodamFactory factory = new PodamFactoryImpl();
 
     @Inject
@@ -45,7 +44,7 @@ public class EstudianteCuentaBancariaLogicTest {
 
     @PersistenceContext
     private EntityManager em;
-    
+
     @Inject
     private UserTransaction utx;
 
@@ -106,36 +105,46 @@ public class EstudianteCuentaBancariaLogicTest {
      * pruebas.
      */
     private void insertData() {
-
-
         for (int i = 0; i < 3; i++) {
-        	CuentaBancariaEntity entity = factory.manufacturePojo(CuentaBancariaEntity.class);
-            em.persist(entity);
-            data.add(entity);
-            if (i == 0) {
-            	caldata.get(0).setCuentaBancaria(data.get(0));
-            }
-        }
-        
-         for (int i = 0; i < 3; i++) {
             EstudianteEntity est = factory.manufacturePojo(EstudianteEntity.class);
             em.persist(est);
             caldata.add(est);
         }
 
+        for (int i = 0; i < 3; i++) {
+            CuentaBancariaEntity entity = factory.manufacturePojo(CuentaBancariaEntity.class);
+            em.persist(entity);
+            data.add(entity);
+            if (i == 0) {
+                caldata.get(0).setCuentaBancaria(data.get(0));
+            }
+        }
+
     }
-    
+
     /**
      * Prueba para remplazar las instancias de Books asociadas a una instancia
      * de Editorial.
      */
     @Test
-    public void replaceCuentaBancariaTest() {
-        EstudianteEntity entity = caldata.get(0);
-        CuentaBancariaEntity c = data.get(1);
-        estudianteCuentaBancariaLogic.replaceCuentaBancaria(entity.getId(), data.get(0).getId());
-        entity = estudianteLogic.getEstudiante(entity.getId());
-        Assert.assertEquals(entity.getCuentaBancaria(), c);
+    public void replaceCuentaBancariaTest() throws BusinessLogicException {
+        try {
+            utx.begin();
+            em.joinTransaction();
+            EstudianteEntity entity = caldata.get(0);
+            CuentaBancariaEntity c = data.get(0);
+            estudianteCuentaBancariaLogic.replaceCuentaBancaria(entity.getId(), data.get(0).getId());
+            entity = estudianteLogic.getEstudiante(entity.getId());
+            Assert.assertEquals(entity.getCuentaBancaria(), c);
+        } catch (Exception exx) {
+            Assert.fail("No debería haber lanzado excepción");
+            exx.printStackTrace();
+            try {
+                utx.rollback();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
     }
-    
+
 }

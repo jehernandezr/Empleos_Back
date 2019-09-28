@@ -30,14 +30,13 @@ import org.junit.runner.RunWith;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
-
 /**
  *
  * @author David Dominguez
  */
 @RunWith(Arquillian.class)
 public class EstudianteOfertasLogicTest {
-    
+
     private PodamFactory factory = new PodamFactoryImpl();
 
     @Inject
@@ -50,7 +49,7 @@ public class EstudianteOfertasLogicTest {
 
     @PersistenceContext
     private EntityManager em;
-    
+
     @Inject
     private UserTransaction utx;
 
@@ -112,33 +111,49 @@ public class EstudianteOfertasLogicTest {
      */
     private void insertData() {
 
-
+        for (int i = 0; i < 3; i++) {
+            EstudianteEntity est = factory.manufacturePojo(EstudianteEntity.class);
+            em.persist(est);
+            caldata.add(est);
+        }
         for (int i = 0; i < 3; i++) {
             OfertaEntity entity = factory.manufacturePojo(OfertaEntity.class);
             em.persist(entity);
             data.add(entity);
         }
         caldata.get(0).setOfertas(data);
-        
-         for (int i = 0; i < 3; i++) {
-            EstudianteEntity est = factory.manufacturePojo(EstudianteEntity.class);
-            em.persist(est);
-            caldata.add(est);
-        }
 
     }
-    
+
     /**
      * Prueba para remplazar las instancias de Books asociadas a una instancia
      * de Editorial.
      */
     @Test
-    public void replaceOfertaTest() {
-        EstudianteEntity entity = caldata.get(0);
-        OfertaEntity e = data.get(0);
-        estudianteOfertasLogic.replaceOferta(entity.getId(), data.get(0).getId());
-        entity = estudianteLogic.getEstudiante(entity.getId());
-        Assert.assertEquals(entity.getOfertas(), data.remove(e));
+    public void replaceOfertaTest() throws BusinessLogicException {
+        try {
+            utx.begin();
+            em.joinTransaction();
+            EstudianteEntity entity = caldata.get(0);
+            OfertaEntity e = data.get(0);
+            estudianteOfertasLogic.replaceOferta(entity.getId(), data.get(0).getId());
+            entity = estudianteLogic.getEstudiante(entity.getId());
+            for(OfertaEntity i: entity.getOfertas()){
+                System.out.println("entity: " + i.getId());
+            }
+             for(OfertaEntity i: data){
+                System.out.println("data: " + i.getId());
+            }
+            Assert.assertEquals(entity.getOfertas(), data);
+        } catch (Exception exx) {
+            Assert.fail("No debería haber lanzado excepción");
+            exx.printStackTrace();
+            try {
+                utx.rollback();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
     }
-    
+
 }
