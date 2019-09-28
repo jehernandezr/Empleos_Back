@@ -51,11 +51,11 @@ public class EstudianteOfertasLogic {
     public void removeOferta(Long estId, Long ofertaId) {
         EstudianteEntity estudianteEntity = estudiantePersistence.find(estId);
         OfertaEntity oferta = null;
-        for(OfertaEntity o : estudianteEntity.getOfertas()) {
+        /*for(OfertaEntity o : estudianteEntity.getOfertas()) {
         	if(o.getId() == ofertaId) {
         		oferta = o;
-        } 
-        OfertaEntity ofertaEntity = ofertaPersistence.find(o.getId());
+        }*/
+        OfertaEntity ofertaEntity = ofertaPersistence.find(estId);
         int i = 0;
         for(OfertaEntity ofe : estudianteEntity.getOfertas()) {
         	if(ofe.getId() == ofertaId) {
@@ -76,7 +76,7 @@ public class EstudianteOfertasLogic {
         		
         }
         }
-    }
+    
     
     
 

@@ -146,5 +146,18 @@ public class EstudianteCuentaBancariaLogicTest {
             }
         }
     }
+    
+    
+    /**
+     * Prueba para desasociar una cuentaBancaria existente de un Estudiante existente
+     *
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
+     */
+    @Test
+    public void removeCuentaBancariaTest() throws BusinessLogicException {
+        estudianteCuentaBancariaLogic.removeCuentaBancaria(caldata.get(0).getId());
+        EstudianteEntity response = estudianteLogic.getEstudiante(caldata.get(0).getId());
+        Assert.assertNull(response.getCuentaBancaria());
+    }
 
 }

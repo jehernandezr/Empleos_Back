@@ -116,6 +116,8 @@ public class CuentaDeCobroLogicTest {
     @Test
     public void createCuentaDeCobroTest() throws BusinessLogicException {
         CuentaDeCobroEntity newEntity = factory.manufacturePojo(CuentaDeCobroEntity.class);
+        newEntity.setNumeroCuentaDeCobro(Math.abs(newEntity.getNumeroCuentaDeCobro()) + 1);
+        newEntity.setValor(Math.abs(newEntity.getValor()) + 1);
         ContratistaEntity contratista = factory.manufacturePojo(ContratistaEntity.class);
         contratista.setEmail(contratista.getEmail()+"@hotmail.com");
         ContratistaEntity contratistaGuardado= contratistaLogic.createContratista(contratista);
@@ -150,6 +152,8 @@ public class CuentaDeCobroLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void createCuentaDeCobroConceptoNulo() throws BusinessLogicException {
         CuentaDeCobroEntity entity = factory.manufacturePojo(CuentaDeCobroEntity.class);
+        entity.setNumeroCuentaDeCobro(Math.abs(entity.getNumeroCuentaDeCobro()) + 1);
+        entity.setValor(Math.abs(entity.getValor()) + 1);
         entity.setConcepto(null);
         logic.createCuentaDeCobro(entity);
     }
@@ -157,6 +161,8 @@ public class CuentaDeCobroLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void createCuentaDeCobroContratistaNulo() throws BusinessLogicException {
         CuentaDeCobroEntity entity = factory.manufacturePojo(CuentaDeCobroEntity.class);
+        entity.setNumeroCuentaDeCobro(Math.abs(entity.getNumeroCuentaDeCobro()) + 1);
+        entity.setValor(Math.abs(entity.getValor()) + 1);
         entity.setContratista(null);
         logic.createCuentaDeCobro(entity);
     }
@@ -164,6 +170,8 @@ public class CuentaDeCobroLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void createCuentaDeCobroFechaNula() throws BusinessLogicException {
         CuentaDeCobroEntity entity = factory.manufacturePojo(CuentaDeCobroEntity.class);
+        entity.setNumeroCuentaDeCobro(Math.abs(entity.getNumeroCuentaDeCobro()) + 1);
+        entity.setValor(Math.abs(entity.getValor()) + 1);
         entity.setFecha(null);
         logic.createCuentaDeCobro(entity);
     }
@@ -171,6 +179,8 @@ public class CuentaDeCobroLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void createCuentaDeCobroConceptoVacio() throws BusinessLogicException {
         CuentaDeCobroEntity entity = factory.manufacturePojo(CuentaDeCobroEntity.class);
+        entity.setNumeroCuentaDeCobro(Math.abs(entity.getNumeroCuentaDeCobro()) + 1);
+        entity.setValor(Math.abs(entity.getValor()) + 1);
         entity.setConcepto("");
         logic.createCuentaDeCobro(entity);
     }
@@ -178,6 +188,8 @@ public class CuentaDeCobroLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void createCuentaDeCobroNombreEstudianteNulo () throws BusinessLogicException {
         CuentaDeCobroEntity entity = factory.manufacturePojo(CuentaDeCobroEntity.class);
+        entity.setNumeroCuentaDeCobro(Math.abs(entity.getNumeroCuentaDeCobro()) + 1);
+        entity.setValor(Math.abs(entity.getValor()) + 1);
         entity.setNombreEstudiante(null);
         logic.createCuentaDeCobro(entity);
     }
@@ -185,6 +197,8 @@ public class CuentaDeCobroLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void createCuentaDeCobroNombreEstudianteVacio () throws BusinessLogicException {
         CuentaDeCobroEntity entity = factory.manufacturePojo(CuentaDeCobroEntity.class);
+        entity.setNumeroCuentaDeCobro(Math.abs(entity.getNumeroCuentaDeCobro()) + 1);
+        entity.setValor(Math.abs(entity.getValor()) + 1);
         entity.setNombreEstudiante("");
         logic.createCuentaDeCobro(entity);
     }
@@ -192,6 +206,7 @@ public class CuentaDeCobroLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void createCuentaDeCobroNumeroCuentaDeCobroErroneo () throws BusinessLogicException {
         CuentaDeCobroEntity entity = factory.manufacturePojo(CuentaDeCobroEntity.class);
+        entity.setValor(Math.abs(entity.getValor()) + 1);
         entity.setNumeroCuentaDeCobro(-1);
         logic.createCuentaDeCobro(entity);
     }
@@ -199,7 +214,7 @@ public class CuentaDeCobroLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void createCuentaDeCobroValorErroneo () throws BusinessLogicException {
         CuentaDeCobroEntity entity = factory.manufacturePojo(CuentaDeCobroEntity.class);
-        entity.setValor(-1);
+        entity.setNumeroCuentaDeCobro(Math.abs(entity.getNumeroCuentaDeCobro()) + 1);
         logic.createCuentaDeCobro(entity);
     }
 }

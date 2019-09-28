@@ -150,5 +150,18 @@ public class TrabajoOfertasLogicTest {
             }
         }
     }
+    
+    
+    /**
+     * Prueba para desasociar una Oferta existente de un Trabajo existente
+     *
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
+     */
+    @Test
+    public void removeOfertaTest() throws BusinessLogicException {
+        trabajoOfertaLogic.removeOferta(caldata.get(0).getId());
+        TrabajoEntity response = trabajoLogic.getTrabajo(caldata.get(0).getId());
+        Assert.assertNull(response.getOferta());
+    }
 
 }

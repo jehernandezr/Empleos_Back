@@ -138,16 +138,44 @@ public class EstudianteOfertasLogicTest {
             OfertaEntity e = data.get(0);
             estudianteOfertasLogic.replaceOferta(entity.getId(), data.get(0).getId());
             entity = estudianteLogic.getEstudiante(entity.getId());
-            for(OfertaEntity i: entity.getOfertas()){
+            for (OfertaEntity i : entity.getOfertas()) {
                 System.out.println("entity: " + i.getId());
             }
-             for(OfertaEntity i: data){
+            for (OfertaEntity i : data) {
                 System.out.println("data: " + i.getId());
             }
             Assert.assertEquals(entity.getOfertas(), data);
         } catch (Exception exx) {
             Assert.fail("No debería haber lanzado excepción");
             exx.printStackTrace();
+            try {
+                utx.rollback();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Prueba para desasociar una Oferta existente de un Estudiante existente
+     *
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
+     */
+    @Test
+    public void removeOfertasTest() throws BusinessLogicException {
+        try {
+            utx.begin();
+            em.joinTransaction();
+            long id1 = caldata.get(0).getId();
+            long id2 = caldata.get(0).getOfertas().get(0).getId();
+            estudianteOfertasLogic.removeOferta(id1, id2);
+            EstudianteEntity response = estudianteLogic.getEstudiante(caldata.get(0).getId());
+            Assert.assertNull(response.getOfertas().get(0));
+        } catch (Exception exx) {
+            Assert.fail("No debería haber lanzado excepción");
+            exx.printStackTrace();
+            System.out.println("EXCEPCION:");
+            System.out.println(exx.getMessage());
             try {
                 utx.rollback();
             } catch (Exception e1) {

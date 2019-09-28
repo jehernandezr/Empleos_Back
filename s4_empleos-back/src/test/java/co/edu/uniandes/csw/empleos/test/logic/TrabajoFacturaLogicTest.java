@@ -150,5 +150,17 @@ public class TrabajoFacturaLogicTest {
             }
         }
     }
+    
+    /**
+     * Prueba para desasociar una Factura existente de un Trabajo existente
+     *
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
+     */
+    @Test
+    public void removeFacturaTest() throws BusinessLogicException {
+        trabajoFacturaLogic.removeFactura(caldata.get(0).getId());
+        TrabajoEntity response = trabajoLogic.getTrabajo(caldata.get(0).getId());
+        Assert.assertNull(response.getFactura());
+    }
 
 }
