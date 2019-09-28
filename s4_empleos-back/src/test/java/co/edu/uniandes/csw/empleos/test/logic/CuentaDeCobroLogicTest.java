@@ -117,6 +117,7 @@ public class CuentaDeCobroLogicTest {
     public void createCuentaDeCobroTest() throws BusinessLogicException {
         CuentaDeCobroEntity newEntity = factory.manufacturePojo(CuentaDeCobroEntity.class);
         ContratistaEntity contratista = factory.manufacturePojo(ContratistaEntity.class);
+        contratista.setEmail("fff@uniandes.edu.co");
         ContratistaEntity contratistaGuardado= contratistaLogic.createContratista(contratista);
         newEntity.setContratista(contratistaGuardado);
         CuentaDeCobroEntity result = logic.createCuentaDeCobro(newEntity);
