@@ -35,6 +35,12 @@ public class CalificacionLogic {
         if(calificacion.getComentario()==null){
             throw new BusinessLogicException("El comentario de un estudainte no puede ser nulo");
         }
+        if(calificacion.getNota()>5){
+            throw new BusinessLogicException("La nota es en una escala de 1-5");
+        }
+        if(calificacion.getComentario().equals("")){
+            throw new BusinessLogicException("El comentario no puede ser vacìo");
+        }
         
         calificacion = persistence.create(calificacion);
         return calificacion;
@@ -79,7 +85,12 @@ public class CalificacionLogic {
         if(calificacionEntity.getComentario()==null){
             throw new BusinessLogicException("El comentario de un estudainte no puede ser nulo");
         }
-        
+        if(calificacionEntity.getNota()>5){
+            throw new BusinessLogicException("La nota es en una escala de 1-5");
+        }
+        if(calificacionEntity.getComentario().equals("")){
+            throw new BusinessLogicException("El comentario no puede ser vacìo");
+        }
         CalificacionEntity newEntity = persistence.update(calificacionEntity);
         return newEntity;
     }

@@ -123,6 +123,18 @@ public class CalificacionLogicTest {
     }
     
     /**
+     * Se crea una calificacion con una nota mayor a 5
+     * @throws BusinessLogicException 
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createCalificacionNotaNoMayorCinco()throws BusinessLogicException{
+        
+      CalificacionEntity newEntity = factory.manufacturePojo(CalificacionEntity.class);
+      newEntity.setNota(5.5);
+      CalificacionEntity result = calificacionLogic.createCalificacion(newEntity);
+    }
+    
+    /**
      * Se crea una calificacion con un Comentario no nulo
      * @throws BusinessLogicException Excepcion untilizada para representar errores en la lógica del negocio.
      */
@@ -131,6 +143,18 @@ public class CalificacionLogicTest {
         
       CalificacionEntity newEntity = factory.manufacturePojo(CalificacionEntity.class);
       newEntity.setComentario(null);
+      CalificacionEntity result = calificacionLogic.createCalificacion(newEntity);
+    }
+    
+    /**
+     * Se crea una calificacion con un Comentario no vacio
+     * @throws BusinessLogicException Excepcion untilizada para representar errores en la lógica del negocio.
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createCalificacionComentarioNotVacio()throws BusinessLogicException{
+        
+      CalificacionEntity newEntity = factory.manufacturePojo(CalificacionEntity.class);
+      newEntity.setComentario("");
       CalificacionEntity result = calificacionLogic.createCalificacion(newEntity);
     }
     
@@ -186,10 +210,38 @@ public class CalificacionLogicTest {
      * @throws BusinessLogicException
      */
     @Test(expected = BusinessLogicException.class)
+    public void updateCalificacionValorNoMayorCinco() throws BusinessLogicException {
+        CalificacionEntity entity = data.get(0);
+        CalificacionEntity pojoEntity = factory.manufacturePojo(CalificacionEntity.class);
+        pojoEntity.setNota(6.0);
+        pojoEntity.setId(entity.getId());
+        calificacionLogic.updateCalificacion(pojoEntity.getId(), pojoEntity);
+    }
+    
+    /**
+     * Prueba para actualizar una Calificacion.
+     *
+     * @throws BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
     public void updateCalificacionFechaNotNull() throws BusinessLogicException {
         CalificacionEntity entity = data.get(0);
         CalificacionEntity pojoEntity = factory.manufacturePojo(CalificacionEntity.class);
         pojoEntity.setComentario(null);
+        pojoEntity.setId(entity.getId());
+        calificacionLogic.updateCalificacion(pojoEntity.getId(), pojoEntity);
+    }
+    
+        /**
+     * Prueba para actualizar una Calificacion.
+     *
+     * @throws BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void updateCalificacionFechaNotVacio() throws BusinessLogicException {
+        CalificacionEntity entity = data.get(0);
+        CalificacionEntity pojoEntity = factory.manufacturePojo(CalificacionEntity.class);
+        pojoEntity.setComentario("");
         pojoEntity.setId(entity.getId());
         calificacionLogic.updateCalificacion(pojoEntity.getId(), pojoEntity);
     }
