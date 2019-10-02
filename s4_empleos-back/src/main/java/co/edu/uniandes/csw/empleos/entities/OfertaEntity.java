@@ -376,6 +376,19 @@ public class OfertaEntity extends BaseEntity{
         this.trabajo = ptrabajo;
     }
     
+    /**
+     * @return the estudiantes
+     */
+    public List<EstudianteEntity> getEstudiantes() {
+        return estudiantes;
+    }
+
+    /**
+     * @param estudaintes the estudiantes to set
+     */
+    public void setEstudiantes(List<EstudianteEntity> estudiantes) {
+        this.estudiantes = (ArrayList<EstudianteEntity>) estudiantes;
+    }
     
     
 }
