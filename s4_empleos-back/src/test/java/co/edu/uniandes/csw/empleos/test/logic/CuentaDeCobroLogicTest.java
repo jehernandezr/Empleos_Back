@@ -13,6 +13,8 @@ import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.empleos.persistence.CuentaDeCobroPersistence;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -216,5 +218,29 @@ public class CuentaDeCobroLogicTest {
         CuentaDeCobroEntity entity = factory.manufacturePojo(CuentaDeCobroEntity.class);
         entity.setNumeroCuentaDeCobro(Math.abs(entity.getNumeroCuentaDeCobro()) + 1);
         logic.createCuentaDeCobro(entity);
+    }
+    
+     /**
+     * Prueba para consultar una cuenta de cobro.
+     */
+    @Test
+    public void getCuentaTest() {
+        CuentaDeCobroEntity entity = factory.manufacturePojo(CuentaDeCobroEntity.class);
+        entity.setNumeroCuentaDeCobro(Math.abs(entity.getNumeroCuentaDeCobro()) + 1);
+        entity.setValor(Math.abs(entity.getValor()) + 1);
+        try {
+            entity =logic.createCuentaDeCobro(entity);
+        } catch (BusinessLogicException ex) {
+            Logger.getLogger(CuentaDeCobroLogicTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        CuentaDeCobroEntity resultEntity = logic.getCuenta(entity.getId());
+        Assert.assertNotNull("result nulo",resultEntity);//corregir error de result nulo probablemente hay que persistirla
+        Assert.assertEquals("id diferente",entity.getId(), resultEntity.getId());
+        Assert.assertEquals("concepto diferente",entity.getConcepto(), resultEntity.getConcepto());
+        Assert.assertEquals("contratista diferente",entity.getContratista(), resultEntity.getContratista());
+        Assert.assertEquals("fecha diferente",entity.getFecha(), resultEntity.getFecha());
+        Assert.assertEquals("nombre estudiante diferente",entity.getNombreEstudiante(), resultEntity.getNombreEstudiante());
+        Assert.assertEquals("numero diferente",entity.getNumeroCuentaDeCobro(), resultEntity.getNumeroCuentaDeCobro());
+        Assert.assertEquals("valor diferente",entity.getValor(), resultEntity.getValor());
     }
 }
