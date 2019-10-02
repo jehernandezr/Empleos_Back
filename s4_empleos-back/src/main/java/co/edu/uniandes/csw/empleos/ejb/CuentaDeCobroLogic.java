@@ -8,6 +8,8 @@ package co.edu.uniandes.csw.empleos.ejb;
 import co.edu.uniandes.csw.empleos.entities.CuentaDeCobroEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.empleos.persistence.CuentaDeCobroPersistence;
+import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
+import java.util.logging.Level;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -44,4 +46,19 @@ public class CuentaDeCobroLogic {
         }
     }
     
+   /**
+     * Busca una cuenta por ID
+     *
+     * @param cuentaId El id de la cuenta a buscar
+     * @return La cuenta encontrada, null si no la encuentra.
+     */
+    public CuentaDeCobroEntity getCuenta(Long cuentaId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar la cuenta de cobro con id = {0}", cuentaId);
+        CuentaDeCobroEntity cuentaEntity = persistencia.find(cuentaId);
+        if (cuentaEntity == null) {
+            LOGGER.log(Level.SEVERE, "La cuenta con el id = {0} no existe", cuentaId);
+        }
+        LOGGER.log(Level.INFO, "Termina proceso de consultar la cuenta con id = {0}", cuentaId);
+        return cuentaEntity;
+    } 
 }
