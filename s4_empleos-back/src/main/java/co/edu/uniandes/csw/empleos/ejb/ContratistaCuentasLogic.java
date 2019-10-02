@@ -50,8 +50,8 @@ public class ContratistaCuentasLogic {
     /**
      * Retorna todos las cuentas asociadas a un contratista
      *
-     * @param contratistasId El ID de la editorial buscada
-     * @return La lista de libros de la editorial
+     * @param contratistasId El ID del contratista buscado
+     * @return La lista de cuentas del contratista
      */
     public List<CuentaDeCobroEntity> getCuentas(Long contratistasId) {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar las cuentas asociadas al contratista con id = {0}", contratistasId);
@@ -80,13 +80,13 @@ public class ContratistaCuentasLogic {
     }
 
     /**
-     * Remplazar books de una editorial
+     * Remplazar cuentas de un contratista
      *
-     * @param cuentas Lista de libros que serán los de la editorial.
-     * @param contratistasId El id de la editorial que se quiere actualizar.
-     * @return La lista de libros actualizada.
+     * @param cuentas Lista de cuentass que serán del contratista.
+     * @param contratistasId El id del contratista que se quiere actualizar.
+     * @return La lista de cuentas actualizada.
      */
-    public List<CuentaDeCobroEntity> replaceBooks(Long contratistasId, List<CuentaDeCobroEntity> cuentas) {
+    public List<CuentaDeCobroEntity> replaceCuentas(Long contratistasId, List<CuentaDeCobroEntity> cuentas) {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar el contratista con id = {0}", contratistasId);
         ContratistaEntity contratistaEntity = contratistaPersistence.find(contratistasId);
         List<CuentaDeCobroEntity> cuentaList = cuentaPersistence.findAll();

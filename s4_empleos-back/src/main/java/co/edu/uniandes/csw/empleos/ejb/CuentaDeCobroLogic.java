@@ -43,4 +43,5 @@ public class CuentaDeCobroLogic {
             throw new BusinessLogicException("La cuenta de cobro es nula.");
         }
     }
+    
 }
