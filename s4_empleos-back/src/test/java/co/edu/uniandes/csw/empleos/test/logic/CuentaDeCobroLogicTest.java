@@ -254,7 +254,7 @@ public class CuentaDeCobroLogicTest {
         }
         
         CuentaDeCobroEntity resultEntity = logic.getCuenta(entity.getId());
-        Assert.assertNotNull("result nulo",resultEntity);//corregir error de result nulo probablemente hay que persistirla
+        Assert.assertNotNull("result nulo",resultEntity);
         Assert.assertEquals("id diferente",entity.getId(), resultEntity.getId());
         Assert.assertEquals("concepto diferente",entity.getConcepto(), resultEntity.getConcepto());
         Assert.assertEquals("contratista diferente",entity.getContratista(), resultEntity.getContratista());
