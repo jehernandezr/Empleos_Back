@@ -18,6 +18,11 @@ import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.RollbackException;
+import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -229,10 +234,25 @@ public class CuentaDeCobroLogicTest {
         entity.setNumeroCuentaDeCobro(Math.abs(entity.getNumeroCuentaDeCobro()) + 1);
         entity.setValor(Math.abs(entity.getValor()) + 1);
         try {
-            entity =logic.createCuentaDeCobro(entity);
-        } catch (BusinessLogicException ex) {
+            utx.begin();
+            em.persist(entity);
+            utx.commit();
+        } catch (NotSupportedException ex) {
+            Logger.getLogger(CuentaDeCobroLogicTest.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SystemException ex) {
+            Logger.getLogger(CuentaDeCobroLogicTest.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RollbackException ex) {
+            Logger.getLogger(CuentaDeCobroLogicTest.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (HeuristicMixedException ex) {
+            Logger.getLogger(CuentaDeCobroLogicTest.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (HeuristicRollbackException ex) {
+            Logger.getLogger(CuentaDeCobroLogicTest.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SecurityException ex) {
+            Logger.getLogger(CuentaDeCobroLogicTest.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalStateException ex) {
             Logger.getLogger(CuentaDeCobroLogicTest.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         CuentaDeCobroEntity resultEntity = logic.getCuenta(entity.getId());
         Assert.assertNotNull("result nulo",resultEntity);//corregir error de result nulo probablemente hay que persistirla
         Assert.assertEquals("id diferente",entity.getId(), resultEntity.getId());
