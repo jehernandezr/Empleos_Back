@@ -7,7 +7,6 @@ package co.edu.uniandes.csw.empleos.resources;
 
 import co.edu.uniandes.csw.empleos.dtos.CalificacionDTO;
 import co.edu.uniandes.csw.empleos.ejb.CalificacionEstudianteLogic;
-import co.edu.uniandes.csw.empleos.ejb.CalificacionLogic;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.empleos.ejb.CalificacionLogic;
 import co.edu.uniandes.csw.empleos.entities.CalificacionEntity;
@@ -153,7 +152,7 @@ public class CalificacionResource {
      * Error de lógica que se genera cuando no se encuentra la calificacion.
      */
     @Path("{calificacionesId: \\d+}/estudiantes")
-    public Class<CalificacionEstudianteResource> getBookAuthorsResource(@PathParam("calificacionesId") Long calId) {
+    public Class<CalificacionEstudianteResource> getCalificacionEstudianteResource(@PathParam("calificacionesId") Long calId) {
         if (calificacionLogic.getCalificacion(calId) == null) {
             throw new WebApplicationException("El recurso /calificaciones/" + calId + " no existe.", 404);
         }
