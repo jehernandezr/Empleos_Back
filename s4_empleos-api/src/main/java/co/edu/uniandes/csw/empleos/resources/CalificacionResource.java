@@ -7,7 +7,6 @@ package co.edu.uniandes.csw.empleos.resources;
 
 import co.edu.uniandes.csw.empleos.dtos.CalificacionDTO;
 import co.edu.uniandes.csw.empleos.ejb.CalificacionEstudianteLogic;
-import co.edu.uniandes.csw.empleos.ejb.CalificacionLogic;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.empleos.ejb.CalificacionLogic;
 import co.edu.uniandes.csw.empleos.entities.CalificacionEntity;
@@ -97,13 +96,12 @@ public class CalificacionResource {
         return detailDTO;
     }
     
-        /**
+     /**
      * Borra La Calificacion con el id asociado recibido en la URL.
      *
      * @param calId Identificador del La Calificacion que se desea borrar. Este debe ser
-     * una cadena de dígitos.
-     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
-     * cuando el libro tiene autores asociados.
+     * una cadena de dígitos
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra La Calificacion.
      */
@@ -131,6 +129,7 @@ public class CalificacionResource {
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra la Calificacion .
      */
+    @GET
     @Path("{calificacionesId: \\d+}/estudiantes")
     public Class<EstudianteResource> getEstudianteResource(@PathParam("calificacionesId") Long calId) {
         if (calificacionLogic.getCalificacion(calId) == null) {
@@ -153,7 +152,7 @@ public class CalificacionResource {
      * Error de lógica que se genera cuando no se encuentra la calificacion.
      */
     @Path("{calificacionesId: \\d+}/estudiantes")
-    public Class<CalificacionEstudianteResource> getBookAuthorsResource(@PathParam("calificacionesId") Long calId) {
+    public Class<CalificacionEstudianteResource> getCalificacionEstudianteResource(@PathParam("calificacionesId") Long calId) {
         if (calificacionLogic.getCalificacion(calId) == null) {
             throw new WebApplicationException("El recurso /calificaciones/" + calId + " no existe.", 404);
         }
