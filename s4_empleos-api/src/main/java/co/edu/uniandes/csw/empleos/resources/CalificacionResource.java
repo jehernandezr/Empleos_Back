@@ -96,13 +96,12 @@ public class CalificacionResource {
         return detailDTO;
     }
     
-        /**
+     /**
      * Borra La Calificacion con el id asociado recibido en la URL.
      *
      * @param calId Identificador del La Calificacion que se desea borrar. Este debe ser
-     * una cadena de dígitos.
-     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
-     * cuando el libro tiene autores asociados.
+     * una cadena de dígitos
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra La Calificacion.
      */
@@ -130,6 +129,7 @@ public class CalificacionResource {
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra la Calificacion .
      */
+    @GET
     @Path("{calificacionesId: \\d+}/estudiantes")
     public Class<EstudianteResource> getEstudianteResource(@PathParam("calificacionesId") Long calId) {
         if (calificacionLogic.getCalificacion(calId) == null) {

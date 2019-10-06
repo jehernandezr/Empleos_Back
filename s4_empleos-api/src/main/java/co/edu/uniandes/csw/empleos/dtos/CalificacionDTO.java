@@ -14,10 +14,19 @@ import java.io.Serializable;
  */
 public class CalificacionDTO implements Serializable{
     
+    /**
+     * id de la calificacion
+    */
     private Long id;
     
+    /**
+     * nota asociada a la calificacion
+    */
     private Double nota;
     
+    /**
+     * comentario asociado a la calificacion
+    */
     private String comentario;
 
     public CalificacionDTO()
@@ -30,12 +39,12 @@ public class CalificacionDTO implements Serializable{
      *
      * @param calificacionEntity La entidad del libro
      */
-    public CalificacionDTO(CalificacionEntity tarjetaEntity) {
+    public CalificacionDTO(CalificacionEntity calificacionEntity) {
         
-        if (tarjetaEntity != null) {
-            this.id = tarjetaEntity.getId();
-            this.comentario = tarjetaEntity.getComentario();
-            this.nota = tarjetaEntity.getNota();
+        if (calificacionEntity != null) {
+            this.id = calificacionEntity.getId();
+            this.comentario = calificacionEntity.getComentario();
+            this.nota = calificacionEntity.getNota();
        }
     }
     
@@ -91,7 +100,7 @@ public class CalificacionDTO implements Serializable{
     }
 
     /**
-     * @param comnetario the comnetario to set
+     * @param comentario the comnetario to set
      */
     public void setComentario(String comentario) {
         this.comentario = comentario;

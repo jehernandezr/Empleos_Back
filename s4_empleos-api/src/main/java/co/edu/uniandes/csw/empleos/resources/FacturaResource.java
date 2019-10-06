@@ -13,8 +13,10 @@ import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -60,4 +62,50 @@ public class FacturaResource {
         FacturaDTO facDTO = new FacturaDTO(facEntity);
         return facDTO;
     }
+    
+    
+      /**
+     * Actualiza la calificacion con el id recibido en la URL con la información que se
+     * recibe en el cuerpo de la petición.
+     *
+     * @param factId Identificador de la Factura que se desea actualizar. Este debe
+     * ser una cadena de dígitos.
+     * @param factura {@link FacturaDTO} La Factura que se desea guardar.
+     * @return JSON {@link FacturaDTO} - La Factura guardada.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra la Factura a
+     * actualizar.
+     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
+     * Error de lógica que se genera cuando no se puede actualizar la Factura.
+     */
+    @PUT
+    @Path("{facturasId: \\d+}")
+    public FacturaDTO updateFactura(@PathParam("facturasId") Long factId, FacturaDTO factura) throws BusinessLogicException {
+        factura.setId(factId);
+        if (facturaLogic.getFactura(factId) == null) {
+            throw new WebApplicationException("El recurso /facturas/" + factId + " no existe.", 404);
+        }
+        FacturaDTO detailDTO = new FacturaDTO(facturaLogic.updateFactura(factId, factura.toEntity()));
+        return detailDTO;
+    }
+    
+    /**
+     * Borra La factura con el id asociado recibido en la URL.
+     *
+     * @param factId Identificador del La Factura que se desea borrar. Este debe ser
+     * una cadena de dígitos
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra La Factura.
+     */
+    @DELETE
+    @Path("{facturasId: \\d+}")
+    public void deleteFactura (@PathParam("facturasId") Long factId) throws BusinessLogicException {
+        FacturaEntity entity = facturaLogic.getFactura(factId);
+        if (entity == null) {
+            throw new WebApplicationException("El recurso /facturas/" + factId + " no existe.", 404);
+        }
+        facturaLogic.deleteFactura(factId);
+        }
+    
 }
