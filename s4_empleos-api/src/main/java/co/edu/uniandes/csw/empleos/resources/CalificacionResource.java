@@ -69,6 +69,18 @@ public class CalificacionResource {
         return calDTO;
     }
     
+        /**
+     * Busca y devuelve todas las editoriales que existen en la aplicacion.
+     *
+     * @return JSONArray {@link EditorialDetailDTO} - Las editoriales
+     * encontradas en la aplicación. Si no hay ninguna retorna una lista vacía.
+     */
+    @GET
+    public List<CalificacionDTO> getEditorials() {
+        List<CalificacionDTO> listaEditoriales = listEntity2DTO(calificacionLogic.getCalificaciones());
+        return listaEditoriales;
+    }
+    
      /**
      * Actualiza la calificacion con el id recibido en la URL con la información que se
      * recibe en el cuerpo de la petición.
@@ -105,14 +117,13 @@ public class CalificacionResource {
      */
     @DELETE
     @Path("{calificacionesId: \\d+}")
-    public void deleteCalificacion (@PathParam("calificacionesId") Long calId) throws BusinessLogicException {
-        CalificacionEntity entity = calificacionLogic.getCalificacion(calId);
-        if (entity == null) {
+    public void deleteCalificacion(@PathParam("calificacionesId") Long calId) throws BusinessLogicException {
+        if (calificacionLogic.getCalificacion(calId) == null) {
             throw new WebApplicationException("El recurso /calificaciones/" + calId + " no existe.", 404);
         }
-        calificacionEstudianteLogic.removeEstudiante(calId);
         calificacionLogic.deleteCalificacion(calId);
-        }
+    }
+    
     
     /**
      * Conexión con el servicio de reseñas para una Calificacion. {@link ReviewResource}
@@ -156,6 +167,8 @@ public class CalificacionResource {
         }
         return CalificacionEstudianteResource.class;
     }
+    
+    
     
         /**
      * Convierte una lista de entidades a DTO.

@@ -64,36 +64,22 @@
 			"response": []
 		},
 		{
-			"name": "Obtener una calificacion",
+			"name": "Crear una calificacion con nota fuera del rango",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "d1523579-6d97-410f-abdf-02cbf6fc7a5f",
+						"id": "af1fb83b-34cd-4e64-8195-53293f18626c",
 						"exec": [
-							"console.log(responseBody);",
-							"var data = JSON.parse(responseBody);",
-							"tests[\"No genera error en el Get\"] = responseCode.code === 200;"
+							"tests[\"No crea con calificacion fuera de rango\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has (\"La nota es en una escala de 1-5\");"
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "xoxp-763869224470-748885497506-763873159334-5e9fff7b7ff0e42024f33be880742692",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -104,10 +90,15 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": ""
+					"raw": "{\n\t\"nota\":6,\n\t\"comentario\":\"Estudiante tuvo un desempeño increible\" \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/calificaciones/{{new_id_c}}",
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/calificaciones",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -116,8 +107,7 @@
 					"path": [
 						"s4_empleos-api",
 						"api",
-						"calificaciones",
-						"{{new_id_c}}"
+						"calificaciones"
 					]
 				}
 			},
@@ -224,22 +214,72 @@
 			"response": []
 		},
 		{
-			"name": "Crear una calificacion con nota fuera del rango",
+			"name": "Obtener todas las calificaciones",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "af1fb83b-34cd-4e64-8195-53293f18626c",
+						"id": "3c63c569-c850-4413-bab3-4f60e5b57139",
 						"exec": [
-							"tests[\"No crea con calificacion fuera de rango\"] = responseCode.code === 412;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has (\"La nota es en una escala de 1-5\");"
+							"var data= JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get all\"] = responseCode.code === 200;",
+							"tests[\"calificaciones count\"] = data.length > 1;"
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
 			"request": {
-				"method": "POST",
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/calificaciones/",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_empleos-api",
+						"api",
+						"calificaciones",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener una calificacion",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d1523579-6d97-410f-abdf-02cbf6fc7a5f",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "xoxp-763869224470-748885497506-763873159334-5e9fff7b7ff0e42024f33be880742692",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -250,15 +290,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nota\":6,\n\t\"comentario\":\"Estudiante tuvo un desempeño increible\" \n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/calificaciones",
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/calificaciones/{{new_id_c}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -267,7 +302,184 @@
 					"path": [
 						"s4_empleos-api",
 						"api",
-						"calificaciones"
+						"calificaciones",
+						"{{new_id_c}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener una calificacion que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "62717fc7-321f-44a0-9b21-78f08af90610",
+						"exec": [
+							"tests[\"No consulta con id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /calificaciones/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/calificaciones/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_empleos-api",
+						"api",
+						"calificaciones",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar una calificacion",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7adfbd0b-2ad3-4a8d-b776-814293118176",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nota\":4,\n\t\"comentario\":\"El estudiante bajó el desempeño\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/calificaciones/{{new_id_c}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_empleos-api",
+						"api",
+						"calificaciones",
+						"{{new_id_c}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar una calificacion que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9d5c42ae-3506-4a25-9481-10728e915221",
+						"exec": [
+							"tests[\"No actualiza con id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /calificaciones/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nota\":2,\n\t\"comentario\":\"El estudiante tuvo un desempeño regular\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/calificaciones/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_empleos-api",
+						"api",
+						"calificaciones",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar una calificacion",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "28e5d65b-d3f4-4b9d-951f-7e68abf3a06e",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/calificaciones/{{new_id_c}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_empleos-api",
+						"api",
+						"calificaciones",
+						"{{new_id_c}}"
 					]
 				}
 			},
