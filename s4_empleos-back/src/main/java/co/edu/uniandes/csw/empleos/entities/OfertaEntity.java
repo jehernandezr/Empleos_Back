@@ -1,16 +1,10 @@
-
 package co.edu.uniandes.csw.empleos.entities;
-
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-
-
-
-
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
@@ -149,27 +143,7 @@ public class OfertaEntity extends BaseEntity{
     public void setContratista(ContratistaEntity contratista) {
         this.contratista = contratista;
     }
-    /*
-    public List<EstudianteEntity> getAspirantes() {
-        return aspirantes;
-    }
-
-    public void setAspirantes(List<EstudianteEntity> aspirantes) {
-        this.aspirantes = aspirantes;
-    }
-
-    public List<TrabajoEntity> getTrabajos() {
-        return trabajos;
-    }
-
-    public void setTrabajos(List<TrabajoEntity> trabajos) {
-        this.trabajos = trabajos;
-    }
-    
    
-     */
-    
-
     /**
      * Devuelve numero de vacantes disponibles en el momento.
      * @return el numero de vanates disponibles.
@@ -180,7 +154,7 @@ public class OfertaEntity extends BaseEntity{
 
     /**
      * Actualiza el numero de vacantes de la oferta.
-     * @param rutaImagen ruta de la imagen a modificar
+     * @param numeroDeVacantes numero de vacantes a modificar
      */
     public void setNumeroDeVacantes(int numeroDeVacantes) {
         this.numeroDeVacantes = numeroDeVacantes;
@@ -196,7 +170,7 @@ public class OfertaEntity extends BaseEntity{
 
     /**
      * Actualiza el pago por hora de la oferta.
-     * @param rutaImagen ruta de la imagen a modificar
+     * @param pagoPorHora pago por hora a modificar
      */
     public void setPagoPorHora(Double pagoPorHora) {
         this.pagoPorHora = pagoPorHora;
@@ -370,7 +344,7 @@ public class OfertaEntity extends BaseEntity{
     }
 
     /**
-     * @param trabajos the trabajos to set
+     * @param ptrabajo the trabajos to set
      */
     public void setTrabajo(TrabajoEntity ptrabajo) {
         this.trabajo = ptrabajo;
@@ -384,7 +358,7 @@ public class OfertaEntity extends BaseEntity{
     }
 
     /**
-     * @param estudaintes the estudiantes to set
+     * @param estudiantes the estudiantes to set
      */
     public void setEstudiantes(List<EstudianteEntity> estudiantes) {
         this.estudiantes = (ArrayList<EstudianteEntity>) estudiantes;

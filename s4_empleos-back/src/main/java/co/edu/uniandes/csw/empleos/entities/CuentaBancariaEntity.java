@@ -9,7 +9,6 @@ package co.edu.uniandes.csw.empleos.entities;
 import co.edu.uniandes.csw.empleos.podam.NumeroStringStrategy;
 import co.edu.uniandes.csw.empleos.podam.TipoCuentaStrategy;
 import java.util.Objects;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
@@ -123,11 +122,13 @@ public class CuentaBancariaEntity extends BaseEntity {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 29 * hash + Objects.hashCode(this.numeroCuenta);
-        hash = 29 * hash + Objects.hashCode(this.nombreBanco);
-        hash = 29 * hash + Objects.hashCode(this.estudiante);
-        hash = 29 * hash + this.tipoCuenta;
+
+        int hash = 5;
+        hash = 23 * hash + Objects.hashCode(this.numeroCuenta);
+        hash = 23 * hash + Objects.hashCode(this.nombreBanco);
+        hash = 23 * hash + Objects.hashCode(this.estudiante);
+        hash = 23 * hash + this.tipoCuenta;
+
         return hash;
     }
 

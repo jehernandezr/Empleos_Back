@@ -7,15 +7,11 @@ package co.edu.uniandes.csw.empleos.entities;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.OneToOne;
-import uk.co.jemos.podam.common.PodamExclude;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import uk.co.jemos.podam.common.PodamExclude;
-import uk.co.jemos.podam.common.PodamStringValue;
 
 
 /**
@@ -31,15 +27,15 @@ public class ContratistaEntity extends BaseEntity {
          
      @PodamExclude
     @OneToMany(mappedBy = "contratista")
-    private List<OfertaEntity> ofertas = new ArrayList<OfertaEntity>();
+    private List<OfertaEntity> ofertas = new ArrayList<>();
      
      @PodamExclude
     @OneToOne(mappedBy = "contratista", orphanRemoval = true)
-    private List<TarjetaDeCreditoEntity> tarjetaDeCredito = new ArrayList<TarjetaDeCreditoEntity>();
+    private List<TarjetaDeCreditoEntity> tarjetaDeCredito = new ArrayList<>();
      
      @PodamExclude
     @OneToOne(mappedBy = "contratista", orphanRemoval = true)
-    private List<CuentaDeCobroEntity> cuentaDeCobro = new ArrayList<CuentaDeCobroEntity>();
+    private List<CuentaDeCobroEntity> cuentaDeCobro = new ArrayList<>();
 
 
     
