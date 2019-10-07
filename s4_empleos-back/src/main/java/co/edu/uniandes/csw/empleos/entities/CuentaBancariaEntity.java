@@ -121,4 +121,14 @@ public class CuentaBancariaEntity extends BaseEntity {
         return Objects.equals(this.numeroCuenta, other.getNumeroCuenta());
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 23 * hash + Objects.hashCode(this.numeroCuenta);
+        hash = 23 * hash + Objects.hashCode(this.nombreBanco);
+        hash = 23 * hash + Objects.hashCode(this.estudiante);
+        hash = 23 * hash + this.tipoCuenta;
+        return hash;
+    }
+
 }
