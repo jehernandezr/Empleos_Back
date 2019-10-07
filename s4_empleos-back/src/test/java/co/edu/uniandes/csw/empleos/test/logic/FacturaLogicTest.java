@@ -143,6 +143,7 @@ public class FacturaLogicTest {
       newEntity.setFecha(null);
       FacturaEntity result = facturaLogic.createFactura(newEntity);
     }
+
     
     /**
      * Prueba para consultar la lista de Facturas.
@@ -174,6 +175,34 @@ public class FacturaLogicTest {
         Assert.assertEquals(entity.getFecha(), resultEntity.getFecha());
         Assert.assertEquals(entity.getValor(), resultEntity.getValor());
        
+    }
+    
+    /**
+     * Prueba para actualizar una Factura.
+     *
+     * @throws BusinessLogicException
+     */
+    @Test
+    public void updateFactura() throws BusinessLogicException {
+        FacturaEntity entity = data.get(0);
+        FacturaEntity pojoEntity = factory.manufacturePojo(FacturaEntity.class);
+
+    
+
+        pojoEntity.setId(entity.getId());
+        if(pojoEntity.getValor()<0){
+            pojoEntity.setValor(pojoEntity.getValor()*-1);
+        }
+        facturaLogic.updateFactura(pojoEntity.getId(), pojoEntity);
+
+        FacturaEntity resp = em.find(FacturaEntity.class, entity.getId());
+
+        Assert.assertEquals(pojoEntity.getFecha(), resp.getFecha());
+
+        Assert.assertEquals(pojoEntity.getTrabajo(), resp.getTrabajo());
+        
+        Assert.assertEquals(pojoEntity.getValor(), resp.getValor());
+
     }
     
     /**

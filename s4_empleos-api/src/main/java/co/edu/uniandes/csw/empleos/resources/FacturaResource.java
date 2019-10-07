@@ -9,7 +9,6 @@ import co.edu.uniandes.csw.empleos.dtos.FacturaDTO;
 import co.edu.uniandes.csw.empleos.ejb.FacturaLogic;
 import co.edu.uniandes.csw.empleos.entities.FacturaEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
-import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -31,7 +30,6 @@ import javax.ws.rs.WebApplicationException;
 @Consumes("application/json")
 @RequestScoped
 public class FacturaResource {
-    private static final Logger LOOGER =Logger.getLogger(FacturaResource.class.getName());
     
     @Inject
     private FacturaLogic facturaLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.

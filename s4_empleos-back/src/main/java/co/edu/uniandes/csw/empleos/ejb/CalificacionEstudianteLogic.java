@@ -9,7 +9,6 @@ import co.edu.uniandes.csw.empleos.entities.CalificacionEntity;
 import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
 import co.edu.uniandes.csw.empleos.persistence.CalificacionPersistence;
 import co.edu.uniandes.csw.empleos.persistence.EstudiantePersistence;
-import java.util.logging.Level;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 

@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.empleos.tests.postman;
 
 import co.edu.uniandes.csw.empleos.dtos.FacturaDTO;
 import co.edu.uniandes.csw.empleos.mappers.BusinessLogicExceptionMapper;
+import co.edu.uniandes.csw.empleos.resources.FacturaResource;
 import co.edu.uniandes.csw.empleos.resources.RestConfig;
 import co.edu.uniandes.csw.postman.tests.PostmanTestBuilder;
 import java.io.File;
@@ -35,7 +36,7 @@ public class FacturaIT {
                         .importRuntimeDependencies().resolve()
                         .withTransitivity().asFile())
                 // Se agregan los compilados de los paquetes de servicios
-                .addPackage(RestConfig.class.getPackage()) //No importa cual recurso usar, lo importante es agregar el paquet
+                .addPackage(FacturaResource.class.getPackage()) //No importa cual recurso usar, lo importante es agregar el paquet
                 .addPackage(FacturaDTO.class.getPackage()) //No importa cual dto usar, lo importante es agregar el paquete.
                 .addPackage(BusinessLogicExceptionMapper.class.getPackage())
                 // El archivo que contiene la configuracion a la base de datos.
@@ -47,7 +48,7 @@ public class FacturaIT {
                 .addAsWebInfResource(new File("src/main/webapp/WEB-INF/glassfish-resources.xml"));
     }
     
-     @Test
+    @Test
     @RunAsClient
     public void postman() throws IOException {
         PostmanTestBuilder tp = new PostmanTestBuilder();

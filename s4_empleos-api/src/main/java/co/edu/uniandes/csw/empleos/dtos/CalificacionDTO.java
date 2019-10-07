@@ -7,6 +7,8 @@ package co.edu.uniandes.csw.empleos.dtos;
 
 import co.edu.uniandes.csw.empleos.entities.CalificacionEntity;
 import java.io.Serializable;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  *
@@ -28,6 +30,12 @@ public class CalificacionDTO implements Serializable{
      * comentario asociado a la calificacion
     */
     private String comentario;
+    
+    /*
+    * Relación a un estudiante  
+    * dado que esta tiene cardinalidad 1.
+     */
+    private EstudianteDTO estudiante;
 
     public CalificacionDTO()
     {
@@ -106,6 +114,27 @@ public class CalificacionDTO implements Serializable{
         this.comentario = comentario;
     }
 
-    
+    /**
+     * Devuelve el estudiante asociada a esta calificacion.
+     *
+     * @return the estudiante
+     */
+    public EstudianteDTO getEstudiante() {
+        return estudiante;
+    }
+
+    /**
+     * Modifica el estudiante asociado a esta calificacion.
+     *
+     * @param est the editorial to set
+     */
+    public void setEstudiante(EstudianteDTO est) {
+        this.estudiante = est;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    }
     
 }

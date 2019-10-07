@@ -9,6 +9,7 @@ import co.edu.uniandes.csw.empleos.ejb.CalificacionEstudianteLogic;
 import co.edu.uniandes.csw.empleos.ejb.CalificacionLogic;
 import co.edu.uniandes.csw.empleos.entities.CalificacionEntity;
 import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
+import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.empleos.persistence.EstudiantePersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -115,10 +116,21 @@ public class CalificacionEstudianteLogicTest {
         }
     }
 
+        /**
+     * Prueba para desasociar una Calificacion existente de un Estudiante existente
+     *
+     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
+     */
+    @Test
+    public void removeCalificacionTest() throws BusinessLogicException {
+        calificacionEstudianteLogic.removeEstudiante(caldata.get(0).getId());
+        CalificacionEntity response = calificacionLogic.getCalificacion(caldata.get(0).getId());
+        Assert.assertNull(response.getEstudiante());
+    }
     
-       /**
-     * Prueba para remplazar las instancias de Books asociadas a una instancia
-     * de Editorial.
+     /**
+     * Prueba para remplazar las instancias de calificaciones asociadas a una instancia
+     * de Estudiante.
      */
     @Test
     public void replaceEstudianteTest() {
@@ -127,5 +139,7 @@ public class CalificacionEstudianteLogicTest {
         entity = calificacionLogic.getCalificacion(entity.getId());
         Assert.assertEquals(entity.getEstudiante(), data.get(1));
     }
+    
+   
     
 }

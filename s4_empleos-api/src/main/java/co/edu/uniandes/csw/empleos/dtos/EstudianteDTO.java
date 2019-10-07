@@ -7,7 +7,6 @@ package co.edu.uniandes.csw.empleos.dtos;
 
 import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  *

@@ -10,6 +10,8 @@ import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  *
@@ -60,17 +62,22 @@ public class EstudianteDetailDTO extends EstudianteDTO implements Serializable{
     }
 
     /**
-     * @return the califics
+     * @return the calificioness
      */
     public List<CalificacionDTO> getCalificaciones() {
         return calificacioness;
     }
 
     /**
-     * @param califics the califics to set
+     * @param calificacioness the califics to set
      */
     public void setCalificaciones(List<CalificacionDTO> calificacioness) {
         this.calificacioness = calificacioness;
+    }
+    
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
     
 }

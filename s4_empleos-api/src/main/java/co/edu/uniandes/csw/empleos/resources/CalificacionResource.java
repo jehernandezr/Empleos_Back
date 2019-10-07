@@ -12,7 +12,6 @@ import co.edu.uniandes.csw.empleos.ejb.CalificacionLogic;
 import co.edu.uniandes.csw.empleos.entities.CalificacionEntity;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -33,7 +32,6 @@ import javax.ws.rs.WebApplicationException;
 @Consumes("application/json")
 @RequestScoped
 public class CalificacionResource {
-    private static final Logger LOOGER =Logger.getLogger(CalificacionResource.class.getName());
     
     
     @Inject

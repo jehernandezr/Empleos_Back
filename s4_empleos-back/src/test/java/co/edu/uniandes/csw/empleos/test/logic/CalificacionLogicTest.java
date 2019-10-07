@@ -7,8 +7,10 @@ package co.edu.uniandes.csw.empleos.test.logic;
 
 import co.edu.uniandes.csw.empleos.ejb.CalificacionLogic;
 import co.edu.uniandes.csw.empleos.entities.CalificacionEntity;
+import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.empleos.persistence.CalificacionPersistence;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -101,7 +103,9 @@ public class CalificacionLogicTest {
      */
     @Test
     public void createCalificacion()throws BusinessLogicException{
-      CalificacionEntity newEntity = factory.manufacturePojo(CalificacionEntity.class);  
+      CalificacionEntity newEntity = factory.manufacturePojo(CalificacionEntity.class);
+      if(newEntity.getNota()<0){
+          newEntity.setNota(newEntity.getNota()*-1);}
       CalificacionEntity result = calificacionLogic.createCalificacion(newEntity);
       Assert.assertNotNull(result);
       
@@ -188,6 +192,31 @@ public class CalificacionLogicTest {
         Assert.assertEquals(entity.getComentario(), resultEntity.getComentario());
         Assert.assertEquals(entity.getNota(), resultEntity.getNota());
        
+    }
+    
+    /**
+     * Prueba para actualizar una Calificacion.
+     *
+     * @throws BusinessLogicException
+     */
+    @Test
+    public void updateCalificacion() throws BusinessLogicException {
+        CalificacionEntity entity = data.get(0);
+        CalificacionEntity pojoEntity = factory.manufacturePojo(CalificacionEntity.class);
+              if(pojoEntity.getNota()<0){
+          pojoEntity.setNota(pojoEntity.getNota()*-1);}
+    
+
+        pojoEntity.setId(entity.getId());
+        calificacionLogic.updateCalificacion(pojoEntity.getId(), pojoEntity);
+
+        CalificacionEntity resp = em.find(CalificacionEntity.class, entity.getId());
+
+        Assert.assertEquals(pojoEntity.getComentario(), resp.getComentario());
+
+        Assert.assertEquals(pojoEntity.getNota(), resp.getNota());
+
+        Assert.assertEquals(pojoEntity.getEstudiante(), resp.getEstudiante());
     }
     
     /**

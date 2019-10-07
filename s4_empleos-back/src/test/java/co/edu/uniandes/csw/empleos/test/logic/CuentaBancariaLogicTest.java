@@ -121,7 +121,7 @@ public class CuentaBancariaLogicTest {
         String cuenta = numero == 2 ? "Ahorros" : "Corriente";
         newEntity.setTipoCuenta(cuenta);
         EstudianteEntity newEstudiante = factory.manufacturePojo(EstudianteEntity.class);
-        newEstudiante.setCorreo("algo@uniandes.edu.co");
+        newEstudiante.setCorreo(newEstudiante.getCorreo()+"@uniandes.edu.co");
         newEstudiante.setSemestre(1);
         newEstudiante = estudianteLogic.crearEstudiante(newEstudiante);
 
@@ -285,7 +285,7 @@ public class CuentaBancariaLogicTest {
         CuentaBancariaEntity pojoEntity = factory.manufacturePojo(CuentaBancariaEntity.class);
 
         EstudianteEntity newEstudiante = factory.manufacturePojo(EstudianteEntity.class);
-        newEstudiante.setCorreo("algo@uniandes.edu.co");
+        newEstudiante.setCorreo(newEstudiante.getCorreo()+"@uniandes.edu.co");
         newEstudiante.setSemestre(1);
         newEstudiante = estudianteLogic.crearEstudiante(newEstudiante);
 
