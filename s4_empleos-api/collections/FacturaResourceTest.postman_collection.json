@@ -7,6 +7,56 @@
 	},
 	"item": [
 		{
+			"name": "Crear una factura con valor negativo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c2b3b626-fa2c-4c1e-b6b7-57c7e8d3cfff",
+						"exec": [
+							"tests[\"No crea con valor negativo\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has (\"El valor de la factura no puede tener valores negativos\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"fecha\":\"2000-08-20T00:00:00-05:00\",\n\t\"valor\":-200000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/facturas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_empleos-api",
+						"api",
+						"facturas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Crear una factura",
 			"event": [
 				{
@@ -95,22 +145,25 @@
 			"response": []
 		},
 		{
-			"name": "Crear una factura con valor negativo",
+			"name": "Obtener una factura que no existe",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "c2b3b626-fa2c-4c1e-b6b7-57c7e8d3cfff",
+						"id": "8f35b1c7-7bf5-4b84-9631-49d2246ff8cc",
 						"exec": [
-							"tests[\"No crea con valor negativo\"] = responseCode.code === 412;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has (\"El valor de la factura no puede tener valores negativos\");"
+							"tests[\"No consulta con id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /facturas/0 no existe.\");"
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -121,7 +174,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"fecha\":\"2000-08-20T00:00:00-05:00\",\n\t\"valor\":-200000\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -129,7 +182,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/facturas",
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/facturas/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -138,7 +191,235 @@
 					"path": [
 						"s4_empleos-api",
 						"api",
-						"facturas"
+						"facturas",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener todas las facturas",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8f35b1c7-7bf5-4b84-9631-49d2246ff8cc",
+						"exec": [
+							"var data= JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get all\"] = responseCode.code === 200;",
+							"tests[\"calificaciones count\"] = data.length > 1;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/facturas/",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_empleos-api",
+						"api",
+						"facturas",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar una factura",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e01daeea-5b2a-437f-be4f-5d18889786bc",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"fecha\":\"2000-08-20T00:00:00-05:00\",\n\t\"valor\":900000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/facturas/{{new_id_f}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_empleos-api",
+						"api",
+						"facturas",
+						"{{new_id_f}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar una factura que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d6f02567-613e-409c-aa6c-6f440b385f4b",
+						"exec": [
+							"tests[\"No actualiza con id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /facturas/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"fecha\":\"2000-08-20T00:00:00-05:00\",\n\t\"valor\":900000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/facturas/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_empleos-api",
+						"api",
+						"facturas",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar una factura",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e9c7c7af-b327-4851-a294-41039549b4e7",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/facturas/{{new_id_f}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_empleos-api",
+						"api",
+						"facturas",
+						"{{new_id_f}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar una factura que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "625b4ae1-5872-4c67-bc97-d73c71846ea6",
+						"exec": [
+							"tests[\"No borra con id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /facturas/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/facturas/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_empleos-api",
+						"api",
+						"facturas",
+						"0"
 					]
 				}
 			},
