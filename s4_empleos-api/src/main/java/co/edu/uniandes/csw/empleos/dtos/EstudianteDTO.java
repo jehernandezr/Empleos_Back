@@ -15,25 +15,48 @@ import java.util.Date;
  */
 class EstudianteDTO implements Serializable{
     
-    private Integer id;
+    private Long id;
     private String nombre;
     private String carrera;
     private String correo;
     private Double calificacionPromedio;
     private Integer semestre;
-    private Date horarioDeTrabajo;
+    private String horarioDeTrabajo;
 
+        /**
+     * Constructor por defecto
+     */
+    public EstudianteDTO() {
+    }
+
+    /**
+     * Conviertir Entity a DTO (Crea un nuevo DTO con los valores que recibe en
+     * la entidad que viene de argumento.
+     *
+     * @param estudianteEntity: Es la entidad que se va a convertir a DTO
+     */
+    public EstudianteDTO(EstudianteEntity estudianteEntity) {
+        if (estudianteEntity != null) {
+            this.id = estudianteEntity.getId();
+            this.nombre = estudianteEntity.getNombre();
+            this.carrera = estudianteEntity.getCarrera();
+            this.calificacionPromedio = estudianteEntity.getCalificacionPromedio();
+            this.semestre = estudianteEntity.getSemestre();
+            this.horarioDeTrabajo = estudianteEntity.getHorarioDeTrabajo();
+        }
+    }
+    
     /**
      * @return the id
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -110,19 +133,32 @@ class EstudianteDTO implements Serializable{
     /**
      * @return the horarioDeTrabajo
      */
-    public Date getHorarioDeTrabajo() {
+    public String getHorarioDeTrabajo() {
         return horarioDeTrabajo;
     }
 
     /**
      * @param horarioDeTrabajo the horarioDeTrabajo to set
      */
-    public void setHorarioDeTrabajo(Date horarioDeTrabajo) {
+    public void setHorarioDeTrabajo(String horarioDeTrabajo) {
         this.horarioDeTrabajo = horarioDeTrabajo;
     }
 
+    /**
+     * Convertir DTO a Entity
+     *
+     * @return Un Entity con los valores del DTO
+     */
     EstudianteEntity toEntity() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+        EstudianteEntity estudianteEntity = new EstudianteEntity();
+        estudianteEntity.setId(this.id);
+        estudianteEntity.setNombre(this.nombre);
+        estudianteEntity.setCarrera(this.carrera);
+        estudianteEntity.setCalificacionPromedio(this.calificacionPromedio);
+        estudianteEntity.setHorarioDeTrabajo(this.horarioDeTrabajo);
+        estudianteEntity.setSemestre(this.semestre);
+        return estudianteEntity;
     }
     
 }
