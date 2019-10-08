@@ -10,6 +10,7 @@ import co.edu.uniandes.csw.empleos.ejb.EstudianteLogic;
 import co.edu.uniandes.csw.empleos.ejb.OfertaLogic;
 import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
 import co.edu.uniandes.csw.empleos.entities.OfertaEntity;
+import co.edu.uniandes.csw.empleos.entities.TrabajoEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.empleos.persistence.EstudiantePersistence;
 import co.edu.uniandes.csw.empleos.persistence.OfertaPersistence;
@@ -53,6 +54,8 @@ public class EstudianteOfertasLogicTest {
     @Inject
     private UserTransaction utx;
 
+    private EstudianteEntity estudiante = new EstudianteEntity();
+       
     private List<EstudianteEntity> caldata = new ArrayList<EstudianteEntity>();
     private List<OfertaEntity> data = new ArrayList<OfertaEntity>();
 
@@ -105,26 +108,59 @@ public class EstudianteOfertasLogicTest {
         em.createQuery("delete from OfertaEntity").executeUpdate();
     }
 
+
+    
     /**
      * Inserta los datos iniciales para el correcto funcionamiento de las
      * pruebas.
      */
     private void insertData() {
 
-        for (int i = 0; i < 3; i++) {
-            EstudianteEntity est = factory.manufacturePojo(EstudianteEntity.class);
-            em.persist(est);
-            caldata.add(est);
-        }
+        estudiante = factory.manufacturePojo(EstudianteEntity.class);
+        estudiante.setId(1L);
+        estudiante.setOfertas(new ArrayList<>());
+        em.persist(estudiante);
+
         for (int i = 0; i < 3; i++) {
             OfertaEntity entity = factory.manufacturePojo(OfertaEntity.class);
+            entity.setEstudiantes(new ArrayList<>());
+            entity.getEstudiantes().add(estudiante);
             em.persist(entity);
             data.add(entity);
+            estudiante.getOfertas().add(entity);
         }
-        caldata.get(0).setOfertas(data);
-
     }
 
+    /**
+     * Prueba para asociar un estudiante a una oferta.
+     *
+     *
+     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
+     */
+    @Test
+    public void addOfertaTest() throws BusinessLogicException {
+        OfertaEntity newOferta = factory.manufacturePojo(OfertaEntity.class);
+        ofertaLogic.createOferta(newOferta);
+        OfertaEntity ofertaEntity = estudianteOfertasLogic.addOferta(estudiante.getId(), newOferta.getId());
+        Assert.assertNotNull(ofertaEntity);
+
+        Assert.assertEquals(ofertaEntity.getId(), newOferta.getId());
+        Assert.assertEquals(ofertaEntity.getTipoOferta(), newOferta.getTipoOferta());
+        Assert.assertEquals(ofertaEntity.getEstudiantes(), newOferta.getEstudiantes());
+        Assert.assertEquals(ofertaEntity.getEstaAbierta(), newOferta.getEstaAbierta());
+        Assert.assertEquals(ofertaEntity.getNombre(), newOferta.getNombre());
+        Assert.assertEquals(ofertaEntity.getContratista(), newOferta.getContratista());
+
+        OfertaEntity lasOferta = estudianteOfertasLogic.getOferta(estudiante.getId(), newOferta.getId());
+
+        Assert.assertEquals(lasOferta.getId(), newOferta.getId());
+        Assert.assertEquals(lasOferta.getTipoOferta(), newOferta.getTipoOferta());
+        Assert.assertEquals(lasOferta.getEstudiantes(), newOferta.getEstudiantes());
+        Assert.assertEquals(lasOferta.getEstaAbierta(), newOferta.getEstaAbierta());
+        Assert.assertEquals(lasOferta.getNombre(), newOferta.getNombre());
+        Assert.assertEquals(lasOferta.getContratista(), newOferta.getContratista());
+    }
+    
     /**
      * Prueba para remplazar las instancias de Books asociadas a una instancia
      * de Editorial.
@@ -136,14 +172,13 @@ public class EstudianteOfertasLogicTest {
             em.joinTransaction();
             EstudianteEntity entity = caldata.get(0);
             OfertaEntity e = data.get(0);
-            estudianteOfertasLogic.replaceOferta(entity.getId(), data.get(0).getId());
+            
+            ArrayList<OfertaEntity> ofertas = new ArrayList<>();
+            ofertas.add(data.get(0));
+            
+            estudianteOfertasLogic.replaceOfertas(entity.getId(), ofertas);
             entity = estudianteLogic.getEstudiante(entity.getId());
-            for (OfertaEntity i : entity.getOfertas()) {
-                System.out.println("entity: " + i.getId());
-            }
-            for (OfertaEntity i : data) {
-                System.out.println("data: " + i.getId());
-            }
+
             Assert.assertEquals(entity.getOfertas(), data);
         } catch (Exception exx) {
             Assert.fail("No debería haber lanzado excepción");
