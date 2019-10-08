@@ -18,7 +18,7 @@ public class OfertaEntity extends BaseEntity{
      * Contratista que creo la oferta.
      */
     @PodamExclude
-     @ManyToOne()
+    @ManyToOne()
     private ContratistaEntity contratista;
 
    
@@ -104,7 +104,7 @@ public class OfertaEntity extends BaseEntity{
         mappedBy = "ofertas",
         fetch = javax.persistence.FetchType.LAZY
     )
-    ArrayList<EstudianteEntity> estudiantes;
+    private List<EstudianteEntity> estudiantes;
     
     
     @PodamExclude  

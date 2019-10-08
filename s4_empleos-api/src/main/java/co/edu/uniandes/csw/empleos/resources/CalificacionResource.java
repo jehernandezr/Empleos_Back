@@ -137,7 +137,7 @@ public class CalificacionResource {
      * @return El servicio de Estudiantes para esa Calificacion en paricular.\
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra la Calificacion .
-     */
+     
     @GET
     @Path("{calificacionesId: \\d+}/estudiantes")
     public Class<EstudianteResource> getEstudianteResource(@PathParam("calificacionesId") Long calId) {
@@ -146,7 +146,7 @@ public class CalificacionResource {
         }
         return EstudianteResource.class;
     }
-    
+    */
         /**
      * Conexión con el servicio de estudiantes para una calificacion.
      * {@link CalificacionEstudiantesResource}
@@ -159,7 +159,7 @@ public class CalificacionResource {
      * @return El servicio de autores para esa calificacion en paricular.\
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra la calificacion.
-     */
+     
     @Path("{calificacionesId: \\d+}/estudiantes")
     public Class<CalificacionEstudianteResource> getCalificacionEstudianteResource(@PathParam("calificacionesId") Long calId) {
         if (calificacionLogic.getCalificacion(calId) == null) {
@@ -167,7 +167,7 @@ public class CalificacionResource {
         }
         return CalificacionEstudianteResource.class;
     }
-    
+    */
     
     
         /**
