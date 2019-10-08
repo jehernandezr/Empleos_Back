@@ -49,6 +49,31 @@ public class TrabajoFacturaLogic {
         facturaEntity.setTrabajo(null);
     }
     
+    /**
+     * Asocia una oferta a un trabajo
+     *
+     * @param trabajoId Identificador de la instancia de trabajo
+     * @param facturaId Identificador de la instancia de Factura
+     * @return Instancia de BookEntity que fue asociada a Author
+     */
+    public FacturaEntity addFactura(Long trabajoId, Long facturaId) {
+        TrabajoEntity trabajoEntity = trabajoPersistence.read(trabajoId);
+        FacturaEntity facturaEntity = facturaPersistence.find(facturaId);
+        trabajoEntity.setFactura(facturaEntity);
+        facturaEntity.setTrabajo(trabajoEntity);
+        return facturaPersistence.find(facturaId);
+    }
     
+        /**
+     * Obtiene una instancia de CuentaBancariaEntity asociada a una
+     * instancia de Factura
+     *
+     * @param trabajoId Identificador de la instancia de trabajo
+     * @return instancia de oferta asociada a la instancia de estudiante
+     * 
+     */
+    public FacturaEntity getFactura(Long trabajoId) {
+        return trabajoPersistence.read(trabajoId).getFactura();
+    }
 
 }

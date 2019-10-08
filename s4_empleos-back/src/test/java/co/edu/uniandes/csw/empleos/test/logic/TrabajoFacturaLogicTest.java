@@ -162,5 +162,22 @@ public class TrabajoFacturaLogicTest {
         TrabajoEntity response = trabajoLogic.getTrabajo(caldata.get(0).getId());
         Assert.assertNull(response.getFactura());
     }
+    
+     /**
+     * Prueba para asociar una cuenta factura a un trabajo
+     *
+     *
+     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
+     */
+    @Test
+    public void addFacturaTest() throws BusinessLogicException {
+        TrabajoEntity trabajo = caldata.get(0);
+        FacturaEntity factura = factory.manufacturePojo(FacturaEntity.class);
+        factura.setValor(Math.abs(factura.getValor()) + 1);
+        facturaLogic.createFactura(factura);
+        FacturaEntity facturaEntity = trabajoFacturaLogic.addFactura(trabajo.getId(), factura.getId());
+        Assert.assertNotNull(facturaEntity);
+        Assert.assertEquals(facturaEntity.getId(), factura.getId());
+    }
 
 }

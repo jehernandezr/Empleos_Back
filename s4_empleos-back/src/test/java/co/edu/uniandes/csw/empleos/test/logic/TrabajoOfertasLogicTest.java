@@ -163,5 +163,25 @@ public class TrabajoOfertasLogicTest {
         TrabajoEntity response = trabajoLogic.getTrabajo(caldata.get(0).getId());
         Assert.assertNull(response.getOferta());
     }
+    
+    /**
+     * Prueba para asociar una cuenta factura a un trabajo
+     *
+     *
+     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
+     */
+    @Test
+    public void addOfertaTest() throws BusinessLogicException {
+        TrabajoEntity trabajo = caldata.get(0);
+        OfertaEntity oferta = factory.manufacturePojo(OfertaEntity.class);
+        oferta.setHorasDeTrabajo((double) 5);
+        oferta.setNumeroDeVacantes(5);
+        oferta.setPagoPorHora((double) 3600);
+        oferta.setTipoOferta(1);
+        ofertaLogic.createOferta(oferta);
+        OfertaEntity ofertaEntity = trabajoOfertaLogic.addOferta(trabajo.getId(), oferta.getId());
+        Assert.assertNotNull(ofertaEntity);
+        Assert.assertEquals(ofertaEntity.getId(), oferta.getId());
+    }
 
 }
