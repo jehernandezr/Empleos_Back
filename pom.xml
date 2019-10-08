@@ -10,7 +10,10 @@
     <packaging>pom</packaging>
     <name>s4_empleos</name>
  
-    <modules></modules>
+    <modules>
+         <module>s4_empleos-back</module>
+         <module>s4_empleos-api</module>
+    </modules>
     
     <repositories>
         <repository>
