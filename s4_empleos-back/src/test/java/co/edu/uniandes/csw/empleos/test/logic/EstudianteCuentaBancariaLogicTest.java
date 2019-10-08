@@ -172,7 +172,15 @@ public class EstudianteCuentaBancariaLogicTest {
     @Test
     public void addCuentaBancariaTest() throws BusinessLogicException {
         EstudianteEntity estudiante = caldata.get(0);
+        estudiante.setCuentaBancaria(null);
+        estudiante.setCorreo("akjwd@uniandes.edu.co");
+        estudiante.setSemestre(Math.min(Math.abs(estudiante.getSemestre()) + 1, 12));
+        estudiante.setNombre(estudiante.getNombre() + "a");
+        estudiante.setCarrera(estudiante.getCarrera() + "a");
+        estudianteLogic.updateEstudiante(estudiante);
         CuentaBancariaEntity cuenta = factory.manufacturePojo(CuentaBancariaEntity.class);
+        cuenta.setTipoCuenta("AHORROS");
+        cuenta.setEstudiante(estudiante);
         cuentaBancariaLogic.createCuentaBancaria(cuenta);
         CuentaBancariaEntity cuentaEntity = estudianteCuentaBancariaLogic.addCuentaBancaria(estudiante.getId(), cuenta.getId());
         Assert.assertNotNull(cuentaEntity);

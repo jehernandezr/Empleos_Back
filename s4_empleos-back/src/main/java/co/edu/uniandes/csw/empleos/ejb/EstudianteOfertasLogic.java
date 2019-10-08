@@ -33,6 +33,7 @@ public class EstudianteOfertasLogic {
         EstudianteEntity estudianteEntity = estudiantePersistence.find(estudiantesId);
         OfertaEntity ofertaEntity = ofertaPersistence.find(ofertasId);
         ofertaEntity.getEstudiantes().add(estudianteEntity);
+        estudianteEntity.getOfertas().add(ofertaEntity);
         return ofertaPersistence.find(ofertasId);
     }
     
@@ -99,5 +100,6 @@ public class EstudianteOfertasLogic {
         EstudianteEntity estudainteEntity = estudiantePersistence.find(estudiantesId);
         OfertaEntity ofertaEntity = ofertaPersistence.find(ofertasId);
         ofertaEntity.getEstudiantes().remove(estudainteEntity);
+        estudainteEntity.getOfertas().remove(ofertaEntity);
     }
 }
