@@ -5,6 +5,7 @@ import co.edu.uniandes.csw.empleos.ejb.EstudianteLogic;
 import co.edu.uniandes.csw.empleos.ejb.CuentaBancariaLogic;
 import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
 import co.edu.uniandes.csw.empleos.entities.CuentaBancariaEntity;
+import co.edu.uniandes.csw.empleos.entities.OfertaEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.empleos.persistence.EstudiantePersistence;
 import co.edu.uniandes.csw.empleos.persistence.CuentaBancariaPersistence;
@@ -37,7 +38,7 @@ public class EstudianteCuentaBancariaLogicTest {
     @Inject
     private EstudianteLogic estudianteLogic;
     @Inject
-    private CuentaBancariaLogic ofertaLogic;
+    private CuentaBancariaLogic cuentaBancariaLogic;
 
     @Inject
     private EstudianteCuentaBancariaLogic estudianteCuentaBancariaLogic;
@@ -158,6 +159,27 @@ public class EstudianteCuentaBancariaLogicTest {
         estudianteCuentaBancariaLogic.removeCuentaBancaria(caldata.get(0).getId());
         EstudianteEntity response = estudianteLogic.getEstudiante(caldata.get(0).getId());
         Assert.assertNull(response.getCuentaBancaria());
+    }
+    
+    
+    
+    /**
+     * Prueba para asociar una cuenta bancaria a un estudiante
+     *
+     *
+     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
+     */
+    @Test
+    public void addCuentaBancariaTest() throws BusinessLogicException {
+        EstudianteEntity estudiante = caldata.get(0);
+        CuentaBancariaEntity cuenta = factory.manufacturePojo(CuentaBancariaEntity.class);
+        cuentaBancariaLogic.createCuentaBancaria(cuenta);
+        CuentaBancariaEntity cuentaEntity = estudianteCuentaBancariaLogic.addCuentaBancaria(estudiante.getId(), cuenta.getId());
+        Assert.assertNotNull(cuentaEntity);
+
+        Assert.assertEquals(cuentaEntity.getId(), cuenta.getId());
+        Assert.assertEquals(cuentaEntity.getNumeroCuenta(), cuenta.getNumeroCuenta());
+        Assert.assertEquals(cuentaEntity.getNombreBanco(), cuenta.getNombreBanco());
     }
 
 }

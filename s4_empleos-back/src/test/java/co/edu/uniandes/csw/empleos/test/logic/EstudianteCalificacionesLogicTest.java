@@ -197,4 +197,37 @@ public class EstudianteCalificacionesLogicTest {
         Assert.assertTrue(entity.getCalificaciones().contains(caldata.get(2)));
     }
     
+    
+    /**
+     * Prueba para desasociar una calificaci{on existente de un Estudiante existente
+     *
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
+     */
+    @Test
+    public void removeCalificacion() throws BusinessLogicException {
+        try {
+            utx.begin();
+            em.joinTransaction();
+            long id1 = data.get(0).getId();
+            long id2 = data.get(0).getCalificaciones().get(0).getId();
+            
+            estudianteCalificacionesLogic.removeCalificacion(id1, id2);
+            EstudianteEntity response = estudianteLogic.getEstudiante(id1);
+            CalificacionEntity cal = null;
+            for(CalificacionEntity e : response.getCalificaciones()) {
+                if(e.getId() == id2) cal = e;
+            }
+            Assert.assertNull(cal);
+        } catch (Exception exx) {
+            Assert.fail("No debería haber lanzado excepción");
+            exx.printStackTrace();
+            System.out.println("EXCEPCION:");
+            System.out.println(exx.getMessage());
+            try {
+                utx.rollback();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
 }
