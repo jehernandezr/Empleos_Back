@@ -50,9 +50,9 @@ public class OfertaResource {
      * aplicación. Si no hay ninguno retorna una lista vacía.
      */
     @GET
-    public String getOfertas() {
+    public List<OfertaDTO> getOfertas() {
         
-        return "hola";
+        return listEntity2DTO(logic.getOfertas());
         
     }
     
@@ -79,7 +79,8 @@ public class OfertaResource {
      */
     @GET
     @Path("{id: \\d+}")
-    public OfertaDTO getOferta(@PathParam("id") Long idOferta) throws BusinessLogicException {
+    public OfertaDTO getCuentaBancaria(@PathParam("id") Long idOferta) throws BusinessLogicException {
+
         OfertaEntity ofertaEntity = logic.getOferta(idOferta);
         if (ofertaEntity == null) {
             throw new WebApplicationException("El recurso /oferta/" + idOferta + " no existe.", 404);
@@ -104,8 +105,8 @@ public class OfertaResource {
      * @param entityList Lista de OfertaEntity a convertir.
      * @return Lista de OfertaDetailDTO convertida.
      */
-    private List<OfertaDetailDTO> listEntity2DTO(List<OfertaEntity> entityList) {
-        List<OfertaDetailDTO> list = new ArrayList<>();
+    private List<OfertaDTO> listEntity2DTO(List<OfertaEntity> entityList) {
+        List<OfertaDTO> list = new ArrayList<>();
         for (OfertaEntity entity : entityList) {
             list.add(new OfertaDetailDTO(entity));
         }

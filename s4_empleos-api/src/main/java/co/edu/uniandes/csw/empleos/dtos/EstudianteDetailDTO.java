@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.empleos.dtos;
 
 import co.edu.uniandes.csw.empleos.entities.CalificacionEntity;
 import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
+import co.edu.uniandes.csw.empleos.entities.OfertaEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,11 +16,15 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  *
- * @author Estudiante
+ * @author David Domínguez
  */
 public class EstudianteDetailDTO extends EstudianteDTO implements Serializable{
     
     private List<CalificacionDTO> calificacioness;
+    
+    private List<OfertaDTO> ofertas;
+    
+    private CuentaBancariaDTO cuentaBancaria;
     
     public EstudianteDetailDTO()
     {
@@ -40,6 +45,16 @@ public class EstudianteDetailDTO extends EstudianteDTO implements Serializable{
                     calificacioness.add(new CalificacionDTO(entityBook));
                 }
             }
+            
+            if (estudianteEntity.getOfertas()!= null) {
+                ofertas = new ArrayList<>();
+                for (OfertaEntity entityBook : estudianteEntity.getOfertas()) {
+                    ofertas.add(new OfertaDTO(entityBook));
+                }
+            }
+            
+            if (estudianteEntity.getCuentaBancaria() != null)
+                cuentaBancaria = new CuentaBancariaDTO(estudianteEntity.getCuentaBancaria());
         }
     }
     
@@ -58,6 +73,14 @@ public class EstudianteDetailDTO extends EstudianteDTO implements Serializable{
             }
             estudianteEntity.setCalificaciones(calificacionesEntity);
         }
+        if (ofertas != null) {
+            List<OfertaEntity> ofertasEntity = new ArrayList<>();
+            for (OfertaDTO dtoOferta : ofertas) {
+                ofertasEntity.add(dtoOferta.toEntity());
+            }
+            estudianteEntity.setOfertas(ofertasEntity);
+        }
+        if (cuentaBancaria != null) estudianteEntity.setCuentaBancaria(cuentaBancaria.toEntity());
         return estudianteEntity;
     }
 
@@ -73,6 +96,34 @@ public class EstudianteDetailDTO extends EstudianteDTO implements Serializable{
      */
     public void setCalificaciones(List<CalificacionDTO> calificacioness) {
         this.calificacioness = calificacioness;
+    }
+    
+    /**
+     * @return the ofertas
+     */
+    public List<OfertaDTO> getOfertas() {
+        return ofertas;
+    }
+
+    /**
+     * @param ofertas the ofertas to set
+     */
+    public void setOfertas(List<OfertaDTO> ofertas) {
+        this.ofertas = ofertas;
+    }
+    
+    /**
+     * @return the cuenta bancaria
+     */
+    public CuentaBancariaDTO getCuentaBancaria() {
+        return cuentaBancaria;
+    }
+
+    /**
+     * @param cuentaBancaria the cuenta bancaria to set
+     */
+    public void setCuentaBancaria(CuentaBancariaDTO cuentaBancaria) {
+        this.cuentaBancaria = cuentaBancaria;
     }
     
     @Override

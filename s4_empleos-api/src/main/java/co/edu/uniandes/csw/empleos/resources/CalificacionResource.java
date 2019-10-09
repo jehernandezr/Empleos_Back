@@ -69,6 +69,18 @@ public class CalificacionResource {
         return calDTO;
     }
     
+        /**
+     * Busca y devuelve todas las editoriales que existen en la aplicacion.
+     *
+     * @return JSONArray {@link EditorialDetailDTO} - Las editoriales
+     * encontradas en la aplicación. Si no hay ninguna retorna una lista vacía.
+     */
+    @GET
+    public List<CalificacionDTO> getCalificaciones() {
+        List<CalificacionDTO> listaCalificaciones = listEntity2DTO(calificacionLogic.getCalificaciones());
+        return listaCalificaciones;
+    }
+    
      /**
      * Actualiza la calificacion con el id recibido en la URL con la información que se
      * recibe en el cuerpo de la petición.
@@ -105,14 +117,13 @@ public class CalificacionResource {
      */
     @DELETE
     @Path("{calificacionesId: \\d+}")
-    public void deleteCalificacion (@PathParam("calificacionesId") Long calId) throws BusinessLogicException {
-        CalificacionEntity entity = calificacionLogic.getCalificacion(calId);
-        if (entity == null) {
+    public void deleteCalificacion(@PathParam("calificacionesId") Long calId) throws BusinessLogicException {
+        if (calificacionLogic.getCalificacion(calId) == null) {
             throw new WebApplicationException("El recurso /calificaciones/" + calId + " no existe.", 404);
         }
-        calificacionEstudianteLogic.removeEstudiante(calId);
         calificacionLogic.deleteCalificacion(calId);
-        }
+    }
+    
     
     /**
      * Conexión con el servicio de reseñas para una Calificacion. {@link ReviewResource}
@@ -126,7 +137,7 @@ public class CalificacionResource {
      * @return El servicio de Estudiantes para esa Calificacion en paricular.\
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra la Calificacion .
-     */
+     
     @GET
     @Path("{calificacionesId: \\d+}/estudiantes")
     public Class<EstudianteResource> getEstudianteResource(@PathParam("calificacionesId") Long calId) {
@@ -135,7 +146,7 @@ public class CalificacionResource {
         }
         return EstudianteResource.class;
     }
-    
+    */
         /**
      * Conexión con el servicio de estudiantes para una calificacion.
      * {@link CalificacionEstudiantesResource}
@@ -148,7 +159,7 @@ public class CalificacionResource {
      * @return El servicio de autores para esa calificacion en paricular.\
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra la calificacion.
-     */
+     
     @Path("{calificacionesId: \\d+}/estudiantes")
     public Class<CalificacionEstudianteResource> getCalificacionEstudianteResource(@PathParam("calificacionesId") Long calId) {
         if (calificacionLogic.getCalificacion(calId) == null) {
@@ -156,6 +167,8 @@ public class CalificacionResource {
         }
         return CalificacionEstudianteResource.class;
     }
+    */
+    
     
         /**
      * Convierte una lista de entidades a DTO.

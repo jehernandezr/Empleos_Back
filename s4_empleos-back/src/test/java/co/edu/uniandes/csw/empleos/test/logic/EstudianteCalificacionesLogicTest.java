@@ -30,15 +30,14 @@ import org.junit.runner.RunWith;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
-
 /**
  *
  * @author Nicolàs Munar
  */
 @RunWith(Arquillian.class)
 public class EstudianteCalificacionesLogicTest {
-    
-       private PodamFactory factory = new PodamFactoryImpl();
+
+    private PodamFactory factory = new PodamFactoryImpl();
 
     @Inject
     private CalificacionLogic calificacionLogic;
@@ -50,7 +49,7 @@ public class EstudianteCalificacionesLogicTest {
 
     @PersistenceContext
     private EntityManager em;
-    
+
     @Inject
     private UserTransaction utx;
 
@@ -108,14 +107,11 @@ public class EstudianteCalificacionesLogicTest {
      */
     private void insertData() {
 
-        
-         for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             CalificacionEntity calificaciones = factory.manufacturePojo(CalificacionEntity.class);
             em.persist(calificaciones);
             caldata.add(calificaciones);
         }
-         
-         
 
         for (int i = 0; i < 3; i++) {
             EstudianteEntity entity = factory.manufacturePojo(EstudianteEntity.class);
@@ -127,8 +123,8 @@ public class EstudianteCalificacionesLogicTest {
         }
 
     }
-    
-     /**
+
+    /**
      * Prueba para asociar una calificaiocn existente a un Estudiante
      */
     @Test
@@ -140,38 +136,38 @@ public class EstudianteCalificacionesLogicTest {
         Assert.assertNotNull(response);
         Assert.assertEquals(calificacionEntity.getId(), response.getId());
     }
-    
-        /**
-     * Prueba para obtener una colección de instancias de Calificaciones asociadas a una
-     * instancia Estudiante.
+
+    /**
+     * Prueba para obtener una colección de instancias de Calificaciones
+     * asociadas a una instancia Estudiante.
      */
     @Test
     public void getCalificaionesTest() {
         List<CalificacionEntity> list = estudianteCalificacionesLogic.getCalificaciones(data.get(0).getId());
         Assert.assertEquals(1, list.size());
     }
-    
-      /**
-     * Prueba para obtener una instancia de Calificacion asociada a una instancia
-     * Estudiante.
+
+    /**
+     * Prueba para obtener una instancia de Calificacion asociada a una
+     * instancia Estudiante.
      *
      * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
      */
     @Test
     public void getCalificacionTest() throws BusinessLogicException {
-       EstudianteEntity entity = data.get(0);
-       CalificacionEntity calEntity = caldata.get(0);
-       CalificacionEntity response = estudianteCalificacionesLogic.getCalificacion(entity.getId(), calEntity.getId());
+        EstudianteEntity entity = data.get(0);
+        CalificacionEntity calEntity = caldata.get(0);
+        CalificacionEntity response = estudianteCalificacionesLogic.getCalificacion(entity.getId(), calEntity.getId());
 
         Assert.assertEquals(calEntity.getId(), response.getId());
         Assert.assertEquals(calEntity.getComentario(), response.getComentario());
         Assert.assertEquals(calEntity.getNota(), response.getNota());
 
     }
-    
-        /**
-     * Prueba para obtener una instancia de Calificaiones asociada a una instancia
-     * Estudiante que no le pertenece.
+
+    /**
+     * Prueba para obtener una instancia de Calificaiones asociada a una
+     * instancia Estudiante que no le pertenece.
      *
      * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
      */
@@ -181,10 +177,10 @@ public class EstudianteCalificacionesLogicTest {
         CalificacionEntity calEntity = caldata.get(1);
         estudianteCalificacionesLogic.getCalificacion(entity.getId(), calEntity.getId());
     }
-    
+
     /**
-     * Prueba para remplazar las instancias de Calificaciones asociadas a una instancia
-     * de Estudiante.
+     * Prueba para remplazar las instancias de Calificaciones asociadas a una
+     * instancia de Estudiante.
      */
     @Test
     public void replaceCalificacionesTest() {
@@ -196,5 +192,48 @@ public class EstudianteCalificacionesLogicTest {
         Assert.assertTrue(entity.getCalificaciones().contains(caldata.get(1)));
         Assert.assertTrue(entity.getCalificaciones().contains(caldata.get(2)));
     }
-    
+
+    /**
+     * Prueba para desasociar una calificaci{on existente de un Estudiante
+     * existente
+     *
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
+     */
+    @Test
+    public void removeCalificacion() throws BusinessLogicException {
+        try {
+            utx.begin();
+            em.joinTransaction();
+            insertData();
+            EstudianteEntity estudiante = data.get(0);
+            long id1 = estudiante.getId();
+            estudiante.setCalificaciones(caldata);
+            long id2 = estudiante.getCalificaciones().get(0).getId();
+            estudiante.setCorreo("akjwd@uniandes.edu.co");
+            estudiante.setSemestre(Math.min(Math.abs(estudiante.getSemestre()) + 1, 12));
+            estudiante.setNombre(estudiante.getNombre() + "a");
+            estudiante.setCarrera(estudiante.getCarrera() + "a");
+            estudianteLogic.updateEstudiante(estudiante);
+
+            estudianteCalificacionesLogic.removeCalificacion(id1, id2);
+            EstudianteEntity response = estudianteLogic.getEstudiante(id1);
+            CalificacionEntity cal = null;
+            for (CalificacionEntity e : response.getCalificaciones()) {
+                if (e.getId() == id2) {
+                    cal = e;
+                }
+            }
+            Assert.assertNull(cal);
+        } catch (Exception exx) {
+            Assert.fail("No debería haber lanzado excepción");
+            exx.printStackTrace();
+            System.out.println("EXCEPCION:");
+            System.out.println(exx.getMessage());
+            try {
+                utx.rollback();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
 }

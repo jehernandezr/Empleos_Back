@@ -5,6 +5,7 @@ import co.edu.uniandes.csw.empleos.ejb.EstudianteLogic;
 import co.edu.uniandes.csw.empleos.ejb.CuentaBancariaLogic;
 import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
 import co.edu.uniandes.csw.empleos.entities.CuentaBancariaEntity;
+import co.edu.uniandes.csw.empleos.entities.OfertaEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.empleos.persistence.EstudiantePersistence;
 import co.edu.uniandes.csw.empleos.persistence.CuentaBancariaPersistence;
@@ -37,7 +38,7 @@ public class EstudianteCuentaBancariaLogicTest {
     @Inject
     private EstudianteLogic estudianteLogic;
     @Inject
-    private CuentaBancariaLogic ofertaLogic;
+    private CuentaBancariaLogic cuentaBancariaLogic;
 
     @Inject
     private EstudianteCuentaBancariaLogic estudianteCuentaBancariaLogic;
@@ -158,6 +159,35 @@ public class EstudianteCuentaBancariaLogicTest {
         estudianteCuentaBancariaLogic.removeCuentaBancaria(caldata.get(0).getId());
         EstudianteEntity response = estudianteLogic.getEstudiante(caldata.get(0).getId());
         Assert.assertNull(response.getCuentaBancaria());
+    }
+    
+    
+    
+    /**
+     * Prueba para asociar una cuenta bancaria a un estudiante
+     *
+     *
+     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
+     */
+    @Test
+    public void addCuentaBancariaTest() throws BusinessLogicException {
+        EstudianteEntity estudiante = caldata.get(0);
+        estudiante.setCuentaBancaria(null);
+        estudiante.setCorreo("akjwd@uniandes.edu.co");
+        estudiante.setSemestre(Math.min(Math.abs(estudiante.getSemestre()) + 1, 12));
+        estudiante.setNombre(estudiante.getNombre() + "a");
+        estudiante.setCarrera(estudiante.getCarrera() + "a");
+        estudianteLogic.updateEstudiante(estudiante);
+        CuentaBancariaEntity cuenta = factory.manufacturePojo(CuentaBancariaEntity.class);
+        cuenta.setTipoCuenta("AHORROS");
+        cuenta.setEstudiante(estudiante);
+        cuentaBancariaLogic.createCuentaBancaria(cuenta);
+        CuentaBancariaEntity cuentaEntity = estudianteCuentaBancariaLogic.addCuentaBancaria(estudiante.getId(), cuenta.getId());
+        Assert.assertNotNull(cuentaEntity);
+
+        Assert.assertEquals(cuentaEntity.getId(), cuenta.getId());
+        Assert.assertEquals(cuentaEntity.getNumeroCuenta(), cuenta.getNumeroCuenta());
+        Assert.assertEquals(cuentaEntity.getNombreBanco(), cuenta.getNombreBanco());
     }
 
 }

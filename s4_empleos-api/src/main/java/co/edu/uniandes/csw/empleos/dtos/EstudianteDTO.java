@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author Estudiante
+ * @author David Domínguez
  */
 public class EstudianteDTO implements Serializable{
     
@@ -148,7 +148,7 @@ public class EstudianteDTO implements Serializable{
      *
      * @return Un Entity con los valores del DTO
      */
-    EstudianteEntity toEntity() {
+    public EstudianteEntity toEntity() {
     
         EstudianteEntity estudianteEntity = new EstudianteEntity();
         estudianteEntity.setId(this.id);

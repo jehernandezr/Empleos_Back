@@ -46,15 +46,40 @@ public class TrabajoOfertaLogic {
      * Borrar una oferta de una trabajo Este metodo se utiliza para borrar la
      * relacion de una oferta.
      *
-     * @param calId El libro que se desea borrar de la editorial.
+     * @param trabajoId El libro que se desea borrar de la editorial.
      */
-    public void removeOferta(Long calId) {
-        TrabajoEntity trabajoEntity = trabajoPersistence.read(calId);
+    public void removeOferta(Long trabajoId) {
+        TrabajoEntity trabajoEntity = trabajoPersistence.read(trabajoId);
         OfertaEntity ofertaEntity = ofertaPersistence.find(trabajoEntity.getOferta().getId());
         trabajoEntity.setOferta(null);
         ofertaEntity.setTrabajo(null);
     }
     
+    /**
+     * Asocia una oferta a un trabajo
+     *
+     * @param trabajoId Identificador de la instancia de trabajo
+     * @param ofertaId Identificador de la instancia de Oferta
+     * @return Instancia de BookEntity que fue asociada a Author
+     */
+    public OfertaEntity addOferta(Long trabajoId, Long ofertaId) {
+        TrabajoEntity trabajoEntity = trabajoPersistence.read(trabajoId);
+        OfertaEntity ofertaEntity = ofertaPersistence.find(ofertaId);
+        trabajoEntity.setOferta(ofertaEntity);
+        ofertaEntity.setTrabajo(trabajoEntity);
+        return ofertaPersistence.find(ofertaId);
+    }
     
+        /**
+     * Obtiene una instancia de CuentaBancariaEntity asociada a una
+     * instancia de Estudiante
+     *
+     * @param trabajoId Identificador de la instancia de trabajo
+     * @return instancia de oferta asociada a la instancia de estudiante
+     * 
+     */
+    public OfertaEntity getOferta(Long trabajoId) {
+        return trabajoPersistence.read(trabajoId).getOferta();
+    }
 
 }

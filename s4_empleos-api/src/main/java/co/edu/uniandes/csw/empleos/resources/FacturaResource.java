@@ -9,6 +9,8 @@ import co.edu.uniandes.csw.empleos.dtos.FacturaDTO;
 import co.edu.uniandes.csw.empleos.ejb.FacturaLogic;
 import co.edu.uniandes.csw.empleos.entities.FacturaEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -61,6 +63,17 @@ public class FacturaResource {
         return facDTO;
     }
     
+        /**
+     * Busca y devuelve todas las facuras que existen en la aplicacion.
+     *
+     * @return JSONArray {@link FacturaDTO} - Las editoriales
+     * encontradas en la aplicación. Si no hay ninguna retorna una lista vacía.
+     */
+    @GET
+    public List<FacturaDTO> getEditorials() {
+        List<FacturaDTO> listaFacturas = listEntity2DTO(facturaLogic.getFacturas());
+        return listaFacturas;
+    }
     
       /**
      * Actualiza la calificacion con el id recibido en la URL con la información que se
@@ -105,5 +118,23 @@ public class FacturaResource {
         }
         facturaLogic.deleteFactura(factId);
         }
+    
+     /**
+     * Convierte una lista de entidades a DTO.
+     *
+     * Este método convierte una lista de objetos BookEntity a una lista de
+     * objetos FacturaDTO (json)
+     *
+     * @param entityList corresponde a la lista de libros de tipo Entity que
+     * vamos a convertir a DTO.
+     * @return la lista de libros en forma DTO (json)
+     */
+    private List<FacturaDTO> listEntity2DTO(List<FacturaEntity> entityList) {
+        List<FacturaDTO> list = new ArrayList<>();
+        for (FacturaEntity entity : entityList) {
+            list.add(new FacturaDTO(entity));
+        }
+        return list;
+    }
     
 }
