@@ -14,10 +14,10 @@
 					"script": {
 						"id": "24437b82-dc17-409a-990b-3cf04031eba6",
 						"exec": [
-							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"new_id_c\",data.id);",
 							"tests[\"No genera error en el post\"] = responseCode.code===200;",
-							""
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_c\",data.id);"
 						],
 						"type": "text/javascript"
 					}
@@ -25,14 +25,7 @@
 			],
 			"request": {
 				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "xoxp-763869224470-748885497506-763873159334-5e9fff7b7ff0e42024f33be880742692",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
 				"method": "POST",
 				"header": [
@@ -480,6 +473,41 @@
 						"api",
 						"calificaciones",
 						"{{new_id_c}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar una calificacion que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5839b520-db1b-460f-ad35-5a6ec5cebe70",
+						"exec": [
+							"tests[\"No borra con id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /calificaciones/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/calificaciones/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_empleos-api",
+						"api",
+						"calificaciones",
+						"0"
 					]
 				}
 			},

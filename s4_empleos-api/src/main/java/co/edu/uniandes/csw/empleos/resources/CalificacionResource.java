@@ -76,9 +76,9 @@ public class CalificacionResource {
      * encontradas en la aplicación. Si no hay ninguna retorna una lista vacía.
      */
     @GET
-    public List<CalificacionDTO> getEditorials() {
-        List<CalificacionDTO> listaEditoriales = listEntity2DTO(calificacionLogic.getCalificaciones());
-        return listaEditoriales;
+    public List<CalificacionDTO> getCalificaciones() {
+        List<CalificacionDTO> listaCalificaciones = listEntity2DTO(calificacionLogic.getCalificaciones());
+        return listaCalificaciones;
     }
     
      /**
