@@ -55,6 +55,31 @@ public class TrabajoOfertaLogic {
         ofertaEntity.setTrabajo(null);
     }
     
+    /**
+     * Asocia una oferta a un trabajo
+     *
+     * @param trabajoId Identificador de la instancia de trabajo
+     * @param ofertaId Identificador de la instancia de Oferta
+     * @return Instancia de BookEntity que fue asociada a Author
+     */
+    public OfertaEntity addOferta(Long trabajoId, Long ofertaId) {
+        TrabajoEntity trabajoEntity = trabajoPersistence.read(trabajoId);
+        OfertaEntity ofertaEntity = ofertaPersistence.find(ofertaId);
+        trabajoEntity.setOferta(ofertaEntity);
+        ofertaEntity.setTrabajo(trabajoEntity);
+        return ofertaPersistence.find(ofertaId);
+    }
     
+        /**
+     * Obtiene una instancia de CuentaBancariaEntity asociada a una
+     * instancia de Estudiante
+     *
+     * @param trabajoId Identificador de la instancia de trabajo
+     * @return instancia de oferta asociada a la instancia de estudiante
+     * 
+     */
+    public OfertaEntity getOferta(Long trabajoId) {
+        return trabajoPersistence.read(trabajoId).getOferta();
+    }
 
 }

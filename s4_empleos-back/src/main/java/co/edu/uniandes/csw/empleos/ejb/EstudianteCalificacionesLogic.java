@@ -98,4 +98,11 @@ public class EstudianteCalificacionesLogic {
         
     }
 
+    
+    public void removeCalificacion(Long estudiantesId, Long calificacionId) {
+        EstudianteEntity estudianteEntity = estudiantePersistence.find(estudiantesId);
+        CalificacionEntity calificacionEntity = calificacionPersistence.find(calificacionId);
+        estudianteEntity.getCalificaciones().remove(calificacionEntity);
+        calificacionEntity.setEstudiante(null);
+    }
 }

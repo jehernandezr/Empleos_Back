@@ -4,7 +4,6 @@ import co.edu.uniandes.csw.empleos.entities.CuentaBancariaEntity;
 import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
 import co.edu.uniandes.csw.empleos.persistence.CuentaBancariaPersistence;
 import co.edu.uniandes.csw.empleos.persistence.EstudiantePersistence;
-import java.util.logging.Level;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -32,7 +31,6 @@ public class EstudianteCuentaBancariaLogic {
     }
     
     
-    
     /**
      * Borrar una cuentaBancaria de un Estudiante Este metodo se utiliza para borrar la
      * relacion de una cuentaBancaria.
@@ -46,8 +44,31 @@ public class EstudianteCuentaBancariaLogic {
         cuentaBancariaEntity.setEstudiante(null);
     }
     
-
+    /**
+     * Asocia una cuentaBancaria a un Estudiante
+     *
+     * @param estudiantesId Identificador de la instancia de Estudiante
+     * @param ofertasId Identificador de la instancia de Oferta
+     * @return Instancia de BookEntity que fue asociada a Author
+     */
+    public CuentaBancariaEntity addCuentaBancaria(Long estudiantesId, Long cuentaBancariaId) {
+        EstudianteEntity estudianteEntity = estudiantePersistence.find(estudiantesId);
+        CuentaBancariaEntity cuentaBancariaEntity = cuentaBancariaPersistence.find(cuentaBancariaId);
+        estudianteEntity.setCuentaBancaria(cuentaBancariaEntity);
+        cuentaBancariaEntity.setEstudiante(estudianteEntity);
+        return cuentaBancariaPersistence.find(cuentaBancariaId);
+    }
     
+        /**
+     * Obtiene una instancia de CuentaBancariaEntity asociada a una
+     * instancia de Estudiante
+     *
+     * @param estudianteId Identificador de la instancia de Estudiante
+     * @return instancia de CuentaBancariaEntity asociadas a la instancia de estudiante
+     * 
+     */
+    public CuentaBancariaEntity getCuentaBancaria(Long estudianteId) {
+        return estudiantePersistence.find(estudianteId).getCuentaBancaria();
+    }
     
-
 }
