@@ -110,7 +110,6 @@ public class TarjetaDeCreditoLogicTest {
 
         TarjetaDeCreditoEntity entity = em.find(TarjetaDeCreditoEntity.class, result.getId());
         Assert.assertEquals(entity.getNumero(), result.getNumero());
-
     }
     
     @Test(expected = BusinessLogicException.class)
@@ -118,6 +117,19 @@ public class TarjetaDeCreditoLogicTest {
         TarjetaDeCreditoEntity newEntity = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
         newEntity.setNumero("0234567890123456");
         TarjetaDeCreditoEntity result = tarjetaCreditoLogic.createTarjetaDeCredito(newEntity);
+    }
+    
+    @Test(expected = BusinessLogicException.class)
+    public void createTarjetaDeCreditoNumeroRepetido() throws BusinessLogicException {
+        
+        TarjetaDeCreditoEntity newEntity1 = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
+        newEntity1.setNumero("4234567891234567");
+        tarjetaCreditoLogic.createTarjetaDeCredito(newEntity1);
+        Assert.assertNotNull(tarjetaCreditoLogic.getTarjetaCredito(newEntity1.getId()));
+        
+        TarjetaDeCreditoEntity newEntity2 = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
+        newEntity2.setNumero("4234567891234567");
+        TarjetaDeCreditoEntity result = tarjetaCreditoLogic.createTarjetaDeCredito(newEntity2);
     }
 
     @Test(expected = BusinessLogicException.class)

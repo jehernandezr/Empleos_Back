@@ -12,7 +12,7 @@ import java.io.Serializable;
  *
  * @author Estudiante
  */
-class EstudianteDTO implements Serializable{
+public class EstudianteDTO implements Serializable{
     
     private Long id;
     private String nombre;

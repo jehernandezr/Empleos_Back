@@ -19,6 +19,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -78,13 +79,23 @@ public class OfertaResource {
      */
     @GET
     @Path("{id: \\d+}")
-    public OfertaDTO getCuntaBancaria(@PathParam("id") Long idOferta) throws BusinessLogicException {
+    public OfertaDTO getOferta(@PathParam("id") Long idOferta) throws BusinessLogicException {
         OfertaEntity ofertaEntity = logic.getOferta(idOferta);
         if (ofertaEntity == null) {
             throw new WebApplicationException("El recurso /oferta/" + idOferta + " no existe.", 404);
         }
-        OfertaDTO cuentaDTO = new OfertaDTO(ofertaEntity);
-        return cuentaDTO;
+        OfertaDTO ofertaDTO = new OfertaDTO(ofertaEntity);
+        return ofertaDTO;       
+    }
+    
+    @DELETE
+    @Path("{ofertaId: \\d+}")
+    public void deleteTarjeta(@PathParam("ofertaId") Long ofertaId ) throws BusinessLogicException {
+        OfertaEntity entity = logic.getOferta(ofertaId);
+        if (entity == null) {
+            throw new WebApplicationException("El recurso /ofertas/" + ofertaId + " no existe.", 404);
+        }
+        logic.deleteOferta(ofertaId);
     }
     
      /**

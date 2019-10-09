@@ -1,5 +1,6 @@
 package co.edu.uniandes.csw.empleos.dtos;
 
+import co.edu.uniandes.csw.empleos.entities.CuentaDeCobroEntity;
 import java.io.Serializable;
 
 /**
@@ -12,6 +13,10 @@ public class CuentaDeCobroDetailDTO extends CuentaDeCobroDTO implements Serializ
      * Contratista de la cuenta de cobro
      */
     private ContratistaDTO contratista;
+
+    public CuentaDeCobroDetailDTO(CuentaDeCobroEntity entity) {
+        super(entity);
+    }
 
     /**
      * Constructor

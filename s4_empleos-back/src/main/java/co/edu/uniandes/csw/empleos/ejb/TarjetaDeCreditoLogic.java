@@ -22,6 +22,13 @@ public class TarjetaDeCreditoLogic {
     private TarjetaDeCreditoPersistence persistence;
     
     public TarjetaDeCreditoEntity createTarjetaDeCredito(TarjetaDeCreditoEntity tarjetaCredito) throws BusinessLogicException {
+       
+        for (TarjetaDeCreditoEntity tarjetaDeCreditoEntity : persistence.findAll()) {
+            if(tarjetaDeCreditoEntity.getNumero().equals(tarjetaCredito.getNumero()))
+            {
+                throw new BusinessLogicException("La tarjeta de credito ya existe.");
+            }
+        }
         
         if (tarjetaCredito.getNumero() == null ) 
         {

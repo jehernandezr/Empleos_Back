@@ -1,1 +1,1 @@
-delete from CalificacionEntity;
+delete from TarjetaDeCreditoEntity;

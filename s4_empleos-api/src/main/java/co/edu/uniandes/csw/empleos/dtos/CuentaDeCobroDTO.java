@@ -1,5 +1,6 @@
 package co.edu.uniandes.csw.empleos.dtos;
 
+import co.edu.uniandes.csw.empleos.entities.CuentaDeCobroEntity;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -39,12 +40,24 @@ public class CuentaDeCobroDTO implements Serializable {
      */
     private String concepto;
 
+    public CuentaDeCobroDTO(CuentaDeCobroEntity entity) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     /**
      * Constructor vacio
      */
     public void CuentaDeCobroDTO()
     {
         //Vacio
+    }
+    
+    public void CuentaDeCobroDTO(CuentaDeCobroEntity cuentaEntity )
+    {
+        if(cuentaEntity != null)
+        {
+            
+        }
     }
     //--------------------------------------------------------------------------------------------
     //Getters && Setters
