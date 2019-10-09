@@ -1,8 +1,8 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
 package co.edu.uniandes.csw.empleos.ejb;
 
 import co.edu.uniandes.csw.empleos.entities.CalificacionEntity;
@@ -25,11 +25,11 @@ public class EstudianteCalificacionesLogic {
     
     @Inject
     private CalificacionPersistence calificacionPersistence;
-
+    
     @Inject
     private EstudiantePersistence estudiantePersistence;
     
-
+    
     /**
      * Asocia un Estudiante existente a una Calificacion
      *
@@ -38,14 +38,14 @@ public class EstudianteCalificacionesLogic {
      * @return Instancia de EstudianteEntity que fue asociada a Calificacion
      */
     public CalificacionEntity addCalificacion(Long calId, Long estId) {
-       
+        
         EstudianteEntity estudianteEntity = estudiantePersistence.find(estId);
         CalificacionEntity calificacionEntity = calificacionPersistence.find(calId);
         calificacionEntity.setEstudiante(estudianteEntity);
         return calificacionEntity;
     }
     
-
+    
     /**
      * Obtiene una colección de instancias de CalificacionEntity asociadas a una
      * instancia de Estudiante
@@ -57,7 +57,7 @@ public class EstudianteCalificacionesLogic {
     public List<CalificacionEntity> getCalificaciones(Long estId) {
         return estudiantePersistence.find(estId).getCalificaciones();
     }
-
+    
     /**
      * Obtiene una instancia de EstudianteEntity asociada a una instancia de calificacion
      *
@@ -75,7 +75,7 @@ public class EstudianteCalificacionesLogic {
         throw new BusinessLogicException("La calificacion no está asociada al estudiante");
     }
     
-
+    
     /**
      * Remplaza las instancias de Calificacion asociadas a una instancia de Estudiante
      *
@@ -87,22 +87,40 @@ public class EstudianteCalificacionesLogic {
     public List<CalificacionEntity> replaceCalificaciones(Long estId, List<CalificacionEntity> list) {
         EstudianteEntity estudianteEntity = estudiantePersistence.find(estId);
         List<CalificacionEntity> calificacionList = calificacionPersistence.findAll();
-            for (CalificacionEntity book : calificacionList) {
+        for (CalificacionEntity book : calificacionList) {
             if (calificacionList.contains(book)) {
                 book.setEstudiante(estudianteEntity);
             } else if (book.getEstudiante()!= null && book.getEstudiante().equals(estudianteEntity)) {
                 book.setEstudiante(null);
-                }
             }
+        }
         return calificacionList;
         
     }
-
     
+    /**
+     * Desasocia una calificacion existente de un Estudiante existente
+     *
+     * @param estudiantesId Identificador de la instancia de Estudiante
+     * @param calificacionId Identificador de la instancia de calificacion
+     */
     public void removeCalificacion(Long estudiantesId, Long calificacionId) {
         EstudianteEntity estudianteEntity = estudiantePersistence.find(estudiantesId);
         CalificacionEntity calificacionEntity = calificacionPersistence.find(calificacionId);
         estudianteEntity.getCalificaciones().remove(calificacionEntity);
         calificacionEntity.setEstudiante(null);
+    }
+    
+    /**
+     * Desasocia todas las calificaciones existentes de un Estudiante existente
+     *
+     * @param estudiantesId Identificador de la instancia de Estudiante
+     */
+    public void removeCalificaciones(Long estudiantesId) {
+        EstudianteEntity estudianteEntity = estudiantePersistence.find(estudiantesId);
+        for(CalificacionEntity calificacionEntity : estudianteEntity.getCalificaciones()) {
+            estudianteEntity.getCalificaciones().remove(calificacionEntity);
+            calificacionEntity.setEstudiante(null);
+        }
     }
 }

@@ -90,7 +90,7 @@ public class EstudianteOfertasLogic {
         return estEntity.getOfertas();
     }
     
-        /**
+    /**
      * Desasocia una Oferta existente de un Estudiante existente
      *
      * @param estudiantesId Identificador de la instancia de Estudiante
@@ -101,5 +101,18 @@ public class EstudianteOfertasLogic {
         OfertaEntity ofertaEntity = ofertaPersistence.find(ofertasId);
         ofertaEntity.getEstudiantes().remove(estudainteEntity);
         estudainteEntity.getOfertas().remove(ofertaEntity);
+    }
+    
+    /**
+     * Desasocia todas las Oferta existentes de un Estudiante existente
+     *
+     * @param estudiantesId Identificador de la instancia de Estudiante
+     */
+    public void removeOfertas(Long estudianteId) {
+        EstudianteEntity estudianteEntity = estudiantePersistence.find(estudianteId);
+        for(OfertaEntity oferta : estudianteEntity.getOfertas()) {
+            OfertaEntity ofertaEntity = ofertaPersistence.find(oferta.getId());
+            estudianteEntity.getOfertas().remove(ofertaEntity);
+        }
     }
 }

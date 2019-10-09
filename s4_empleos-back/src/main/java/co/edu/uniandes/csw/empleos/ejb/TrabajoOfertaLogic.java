@@ -46,10 +46,10 @@ public class TrabajoOfertaLogic {
      * Borrar una oferta de una trabajo Este metodo se utiliza para borrar la
      * relacion de una oferta.
      *
-     * @param calId El libro que se desea borrar de la editorial.
+     * @param trabajoId El libro que se desea borrar de la editorial.
      */
-    public void removeOferta(Long calId) {
-        TrabajoEntity trabajoEntity = trabajoPersistence.read(calId);
+    public void removeOferta(Long trabajoId) {
+        TrabajoEntity trabajoEntity = trabajoPersistence.read(trabajoId);
         OfertaEntity ofertaEntity = ofertaPersistence.find(trabajoEntity.getOferta().getId());
         trabajoEntity.setOferta(null);
         ofertaEntity.setTrabajo(null);

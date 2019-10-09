@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.empleos.resources;
 
 
 import co.edu.uniandes.csw.empleos.dtos.EstudianteDTO;
+import co.edu.uniandes.csw.empleos.dtos.EstudianteDetailDTO;
 import co.edu.uniandes.csw.empleos.ejb.EstudianteCalificacionesLogic;
 import co.edu.uniandes.csw.empleos.ejb.EstudianteCuentaBancariaLogic;
 import co.edu.uniandes.csw.empleos.ejb.EstudianteLogic;
@@ -71,12 +72,12 @@ class EstudianteResource {
      */
     @GET
     @Path("{estudianteId: \\d+}")
-    public EstudianteDTO getEstudiante(@PathParam("estudianteId") Long estudianteId) {
+    public EstudianteDetailDTO getEstudiante(@PathParam("estudianteId") Long estudianteId) {
         EstudianteEntity calEntity = estudianteLogic.getEstudiante(estudianteId);
         if (calEntity == null) {
             throw new WebApplicationException("El recurso /estudiante/" + estudianteId + " no existe.", 404);
         }
-        EstudianteDTO calDTO = new EstudianteDTO(calEntity);
+        EstudianteDetailDTO calDTO = new EstudianteDetailDTO(calEntity);
         return calDTO;
     }
     
@@ -87,8 +88,8 @@ class EstudianteResource {
      * encontrados en la aplicación. Si no hay ninguna retorna una lista vacía.
      */
     @GET
-    public List<EstudianteDTO> getEstudiantes() {
-        List<EstudianteDTO> estudiantes = listEntity2DTO(estudianteLogic.getEstudiantes());
+    public List<EstudianteDetailDTO> getEstudiantes() {
+        List<EstudianteDetailDTO> estudiantes = listEntity2DTO(estudianteLogic.getEstudiantes());
         return estudiantes;
     }
     
@@ -108,12 +109,12 @@ class EstudianteResource {
      */
     @PUT
     @Path("{estudianteId: \\d+}")
-    public EstudianteDTO updateEstudiante(@PathParam("estudianteId") Long estudianteId, EstudianteDTO estudiante) throws BusinessLogicException {
+    public EstudianteDetailDTO updateEstudiante(@PathParam("estudianteId") Long estudianteId, EstudianteDetailDTO estudiante) throws BusinessLogicException {
         estudiante.setId(estudianteId);
         if (estudianteLogic.getEstudiante(estudianteId) == null) {
             throw new WebApplicationException("El recurso /estudiante/" + estudianteId + " no existe.", 404);
         }
-        EstudianteDTO dto = new EstudianteDTO(estudianteLogic.updateEstudiante(estudiante.toEntity()));
+        EstudianteDetailDTO dto = new EstudianteDetailDTO(estudianteLogic.updateEstudiante(estudiante.toEntity()));
         return dto;
     }
     
@@ -132,8 +133,11 @@ class EstudianteResource {
         if (estudianteLogic.getEstudiante(estudianteId) == null) {
             throw new WebApplicationException("El recurso /estudiante/" + estudianteId + " no existe.", 404);
         }
+        estudianteCalificacionesLogic.removeCalificaciones(estudianteId); 
+        estudianteOfertasLogic.removeOfertas(estudianteId);
+        estudianteCuentaBancariaLogic.removeCuentaBancaria(estudianteId); 
         estudianteLogic.deleteEstudiante(estudianteId);
-    }  
+    }
     
     /**
      * Convierte una lista de entidades a DTO.
@@ -145,10 +149,10 @@ class EstudianteResource {
      * vamos a convertir a DTO.
      * @return la lista de estudiantes en forma DTO (json)
      */
-    private List<EstudianteDTO> listEntity2DTO(List<EstudianteEntity> entityList) {
-        List<EstudianteDTO> list = new ArrayList<>();
+    private List<EstudianteDetailDTO> listEntity2DTO(List<EstudianteEntity> entityList) {
+        List<EstudianteDetailDTO> list = new ArrayList<>();
         for (EstudianteEntity entity : entityList) 
-            list.add(new EstudianteDTO(entity));
+            list.add(new EstudianteDetailDTO(entity));
         return list;
     }
 
