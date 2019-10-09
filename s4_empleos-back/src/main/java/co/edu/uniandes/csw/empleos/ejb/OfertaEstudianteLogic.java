@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.empleos.ejb;
 
 import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
 import co.edu.uniandes.csw.empleos.entities.OfertaEntity;
+import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.empleos.persistence.EstudiantePersistence;
 import co.edu.uniandes.csw.empleos.persistence.OfertaPersistence;
 import java.util.List;
@@ -35,12 +36,13 @@ public class OfertaEstudianteLogic {
      */
     public EstudianteEntity addEstudiante(Long ofertasId, Long estudianteId) {
 
-        EstudianteEntity estudianteEntity = estudiantePersistence.find(estudianteId);
+       
+        
         OfertaEntity ofertaEntity = ofertaPersistence.find(ofertasId);
-        ofertaEntity.getEstudiantes().add(estudianteEntity);
-        estudiantePersistence.update(estudianteEntity);
-        ofertaPersistence.update(ofertaEntity);
-        return estudiantePersistence.find(estudianteId);
+        EstudianteEntity estudianteEntity = estudiantePersistence.find(estudianteId);
+        estudianteEntity.getOfertas().add(ofertaEntity);
+       
+        return estudianteEntity;
     }
 
     /**
@@ -63,14 +65,16 @@ public class OfertaEstudianteLogic {
      * @param estudiantesId
      * @return La entidad del Autor asociada al libro
      */
-    public EstudianteEntity getEstudiante(Long ofertasId, Long estudiantesId) {
-        List<EstudianteEntity> estudiantes = ofertaPersistence.find(ofertasId).getEstudiantes();
+    public EstudianteEntity getEstudiante(Long ofertasId, Long estudiantesId) throws BusinessLogicException {
+         
+        List<EstudianteEntity>estudiantes = ofertaPersistence.find(ofertasId).getEstudiantes();
         EstudianteEntity estudianteEntity = estudiantePersistence.find(estudiantesId);
         int index = estudiantes.indexOf(estudianteEntity);
+       
         if (index >= 0) {
             return estudiantes.get(index);
         }
-        return null;
+        throw new BusinessLogicException("El lestudiante no está asociado a la oferta");
     }
 
     /**
@@ -94,10 +98,16 @@ public class OfertaEstudianteLogic {
      * @param ofertasId
      * @param estudiantesId
      */
-    public void removeEstudiante(Long ofertasId, Long estudiantesId) {
+    public void removeEstudiante(Long ofertasId, Long estudiantesId) throws BusinessLogicException {
 
         EstudianteEntity estudianteEntity = estudiantePersistence.find(estudiantesId);
         OfertaEntity ofertaEntity = ofertaPersistence.find(ofertasId);
-        boolean remove = ofertaEntity.getEstudiantes().remove(estudianteEntity);
+        int indice= ofertaEntity.getEstudiantes().indexOf(estudianteEntity);
+       if(indice>=0){
+           
+           ofertaEntity.getEstudiantes().remove(indice);
+                      
+       }
+       else throw new BusinessLogicException("El estudiante no está asociado a la oferta");
     }
 }
