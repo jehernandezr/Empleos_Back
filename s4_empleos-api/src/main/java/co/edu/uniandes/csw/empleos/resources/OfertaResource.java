@@ -49,9 +49,9 @@ public class OfertaResource {
      * aplicación. Si no hay ninguno retorna una lista vacía.
      */
     @GET
-    public String getOfertas() {
+    public List<OfertaDTO> getOfertas() {
         
-        return "hola";
+        return listEntity2DTO(logic.getOfertas());
         
     }
     
@@ -93,8 +93,8 @@ public class OfertaResource {
      * @param entityList Lista de OfertaEntity a convertir.
      * @return Lista de OfertaDetailDTO convertida.
      */
-    private List<OfertaDetailDTO> listEntity2DTO(List<OfertaEntity> entityList) {
-        List<OfertaDetailDTO> list = new ArrayList<>();
+    private List<OfertaDTO> listEntity2DTO(List<OfertaEntity> entityList) {
+        List<OfertaDTO> list = new ArrayList<>();
         for (OfertaEntity entity : entityList) {
             list.add(new OfertaDetailDTO(entity));
         }
