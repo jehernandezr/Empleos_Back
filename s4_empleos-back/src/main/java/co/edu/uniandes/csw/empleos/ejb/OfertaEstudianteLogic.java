@@ -36,8 +36,6 @@ public class OfertaEstudianteLogic {
      */
     public EstudianteEntity addEstudiante(Long ofertasId, Long estudianteId) {
 
-       
-        
         OfertaEntity ofertaEntity = ofertaPersistence.find(ofertasId);
         EstudianteEntity estudianteEntity = estudiantePersistence.find(estudianteId);
         estudianteEntity.getOfertas().add(ofertaEntity);
