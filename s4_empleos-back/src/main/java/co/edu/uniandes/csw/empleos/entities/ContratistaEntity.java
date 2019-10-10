@@ -31,11 +31,11 @@ public class ContratistaEntity extends BaseEntity {
      
      @PodamExclude
     @OneToOne(mappedBy = "contratista", orphanRemoval = true)
-    private List<TarjetaDeCreditoEntity> tarjetaDeCredito = new ArrayList<>();
+    private TarjetaDeCreditoEntity tarjetaDeCredito ;
      
      @PodamExclude
     @OneToOne(mappedBy = "contratista", orphanRemoval = true)
-    private List<CuentaDeCobroEntity> cuentaDeCobro = new ArrayList<>();
+    private List<CuentaDeCobroEntity> cuentaDeCobro ;
 
 
     
@@ -175,20 +175,7 @@ public class ContratistaEntity extends BaseEntity {
         this.rutaImagen = rutaImagen;
     }
 
-    /**
-     * @return the tarjetaDeCredito
-     */
-    public List<TarjetaDeCreditoEntity> getTarjetaDeCredito() {
-        return tarjetaDeCredito;
-    }
-
-    /**
-     * @param tarjetaDeCredito the tarjetaDeCredito to set
-     */
-    public void setTarjetaDeCredito(List<TarjetaDeCreditoEntity> tarjetaDeCredito) {
-        this.tarjetaDeCredito = tarjetaDeCredito;
-    }
-
+    
     /**
      * @return the cuentaDeCobro
      */
@@ -201,6 +188,20 @@ public class ContratistaEntity extends BaseEntity {
      */
     public void setCuentaDeCobro(List<CuentaDeCobroEntity> cuentaDeCobro) {
         this.cuentaDeCobro = cuentaDeCobro;
+    }
+
+    /**
+     * @return the tarjetaCredito
+     */
+    public TarjetaDeCreditoEntity getTarjetaCredito() {
+        return tarjetaCredito;
+    }
+
+    /**
+     * @param tarjetaCredito the tarjetaCredito to set
+     */
+    public void setTarjetaCredito(TarjetaDeCreditoEntity tarjetaCredito) {
+        this.tarjetaCredito = tarjetaCredito;
     }
     
    
