@@ -22,7 +22,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Nicolas Munar
+ * @author David Dominguez
  */
 public class EstudianteIT {
     
