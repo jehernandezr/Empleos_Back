@@ -54,7 +54,6 @@ public class TarjetaDeCreditoResource {
      */
     @POST
     public TarjetaDeCreditoDTO createTarjeta(TarjetaDeCreditoDTO tarjeta) throws BusinessLogicException {
-        
         TarjetaDeCreditoDTO nuevaTarjetaDTO = new TarjetaDeCreditoDTO(tarjetaLogic.createTarjetaDeCredito(tarjeta.toEntity()));
         return nuevaTarjetaDTO;
     }
@@ -101,16 +100,11 @@ public class TarjetaDeCreditoResource {
     @Path("{tarjetasId: \\d+}")
     public TarjetaDeCreditoDTO updateTarjeta(@PathParam("tarjetasId") Long tarjetaId, TarjetaDeCreditoDTO tarjeta) throws BusinessLogicException {
         
-        if (tarjetaId.equals(tarjeta.getId())) {
-            throw new BusinessLogicException("Los ids del Review no coinciden.");
-        }
+        tarjeta.setId(tarjetaId);
         TarjetaDeCreditoEntity entity = tarjetaLogic.getTarjetaCredito(tarjetaId);
-        
         if (entity == null) {
-            throw new WebApplicationException("El recurso /books/" + tarjetaId + " no existe.", 404);
-
+            throw new WebApplicationException("El recurso /tarjetas/" + tarjetaId + " no existe.", 404);
         }
-        
         TarjetaDeCreditoDTO tarjetaDTO = new TarjetaDeCreditoDTO(tarjetaLogic.updateTarjetaCredito(tarjetaId, tarjeta.toEntity()));
         
         return tarjetaDTO;

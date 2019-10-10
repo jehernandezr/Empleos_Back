@@ -7,6 +7,13 @@ package co.edu.uniandes.csw.empleos.resources;
 
 
 import co.edu.uniandes.csw.empleos.dtos.EstudianteDTO;
+import co.edu.uniandes.csw.empleos.ejb.EstudianteLogic;
+import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
+import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import co.edu.uniandes.csw.empleos.dtos.EstudianteDetailDTO;
 import co.edu.uniandes.csw.empleos.ejb.EstudianteCalificacionesLogic;
 import co.edu.uniandes.csw.empleos.ejb.EstudianteCuentaBancariaLogic;
@@ -39,6 +46,11 @@ import javax.ws.rs.WebApplicationException;
 @RequestScoped
 class EstudianteResource {
     
+    
+    
+
+    
+
     // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
     @Inject
     private EstudianteLogic estudianteLogic; 

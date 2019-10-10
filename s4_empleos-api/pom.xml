@@ -12,7 +12,10 @@
     </parent>
     <artifactId>s4_empleos-api</artifactId>
     <packaging>war</packaging>
-
+    
+    
+    
+    
     <name>s4_empleos-api</name>
 
     <properties>

@@ -80,13 +80,33 @@ public class OfertaResource {
      */
     @GET
     @Path("{id: \\d+}")
+<<<<<<< HEAD
     public OfertaDetailDTO getOferta(@PathParam("id") Long idOferta) throws BusinessLogicException {
+=======
+    public OfertaDTO getCuentaBancaria(@PathParam("id") Long idOferta) throws BusinessLogicException {
+
+>>>>>>> a922efd2ecf0ff95ed71ad54b56252265ef01bed
         OfertaEntity ofertaEntity = logic.getOferta(idOferta);
         if (ofertaEntity == null) {
             throw new WebApplicationException("El recurso /oferta/" + idOferta + " no existe.", 404);
         }
+<<<<<<< HEAD
         OfertaDetailDTO cuentaDTO = new OfertaDetailDTO(ofertaEntity);
         return cuentaDTO;
+=======
+        OfertaDTO ofertaDTO = new OfertaDTO(ofertaEntity);
+        return ofertaDTO;       
+    }
+    
+    @DELETE
+    @Path("{ofertaId: \\d+}")
+    public void deleteTarjeta(@PathParam("ofertaId") Long ofertaId ) throws BusinessLogicException {
+        OfertaEntity entity = logic.getOferta(ofertaId);
+        if (entity == null) {
+            throw new WebApplicationException("El recurso /ofertas/" + ofertaId + " no existe.", 404);
+        }
+        logic.deleteOferta(ofertaId);
+>>>>>>> a922efd2ecf0ff95ed71ad54b56252265ef01bed
     }
     
     /**
