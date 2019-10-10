@@ -40,9 +40,6 @@ public class CuentaDeCobroDTO implements Serializable {
      */
     private String concepto;
 
-    public CuentaDeCobroDTO(CuentaDeCobroEntity entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     /**
      * Constructor vacio
@@ -52,13 +49,37 @@ public class CuentaDeCobroDTO implements Serializable {
         //Vacio
     }
     
-    public void CuentaDeCobroDTO(CuentaDeCobroEntity cuentaEntity )
+    public CuentaDeCobroDTO(CuentaDeCobroEntity entity )
     {
-        if(cuentaEntity != null)
+        if(entity != null)
         {
-            
+           this.id = entity.getId(); 
+           this.concepto = entity.getConcepto(); 
+           this.fecha = entity.getFecha(); 
+           this.nombreEstudiante = entity.getNombreEstudiante(); 
+           this.numeroCuentaDeCobro = entity.getNumeroCuentaDeCobro(); 
+           this.valor = entity.getValor(); 
         }
     }
+    
+    /**
+     * Convertir DTO a Entity
+     *
+     * @return Un Entity con los valores del DTO
+     */
+    public CuentaDeCobroEntity toEntity() {
+    
+        CuentaDeCobroEntity cuentaDeCobroEntity = new CuentaDeCobroEntity();
+        cuentaDeCobroEntity.setId(this.id);
+        cuentaDeCobroEntity.setConcepto(this.concepto);
+        cuentaDeCobroEntity.setNumeroCuentaDeCobro(this.numeroCuentaDeCobro);
+        cuentaDeCobroEntity.setFecha(this.fecha);
+        cuentaDeCobroEntity.setNombreEstudiante(this.nombreEstudiante);
+        cuentaDeCobroEntity.setValor(this.valor);
+
+        return cuentaDeCobroEntity;
+    }
+    
     //--------------------------------------------------------------------------------------------
     //Getters && Setters
     //Mira que titulo más cool xd
