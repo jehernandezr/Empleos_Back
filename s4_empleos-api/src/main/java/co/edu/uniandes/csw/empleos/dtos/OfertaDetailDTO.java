@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.empleos.dtos;
 
 import co.edu.uniandes.csw.empleos.entities.OfertaEntity;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -14,6 +15,9 @@ import java.io.Serializable;
  */
 public class OfertaDetailDTO extends OfertaDTO implements Serializable {
     
+    private TrabajoDTO trabajo;
+    
+    private List<EstudianteDetailDTO> estudiantes;
     
     
     

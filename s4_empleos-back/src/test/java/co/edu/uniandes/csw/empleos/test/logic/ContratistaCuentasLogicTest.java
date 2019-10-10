@@ -13,11 +13,6 @@ import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.NotSupportedException;
-import javax.transaction.RollbackException;
-import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -50,7 +45,7 @@ public class ContratistaCuentasLogicTest {
     @Inject
     private UserTransaction utx;
 
-    private List<ContratistaEntity> data = new ArrayList<ContratistaEntity>();
+    private List<ContratistaEntity> data = new ArrayList<>();
 
     private List<CuentaDeCobroEntity> cuentasData = new ArrayList();
 
@@ -160,6 +155,7 @@ public class ContratistaCuentasLogicTest {
         ContratistaEntity entity = factory.manufacturePojo(ContratistaEntity.class);
         CuentaDeCobroEntity cuentaEntity = factory.manufacturePojo(CuentaDeCobroEntity.class);
         cuentaEntity.setContratista(entity);
+        entity.setCuentaDeCobro(cuentasData);
         try {
             utx.begin();
             em.persist(cuentaEntity);

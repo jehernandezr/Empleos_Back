@@ -23,7 +23,7 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Assert;
-import static org.junit.Assert.assertNull;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -120,12 +120,7 @@ public class CuentaBancariaLogicTest {
         int numero = Math.abs(num.nextInt(3) + 2);
         String cuenta = numero == 2 ? "Ahorros" : "Corriente";
         newEntity.setTipoCuenta(cuenta);
-        EstudianteEntity newEstudiante = factory.manufacturePojo(EstudianteEntity.class);
-        newEstudiante.setCorreo(newEstudiante.getCorreo()+"@uniandes.edu.co");
-        newEstudiante.setSemestre(1);
-        newEstudiante = estudianteLogic.crearEstudiante(newEstudiante);
-
-        newEntity.setEstudiante(newEstudiante);
+     newEntity.setNumeroCuenta(Long.MAX_VALUE+"");
         CuentaBancariaEntity result = cuentaBancariaLogic.createCuentaBancaria(newEntity);
         Assert.assertNotNull(result);
 
@@ -138,7 +133,7 @@ public class CuentaBancariaLogicTest {
     }
 
     /**
-     * Pruba la verificacion de una regla de negocio
+     * Prueba la verificacion de una regla de negocio
      *
      * @throws BusinessLogicException
      */
@@ -147,9 +142,25 @@ public class CuentaBancariaLogicTest {
         CuentaBancariaEntity newEntity = factory.manufacturePojo(CuentaBancariaEntity.class);
         newEntity.setNumeroCuenta(null);
         CuentaBancariaEntity result = cuentaBancariaLogic.createCuentaBancaria(newEntity);
-        Assert.assertNull(newEntity.getNumeroCuenta());
+        Assert.assertNull(result.getNumeroCuenta());
     }
-
+ /**
+     * Pruba la verificacion de una regla de negocio
+     *
+     * @throws BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createCuentaBancariaNumeroExistente() throws BusinessLogicException {
+        CuentaBancariaEntity newEntity = factory.manufacturePojo(CuentaBancariaEntity.class);
+        
+        CuentaBancariaEntity result = cuentaBancariaLogic.createCuentaBancaria(newEntity);
+        Assert.assertNotNull(result);
+        Assert.assertEquals(result.getNumeroCuenta(), newEntity.getNumeroCuenta());
+        
+        Assert.assertNull(cuentaBancariaLogic.createCuentaBancaria(newEntity));
+        
+        
+    }
     /**
      * Pruba la verificacion de una regla de negocio
      *
@@ -160,7 +171,8 @@ public class CuentaBancariaLogicTest {
         CuentaBancariaEntity newEntity = factory.manufacturePojo(CuentaBancariaEntity.class);
         newEntity.setNumeroCuenta("0");
         CuentaBancariaEntity result = cuentaBancariaLogic.createCuentaBancaria(newEntity);
-        Assert.assertEquals(0, result.getNumeroCuenta());
+        Assert.assertEquals(0+"", result.getNumeroCuenta());
+        Assert.assertNull(result);
 
     }
 
@@ -282,19 +294,7 @@ public class CuentaBancariaLogicTest {
 
     }
 
-    /**
-     * Pruba la verificacion de una regla de negocio
-     *
-     * @throws BusinessLogicException
-     */
-    @Test(expected = BusinessLogicException.class)
-    public void createCuentaBancariaEstudianteNullTest() throws BusinessLogicException {
-        CuentaBancariaEntity newEntity = factory.manufacturePojo(CuentaBancariaEntity.class);
-        newEntity.setEstudiante(null);
-        CuentaBancariaEntity result = cuentaBancariaLogic.createCuentaBancaria(newEntity);
-        assertNull(result);
-
-    }
+    
 
     /**
      * Pruba que verifica que si se actualizo una cuenta bancaria correctamente.
@@ -359,6 +359,21 @@ public class CuentaBancariaLogicTest {
         pojoEntity.setNumeroCuenta(null);
         cuentaBancariaLogic.updateCuentaBancaria(pojoEntity.getId(), pojoEntity);
         Assert.assertNull(pojoEntity.getNumeroCuenta());
+
+    }
+
+    
+    /**
+     * Pruba la verificacion de una regla de negocio
+     *
+     * @throws BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void updateCuentaBancariaNoExisteTest() throws BusinessLogicException {
+        CuentaBancariaEntity pojoEntity = factory.manufacturePojo(CuentaBancariaEntity.class);
+        pojoEntity.setId(Long.MAX_VALUE);
+        cuentaBancariaLogic.updateCuentaBancaria(pojoEntity.getId(), pojoEntity);
+       
 
     }
 
@@ -497,22 +512,7 @@ public class CuentaBancariaLogicTest {
 
     }
 
-    /**
-     * Pruba la verificacion de una regla de negocio
-     *
-     * @throws BusinessLogicException
-     */
-    @Test(expected = BusinessLogicException.class)
-    public void updateCuentaBancariaEstudianteNullTest() throws BusinessLogicException {
-        CuentaBancariaEntity entity = data.get(0);
-        CuentaBancariaEntity pojoEntity = factory.manufacturePojo(CuentaBancariaEntity.class);
-        pojoEntity.setId(entity.getId());
-        pojoEntity.setEstudiante(null);
-        assertNull(pojoEntity.getEstudiante());
-        cuentaBancariaLogic.updateCuentaBancaria(pojoEntity.getId(), pojoEntity);
-
-    }
-
+  
     /**
      * Prueba para consultar la lista de cuentas de Bancos.
      */

@@ -9,12 +9,14 @@ import co.edu.uniandes.csw.empleos.entities.ContratistaEntity;
 import co.edu.uniandes.csw.empleos.entities.OfertaEntity;
 import co.edu.uniandes.csw.empleos.persistence.ContratistaPersistence;
 import co.edu.uniandes.csw.empleos.persistence.OfertaPersistence;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
  *
  * @author je.hernandezr
  */
+@Stateless
 public class OfertaContratistaLogic {
     @Inject
     private OfertaPersistence ofertaPerssitance;

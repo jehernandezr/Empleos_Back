@@ -92,9 +92,9 @@ public class TrabajoResource {
      * Actualiza el trabajo con el id recibido en la URL con la información que se
      * recibe en el cuerpo de la petición.
      *
-     * @param calId Identificador del trabajo que se desea actualizar. Este debe
+     * @param trabajoId Identificador del trabajo que se desea actualizar. Este debe
      * ser una cadena de dígitos.
-     * @param calif {@link EstudianteDTO} El trabajo que se desea guardar.
+     * @param trabajo{@link EstudianteDTO} El trabajo que se desea guardar.
      * @return JSON {@link EstudianteDTO} - El trabajo guardada.
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra el trabajo a

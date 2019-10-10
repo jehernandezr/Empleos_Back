@@ -48,7 +48,7 @@ public class EstudianteCuentaBancariaLogic {
      * Asocia una cuentaBancaria a un Estudiante
      *
      * @param estudiantesId Identificador de la instancia de Estudiante
-     * @param ofertasId Identificador de la instancia de Oferta
+     * @param cuentaBancariaId
      * @return Instancia de BookEntity que fue asociada a Author
      */
     public CuentaBancariaEntity addCuentaBancaria(Long estudiantesId, Long cuentaBancariaId) {

@@ -26,6 +26,7 @@ public class EstudianteDTO implements Serializable{
      * Constructor por defecto
      */
     public EstudianteDTO() {
+        //Vacio
     }
 
     /**

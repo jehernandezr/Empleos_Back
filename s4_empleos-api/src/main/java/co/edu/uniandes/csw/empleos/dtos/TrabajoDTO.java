@@ -23,9 +23,12 @@ public class TrabajoDTO implements Serializable {
     }
     
     public TrabajoDTO(TrabajoEntity e) {
-        verificado = e.isVerificado();
-        cumplido = e.isCumplido();
-        id = e.getId();
+        if (e!= null){
+            this.id = e.getId();
+            this.verificado = e.isVerificado();
+            this.cumplido = e.isCumplido();
+        
+        }
     }
     
     public long getId() {
