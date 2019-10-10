@@ -28,9 +28,7 @@ public class CuentaBancariaPersistence {
 
      /**
      * Busca si hay alguna cuentaBancaria con el id que se envía de argumento
-     *
-     * @param estudianteId
-     * @param cuentaId
+        * @param cuentaId
      * @return un cuenta bancaria.
      */
     public CuentaBancariaEntity find( Long cuentaId) {
@@ -39,6 +37,33 @@ public class CuentaBancariaPersistence {
         
     }
   
+    /**
+     * Busca si hay alguna cuentaBancaria con el numero de cuenta que se envía de argumento
+     * @param numeroCuenta
+     * @return una cuenta bancaria.
+     */
+    public CuentaBancariaEntity findByNumero( String numeroCuenta) {
+      
+    
+   
+        TypedQuery query = em.createQuery("Select e From CuentaBancariaEntity e where e.numeroCuenta = :numeroCuenta", CuentaBancariaEntity.class);
+        // Se remplaza el placeholder ":numeroCuenta" con el valor del argumento 
+        query = query.setParameter("numeroCuenta", numeroCuenta);
+        // Se invoca el query se obtiene la lista resultado
+        List<CuentaBancariaEntity> sameNumeroCuenta = query.getResultList();
+        CuentaBancariaEntity result;
+        if (sameNumeroCuenta  == null) {
+            result = null;
+        } else if (sameNumeroCuenta .isEmpty()) {
+            result = null;
+        } else {
+            result = sameNumeroCuenta .get(0);
+        }
+    
+        return result;
+        
+    }
+    
      /**
      * Devuelve todas las cuentas Bancarias de la base de datos.
      *

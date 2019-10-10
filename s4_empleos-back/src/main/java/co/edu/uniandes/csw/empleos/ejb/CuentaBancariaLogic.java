@@ -24,8 +24,7 @@ public class CuentaBancariaLogic {
     @Inject
     private CuentaBancariaPersistence persistence;
 
-    @Inject
-    private EstudiantePersistence estudiantePersistence;
+
 
     /**
      * Se encarga de crear un Author en la base de datos.
@@ -37,10 +36,12 @@ public class CuentaBancariaLogic {
     public CuentaBancariaEntity createCuentaBancaria(CuentaBancariaEntity cuentaBancaria) throws BusinessLogicException {
         if (cuentaBancaria.getNumeroCuenta() == null) {
             throw new BusinessLogicException("El numero de cuenta está vacío");
-
-        } else if (cuentaBancaria.getEstudiante() == null) {
-            throw new BusinessLogicException("La cuenta bancaria no contiene un estudiante");
-        } else if (cuentaBancaria.getNumeroCuenta().contains(",") || cuentaBancaria.getNumeroCuenta().contains(".") || cuentaBancaria.getNumeroCuenta().contains("-")) {
+        } 
+       CuentaBancariaEntity ent =persistence.findByNumero(cuentaBancaria.getNumeroCuenta());
+       if (ent!=null){
+           throw new BusinessLogicException("Ya existe una cuenta Bancaria con ese numero de cuenta ");
+              }
+         if (cuentaBancaria.getNumeroCuenta().contains(",") || cuentaBancaria.getNumeroCuenta().contains(".") || cuentaBancaria.getNumeroCuenta().contains("-")) {
             throw new BusinessLogicException("El numero de cuenta no puede contener caracteres diferentes  a un numero entero.");
         } else if (Long.parseLong(cuentaBancaria.getNumeroCuenta()) < 0) {
             throw new BusinessLogicException("El numero de cuenta no puede ser negativo");
@@ -100,7 +101,7 @@ public class CuentaBancariaLogic {
         if (cuentaBancoEntity.getNumeroCuenta() == null) {
             throw new BusinessLogicException("El numero de cuenta está vacío");
         }
-       
+      
         if (cuentaBancoEntity.getNumeroCuenta().contains(".")) {
             throw new BusinessLogicException("El numero de cuenta no puede contener puntos.");
         }

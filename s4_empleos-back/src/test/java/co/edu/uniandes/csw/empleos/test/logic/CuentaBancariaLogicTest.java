@@ -23,7 +23,7 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Assert;
-import static org.junit.Assert.assertNull;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -149,7 +149,23 @@ public class CuentaBancariaLogicTest {
         CuentaBancariaEntity result = cuentaBancariaLogic.createCuentaBancaria(newEntity);
         Assert.assertNull(newEntity.getNumeroCuenta());
     }
-
+ /**
+     * Pruba la verificacion de una regla de negocio
+     *
+     * @throws BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createCuentaBancariaNumeroExistente() throws BusinessLogicException {
+        CuentaBancariaEntity newEntity = factory.manufacturePojo(CuentaBancariaEntity.class);
+        
+        CuentaBancariaEntity result = cuentaBancariaLogic.createCuentaBancaria(newEntity);
+        Assert.assertNotNull(result);
+        Assert.assertEquals(result.getNumeroCuenta(), newEntity.getNumeroCuenta());
+        cuentaBancariaLogic.createCuentaBancaria(newEntity);
+        
+        
+        
+    }
     /**
      * Pruba la verificacion de una regla de negocio
      *
