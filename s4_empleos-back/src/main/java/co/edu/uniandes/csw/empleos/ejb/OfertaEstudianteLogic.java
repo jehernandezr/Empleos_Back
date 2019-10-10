@@ -74,7 +74,7 @@ public class OfertaEstudianteLogic {
         if (index >= 0) {
             return estudiantes.get(index);
         }
-        throw new BusinessLogicException("El lestudiante no está asociado a la oferta");
+        throw new BusinessLogicException("El estudiante no está asociado a la oferta");
     }
 
     /**
