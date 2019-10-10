@@ -32,7 +32,18 @@ public class CuentaBancariaDTO implements Serializable {
             this.id = cuentaBancariaEntity.getId();
             this.nombreBanco = cuentaBancariaEntity.getNombreBanco();
             this.numeroCuenta = cuentaBancariaEntity.getNumeroCuenta();
-            setTipoCuenta(cuentaBancariaEntity.getTipoCuenta() == 2 ? "ahorros" : cuentaBancariaEntity.getTipoCuenta() == 3 ? "corriente" : "fff");
+            String type = "";
+            switch (cuentaBancariaEntity.getTipoCuenta()) {
+                case 2:
+                    type = "Ahorros";
+                    break;
+                case 3:
+                    type = "Corriente";
+                    break;
+                default:
+                    type = "gggg";
+            }
+            this.setTipoCuenta(type);
         }
     }
 
@@ -104,15 +115,15 @@ public class CuentaBancariaDTO implements Serializable {
         String tipo = "";
         switch (this.getTipoCuenta()) {
             case 2:
-                tipo = "ahorros";
+                tipo = "Ahorros";
                 break;
             case 3:
-                tipo = "corriente";
+                tipo = "Corriente";
                 break;
             default:
                 tipo = "ffff";
         }
-        this.setTipoCuenta(tipo);
+        cuentaBancaria.setTipoCuenta(tipo);
         if (this.getEstudiante() != null) {
             cuentaBancaria.setEstudiante(this.getEstudiante().toEntity());
         }
