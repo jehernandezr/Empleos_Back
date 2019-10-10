@@ -29,6 +29,14 @@ public class ContratistaDetailDTO extends ContratistaDTO implements Serializable
     private List<OfertaDTO> ofertas ;
     
     /**
+     * Constructor vacio
+     *
+     */
+    public ContratistaDetailDTO() {
+        //Vacio
+    }
+    
+    /**
      * Constructor para transformar un Entity a un DTO
      *
      * @param contratistaEntity La entidad del contratista para transformar a DTO.

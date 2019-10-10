@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
@@ -77,7 +76,7 @@ public class EstudianteEntity extends BaseEntity implements Serializable {
      * @return the idMedioDepago
      */
     public long getIdMedioDepago() {
-        return idMedioDepago;
+        return this.idMedioDepago;
     }
 
     /**
@@ -119,7 +118,7 @@ public class EstudianteEntity extends BaseEntity implements Serializable {
      * @return the calificacionPromedio
      */
     public double getCalificacionPromedio() {
-        return calificacionPromedio;
+        return this.calificacionPromedio;
     }
 
     /**
@@ -147,7 +146,7 @@ public class EstudianteEntity extends BaseEntity implements Serializable {
      * @return the semestre
      */
     public int getSemestre() {
-        return semestre;
+        return this.semestre;
     }
 
     /**

@@ -11,13 +11,14 @@ import co.edu.uniandes.csw.empleos.persistence.OfertaPersistence;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.mail.internet.InternetAddress;
 
 /**
  *
  * @author Estudiante
  */
+@Stateless
 public class OfertaLogic {
     
     

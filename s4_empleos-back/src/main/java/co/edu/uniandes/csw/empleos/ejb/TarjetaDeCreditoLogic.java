@@ -26,7 +26,7 @@ public class TarjetaDeCreditoLogic {
         for (TarjetaDeCreditoEntity tarjetaDeCreditoEntity : persistence.findAll()) {
             if(tarjetaDeCreditoEntity.getNumero().equals(tarjetaCredito.getNumero()))
             {
-                throw new BusinessLogicException("La tarjeta de credito ya existe.");
+                throw new BusinessLogicException("La tarjeta de credito ya existe");
             }
         }
         
@@ -44,15 +44,15 @@ public class TarjetaDeCreditoLogic {
         }
         else if( !tarjetaCredito.getNumero().startsWith("4") && !tarjetaCredito.getNumero().startsWith("5") )
         {      
-            throw new BusinessLogicException("Ingrese un número valido para una tarjeta MasterCard o VISA ");
+            throw new BusinessLogicException("Ingrese un numero valido para una tarjeta MasterCard o VISA");
         }
         else if(tarjetaCredito.getCVC() == null  )
         {
-            throw new BusinessLogicException("El cvc no debe estar vacío.");
+            throw new BusinessLogicException("El cvc no debe estar vacio");
         }
         else if(tarjetaCredito.getCVC().equals(""))
         {
-            throw new BusinessLogicException("El cvc no debe estar vacío.");
+            throw new BusinessLogicException("El cvc no debe estar vacio");
         }
         else if(tarjetaCredito.getCVC().length() != 3)
         {
@@ -60,11 +60,11 @@ public class TarjetaDeCreditoLogic {
         }    
         else if(tarjetaCredito.getFecha() == null  )
         {
-            throw new BusinessLogicException("La fecha no debe estar vacía.");
+            throw new BusinessLogicException("La fecha no debe estar vacia");
         }
         else if(tarjetaCredito.getFecha().equals(""))
         {
-            throw new BusinessLogicException("La fecha no debe estar vacía.");
+            throw new BusinessLogicException("La fecha no debe estar vacia");
         }
         else if(tarjetaCredito.getFecha().charAt(2) != '/')
         {
@@ -105,7 +105,7 @@ public class TarjetaDeCreditoLogic {
      * @param pTarjeta Instancia de la tarjeta con los datos a actualizar.
      * @return Instancia de la tarjeta con los datos actualizados.
      */
-    public TarjetaDeCreditoEntity updateTarjetaCredito(Long pId, TarjetaDeCreditoEntity pTarjeta) throws BusinessLogicException
+    public TarjetaDeCreditoEntity updateTarjetaCredito(Long pId, TarjetaDeCreditoEntity tarjetaCredito) throws BusinessLogicException
     {
         try{
             getTarjetaCredito(pId);
@@ -113,8 +113,53 @@ public class TarjetaDeCreditoLogic {
         catch (Exception e){
             throw e;
         }
+                
+        if (tarjetaCredito.getNumero() == null ) 
+        {
+            throw new BusinessLogicException("El número de la tarjeta de crédito no puede ser vacío.");
+        }
+        else if (tarjetaCredito.getNumero().equals(""))
+        {
+            throw new BusinessLogicException("El número de la tarjeta de crédito no puede ser vacío.");
+        }
+        else if (tarjetaCredito.getNumero().length() != 16)
+        {
+            throw new BusinessLogicException("La tarjeta de credito debe contener 16 números");
+        }
+        else if( !tarjetaCredito.getNumero().startsWith("4") && !tarjetaCredito.getNumero().startsWith("5") )
+        {      
+            throw new BusinessLogicException("Ingrese un numero valido para una tarjeta MasterCard o VISA");
+        }
+        else if(tarjetaCredito.getCVC() == null  )
+        {
+            throw new BusinessLogicException("El cvc no debe estar vacio");
+        }
+        else if(tarjetaCredito.getCVC().equals(""))
+        {
+            throw new BusinessLogicException("El cvc no debe estar vacio");
+        }
+        else if(tarjetaCredito.getCVC().length() != 3)
+        {
+            throw new BusinessLogicException("El cvc debe contener 3 digitos");
+        }    
+        else if(tarjetaCredito.getFecha() == null  )
+        {
+            throw new BusinessLogicException("La fecha no debe estar vacia");
+        }
+        else if(tarjetaCredito.getFecha().equals(""))
+        {
+            throw new BusinessLogicException("La fecha no debe estar vacia");
+        }
+        else if(tarjetaCredito.getFecha().charAt(2) != '/')
+        {
+            throw new BusinessLogicException("El formato de la fecha debe ser dd/aa.");
+        }
+        else if(tarjetaCredito.getFecha().length() != 5 )
+        {
+            throw new BusinessLogicException("La fecha debe contener el día y el año en el formato dd/aa");
+        }
       
-        TarjetaDeCreditoEntity newTarjeta = persistence.update(pTarjeta);
+        TarjetaDeCreditoEntity newTarjeta = persistence.update(tarjetaCredito);
         
         return newTarjeta;
     }

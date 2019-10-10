@@ -11,6 +11,7 @@ import co.edu.uniandes.csw.empleos.persistence.ContratistaPersistence;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -19,6 +20,7 @@ import javax.mail.internet.InternetAddress;
  *
  * @author Estudiante
  */
+@Stateless
 public class ContratistaLogic {
     
      private static final Logger LOGGER = Logger.getLogger(ContratistaLogic.class.getName());

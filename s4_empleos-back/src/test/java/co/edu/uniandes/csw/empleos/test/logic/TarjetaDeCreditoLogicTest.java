@@ -243,7 +243,9 @@ public class TarjetaDeCreditoLogicTest {
         TarjetaDeCreditoEntity pojoEntity = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
         
         pojoEntity.setId(tarjetaEntity.getId());
-        
+        pojoEntity.setNumero("5234567890123456");
+        pojoEntity.setCVC("523");
+        pojoEntity.setFecha("12/12");
         tarjetaCreditoLogic.updateTarjetaCredito(pojoEntity.getId(), pojoEntity);
         
         TarjetaDeCreditoEntity result = em.find(TarjetaDeCreditoEntity.class, tarjetaEntity.getId() );

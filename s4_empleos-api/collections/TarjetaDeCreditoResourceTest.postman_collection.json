@@ -34,7 +34,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"numero\":\"5123456789012349\",\n\t\"fecha\":\"23/11\",\n\t\"cvc\":\"214\"\n}",
+					"raw": "{\n\t\"numero\":\"5123456789018769\",\n\t\"fecha\":\"23/11\",\n\t\"cvc\":\"614\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -66,7 +66,7 @@
 						"id": "d5914c29-3eb8-4962-8a57-aa7302d6a292",
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"new_id_e\", data.id);",
+							"postman.setGlobalVariable(\"new_id_e2\", data.id);",
 							"tests[\"No genera error en el post\"] = responseCode.code === 200;"
 						],
 						"type": "text/javascript"
@@ -117,7 +117,7 @@
 						"id": "7f0c8859-0eaa-4a87-8cd7-eefda8b9b12c",
 						"exec": [
 							"tests[\"No crea con el mismo numero de tarjeta\"] = responseCode.code === 412;",
-							"tests[\"Mensaje correcto del error\"] = responseBody.has(\"La tarjeta de credito ya existe.\");"
+							"tests[\"Mensaje correcto del error\"] = responseBody.has(\"La tarjeta de credito ya existe\");"
 						],
 						"type": "text/javascript"
 					}
@@ -135,7 +135,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"numero\":\"5123456789012349\",\n\t\"fecha\":\"20/07\",\n\t\"cvc\":\"814\"\n}",
+					"raw": "{\n\t\"numero\":\"4123567890987654\",\n\t\"fecha\":\"20/07\",\n\t\"cvc\":\"814\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -216,8 +216,8 @@
 					"script": {
 						"id": "23b03a2c-792d-4e86-8b79-ec9fa9dab225",
 						"exec": [
-							"tests[\"No crea con mas o menos de 16 digitos\"] = responseCode.code === 412;",
-							"tests[\"Mensaje correcto del error\"] = responseBody.has(\"La tarjeta de credito debe contener 16 números\");"
+							"tests[\"No crea con cvc erroneo\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto del error\"] = responseBody.has(\"El cvc debe contener 3 digitos\");"
 						],
 						"type": "text/javascript"
 					}
@@ -235,7 +235,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"numero\":\"51234511190123491\",\n\t\"fecha\":\"12/02\",\n\t\"cvc\":\"999\"\n}",
+					"raw": "{\n\t\"numero\":\"5123451116662341\",\n\t\"fecha\":\"13/02\",\n\t\"cvc\":\"0010\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -266,8 +266,8 @@
 					"script": {
 						"id": "23b03a2c-792d-4e86-8b79-ec9fa9dab225",
 						"exec": [
-							"tests[\"No crea con mas o menos de 16 digitos\"] = responseCode.code === 412;",
-							"tests[\"Mensaje correcto del error\"] = responseBody.has(\"La tarjeta de credito debe contener 16 números\");"
+							"tests[\"No crea con cvc vacio\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto del error\"] = responseBody.has(\"El cvc no debe estar vacio\");"
 						],
 						"type": "text/javascript"
 					}
@@ -285,7 +285,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"numero\":\"51234511190123491\",\n\t\"fecha\":\"12/02\",\n\t\"cvc\":\"999\"\n}",
+					"raw": "{\n\t\"numero\":\"5123451119012309\",\n\t\"fecha\":\"12/02\",\n\t\"cvc\":\"\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -316,8 +316,8 @@
 					"script": {
 						"id": "23b03a2c-792d-4e86-8b79-ec9fa9dab225",
 						"exec": [
-							"tests[\"No crea con mas o menos de 16 digitos\"] = responseCode.code === 412;",
-							"tests[\"Mensaje correcto del error\"] = responseBody.has(\"La tarjeta de credito debe contener 16 números\");"
+							"tests[\"No crea con numero vacio\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto del error\"] = responseBody.has(\"El número de la tarjeta de crédito no puede ser vacío\");"
 						],
 						"type": "text/javascript"
 					}
@@ -335,7 +335,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"numero\":\"51234511190123491\",\n\t\"fecha\":\"12/02\",\n\t\"cvc\":\"999\"\n}",
+					"raw": "{\n\t\"numero\":\"\",\n\t\"fecha\":\"20/02\",\n\t\"cvc\":\"992\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -366,8 +366,8 @@
 					"script": {
 						"id": "23b03a2c-792d-4e86-8b79-ec9fa9dab225",
 						"exec": [
-							"tests[\"No crea con mas o menos de 16 digitos\"] = responseCode.code === 412;",
-							"tests[\"Mensaje correcto del error\"] = responseBody.has(\"La tarjeta de credito debe contener 16 números\");"
+							"tests[\"No crea si no es visa o master\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto del error\"] = responseBody.has(\"Ingrese un numero valido para una tarjeta MasterCard o VISA\");"
 						],
 						"type": "text/javascript"
 					}
@@ -379,13 +379,163 @@
 					{
 						"key": "Content-Type",
 						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
+						"type": "text",
+						"value": "application/json"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"numero\":\"51234511190123491\",\n\t\"fecha\":\"12/02\",\n\t\"cvc\":\"999\"\n}",
+					"raw": "{\n\t\"numero\":\"2123451119012341\",\n\t\"fecha\":\"02/02\",\n\t\"cvc\":\"929\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/tarjetas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_empleos-api",
+						"api",
+						"tarjetas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear tarjeta fecha vacia",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "23b03a2c-792d-4e86-8b79-ec9fa9dab225",
+						"exec": [
+							"tests[\"No crea con fecha vacia\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto del error\"] = responseBody.has(\"La fecha no debe estar vacia\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"numero\":\"4123251119812341\",\n\t\"fecha\":\"\",\n\t\"cvc\":\"921\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/tarjetas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_empleos-api",
+						"api",
+						"tarjetas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear tarjeta fecha en otro formato.",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "23b03a2c-792d-4e86-8b79-ec9fa9dab225",
+						"exec": [
+							"tests[\"No crea con otro formato\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto del error\"] = responseBody.has(\"El formato de la fecha debe ser dd/aa\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"numero\":\"4223151119882341\",\n\t\"fecha\":\"111/0\",\n\t\"cvc\":\"121\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/tarjetas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_empleos-api",
+						"api",
+						"tarjetas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear tarjeta fecha en otro formato 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "23b03a2c-792d-4e86-8b79-ec9fa9dab225",
+						"exec": [
+							"tests[\"No crea con fecha en otros formatos\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto del error\"] = responseBody.has(\"La fecha debe contener el día y el año en el formato dd/aa\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"numero\":\"5113151119882341\",\n\t\"fecha\":\"02/2019\",\n\t\"cvc\":\"121\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -461,6 +611,57 @@
 			"response": []
 		},
 		{
+			"name": "Actualizar una tarjeta de credito inexistente.",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "870f8701-5067-4a3c-b487-21a90c189c5f",
+						"exec": [
+							"tests[\"No actualiza tarjetas inexistentes\"]= responseCode.code === 412;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"La tarjeta con el id: 0 no existe\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"numero\":\"4123567890987654\",\n\t\"fecha\":\"18/11\",\n\t\"cvc\":\"294\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/tarjetas/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_empleos-api",
+						"api",
+						"tarjetas",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Obtener una tarjeta de credito.",
 			"event": [
 				{
@@ -508,6 +709,128 @@
 						"api",
 						"tarjetas",
 						"{{new_id_e}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener una tarjeta de credito inexistente.",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "26ec2835-2c65-4be9-94c8-0f1a1d0baf50",
+						"exec": [
+							"tests[\"No devuelve tarjetas inexistentes\"]= responseCode.code === 412;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"La tarjeta con el id: 0 no existe\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/tarjetas/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_empleos-api",
+						"api",
+						"tarjetas",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar una tarjeta de credito",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "11afdc5c-020e-4e93-bdeb-3c4d18afda77",
+						"exec": [
+							"tests[\"No genera error en el delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/tarjetas/{{new_id_e}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_empleos-api",
+						"api",
+						"tarjetas",
+						"{{new_id_e}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar una tarjeta de credito inexistente.",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "36073596-3921-4957-aa01-0d2e5ddf88d2",
+						"exec": [
+							"tests[\"No genera error en el delete\"] = responseCode.code === 412;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/tarjetas/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_empleos-api",
+						"api",
+						"tarjetas",
+						"0"
 					]
 				}
 			},

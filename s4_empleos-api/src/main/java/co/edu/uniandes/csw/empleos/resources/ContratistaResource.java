@@ -7,7 +7,6 @@ package co.edu.uniandes.csw.empleos.resources;
 
 
 import co.edu.uniandes.csw.empleos.dtos.ContratistaDTO;
-import co.edu.uniandes.csw.empleos.dtos.ContratistaDetailDTO;
 import co.edu.uniandes.csw.empleos.ejb.ContratistaLogic;
 import co.edu.uniandes.csw.empleos.ejb.ContratistaOfertasLogic;
 import co.edu.uniandes.csw.empleos.entities.ContratistaEntity;
