@@ -14,7 +14,7 @@
 					"script": {
 						"id": "ae5942ab-4854-42d7-9bad-bffc6c2476a5",
 						"exec": [
-							"tests[\"Si genera error\"] = responseCode.code===200;",
+							"tests[\"No genera error\"] = responseCode.code===200;",
 							"console.log(responseBody);",
 							"var data = JSON.parse(responseBody);",
 							"postman.setGlobalVariable(\"new_id_c\",data.id);"
@@ -35,7 +35,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"numeroCuenta\": \"123456789123\",\n\t\"nombreBanco\":  \"Bancolombia\",\n\t\"tipoCuenta\" : \"Ahorros\",\n\t\"estudiante\": {}\n}",
+					"raw": "{\n\t\"numeroCuenta\": \"123456789123\",\n\t\"nombreBanco\":  \"Bancolombia\",\n\t\"tipoCuenta\" : \"Ahorros\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -87,7 +87,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"numeroCuenta\": \"123456789123\",\n\t\"nombreBanco\":  \"Bancolombia\",\n\t\"tipoCuenta\" : \"Ahorros\",\n\t\"estudiante\": {}\n}",
+					"raw": "{\n\t\"numeroCuenta\": \"123456789123\",\n\t\"nombreBanco\":  \"Bancolombia\",\n\t\"tipoCuenta\" : \"Ahorros\"\n\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -138,7 +138,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"numeroCuenta\": \"\",\n\t\"nombreBanco\":  \"Bancolombia\",\n\t\"tipoCuenta\" : \"Ahorros\",\n\t\"estudiante\": {}\n}",
+					"raw": "{\n\n\t\"nombreBanco\":  \"Bancolombia\",\n\t\"tipoCuenta\" : \"Ahorros\"\n\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -171,7 +171,7 @@
 						"id": "43fb6332-a634-4b3e-b271-ce803a283283",
 						"exec": [
 							"tests[\"No crea una cuenta con numero negativo\"] = responseCode.code === 412;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has (\"El numero de cuenta no puede ser negativo\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has (\"El numero de cuenta no puede contener caracteres diferentes  a un numero entero.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -189,7 +189,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"numeroCuenta\": \"-123456789124\",\n\t\"nombreBanco\":  \"Bancolombia\",\n\t\"tipoCuenta\" : \"Ahorros\",\n\t\"estudiante\": {}\n}",
+					"raw": "{\n\t\"numeroCuenta\": \"-123456789124\",\n\t\"nombreBanco\":  \"Bancolombia\",\n\t\"tipoCuenta\" : \"Ahorros\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -331,7 +331,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"numeroCuenta\": \"123456789123\",\n\t\"nombreBanco\":  \"Bancolombia\",\n\t\"tipoCuenta\" : \"Ahorros\",\n\t\"estudiante\": {}\n}",
+					"raw": "{\n\t\"numeroCuenta\": \"123456789123\",\n\t\"nombreBanco\":  \"Bancolombia\",\n\t\"tipoCuenta\" : \"Ahorros\"\n\t\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -382,7 +382,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"numeroCuenta\": \"123456789123\",\n\t\"nombreBanco\":  \"Bancolombia\",\n\t\"tipoCuenta\" : \"Ahorros\",\n\t\"estudiante\": {}\n}",
+					"raw": "{\n\t\"numeroCuenta\": \"123456789123\",\n\t\"nombreBanco\":  \"Bancolombia\",\n\t\"tipoCuenta\" : \"Ahorros\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"

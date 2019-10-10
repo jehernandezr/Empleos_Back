@@ -42,17 +42,21 @@ public class CuntaBancariaResource {
     @GET
     @Path("{cuentaId: \\d+}")
     public CuentaBancariaDTO getCuntaBancaria(@PathParam("cuentaId") Long cuentaId) throws BusinessLogicException {
-        CuentaBancariaEntity cuentaEntity = logic.getCuentaBancaria(cuentaId);
-        if (cuentaEntity == null) {
+        try {
+            CuentaBancariaEntity cuentaEntity = logic.getCuentaBancaria(cuentaId);
+
+            CuentaBancariaDTO cuentaDTO = new CuentaBancariaDTO(cuentaEntity);
+            return cuentaDTO;
+        } catch (Exception e) {
             throw new WebApplicationException("El recurso /cuentaBancaria/" + cuentaId + " no existe.", 404);
         }
-        CuentaBancariaDTO cuentaDTO = new CuentaBancariaDTO(cuentaEntity);
-        return cuentaDTO;
+
     }
-    
-     /**
-     * Actualiza la cuentaBancaria con el id recibido en la URL con la información que
-     * se recibe en el cuerpo de la petición.
+
+    /**
+     * Actualiza la cuentaBancaria con el id recibido en la URL con la
+     * información que se recibe en el cuerpo de la petición.
+     *
      * @param cuentaId
      * @param cuenta
      * @return JSON {@link PrizeDetailDTO} - El premio guardada.
@@ -64,40 +68,45 @@ public class CuntaBancariaResource {
      */
     @PUT
     @Path("{cuentaId: \\d+}")
- 
-    public  CuentaBancariaDTO updateCuenta(@PathParam("cuentaId") Long cuentaId,  CuentaBancariaDTO cuenta) throws BusinessLogicException {
-        
-        if (!cuentaId.equals(cuenta.getId())) {
+
+    public CuentaBancariaDTO updateCuenta(@PathParam("cuentaId") Long cuentaId, CuentaBancariaDTO cuenta) throws BusinessLogicException {
+
+        if (cuentaId.equals(cuenta.getId())) {
             throw new BusinessLogicException("La id de la cuenta no coincide.");
         }
-        CuentaBancariaEntity entity = logic.getCuentaBancaria(cuentaId);
-        if (entity == null) {
-            throw new WebApplicationException("El recurso /cuentaBancaria/" + cuentaId + " no existe.", 404);
+        try {
+            CuentaBancariaEntity cuentaEntity = logic.getCuentaBancaria(cuentaId);
 
+            CuentaBancariaDTO cuentaDTO = new CuentaBancariaDTO(cuentaEntity);
+            return cuentaDTO;
+        } catch (Exception e) {
+            throw new WebApplicationException("El recurso /cuentaBancaria/" + cuentaId + " no existe.", 404);
         }
-        CuentaBancariaDTO reviewDTO = new CuentaBancariaDTO(logic.updateCuentaBancaria(cuenta.getId(), cuenta.toEntity()));
-        
-        return reviewDTO;
 
     }
-
 
     /**
      * Borra el premio con el id asociado recibido en la URL.
      *
-     * @param cuentaId    
-     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException    
+     * @param cuentaId
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
      * @throws WebApplicationException {@link WebApplicationExceptionMapper}
      * Error de lógica que se genera cuando no se encuentra el premio.
      */
     @DELETE
     @Path("{cuentaId: \\d+}")
     public void deleteCuenta(@PathParam("cuentaId") Long cuentaId) throws BusinessLogicException {
-      
-        if (logic.getCuentaBancaria(cuentaId) == null) {
+
+        try {
+            CuentaBancariaEntity cuentaEntity = logic.getCuentaBancaria(cuentaId);
+
+            CuentaBancariaDTO cuentaDTO = new CuentaBancariaDTO(cuentaEntity);
+
+        } catch (BusinessLogicException e) {
             throw new WebApplicationException("El recurso /cuentaBancaria/" + cuentaId + " no existe.", 404);
         }
+
         logic.delete(cuentaId);
- 
+
     }
 }
