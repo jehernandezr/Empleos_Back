@@ -201,4 +201,17 @@ public class CuentaBancariaPersistenceTest {
 
     }
 
+    /**
+     * Prueba para consultasr una CuentaBancaria por numero de cuenta.
+     */
+    @Test
+    public void findCuentaBancariaByNumeroCuentaTest() {
+        CuentaBancariaEntity entity = data.get(0);
+        CuentaBancariaEntity newEntity = cuentaBancariaPersistance.findByNumero(entity.getNumeroCuenta());
+        Assert.assertNotNull(newEntity);
+        Assert.assertEquals(entity.getNumeroCuenta(), newEntity.getNumeroCuenta());
+
+        newEntity = cuentaBancariaPersistance.findByNumero(null);
+        Assert.assertNull(newEntity);
+    }
 }
