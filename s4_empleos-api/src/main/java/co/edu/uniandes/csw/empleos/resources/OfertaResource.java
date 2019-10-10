@@ -19,8 +19,10 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -28,7 +30,7 @@ import javax.ws.rs.WebApplicationException;
 
 /**
  *
- * @oferta Estudiante
+ * @oferta Oferta
  */
 @Path("ofertas")
 @Produces("application/json")
@@ -49,7 +51,7 @@ public class OfertaResource {
      * aplicación. Si no hay ninguno retorna una lista vacía.
      */
     @GET
-    public List<OfertaDTO> getOfertas() {
+    public List<OfertaDetailDTO> getOfertas() {
         
         return listEntity2DTO(logic.getOfertas());
         
@@ -63,10 +65,10 @@ public class OfertaResource {
      * @throws BusinessLogicException
      */
     @POST
-    public OfertaDTO crearOferta(OfertaDTO oferta) throws BusinessLogicException {
+    public OfertaDTO crearOferta(OfertaDetailDTO oferta) throws BusinessLogicException {
         OfertaEntity ofertaEntity = oferta.toEntity();
         ofertaEntity = logic.createOferta(ofertaEntity);
-        return new OfertaDTO(ofertaEntity);
+        return new OfertaDetailDTO(ofertaEntity);
     }
 
     
@@ -78,13 +80,62 @@ public class OfertaResource {
      */
     @GET
     @Path("{id: \\d+}")
-    public OfertaDTO getCuntaBancaria(@PathParam("id") Long idOferta) throws BusinessLogicException {
+    public OfertaDetailDTO getOferta(@PathParam("id") Long idOferta) throws BusinessLogicException {
+
         OfertaEntity ofertaEntity = logic.getOferta(idOferta);
         if (ofertaEntity == null) {
             throw new WebApplicationException("El recurso /oferta/" + idOferta + " no existe.", 404);
         }
-        OfertaDTO cuentaDTO = new OfertaDTO(ofertaEntity);
+
+        OfertaDetailDTO cuentaDTO = new OfertaDetailDTO(ofertaEntity);
         return cuentaDTO;
+    
+    }
+    
+   
+    
+    /**
+     * Actualiza el oferta con el id recibido en la URL con la información que se
+     * recibe en el cuerpo de la petición.
+     *
+     * @param calId Identificador del oferta que se desea actualizar. Este debe
+     * ser una cadena de dígitos.
+     * @param calif {@link OfertaDTO} El oferta que se desea guardar.
+     * @return JSON {@link OfertaDTO} - El oferta guardada.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra el oferta a
+     * actualizar.
+     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
+     * Error de lógica que se genera cuando no se puede actualizar al oferta.
+     */
+    @PUT
+    @Path("{ofertaId: \\d+}")
+    public OfertaDetailDTO updateOferta(@PathParam("ofertaId") Long ofertaId, OfertaDetailDTO oferta) throws BusinessLogicException {
+        oferta.setId(ofertaId);
+        if (logic.getOferta(ofertaId) == null) {
+            throw new WebApplicationException("El recurso /oferta/" + ofertaId + " no existe.", 404);
+        }
+        OfertaDetailDTO dto = new OfertaDetailDTO(logic.updateOferta(ofertaId,oferta.toEntity()));
+        return dto;
+    }
+    
+     /**
+     * Borra el Oferta con el id asociado recibido en la URL.
+     *
+     * @param calId Identificador del oferta que se desea borrar. Este debe ser
+     * una cadena de dígitos
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra al oferta.
+     */
+    @DELETE
+    @Path("{ofertaId: \\d+}")
+    public void deleteOferta(@PathParam("ofertaId") Long ofertaId) throws BusinessLogicException {
+        if (logic.getOferta(ofertaId) == null) {
+            throw new WebApplicationException("El recurso /oferta/" + ofertaId + " no existe.", 404);
+        }
+         
+        logic.deleteOferta(ofertaId);
     }
     
      /**
@@ -93,8 +144,8 @@ public class OfertaResource {
      * @param entityList Lista de OfertaEntity a convertir.
      * @return Lista de OfertaDetailDTO convertida.
      */
-    private List<OfertaDTO> listEntity2DTO(List<OfertaEntity> entityList) {
-        List<OfertaDTO> list = new ArrayList<>();
+    private List<OfertaDetailDTO> listEntity2DTO(List<OfertaEntity> entityList) {
+        List<OfertaDetailDTO> list = new ArrayList<>();
         for (OfertaEntity entity : entityList) {
             list.add(new OfertaDetailDTO(entity));
         }

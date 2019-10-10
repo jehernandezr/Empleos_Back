@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.empleos.test.logic;
 
 import co.edu.uniandes.csw.empleos.ejb.EstudianteLogic;
 import co.edu.uniandes.csw.empleos.ejb.OfertaEstudianteLogic;
+import co.edu.uniandes.csw.empleos.ejb.OfertaLogic;
 import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
 import co.edu.uniandes.csw.empleos.entities.OfertaEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
@@ -61,10 +62,13 @@ public class OfertaEstudianteLogicTest {
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
-                .addPackage(OfertaEntity.class.getPackage())
                 .addPackage(EstudianteEntity.class.getPackage())
-                .addPackage(OfertaEstudianteLogic.class.getPackage())
+                .addPackage(EstudianteLogic.class.getPackage())
+                .addPackage(EstudiantePersistence.class.getPackage())
+                .addPackage(OfertaEntity.class.getPackage())
                 .addPackage(OfertaPersistence.class.getPackage())
+                .addPackage(OfertaLogic.class.getPackage())
+                .addPackage(OfertaEstudianteLogic.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
@@ -129,7 +133,7 @@ public class OfertaEstudianteLogicTest {
         newEstudiante.setCorreo("algo@uniandes.edu.co");
         newEstudiante.setSemestre(2);
         estudianteLogic.crearEstudiante(newEstudiante);
-        
+        System.out.println(estudianteLogic.getEstudiante(newEstudiante.getId()).getNombre() +"  oferta "+ oferta.getId());
         EstudianteEntity estudianteEntity = ofertaEstudianteLogic.addEstudiante(oferta.getId(), newEstudiante.getId());
         Assert.assertNotNull(estudianteEntity);
         Assert.assertEquals(estudianteEntity.getId(), newEstudiante.getId());
@@ -187,6 +191,8 @@ public class OfertaEstudianteLogicTest {
         for (int i = 0; i < 3; i++) {
             EstudianteEntity entity = factory.manufacturePojo(EstudianteEntity.class);
             entity.setOfertas(new ArrayList<>());
+            entity.setCorreo("jdsh@uniandes.edu.co");
+            entity.setSemestre(6);
             entity.getOfertas().add(oferta);
             estudianteLogic.crearEstudiante(entity);
             nuevaLista.add(entity);
@@ -199,15 +205,26 @@ public class OfertaEstudianteLogicTest {
     }
 
     /**
-     * Prueba desasociar un libro con un autor.
+     * Prueba remover un estudiante de una oferta.
      *
      */
     @Test
-    public void removeEstudianteTest() {
-        for (EstudianteEntity oferta : data) {
-            ofertaEstudianteLogic.removeEstudiante(oferta.getId(), oferta.getId());
-        }
-        Assert.assertTrue((ofertaEstudianteLogic.getEstudiantes(oferta.getId())).isEmpty());
+    public void removeEstudianteTest() throws BusinessLogicException {
+        EstudianteEntity newEstudiante = factory.manufacturePojo(EstudianteEntity.class);
+        newEstudiante.setCorreo("algo@uniandes.edu.co");
+        newEstudiante.setSemestre(2);
+        estudianteLogic.crearEstudiante(newEstudiante);
+        System.out.println(estudianteLogic.getEstudiante(newEstudiante.getId()).getNombre() +"  oferta "+ oferta.getId());
+        EstudianteEntity estudianteEntity = ofertaEstudianteLogic.addEstudiante(oferta.getId(), newEstudiante.getId());
+        
+        ofertaEstudianteLogic.removeEstudiante(oferta.getId(), estudianteEntity.getId());
+        
+            
+                
+                
+            
+        
+        Assert.assertTrue(ofertaEstudianteLogic.getEstudiantes(oferta.getId()).indexOf(estudianteEntity)>=0);
     }
     
 }
