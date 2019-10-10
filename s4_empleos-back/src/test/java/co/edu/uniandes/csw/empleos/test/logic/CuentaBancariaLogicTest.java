@@ -282,19 +282,7 @@ public class CuentaBancariaLogicTest {
 
     }
 
-    /**
-     * Pruba la verificacion de una regla de negocio
-     *
-     * @throws BusinessLogicException
-     */
-    @Test(expected = BusinessLogicException.class)
-    public void createCuentaBancariaEstudianteNullTest() throws BusinessLogicException {
-        CuentaBancariaEntity newEntity = factory.manufacturePojo(CuentaBancariaEntity.class);
-        newEntity.setEstudiante(null);
-        CuentaBancariaEntity result = cuentaBancariaLogic.createCuentaBancaria(newEntity);
-        assertNull(result);
-
-    }
+    
 
     /**
      * Pruba que verifica que si se actualizo una cuenta bancaria correctamente.
@@ -497,22 +485,7 @@ public class CuentaBancariaLogicTest {
 
     }
 
-    /**
-     * Pruba la verificacion de una regla de negocio
-     *
-     * @throws BusinessLogicException
-     */
-    @Test(expected = BusinessLogicException.class)
-    public void updateCuentaBancariaEstudianteNullTest() throws BusinessLogicException {
-        CuentaBancariaEntity entity = data.get(0);
-        CuentaBancariaEntity pojoEntity = factory.manufacturePojo(CuentaBancariaEntity.class);
-        pojoEntity.setId(entity.getId());
-        pojoEntity.setEstudiante(null);
-        assertNull(pojoEntity.getEstudiante());
-        cuentaBancariaLogic.updateCuentaBancaria(pojoEntity.getId(), pojoEntity);
-
-    }
-
+  
     /**
      * Prueba para consultar la lista de cuentas de Bancos.
      */

@@ -37,7 +37,9 @@ import javax.ws.rs.WebApplicationException;
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
-class EstudianteResource {
+
+public class EstudianteResource {
+
 
     // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
     @Inject

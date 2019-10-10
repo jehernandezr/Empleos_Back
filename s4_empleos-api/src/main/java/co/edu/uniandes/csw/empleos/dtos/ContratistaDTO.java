@@ -5,14 +5,19 @@
  */
 package co.edu.uniandes.csw.empleos.dtos;
 
+import co.edu.uniandes.csw.empleos.entities.ContratistaEntity;
 import java.io.Serializable;
 
 /**
  *
- * @author Estudiante
+ * @author Contratista
  */
 public class ContratistaDTO implements Serializable{
     
+     /**
+     * Variable que representa la id del contratista.
+     */
+    private Long id;
     /**
      * Variable que representa si el contratista es externo.
      */
@@ -43,6 +48,22 @@ public class ContratistaDTO implements Serializable{
     
     public ContratistaDTO(){
         
+    }
+     /**
+     * Conviertir Entity a DTO (Crea un nuevo DTO con los valores que recibe en
+     * la entidad que viene de argumento.
+     *
+     * @param contratistaEntity: Es la entidad que se va a convertir a DTO
+     */
+    public ContratistaDTO(ContratistaEntity contratistaEntity) {
+        if (contratistaEntity != null) {
+            this.id = contratistaEntity.getId();
+            this.nombre = contratistaEntity.getNombre();
+            this.email = contratistaEntity.getEmail();
+            this.contrasena = contratistaEntity.getContrasena();
+            this.rutaImagen = contratistaEntity.getRutaImagen();
+            
+        }
     }
 
     /**
@@ -113,6 +134,36 @@ public class ContratistaDTO implements Serializable{
      */
     public void setRutaImagen(String rutaImagen) {
         this.rutaImagen = rutaImagen;
+    }
+    
+    /**
+     * Convertir DTO a Entity
+     *
+     * @return Un Entity con los valores del DTO
+     */
+    public ContratistaEntity toEntity() {
+    
+        ContratistaEntity contratistaEntity = new ContratistaEntity();
+        contratistaEntity.setId(this.id);
+        contratistaEntity.setNombre(this.nombre);
+        contratistaEntity.setContrasena(this.email);
+        contratistaEntity.setRutaImagen(this.rutaImagen);
+        contratistaEntity.setEsExterno(this.esExterno);
+        return contratistaEntity;
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
     }
     
 }
