@@ -7,6 +7,8 @@ package co.edu.uniandes.csw.empleos.resources;
 
 import co.edu.uniandes.csw.empleos.dtos.OfertaDTO;
 import co.edu.uniandes.csw.empleos.dtos.OfertaDetailDTO;
+
+import co.edu.uniandes.csw.empleos.ejb.OfertaEstudianteLogic;
 import co.edu.uniandes.csw.empleos.ejb.OfertaLogic;
 
 import co.edu.uniandes.csw.empleos.entities.OfertaEntity;
@@ -40,6 +42,9 @@ public class OfertaResource {
     
    @Inject
     private OfertaLogic logic;
+   
+   @Inject
+   private OfertaEstudianteLogic estudianteOfertasLogic;
      private static final Logger LOGGER = Logger.getLogger(OfertaResource.class.getName());
      
     
@@ -92,6 +97,29 @@ public class OfertaResource {
     
     }
     
+    
+    /**
+     * Conexión con el servicio de libros para una editorial.
+     * {@link EstudiantesOfertaResource}
+     *
+     * Este método conecta la ruta de /editorials con las rutas de /books que
+     * dependen de la editorial, es una redirección al servicio que maneja el
+     * segmento de la URL que se encarga de los libros de una editorial.
+     *
+     * @param editorialsId El ID de la editorial con respecto a la cual se
+     * accede al servicio.
+     * @return El servicio de libros para esta editorial en paricular.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra la editorial.
+     */
+    @Path("{ofertaId: \\d+}/estudiantes")
+    public Class<EstudiantesOfertaResource> getEstudiantesOfertaResource(@PathParam("ofertaId") Long editorialsId) {
+        if (estudianteOfertasLogic.getEstudiantes(editorialsId) == null) {
+            throw new WebApplicationException("El recurso /editorials/" + editorialsId + " no existe.", 404);
+        }
+        return EstudiantesOfertaResource.class;
+    }
+    
    
     
     /**
@@ -109,8 +137,8 @@ public class OfertaResource {
      * Error de lógica que se genera cuando no se puede actualizar al oferta.
      */
     @PUT
-    @Path("{ofertaId: \\d+}")
-    public OfertaDetailDTO updateOferta(@PathParam("ofertaId") Long ofertaId, OfertaDetailDTO oferta) throws BusinessLogicException {
+    @Path("{id: \\d+}")
+    public OfertaDetailDTO updateOferta(@PathParam("id") Long ofertaId, OfertaDetailDTO oferta) throws BusinessLogicException {
         oferta.setId(ofertaId);
         if (logic.getOferta(ofertaId) == null) {
             throw new WebApplicationException("El recurso /oferta/" + ofertaId + " no existe.", 404);
