@@ -1,6 +1,9 @@
 package co.edu.uniandes.csw.empleos.resources;
 
 import co.edu.uniandes.csw.empleos.dtos.CuentaDeCobroDTO;
+import co.edu.uniandes.csw.empleos.dtos.CuentaDeCobroDetailDTO;
+import co.edu.uniandes.csw.empleos.ejb.ContratistaLogic;
+import co.edu.uniandes.csw.empleos.ejb.CuentaDeCobroContratistaLogic;
 import co.edu.uniandes.csw.empleos.ejb.CuentaDeCobroLogic;
 import co.edu.uniandes.csw.empleos.entities.CuentaDeCobroEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
@@ -30,32 +33,48 @@ public class CuentaDeCobroResource {
     @Inject
     private CuentaDeCobroLogic cuentaDeCobroLogic;
     
+     @Inject
+    private ContratistaLogic editorialLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
+
+    @Inject
+    private CuentaDeCobroContratistaLogic bookEditorialLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
+
+    
+     /**
+     * Crea una nueva cuenta con la informacion que se recibe en el cuerpo de la
+     * petición y se regresa un objeto identico con un id auto-generado por la
+     * base de datos.
+     *
+     * @param cuenta {@link CuentaDeCobroDTO} - La cuenta que se desea guardar.
+     * @return JSON {@link CuentaDeCobroDTO} - La cuenta guardado con el atributo id
+     * autogenerado.
+     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
+     * Error de lógica que se genera cuando rompe con las reglas de negocio.
+     */
     @POST
-    public CuentaDeCobroDTO createCuentaDeCobro(CuentaDeCobroDTO cuenta) {
-        return cuenta;
+    public CuentaDeCobroDTO createCuentaDeCobro(CuentaDeCobroDTO cuenta) throws BusinessLogicException {
+        CuentaDeCobroDTO  nuevaCuentaDTO = new CuentaDeCobroDTO(cuentaDeCobroLogic.createCuentaDeCobro(cuenta.toEntity()));
+        return nuevaCuentaDTO;
     }
     
     /**
-     * Busca la tarjeta con el id asociado recibido en la URL y lo devuelve.
+     * Busca la cuenta con el id asociado recibido en la URL y lo devuelve.
      *
-     * @param tarjetaId Identificador de la tarjeta que se esta buscando. Este debe
+     * @param cuentaId Identificador de la cuenta que se esta buscando. Este debe
      * ser una cadena de dígitos.
-     * @return JSON {@link TarjetaDeCreditoDTO} - El libro buscado
+     * @return JSON {@link CuentaDeCobroDetailDTO} - la cuenta buscada
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
-     * Error de lógica que se genera cuando no se encuentra la tarjeta.
+     * Error de lógica que se genera cuando no se encuentra La cuenta.
      */
     @GET
     @Path("{cuentasId: \\d+}")
-    public CuentaDeCobroDTO getCuentaDeCobro(@PathParam("cuentasId") Long cuentaId) throws BusinessLogicException 
-    {
+    public CuentaDeCobroDTO getCuentaDeCobro(@PathParam("cuentasId") Long cuentaId) {
         
-        CuentaDeCobroEntity entity = cuentaDeCobroLogic.getCuenta(cuentaId);
-        
-        if (entity == null) {
-            throw new WebApplicationException("El recurso /cuentas/" + cuentaId + "no existe.", 404);
+        CuentaDeCobroEntity cuentaEntity = cuentaDeCobroLogic.getCuenta(cuentaId);
+        if (cuentaEntity == null) {
+            throw new WebApplicationException("El recurso /books/" + cuentaId + " no existe.", 404);
         }
-        
-        CuentaDeCobroDTO cuentaDTO = new CuentaDeCobroDTO(entity);
+        CuentaDeCobroDTO cuentaDTO = new CuentaDeCobroDTO(cuentaEntity);
         
         return cuentaDTO;
     }
