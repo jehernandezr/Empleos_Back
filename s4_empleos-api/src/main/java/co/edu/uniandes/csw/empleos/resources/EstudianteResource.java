@@ -67,10 +67,16 @@ public class EstudianteResource {
     @Inject
     private EstudianteCuentaBancariaLogic estudianteCuentaBancariaLogic; 
     
+    /*@POST
+    public EstudianteDTO createEstudiante(EstudianteDTO estudiante) throws BusinessLogicException {
+        EstudianteDTO e = new EstudianteDTO(estudianteLogic.crearEstudiante(estudiante.toEntity()));
+        return e;
+    }*/
     @POST
     public EstudianteDTO createEstudiante(EstudianteDTO estudiante) throws BusinessLogicException {
         EstudianteDTO e = new EstudianteDTO(estudianteLogic.crearEstudiante(estudiante.toEntity()));
         return e;
+        //return "hola" + (estudiante != null ? ("not null nombre: " + estudiante.getNombre()) : "null");
     }
     
      /**

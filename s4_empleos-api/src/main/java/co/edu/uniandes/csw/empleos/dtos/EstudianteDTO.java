@@ -15,6 +15,7 @@ import java.io.Serializable;
 public class EstudianteDTO implements Serializable{
     
     private Long id;
+    private Long idMedioDepago;
     private String nombre;
     private String carrera;
     private String correo;
@@ -42,6 +43,7 @@ public class EstudianteDTO implements Serializable{
             this.calificacionPromedio = estudianteEntity.getCalificacionPromedio();
             this.semestre = estudianteEntity.getSemestre();
             this.horarioDeTrabajo = estudianteEntity.getHorarioDeTrabajo();
+            this.idMedioDepago = estudianteEntity.getIdMedioDepago();
         }
     }
     
@@ -57,6 +59,20 @@ public class EstudianteDTO implements Serializable{
      */
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    /**
+     * @return the idMedioDepago
+     */
+    public Long getIdMedioDepago() {
+        return idMedioDepago;
+    }
+
+    /**
+     * @param id the idMedioDepago to set
+     */
+    public void setIdMedioDepago(Long idMedioDepago) {
+        this.idMedioDepago = idMedioDepago;
     }
 
     /**
