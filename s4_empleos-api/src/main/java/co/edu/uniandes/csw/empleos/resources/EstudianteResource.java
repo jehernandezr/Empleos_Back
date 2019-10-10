@@ -39,6 +39,7 @@ import javax.ws.rs.WebApplicationException;
 @RequestScoped
 class EstudianteResource {
 
+
     // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
     @Inject
     private EstudianteLogic estudianteLogic; 
