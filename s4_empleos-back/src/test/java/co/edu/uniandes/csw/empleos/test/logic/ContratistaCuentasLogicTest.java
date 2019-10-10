@@ -160,6 +160,7 @@ public class ContratistaCuentasLogicTest {
         ContratistaEntity entity = factory.manufacturePojo(ContratistaEntity.class);
         CuentaDeCobroEntity cuentaEntity = factory.manufacturePojo(CuentaDeCobroEntity.class);
         cuentaEntity.setContratista(entity);
+        entity.setCuentaDeCobro(cuentasData);
         try {
             utx.begin();
             em.persist(cuentaEntity);

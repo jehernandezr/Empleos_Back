@@ -9,8 +9,6 @@ import co.edu.uniandes.csw.empleos.ejb.ContratistaLogic;
 import co.edu.uniandes.csw.empleos.entities.ContratistaEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.empleos.persistence.ContratistaPersistence;
-import org.jboss.arquillian.junit.Arquillian;
-import org.junit.runner.RunWith;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;

@@ -7,10 +7,8 @@ package co.edu.uniandes.csw.empleos.test.logic;
 
 import co.edu.uniandes.csw.empleos.ejb.CalificacionLogic;
 import co.edu.uniandes.csw.empleos.entities.CalificacionEntity;
-import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.empleos.persistence.CalificacionPersistence;
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
