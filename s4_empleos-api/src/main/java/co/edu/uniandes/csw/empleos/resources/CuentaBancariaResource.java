@@ -21,7 +21,7 @@ import javax.ws.rs.*;
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
-public class CuntaBancariaResource {
+public class CuentaBancariaResource {
 
     @Inject
     private CuentaBancariaLogic logic;
