@@ -24,8 +24,6 @@ public class CuentaBancariaLogic {
     @Inject
     private CuentaBancariaPersistence persistence;
 
-
-
     /**
      * Se encarga de crear un Author en la base de datos.
      *
@@ -36,12 +34,12 @@ public class CuentaBancariaLogic {
     public CuentaBancariaEntity createCuentaBancaria(CuentaBancariaEntity cuentaBancaria) throws BusinessLogicException {
         if (cuentaBancaria.getNumeroCuenta() == null) {
             throw new BusinessLogicException("El numero de cuenta está vacío");
-        } 
-       CuentaBancariaEntity ent =persistence.findByNumero(cuentaBancaria.getNumeroCuenta());
-       if (ent!=null){
-           throw new BusinessLogicException("Ya existe una cuenta Bancaria con ese numero de cuenta ");
-              }
-         if (cuentaBancaria.getNumeroCuenta().contains(",") || cuentaBancaria.getNumeroCuenta().contains(".") || cuentaBancaria.getNumeroCuenta().contains("-")) {
+        }
+        CuentaBancariaEntity ent = persistence.findByNumero(cuentaBancaria.getNumeroCuenta());
+        if (ent != null) {
+            throw new BusinessLogicException("Ya existe una cuenta Bancaria con ese numero de cuenta ");
+        }
+        if (cuentaBancaria.getNumeroCuenta().contains(",") || cuentaBancaria.getNumeroCuenta().contains(".") || cuentaBancaria.getNumeroCuenta().contains("-")) {
             throw new BusinessLogicException("El numero de cuenta no puede contener caracteres diferentes  a un numero entero.");
         } else if (Long.parseLong(cuentaBancaria.getNumeroCuenta()) < 0) {
             throw new BusinessLogicException("El numero de cuenta no puede ser negativo");
@@ -67,9 +65,7 @@ public class CuentaBancariaLogic {
      */
     public List<CuentaBancariaEntity> getCuentasBancarias() {
 
-        List<CuentaBancariaEntity> lista = persistence.findAll();
-
-        return lista;
+        return persistence.findAll();
     }
 
     /**
@@ -92,16 +88,20 @@ public class CuentaBancariaLogic {
     /**
      * Actualiza la información de una instancia de Author.
      *
+     * @param cuentaId
      * @param cuentaBancoEntity
      * @return Instancia de AuthorEntity con los datos actualizados.
      * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
      */
     public CuentaBancariaEntity updateCuentaBancaria(Long cuentaId, CuentaBancariaEntity cuentaBancoEntity) throws BusinessLogicException {
 
+        if (persistence.find(cuentaId) == null) {
+            throw new BusinessLogicException("No existe la cuenta a ser actualizada");
+        }
         if (cuentaBancoEntity.getNumeroCuenta() == null) {
             throw new BusinessLogicException("El numero de cuenta está vacío");
         }
-      
+
         if (cuentaBancoEntity.getNumeroCuenta().contains(".")) {
             throw new BusinessLogicException("El numero de cuenta no puede contener puntos.");
         }

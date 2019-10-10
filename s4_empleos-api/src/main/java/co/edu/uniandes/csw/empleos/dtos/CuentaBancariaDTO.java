@@ -15,28 +15,26 @@ import java.io.Serializable;
 public class CuentaBancariaDTO implements Serializable {
 
     private Long id;
-    
+
     private String numeroCuenta;
 
     private String nombreBanco;
 
     private int tipoCuenta;
 
-   private EstudianteDTO estudiante;
-   
+    private EstudianteDTO estudiante;
+
     public CuentaBancariaDTO() {
     }
 
     public CuentaBancariaDTO(CuentaBancariaEntity cuentaBancariaEntity) {
         if (cuentaBancariaEntity != null) {
-            this.id=cuentaBancariaEntity.getId();
+            this.id = cuentaBancariaEntity.getId();
             this.nombreBanco = cuentaBancariaEntity.getNombreBanco();
             this.numeroCuenta = cuentaBancariaEntity.getNumeroCuenta();
             setTipoCuenta(cuentaBancariaEntity.getTipoCuenta() == 2 ? "ahorros" : cuentaBancariaEntity.getTipoCuenta() == 3 ? "corriente" : "fff");
         }
     }
-
-   
 
     /**
      * @return the id
@@ -97,22 +95,30 @@ public class CuentaBancariaDTO implements Serializable {
             tipoCuenta = 0;
         }
     }
-    
-     public CuentaBancariaEntity toEntity() {
+
+    public CuentaBancariaEntity toEntity() {
         CuentaBancariaEntity cuentaBancaria = new CuentaBancariaEntity();
         cuentaBancaria.setId(this.getId());
         cuentaBancaria.setNombreBanco(this.getNombreBanco());
         cuentaBancaria.setNumeroCuenta(this.getNumeroCuenta());
-        cuentaBancaria.setTipoCuenta(this.getTipoCuenta() == 2 ? "ahorros" : this.getTipoCuenta() == 3 ? "corriente" : "fff");
-        
-        if(this.getEstudiante()!=null)
-        {
-           cuentaBancaria.setEstudiante(this.getEstudiante().toEntity());
+        String tipo = "";
+        switch (this.getTipoCuenta()) {
+            case 2:
+                tipo = "ahorros";
+                break;
+            case 3:
+                tipo = "corriente";
+                break;
+            default:
+                tipo = "ffff";
         }
-        
+        this.setTipoCuenta(tipo);
+        if (this.getEstudiante() != null) {
+            cuentaBancaria.setEstudiante(this.getEstudiante().toEntity());
+        }
+
         return cuentaBancaria;
-    
-     }
+    }
 
     /**
      * @return the estudiante
