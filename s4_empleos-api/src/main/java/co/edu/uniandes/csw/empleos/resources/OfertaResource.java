@@ -15,7 +15,6 @@ import co.edu.uniandes.csw.empleos.entities.OfertaEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -79,7 +78,7 @@ public class OfertaResource {
     
     /**
      *
-     * @param id
+     * @param idOferta
      * @return
      * @throws BusinessLogicException
      */
@@ -126,9 +125,9 @@ public class OfertaResource {
      * Actualiza el oferta con el id recibido en la URL con la información que se
      * recibe en el cuerpo de la petición.
      *
-     * @param calId Identificador del oferta que se desea actualizar. Este debe
+     * @param ofertaId Identificador del oferta que se desea actualizar. Este debe
      * ser una cadena de dígitos.
-     * @param calif {@link OfertaDTO} El oferta que se desea guardar.
+     * @param oferta {@link OfertaDTO} El oferta que se desea guardar.
      * @return JSON {@link OfertaDTO} - El oferta guardada.
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra el oferta a
@@ -150,7 +149,7 @@ public class OfertaResource {
      /**
      * Borra el Oferta con el id asociado recibido en la URL.
      *
-     * @param calId Identificador del oferta que se desea borrar. Este debe ser
+     * @param ofertaId Identificador del oferta que se desea borrar. Este debe ser
      * una cadena de dígitos
      * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
