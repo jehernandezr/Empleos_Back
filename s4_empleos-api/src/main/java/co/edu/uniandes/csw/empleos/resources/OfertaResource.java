@@ -80,34 +80,19 @@ public class OfertaResource {
      */
     @GET
     @Path("{id: \\d+}")
-<<<<<<< HEAD
     public OfertaDetailDTO getOferta(@PathParam("id") Long idOferta) throws BusinessLogicException {
-=======
-    public OfertaDTO getCuentaBancaria(@PathParam("id") Long idOferta) throws BusinessLogicException {
 
->>>>>>> a922efd2ecf0ff95ed71ad54b56252265ef01bed
         OfertaEntity ofertaEntity = logic.getOferta(idOferta);
         if (ofertaEntity == null) {
             throw new WebApplicationException("El recurso /oferta/" + idOferta + " no existe.", 404);
         }
-<<<<<<< HEAD
+
         OfertaDetailDTO cuentaDTO = new OfertaDetailDTO(ofertaEntity);
         return cuentaDTO;
-=======
-        OfertaDTO ofertaDTO = new OfertaDTO(ofertaEntity);
-        return ofertaDTO;       
+    
     }
     
-    @DELETE
-    @Path("{ofertaId: \\d+}")
-    public void deleteTarjeta(@PathParam("ofertaId") Long ofertaId ) throws BusinessLogicException {
-        OfertaEntity entity = logic.getOferta(ofertaId);
-        if (entity == null) {
-            throw new WebApplicationException("El recurso /ofertas/" + ofertaId + " no existe.", 404);
-        }
-        logic.deleteOferta(ofertaId);
->>>>>>> a922efd2ecf0ff95ed71ad54b56252265ef01bed
-    }
+   
     
     /**
      * Actualiza el oferta con el id recibido en la URL con la información que se
@@ -124,7 +109,7 @@ public class OfertaResource {
      * Error de lógica que se genera cuando no se puede actualizar al oferta.
      */
     @PUT
-    @Path("{act/ofertaId: \\d+}")
+    @Path("{ofertaId: \\d+}")
     public OfertaDetailDTO updateOferta(@PathParam("ofertaId") Long ofertaId, OfertaDetailDTO oferta) throws BusinessLogicException {
         oferta.setId(ofertaId);
         if (logic.getOferta(ofertaId) == null) {
@@ -144,7 +129,7 @@ public class OfertaResource {
      * Error de lógica que se genera cuando no se encuentra al oferta.
      */
     @DELETE
-    @Path("del/{ofertaId: \\d+}")
+    @Path("{ofertaId: \\d+}")
     public void deleteOferta(@PathParam("ofertaId") Long ofertaId) throws BusinessLogicException {
         if (logic.getOferta(ofertaId) == null) {
             throw new WebApplicationException("El recurso /oferta/" + ofertaId + " no existe.", 404);
