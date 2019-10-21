@@ -118,9 +118,10 @@ public class EstudianteCalificacionesLogic {
      */
     public void removeCalificaciones(Long estudiantesId) {
         EstudianteEntity estudianteEntity = estudiantePersistence.find(estudiantesId);
-        for(CalificacionEntity calificacionEntity : estudianteEntity.getCalificaciones()) {
-            estudianteEntity.getCalificaciones().remove(calificacionEntity);
-            calificacionEntity.setEstudiante(null);
-        }
+        if(estudianteEntity != null)
+            for(CalificacionEntity calificacionEntity : estudianteEntity.getCalificaciones()) {
+                estudianteEntity.getCalificaciones().remove(calificacionEntity);
+                calificacionEntity.setEstudiante(null);
+            }
     }
 }

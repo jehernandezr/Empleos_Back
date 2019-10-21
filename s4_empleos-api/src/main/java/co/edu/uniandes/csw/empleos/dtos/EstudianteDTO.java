@@ -14,13 +14,13 @@ import java.io.Serializable;
  */
 public class EstudianteDTO implements Serializable{
     
-    private Long id;
-    private Long idMedioDepago;
+    private long id;
+    private long idMedioDepago;
     private String nombre;
     private String carrera;
     private String correo;
-    private Double calificacionPromedio;
-    private Integer semestre;
+    private double calificacionPromedio;
+    private int semestre;
     private String horarioDeTrabajo;
 
         /**
@@ -58,7 +58,7 @@ public class EstudianteDTO implements Serializable{
     /**
      * @param id the id to set
      */
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
     
@@ -72,7 +72,7 @@ public class EstudianteDTO implements Serializable{
     /**
      * @param id the idMedioDepago to set
      */
-    public void setIdMedioDepago(Long idMedioDepago) {
+    public void setIdMedioDepago(long idMedioDepago) {
         this.idMedioDepago = idMedioDepago;
     }
 
@@ -128,7 +128,7 @@ public class EstudianteDTO implements Serializable{
     /**
      * @param calificacionPromedio the calificacionPromedio to set
      */
-    public void setCalificacionPromedio(Double calificacionPromedio) {
+    public void setCalificacionPromedio(double calificacionPromedio) {
         this.calificacionPromedio = calificacionPromedio;
     }
 
@@ -142,7 +142,7 @@ public class EstudianteDTO implements Serializable{
     /**
      * @param semestre the semestre to set
      */
-    public void setSemestre(Integer semestre) {
+    public void setSemestre(int semestre) {
         this.semestre = semestre;
     }
 
@@ -171,9 +171,11 @@ public class EstudianteDTO implements Serializable{
         estudianteEntity.setId(this.id);
         estudianteEntity.setNombre(this.nombre);
         estudianteEntity.setCarrera(this.carrera);
+        estudianteEntity.setCorreo(this.correo);
         estudianteEntity.setCalificacionPromedio(this.calificacionPromedio);
         estudianteEntity.setHorarioDeTrabajo(this.horarioDeTrabajo);
         estudianteEntity.setSemestre(this.semestre);
+        estudianteEntity.setIdMedioDepago(this.idMedioDepago);
         return estudianteEntity;
     }
     

@@ -117,7 +117,7 @@
 					"script": {
 						"id": "b8e4a4f7-fd97-4ebe-b3eb-a3ea9a03d20f",
 						"exec": [
-							"tests[\"No crea con nombre nulo\"] = responseCode.code === 412;",
+							"tests[\"No crea con correo no valido\"] = responseCode.code === 412;",
 							"tests[\"Mensaje de error correcto\"] = responseBody.has(\"El correo no era de uniandes\");"
 						],
 						"type": "text/javascript"
@@ -168,7 +168,7 @@
 					"script": {
 						"id": "42d261a9-b27b-4b1c-a023-ed56c0c57f18",
 						"exec": [
-							"tests[\"No crea con nombre nulo\"] = responseCode.code === 412;",
+							"tests[\"No crea con calificacion mayor a 5\"] = responseCode.code === 412;",
 							"tests[\"Mensaje de error correcto\"] = responseBody.has(\"No es una calificación válida\");"
 						],
 						"type": "text/javascript"
@@ -187,7 +187,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"calificacionPromedio\": 6.0,\r\n    \"carrera\": \"Sistemas\",\r\n    \"correo\": \"aajkwdnakd@gmail.com\",\r\n    \"horarioDeTrabajo\": \"a\",\r\n    \"nombre\": \"David\",\r\n    \"semestre\": 4,\r\n    \"calificaciones\": [],\r\n    \"ofertas\": []\r\n}",
+					"raw": "{\r\n    \"calificacionPromedio\": 6.0,\r\n    \"carrera\": \"Sistemas\",\r\n    \"correo\": \"aajkwdnakd@uniandes.edu.co\",\r\n    \"horarioDeTrabajo\": \"a\",\r\n    \"nombre\": \"David\",\r\n    \"semestre\": 4,\r\n    \"calificaciones\": [],\r\n    \"ofertas\": []\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -219,7 +219,7 @@
 					"script": {
 						"id": "2c8d6fa9-3e86-476c-a93a-7edc745f5813",
 						"exec": [
-							"tests[\"No crea con nombre nulo\"] = responseCode.code === 412;",
+							"tests[\"No crea con calificacion menor a 0\"] = responseCode.code === 412;",
 							"tests[\"Mensaje de error correcto\"] = responseBody.has(\"No es una calificación válida\");"
 						],
 						"type": "text/javascript"
@@ -238,7 +238,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"calificacionPromedio\": -1.0,\r\n    \"carrera\": \"Sistemas\",\r\n    \"correo\": \"aajkwdnakd@gmail.com\",\r\n    \"horarioDeTrabajo\": \"a\",\r\n    \"nombre\": \"David\",\r\n    \"semestre\": 4,\r\n    \"calificaciones\": [],\r\n    \"ofertas\": []\r\n}",
+					"raw": "{\r\n    \"calificacionPromedio\": -1.0,\r\n    \"carrera\": \"Sistemas\",\r\n    \"correo\": \"aajkwdnakd@uniandes.edu.co\",\r\n    \"horarioDeTrabajo\": \"a\",\r\n    \"nombre\": \"David\",\r\n    \"semestre\": 4,\r\n    \"calificaciones\": [],\r\n    \"ofertas\": []\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -270,7 +270,7 @@
 					"script": {
 						"id": "e3efe8e0-96a8-43bd-8184-56b79eeece7f",
 						"exec": [
-							"tests[\"No crea con nombre nulo\"] = responseCode.code === 412;",
+							"tests[\"No crea con semestre mayor a 13\"] = responseCode.code === 412;",
 							"tests[\"Mensaje de error correcto\"] = responseBody.has(\"No es un semestre válido\");"
 						],
 						"type": "text/javascript"
@@ -289,7 +289,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"calificacionPromedio\": 2.0,\r\n    \"carrera\": \"Sistemas\",\r\n    \"correo\": \"aajkwdnakd@gmail.com\",\r\n    \"horarioDeTrabajo\": \"a\",\r\n    \"nombre\": \"David\",\r\n    \"semestre\": 13,\r\n    \"calificaciones\": [],\r\n    \"ofertas\": []\r\n}",
+					"raw": "{\r\n    \"calificacionPromedio\": 2.0,\r\n    \"carrera\": \"Sistemas\",\r\n    \"correo\": \"aajkwdnakd@uniandes.edu.co\",\r\n    \"horarioDeTrabajo\": \"a\",\r\n    \"nombre\": \"David\",\r\n    \"semestre\": 13,\r\n    \"calificaciones\": [],\r\n    \"ofertas\": []\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -321,7 +321,7 @@
 					"script": {
 						"id": "c664618f-ab7b-4a00-aacc-aba82c611f88",
 						"exec": [
-							"tests[\"No crea con nombre nulo\"] = responseCode.code === 412;",
+							"tests[\"No crea con semestre menor a 1\"] = responseCode.code === 412;",
 							"tests[\"Mensaje de error correcto\"] = responseBody.has(\"No es un semestre válido\");"
 						],
 						"type": "text/javascript"
@@ -340,7 +340,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"calificacionPromedio\": 2.0,\r\n    \"carrera\": \"Sistemas\",\r\n    \"correo\": \"aajkwdnakd@gmail.com\",\r\n    \"horarioDeTrabajo\": \"a\",\r\n    \"nombre\": \"David\",\r\n    \"semestre\": 0,\r\n    \"calificaciones\": [],\r\n    \"ofertas\": []\r\n}",
+					"raw": "{\r\n    \"calificacionPromedio\": 2.0,\r\n    \"carrera\": \"Sistemas\",\r\n    \"correo\": \"aajkwdnakd@uniandes.edu.co\",\r\n    \"horarioDeTrabajo\": \"a\",\r\n    \"nombre\": \"David\",\r\n    \"semestre\": 0,\r\n    \"calificaciones\": [],\r\n    \"ofertas\": []\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -372,7 +372,7 @@
 					"script": {
 						"id": "52e55d41-e24b-4867-ae93-d9b92790bd38",
 						"exec": [
-							"tests[\"No crea con nombre nulo\"] = responseCode.code === 412;",
+							"tests[\"No crea con carrera nula\"] = responseCode.code === 412;",
 							"tests[\"Mensaje de error correcto\"] = responseBody.has(\"No es una carrera válida\");"
 						],
 						"type": "text/javascript"
@@ -391,7 +391,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"calificacionPromedio\": 2.0,\r\n    \"carrera\": \"\",\r\n    \"correo\": \"aajkwdnakd@gmail.com\",\r\n    \"horarioDeTrabajo\": \"a\",\r\n    \"nombre\": \"David\",\r\n    \"semestre\": 4,\r\n    \"calificaciones\": [],\r\n    \"ofertas\": []\r\n}",
+					"raw": "{\r\n    \"calificacionPromedio\": 2.0,\r\n    \"carrera\": \"\",\r\n    \"correo\": \"aajkwdnakd@uniandes.edu.co\",\r\n    \"horarioDeTrabajo\": \"a\",\r\n    \"nombre\": \"David\",\r\n    \"semestre\": 4,\r\n    \"calificaciones\": [],\r\n    \"ofertas\": []\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -423,7 +423,7 @@
 					"script": {
 						"id": "ae310e1e-5391-4d30-acc3-b9b563d9cea3",
 						"exec": [
-							"tests[\"No crea con nombre nulo\"] = responseCode.code === 412;",
+							"tests[\"No crea con horario nulo\"] = responseCode.code === 412;",
 							"tests[\"Mensaje de error correcto\"] = responseBody.has(\"No es un horario válido\");"
 						],
 						"type": "text/javascript"
@@ -442,7 +442,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"calificacionPromedio\": 2.0,\r\n    \"carrera\": \"Sistemas\",\r\n    \"correo\": \"aajkwdnakd@gmail.com\",\r\n    \"horarioDeTrabajo\": \"\",\r\n    \"nombre\": \"David\",\r\n    \"semestre\": 4,\r\n    \"calificaciones\": [],\r\n    \"ofertas\": []\r\n}",
+					"raw": "{\r\n    \"calificacionPromedio\": 2.0,\r\n    \"carrera\": \"Sistemas\",\r\n    \"correo\": \"aajkwdnakd@uniandes.edu.co\",\r\n    \"horarioDeTrabajo\": \"\",\r\n    \"nombre\": \"David\",\r\n    \"semestre\": 4,\r\n    \"calificaciones\": [],\r\n    \"ofertas\": []\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -792,7 +792,7 @@
 						"id": "ae310e1e-5391-4d30-acc3-b9b563d9cea3",
 						"exec": [
 							"tests[\"No borra con id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /estudiante/0 no existe.\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso estudiante0 no existe.\");"
 						],
 						"type": "text/javascript"
 					}
