@@ -39,9 +39,11 @@ public class EstudianteCuentaBancariaLogic {
      */
     public void removeCuentaBancaria(Long estId) {
         EstudianteEntity estudianteEntity = estudiantePersistence.find(estId);
-        CuentaBancariaEntity cuentaBancariaEntity = cuentaBancariaPersistence.find(estudianteEntity.getCuentaBancaria().getId());
-        estudianteEntity.setCuentaBancaria(null);
-        cuentaBancariaEntity.setEstudiante(null);
+        if(estudianteEntity != null && estudianteEntity.getCuentaBancaria() != null) {
+            CuentaBancariaEntity cuentaBancariaEntity = cuentaBancariaPersistence.find(estudianteEntity.getCuentaBancaria().getId());
+            estudianteEntity.setCuentaBancaria(null);
+            cuentaBancariaEntity.setEstudiante(null);
+        }
     }
     
     /**

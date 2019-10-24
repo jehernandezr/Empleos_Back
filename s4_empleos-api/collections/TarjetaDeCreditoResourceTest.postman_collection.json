@@ -16,8 +16,6 @@
 						"exec": [
 							"var data = JSON.parse(responseBody);",
 							"postman.setGlobalVariable(\"new_id_e\", data.id);",
-							"var data1 = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"new_numero_e\", data1.numero);",
 							"tests[\"No genera error en el post\"] = responseCode.code === 200;"
 						],
 						"type": "text/javascript"
@@ -269,7 +267,7 @@
 						"id": "23b03a2c-792d-4e86-8b79-ec9fa9dab225",
 						"exec": [
 							"tests[\"No crea con cvc vacio\"] = responseCode.code === 412;",
-							"tests[\"Mensaje correcto del error\"] = responseBody.has(\"El cvc no debe estar vacío\");"
+							"tests[\"Mensaje correcto del error\"] = responseBody.has(\"El cvc no debe estar vacio\");"
 						],
 						"type": "text/javascript"
 					}
@@ -369,7 +367,7 @@
 						"id": "23b03a2c-792d-4e86-8b79-ec9fa9dab225",
 						"exec": [
 							"tests[\"No crea si no es visa o master\"] = responseCode.code === 412;",
-							"tests[\"Mensaje correcto del error\"] = responseBody.has(\"Ingrese un número valido para una tarjeta MasterCard o VISA\");"
+							"tests[\"Mensaje correcto del error\"] = responseBody.has(\"Ingrese un numero valido para una tarjeta MasterCard o VISA\");"
 						],
 						"type": "text/javascript"
 					}
@@ -419,7 +417,7 @@
 						"id": "23b03a2c-792d-4e86-8b79-ec9fa9dab225",
 						"exec": [
 							"tests[\"No crea con fecha vacia\"] = responseCode.code === 412;",
-							"tests[\"Mensaje correcto del error\"] = responseBody.has(\"La fecha no debe estar vacía\");"
+							"tests[\"Mensaje correcto del error\"] = responseBody.has(\"La fecha no debe estar vacia\");"
 						],
 						"type": "text/javascript"
 					}

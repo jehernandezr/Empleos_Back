@@ -14,13 +14,13 @@ import java.io.Serializable;
  */
 public class EstudianteDTO implements Serializable{
     
-    private Long id;
-     private Long idMedioPago;
+    private long id;
+    private long idMedioDepago;
     private String nombre;
     private String carrera;
     private String correo;
-    private Double calificacionPromedio;
-    private Integer semestre;
+    private double calificacionPromedio;
+    private int semestre;
     private String horarioDeTrabajo;
 
         /**
@@ -39,12 +39,13 @@ public class EstudianteDTO implements Serializable{
     public EstudianteDTO(EstudianteEntity estudianteEntity) {
         if (estudianteEntity != null) {
             this.id = estudianteEntity.getId();
-            this.idMedioPago = estudianteEntity.getIdMedioDepago();
+            this.idMedioDepago = estudianteEntity.getIdMedioDepago();
             this.nombre = estudianteEntity.getNombre();
             this.carrera = estudianteEntity.getCarrera();
             this.calificacionPromedio = estudianteEntity.getCalificacionPromedio();
             this.semestre = estudianteEntity.getSemestre();
             this.horarioDeTrabajo = estudianteEntity.getHorarioDeTrabajo();
+            this.idMedioDepago = estudianteEntity.getIdMedioDepago();
         }
     }
     
@@ -58,22 +59,22 @@ public class EstudianteDTO implements Serializable{
     /**
      * @param id the id to set
      */
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
     
-        /**
-     * @return the id
+    /**
+     * @return the idMedioDepago
      */
-    public Long getIdMedioPago() {
-        return idMedioPago;
+    public Long getIdMedioDepago() {
+        return idMedioDepago;
     }
 
     /**
-     * @param idMedioPago the id to set
+     * @param id the idMedioDepago to set
      */
-    public void setIdMedioPago(Long idMedioPago) {
-        this.id = idMedioPago;
+    public void setIdMedioDepago(long idMedioDepago) {
+        this.idMedioDepago = idMedioDepago;
     }
 
     /**
@@ -128,7 +129,7 @@ public class EstudianteDTO implements Serializable{
     /**
      * @param calificacionPromedio the calificacionPromedio to set
      */
-    public void setCalificacionPromedio(Double calificacionPromedio) {
+    public void setCalificacionPromedio(double calificacionPromedio) {
         this.calificacionPromedio = calificacionPromedio;
     }
 
@@ -142,7 +143,7 @@ public class EstudianteDTO implements Serializable{
     /**
      * @param semestre the semestre to set
      */
-    public void setSemestre(Integer semestre) {
+    public void setSemestre(int semestre) {
         this.semestre = semestre;
     }
 
@@ -169,12 +170,14 @@ public class EstudianteDTO implements Serializable{
     
         EstudianteEntity estudianteEntity = new EstudianteEntity();
         estudianteEntity.setId(this.id);
-        estudianteEntity.setIdMedioDepago(this.idMedioPago);
+        estudianteEntity.setIdMedioDepago(this.idMedioDepago);
         estudianteEntity.setNombre(this.nombre);
         estudianteEntity.setCarrera(this.carrera);
+        estudianteEntity.setCorreo(this.correo);
         estudianteEntity.setCalificacionPromedio(this.calificacionPromedio);
         estudianteEntity.setHorarioDeTrabajo(this.horarioDeTrabajo);
         estudianteEntity.setSemestre(this.semestre);
+        estudianteEntity.setIdMedioDepago(this.idMedioDepago);
         return estudianteEntity;
     }
     

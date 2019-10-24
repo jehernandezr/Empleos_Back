@@ -113,14 +113,7 @@ public class TarjetaDeCreditoLogic {
         catch (Exception e){
             throw e;
         }
-        
-        for (TarjetaDeCreditoEntity tarjetaDeCreditoEntity : persistence.findAll()) {
-            if(tarjetaDeCreditoEntity.getNumero().equals(tarjetaCredito.getNumero()))
-            {
-                throw new BusinessLogicException("La tarjeta de credito ya existe");
-            }
-        }
-        
+                
         if (tarjetaCredito.getNumero() == null ) 
         {
             throw new BusinessLogicException("El número de la tarjeta de crédito no puede ser vacío.");

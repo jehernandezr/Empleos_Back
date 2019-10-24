@@ -56,10 +56,14 @@ public class EstudianteResource {
     @Inject
     private EstudianteCuentaBancariaLogic estudianteCuentaBancariaLogic; 
     
-    @POST
+    /*@POST
     public EstudianteDTO createEstudiante(EstudianteDTO estudiante) throws BusinessLogicException {
         EstudianteDTO e = new EstudianteDTO(estudianteLogic.crearEstudiante(estudiante.toEntity()));
         return e;
+    }*/
+    @POST
+    public EstudianteDTO createEstudiante(EstudianteDTO estudiante) throws BusinessLogicException {
+        return new EstudianteDTO(estudianteLogic.crearEstudiante(estudiante.toEntity()));
     }
     
      /**
@@ -132,11 +136,11 @@ public class EstudianteResource {
     @Path("{estudianteId: \\d+}")
     public void deleteEstudiante(@PathParam("estudianteId") Long estudianteId) throws BusinessLogicException {
         if (estudianteLogic.getEstudiante(estudianteId) == null) {
-            throw new WebApplicationException("El recurso /estudiante/" + estudianteId + " no existe.", 404);
+            throw new WebApplicationException("El recurso estudiante" + estudianteId + " no existe.", 404);
         }
-        estudianteCalificacionesLogic.removeCalificaciones(estudianteId); 
-        estudianteOfertasLogic.removeOfertas(estudianteId);
-        estudianteCuentaBancariaLogic.removeCuentaBancaria(estudianteId); 
+        //estudianteCalificacionesLogic.removeCalificaciones(estudianteId); 
+        //estudianteOfertasLogic.removeOfertas(estudianteId);
+        //estudianteCuentaBancariaLogic.removeCuentaBancaria(estudianteId); 
         estudianteLogic.deleteEstudiante(estudianteId);
     }
     
