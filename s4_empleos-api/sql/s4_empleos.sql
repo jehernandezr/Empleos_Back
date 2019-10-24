@@ -2,3 +2,4 @@ insert into EstudianteEntity (id, nombre, idMedioDepago, carrera, correo, califi
 delete from TarjetaDeCreditoEntity;
 delete from CalificacionEntity;
 delete from FacturaEntity;
+delete from EstudianteEntity;
