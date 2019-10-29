@@ -3,6 +3,7 @@
   <persistence-unit name="empleosPU" transaction-type="JTA">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <!--Toca entity por entity, exclude-unlisted-clases = false no funciona-->
+    
     <class>co.edu.uniandes.csw.empleos.entities.CalificacionEntity</class>
     <class>co.edu.uniandes.csw.empleos.entities.ContratistaEntity</class>
     <class>co.edu.uniandes.csw.empleos.entities.CuentaBancariaEntity</class>

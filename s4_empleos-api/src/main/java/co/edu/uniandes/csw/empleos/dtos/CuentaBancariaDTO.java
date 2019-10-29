@@ -20,7 +20,7 @@ public class CuentaBancariaDTO implements Serializable {
 
     private String nombreBanco;
 
-    private int tipoCuenta;
+    private Integer tipoCuenta;
 
     private EstudianteDTO estudiante;
 
