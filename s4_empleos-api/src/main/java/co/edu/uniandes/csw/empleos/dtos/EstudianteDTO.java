@@ -39,6 +39,7 @@ public class EstudianteDTO implements Serializable{
     public EstudianteDTO(EstudianteEntity estudianteEntity) {
         if (estudianteEntity != null) {
             this.id = estudianteEntity.getId();
+            this.idMedioDepago = estudianteEntity.getIdMedioDepago();
             this.nombre = estudianteEntity.getNombre();
             this.carrera = estudianteEntity.getCarrera();
             this.calificacionPromedio = estudianteEntity.getCalificacionPromedio();
@@ -169,6 +170,7 @@ public class EstudianteDTO implements Serializable{
     
         EstudianteEntity estudianteEntity = new EstudianteEntity();
         estudianteEntity.setId(this.id);
+        estudianteEntity.setIdMedioDepago(this.idMedioDepago);
         estudianteEntity.setNombre(this.nombre);
         estudianteEntity.setCarrera(this.carrera);
         estudianteEntity.setCorreo(this.correo);
