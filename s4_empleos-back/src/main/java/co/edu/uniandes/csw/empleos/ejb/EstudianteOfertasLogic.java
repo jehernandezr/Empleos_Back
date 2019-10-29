@@ -110,9 +110,10 @@ public class EstudianteOfertasLogic {
      */
     public void removeOfertas(Long estudianteId) {
         EstudianteEntity estudianteEntity = estudiantePersistence.find(estudianteId);
-        for(OfertaEntity oferta : estudianteEntity.getOfertas()) {
-            OfertaEntity ofertaEntity = ofertaPersistence.find(oferta.getId());
-            estudianteEntity.getOfertas().remove(ofertaEntity);
-        }
+        if(estudianteEntity != null)
+            for(OfertaEntity oferta : estudianteEntity.getOfertas()) {
+                estudianteEntity.getOfertas().remove(oferta);
+                oferta.getEstudiantes().remove(estudianteEntity);
+            }
     }
 }

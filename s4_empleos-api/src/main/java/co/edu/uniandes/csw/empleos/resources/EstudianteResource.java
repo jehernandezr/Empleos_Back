@@ -56,10 +56,14 @@ public class EstudianteResource {
     @Inject
     private EstudianteCuentaBancariaLogic estudianteCuentaBancariaLogic; 
     
-    @POST
+    /*@POST
     public EstudianteDTO createEstudiante(EstudianteDTO estudiante) throws BusinessLogicException {
         EstudianteDTO e = new EstudianteDTO(estudianteLogic.crearEstudiante(estudiante.toEntity()));
         return e;
+    }*/
+    @POST
+    public EstudianteDTO createEstudiante(EstudianteDTO estudiante) throws BusinessLogicException {
+        return new EstudianteDTO(estudianteLogic.crearEstudiante(estudiante.toEntity()));
     }
     
      /**
@@ -72,11 +76,11 @@ public class EstudianteResource {
      * Error de lógica que se genera cuando no se encuentra el estudiante.
      */
     @GET
-    @Path("{estudianteId: \\d+}")
-    public EstudianteDetailDTO getEstudiante(@PathParam("estudianteId") Long estudianteId) {
+    @Path("{estudiantesId: \\d+}")
+    public EstudianteDetailDTO getEstudiante(@PathParam("estudiantesId") Long estudianteId) {
         EstudianteEntity calEntity = estudianteLogic.getEstudiante(estudianteId);
         if (calEntity == null) {
-            throw new WebApplicationException("El recurso /estudiante/" + estudianteId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /estudiantes/" + estudianteId + " no existe.", 404);
         }
         EstudianteDetailDTO calDTO = new EstudianteDetailDTO(calEntity);
         return calDTO;
@@ -109,11 +113,11 @@ public class EstudianteResource {
      * Error de lógica que se genera cuando no se puede actualizar al estudiante.
      */
     @PUT
-    @Path("{estudianteId: \\d+}")
-    public EstudianteDetailDTO updateEstudiante(@PathParam("estudianteId") Long estudianteId, EstudianteDetailDTO estudiante) throws BusinessLogicException {
+    @Path("{estudiantesId: \\d+}")
+    public EstudianteDetailDTO updateEstudiante(@PathParam("estudiantesId") Long estudianteId, EstudianteDetailDTO estudiante) throws BusinessLogicException {
         estudiante.setId(estudianteId);
         if (estudianteLogic.getEstudiante(estudianteId) == null) {
-            throw new WebApplicationException("El recurso /estudiante/" + estudianteId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /estudiantes/" + estudianteId + " no existe.", 404);
         }
         EstudianteDetailDTO dto = new EstudianteDetailDTO(estudianteLogic.updateEstudiante(estudiante.toEntity()));
         return dto;
@@ -132,11 +136,11 @@ public class EstudianteResource {
     @Path("{estudianteId: \\d+}")
     public void deleteEstudiante(@PathParam("estudianteId") Long estudianteId) throws BusinessLogicException {
         if (estudianteLogic.getEstudiante(estudianteId) == null) {
-            throw new WebApplicationException("El recurso /estudiante/" + estudianteId + " no existe.", 404);
+            throw new WebApplicationException("El recurso estudiante" + estudianteId + " no existe.", 404);
         }
-        estudianteCalificacionesLogic.removeCalificaciones(estudianteId); 
-        estudianteOfertasLogic.removeOfertas(estudianteId);
-        estudianteCuentaBancariaLogic.removeCuentaBancaria(estudianteId); 
+        //estudianteCalificacionesLogic.removeCalificaciones(estudianteId); 
+        //estudianteOfertasLogic.removeOfertas(estudianteId);
+        //estudianteCuentaBancariaLogic.removeCuentaBancaria(estudianteId); 
         estudianteLogic.deleteEstudiante(estudianteId);
     }
     
