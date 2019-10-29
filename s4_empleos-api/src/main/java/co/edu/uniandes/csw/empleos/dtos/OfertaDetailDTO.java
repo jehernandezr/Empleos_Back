@@ -12,6 +12,29 @@ import java.util.List;
 /**
  *
  * @author Estudiante
+ * 
+ * 
+{
+   "tipoOferta": number  ,
+   "numeroDeVacantes":  string ,
+   "pagoPorHora": number   ,
+   "nombre":   string  ,
+   "descripcion":   string  ,
+   "categoria":   string  ,
+   "tiempoMaximoAplicacion":   number  ,
+   "porcentajePagoAdicional":  number  ,
+   "estaAbierta":   boolean    ,
+   "requisitos":  string    ,
+   "horario":  string  ,
+   "horasDeTrabajo":  number ,
+   "rutaImagen": string,
+   "trabajo": {
+   },
+   "estudiantes":{
+   
+    }
+   
+}
  */
 public class OfertaDetailDTO extends OfertaDTO implements Serializable {
     
