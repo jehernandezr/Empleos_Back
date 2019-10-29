@@ -37,7 +37,7 @@ public class ContratistaLogic {
     public ContratistaEntity createContratista(ContratistaEntity contratistaEntity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de creación del contratista");
         validarEmail(contratistaEntity.getEmail());
-        validarContrasena(contratistaEntity.getContrasena());
+        
         if (contratistaEntity.getNombre() == null || contratistaEntity.getNombre().trim().equals("")) {
             throw new BusinessLogicException("El nombre del contratista está vacío");
         }
@@ -98,30 +98,7 @@ public class ContratistaLogic {
     }
     
     
-     /**
-     * Valida la contrasena que llega por parametro.
-     *
-     * @param contrasena contraseña a validar.
-     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
-     */
-    public void validarContrasena(String contrasena) throws BusinessLogicException {
-        boolean valida=true;
-        if(contrasena == null || contrasena.trim().equals("")) {
-            
-            throw new BusinessLogicException("No puede estar vacia la contraseña"); 
-            
-        }
-        if(contrasena.length()<6) {
-            
-            throw new BusinessLogicException("La contraseña es muy corta");    
-        }
-        if(contrasena.length()>12) {
-            
-            throw new BusinessLogicException("La contraseña es muy larga");    
-        }
-        
-         
-    }
+    
     
     /**
      * Actualiza la información de una instancia de Contratista.

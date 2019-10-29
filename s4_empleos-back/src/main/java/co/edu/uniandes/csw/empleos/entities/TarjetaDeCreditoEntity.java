@@ -26,7 +26,7 @@ public class TarjetaDeCreditoEntity extends BaseEntity implements Serializable {
     
 
     @PodamExclude
-    @OneToOne(mappedBy = "tarjetaCredito", fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     private ContratistaEntity contratista;
     
     public TarjetaDeCreditoEntity()

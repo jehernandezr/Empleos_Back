@@ -121,7 +121,6 @@ public class ContratistaLogicTest {
         Assert.assertNotNull(result);
         ContratistaEntity entity = em.find(ContratistaEntity.class, result.getId());
         Assert.assertEquals(newEntity.getId(), entity.getId());
-        Assert.assertEquals(newEntity.getContrasena(), entity.getContrasena());
         Assert.assertEquals(newEntity.getEmail(), entity.getEmail());
         Assert.assertEquals(newEntity.getEsExterno(), entity.getEsExterno());
         Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
@@ -139,26 +138,7 @@ public class ContratistaLogicTest {
          contratistaLogic.createContratista(newEntity);
     }
     
-      /**
-     * Prueba para verificar la generacion de la excepcion al crear un contratista con una contraseña menor a 5 caracteres.
-     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
-     */
-    @Test(expected = BusinessLogicException.class)
-    public void createContratistaContrasenaCortaTest() throws BusinessLogicException {
-        ContratistaEntity newEntity = factory.manufacturePojo(ContratistaEntity.class);
-        newEntity.setContrasena("asd");
-         contratistaLogic.createContratista(newEntity);
-    }
-    /**
-     * Prueba para verificar la generacion de la excepcion al crear un contratista con una contraseña mayor a 5 caracteres.
-     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
-     */
-    @Test(expected = BusinessLogicException.class)
-    public void createContratistaContrasenaLargaTest() throws BusinessLogicException {
-        ContratistaEntity newEntity = factory.manufacturePojo(ContratistaEntity.class);
-        newEntity.setContrasena("asdfghjklzxcvb");
-         contratistaLogic.createContratista(newEntity);
-    }
+    
     /**
      * Prueba para verificar la generacion de la excepcion al crear un contratista con una contraseña mayor a 5 caracteres.
      * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
@@ -197,7 +177,7 @@ public class ContratistaLogicTest {
         Assert.assertNotNull(resultEntity);
         
         Assert.assertEquals(entity.getId(), resultEntity.getId());
-        Assert.assertEquals(entity.getContrasena(), resultEntity.getContrasena());
+       
         Assert.assertEquals(entity.getEmail(), resultEntity.getEmail());
         Assert.assertEquals(entity.getEsExterno(), resultEntity.getEsExterno());
         Assert.assertEquals(entity.getNombre(), resultEntity.getNombre());
@@ -219,7 +199,7 @@ public class ContratistaLogicTest {
         ContratistaEntity resp = em.find(ContratistaEntity.class, entity.getId());
 
         Assert.assertEquals(pojoEntity.getId(), resp.getId());
-        Assert.assertEquals(pojoEntity.getContrasena(), resp.getContrasena());
+       
         Assert.assertEquals(pojoEntity.getEmail(), resp.getEmail());
         Assert.assertEquals(pojoEntity.getEsExterno(), resp.getEsExterno());
         Assert.assertEquals(pojoEntity.getNombre(), resp.getNombre());

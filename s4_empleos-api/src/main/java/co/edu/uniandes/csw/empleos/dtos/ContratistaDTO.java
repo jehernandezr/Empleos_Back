@@ -7,6 +7,8 @@ package co.edu.uniandes.csw.empleos.dtos;
 
 import co.edu.uniandes.csw.empleos.entities.ContratistaEntity;
 import java.io.Serializable;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  *
@@ -35,11 +37,7 @@ public class ContratistaDTO implements Serializable{
     
     
     
-    /**
-     * Variable que representa la contraseña del contratista.
-     */
-    private String contrasena;
-    
+  
      /**
      * Variable que representa la ruta de la imagen del contratista.
      */
@@ -60,7 +58,6 @@ public class ContratistaDTO implements Serializable{
             this.id = contratistaEntity.getId();
             this.nombre = contratistaEntity.getNombre();
             this.email = contratistaEntity.getEmail();
-            this.contrasena = contratistaEntity.getContrasena();
             this.rutaImagen = contratistaEntity.getRutaImagen();
             
         }
@@ -108,20 +105,7 @@ public class ContratistaDTO implements Serializable{
         this.email = email;
     }
 
-    /**
-     * @return the contrasena
-     */
-    public String getContrasena() {
-        return contrasena;
-    }
-
-    /**
-     * @param contrasena the contrasena to set
-     */
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
-    }
-
+    
     /**
      * @return the rutaImagen
      */
@@ -146,7 +130,7 @@ public class ContratistaDTO implements Serializable{
         ContratistaEntity contratistaEntity = new ContratistaEntity();
         contratistaEntity.setId(this.id);
         contratistaEntity.setNombre(this.nombre);
-        contratistaEntity.setContrasena(this.email);
+        contratistaEntity.setEmail(this.email);
         contratistaEntity.setRutaImagen(this.rutaImagen);
         contratistaEntity.setEsExterno(this.esExterno);
         return contratistaEntity;
@@ -164,6 +148,11 @@ public class ContratistaDTO implements Serializable{
      */
     public void setId(Long id) {
         this.id = id;
+    }
+    
+      @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
     
 }

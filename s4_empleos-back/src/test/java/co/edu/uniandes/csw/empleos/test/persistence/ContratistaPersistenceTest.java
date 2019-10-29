@@ -117,7 +117,7 @@ public class ContratistaPersistenceTest {
         Assert.assertEquals(newEntity.getEmail(), entity.getEmail());
         Assert.assertEquals(newEntity.getEsExterno(), entity.getEsExterno());
         Assert.assertEquals(newEntity.getRutaImagen(), entity.getRutaImagen());
-        Assert.assertEquals(newEntity.getContrasena(), entity.getContrasena());
+        
     }
 
     /**
@@ -150,7 +150,7 @@ public class ContratistaPersistenceTest {
         Assert.assertEquals(entity.getEmail(), newEntity.getEmail());
         Assert.assertEquals(entity.getEsExterno(), newEntity.getEsExterno());
         Assert.assertEquals(entity.getRutaImagen(), newEntity.getRutaImagen());
-        Assert.assertEquals(entity.getContrasena(), newEntity.getContrasena());
+        
     }
 
     /**
@@ -183,7 +183,7 @@ public class ContratistaPersistenceTest {
         Assert.assertEquals(newEntity.getEmail(), resp.getEmail());
         Assert.assertEquals(newEntity.getEsExterno(), resp.getEsExterno());
         Assert.assertEquals(newEntity.getRutaImagen(), resp.getRutaImagen());
-        Assert.assertEquals(newEntity.getContrasena(), resp.getContrasena());
+       
     }
 
     
