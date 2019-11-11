@@ -1,4 +1,4 @@
-package co.edu.uniandes.csw.empleos.entities;
+ package co.edu.uniandes.csw.empleos.entities;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;

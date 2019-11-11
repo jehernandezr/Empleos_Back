@@ -51,7 +51,7 @@ public class OfertaLogic {
             throw new BusinessLogicException("las horas de trabajo de la oferta debe ser un numero positivo");
         }
         if (ofertaEntity.getNumeroDeVacantes()< 1) {
-            throw new BusinessLogicException("las horas de trabajo de la oferta debe ser un numero positivo");
+            throw new BusinessLogicException("el numero de vacantes de la oferta debe ser un numero positivo");
         }
          if (ofertaEntity.getPagoPorHora()< 3500) {
             throw new BusinessLogicException("El pago por hora debe ser minimo el SMLV");
@@ -74,6 +74,18 @@ public class OfertaLogic {
     public List<OfertaEntity> getOfertas() {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los ofertas");
         List<OfertaEntity> lista = persistence.findAll();
+        LOGGER.log(Level.INFO, "Termina proceso de consultar todos los ofertas");
+        return lista;
+    }
+    
+    /**
+     * Obtiene la lista de los registros de oferta.
+     *
+     * @return Colección de objetos de OfertaEntity.
+     */
+    public List<OfertaEntity> getOfertasPalabraClave(String palabra) {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los ofertas por palabra: "+palabra);
+        List<OfertaEntity> lista = persistence.findAllPalabra(palabra);
         LOGGER.log(Level.INFO, "Termina proceso de consultar todos los ofertas");
         return lista;
     }

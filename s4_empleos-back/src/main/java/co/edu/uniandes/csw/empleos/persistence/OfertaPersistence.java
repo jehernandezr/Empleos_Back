@@ -67,6 +67,25 @@ public class OfertaPersistence {
         return query.getResultList();
     }
     
+    /**
+     * Devuelve todas las ofertas de la base de datos.
+     *
+     * @return una lista con todas las ofertas que encuentre en la base de
+     * datos.
+     */
+    public List<OfertaEntity> findAllPalabra(String palabra) {
+        LOGGER.log(Level.INFO, "Consultando todas las ofertascon "+palabra);
+        
+        TypedQuery query;
+        query = em.createQuery("select e from OfertaEntity e where e.descripcion like :palabra OR e.nombre like :palabra1 OR e.nombre like :palabra2 OR e.requisitos like :palabra3", OfertaEntity.class);
+        query = query.setParameter("palabra", "%" + palabra + "%");
+        query = query.setParameter("palabra1", "%" + palabra + "%");
+        query = query.setParameter("palabra2", "%" + palabra + "%");
+        query = query.setParameter("palabra3", "%" + palabra + "%");
+        
+        return query.getResultList();
+    }
+    
     
    
     /**

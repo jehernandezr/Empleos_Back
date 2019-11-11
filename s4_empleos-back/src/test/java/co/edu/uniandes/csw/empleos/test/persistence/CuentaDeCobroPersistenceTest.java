@@ -175,17 +175,5 @@ public class CuentaDeCobroPersistenceTest {
         Assert.assertEquals(cn.getValor(), cn2.getValor());
     }
     
-    /**
-     * 
-     */
-    @Test
-    public void deleteCuentaDeCobroEntity()
-    {
-        PodamFactory factory = new PodamFactoryImpl();
-        CuentaDeCobroEntity cuenta= factory.manufacturePojo(CuentaDeCobroEntity.class);
-        CuentaDeCobroEntity cu = persistance.create(cuenta);
-        Long id = cu.getId();
-        persistance.delete(id);
-        Assert.assertNull(persistance.find(id));
-    }
+    
 }
