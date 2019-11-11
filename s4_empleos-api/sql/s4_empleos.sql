@@ -13,5 +13,6 @@ delete from EstudianteEntity;
 
 insert into EstudianteEntity (nombre, idMedioDePago, carrera, correo, calificacionPromedio, horarioDeTrabajo, semestre)
 values ('David', 0, 'Sistemas', 'awdawd@uniandes.edu.co', 2.0, 'a', 4);
->>>>>>> 1e06ed5a16a1eafd8d6236c45eae6ac999dc9f4f
->>>>>>> 3f1dffeb1ab6931b3c5ed5082198886cab915c8a
+
+insert into CALIFICACIONENTITY (ID,COMENTARIO,NOTA,ESTUDIANTE_ID)values (8,'No es tan buena',4,5);
+
