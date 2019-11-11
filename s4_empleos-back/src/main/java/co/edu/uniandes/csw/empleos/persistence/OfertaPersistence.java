@@ -77,8 +77,8 @@ public class OfertaPersistence {
         LOGGER.log(Level.INFO, "Consultando todas las ofertascon "+palabra);
         
         TypedQuery query;
-        query = em.createQuery("select e from OfertaEntity e where e.descripcion like :palabra OR e.nombre like :palabra1 OR e.nombre like :palabra2 OR e.requisitos like :palabra3", OfertaEntity.class);
-        query = query.setParameter("palabra", "%" + palabra + "%");
+        query = em.createQuery("select e from OfertaEntity e where UPPER(e.descripcion) like :palabra OR UPPER(e.nombre) like :palabra1 OR UPPER(e.categoria) like :palabra2 OR UPPER(e.requisitos) like :palabra3", OfertaEntity.class);
+        query = query.setParameter("palabra", "UPPER("+"%" + palabra + "%"+")");
         query = query.setParameter("palabra1", "%" + palabra + "%");
         query = query.setParameter("palabra2", "%" + palabra + "%");
         query = query.setParameter("palabra3", "%" + palabra + "%");

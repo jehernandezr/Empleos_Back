@@ -72,7 +72,7 @@ public class OfertaResource {
     @Path("{palabra}")
     public List<OfertaDetailDTO> getOfertasPalabraClave(@PathParam("palabra") String palabra) {
         
-        return listEntity2DTO(logic.getOfertasPalabraClave(palabra));
+        return listEntity2DTO(logic.getOfertasPalabraClave(palabra.toLowerCase()));
         
     }
     
