@@ -58,6 +58,12 @@ public class TarjetaDeCreditoResource {
         return nuevaTarjetaDTO;
     }
     
+    @GET
+    public List<TarjetaDeCreditoDTO> getTarjetas() {
+        
+        return listEntity2DTO(tarjetaLogic.getTarjetas());
+        
+    }
 
     /**
      * Busca la tarjeta con el id asociado recibido en la URL y lo devuelve.

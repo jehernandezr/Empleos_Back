@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.empleos.ejb;
 import co.edu.uniandes.csw.empleos.entities.TarjetaDeCreditoEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.empleos.persistence.TarjetaDeCreditoPersistence;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -80,6 +81,12 @@ public class TarjetaDeCreditoLogic {
         return tarjetaCredito;
     }
 
+     public List<TarjetaDeCreditoEntity> getTarjetas() {
+        
+        List<TarjetaDeCreditoEntity> lista = persistence.findAll();
+        
+        return lista;
+    }
     /**
      * Obtiene los datos de una instancia de Tarjeta de Credito a partir de su ID.
      *
