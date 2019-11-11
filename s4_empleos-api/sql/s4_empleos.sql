@@ -14,9 +14,3 @@ insert into CuentaDeCobroEntity (numeroCuentaDeCobro,contratista,fecha, valor,no
 values(1,null,null,23,'benito','f');
 insert into EstudianteEntity (nombre, idMedioDePago, carrera, correo, calificacionPromedio, horarioDeTrabajo, semestre)
 values ('David', 0, 'Sistemas', 'awdawd@uniandes.edu.co', 2.0, 'a', 4);
-
-<<<<<<< HEAD
-insert into CALIFICACIONENTITY (ID,COMENTARIO,NOTA,ESTUDIANTE_ID)values (8,'No es tan buena',4,5);
-
-=======
->>>>>>> 82b9b87c619e12086a3da80c4621c0d83a4d6b6f
