@@ -6,10 +6,13 @@
 package co.edu.uniandes.csw.empleos.dtos;
 
 import co.edu.uniandes.csw.empleos.entities.ContratistaEntity;
+import co.edu.uniandes.csw.empleos.entities.CuentaDeCobroEntity;
 import co.edu.uniandes.csw.empleos.entities.OfertaEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  *
@@ -22,7 +25,7 @@ public class ContratistaDetailDTO extends ContratistaDTO implements Serializable
     private TarjetaDeCreditoDTO tarjetaDeCredito;
      
     
-   private CuentaBancariaDTO cuentaDeCobro;
+   private List<CuentaDeCobroDTO> cuentaDeCobro;
      
          
      
@@ -57,9 +60,38 @@ public class ContratistaDetailDTO extends ContratistaDTO implements Serializable
             }
             
             if (contratistaEntity.getCuentaDeCobro() != null){
-               // cuentaDeCobro = new CuentaDeCobro(contratistaEntity.getCuentaDeCobro());
+               cuentaDeCobro = new ArrayList<>();
+                for (CuentaDeCobroEntity entityBook : contratistaEntity.getCuentaDeCobro()) {
+                    cuentaDeCobro.add(new CuentaDeCobroDTO(entityBook));
+                }
             }
         }
+    }
+    
+     /**
+     * Transformar un DTO a un Entity
+     *
+     * @return El DTO de la editorial para transformar a Entity
+     */
+    @Override
+    public ContratistaEntity toEntity() {
+        ContratistaEntity contratistaEntity = super.toEntity();
+        if ( cuentaDeCobro != null) {
+            List<CuentaDeCobroEntity> cuentaDeCobroEntity = new ArrayList<>();
+            for (CuentaDeCobroDTO dtoCuentas :cuentaDeCobro) {
+                cuentaDeCobroEntity.add(dtoCuentas.toEntity());
+            }
+            contratistaEntity.setCuentaDeCobro(cuentaDeCobroEntity);
+        }
+        if (ofertas != null) {
+            List<OfertaEntity> ofertasEntity = new ArrayList<>();
+            for (OfertaDTO dtoOferta : ofertas) {
+                ofertasEntity.add(dtoOferta.toEntity());
+            }
+            contratistaEntity.setOfertas(ofertasEntity);
+        }
+        if (tarjetaDeCredito != null) contratistaEntity.setTarjetaCredito(tarjetaDeCredito.toEntity());
+        return contratistaEntity;
     }
 
     /**
@@ -90,6 +122,24 @@ public class ContratistaDetailDTO extends ContratistaDTO implements Serializable
         this.tarjetaDeCredito = tarjetaDeCredito;
     }
 
+    /**
+     * @return the cuentaDeCobro
+     */
+    public List<CuentaDeCobroDTO> getCuentaDeCobro() {
+        return cuentaDeCobro;
+    }
+
+    /**
+     * @param cuentaDeCobro the cuentaDeCobro to set
+     */
+    public void setCuentaDeCobro(List<CuentaDeCobroDTO> cuentaDeCobro) {
+        this.cuentaDeCobro = cuentaDeCobro;
+    }
+
+     @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    }
    
     
 }

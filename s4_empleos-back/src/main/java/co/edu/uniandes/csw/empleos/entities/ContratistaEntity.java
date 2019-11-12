@@ -34,7 +34,7 @@ public class ContratistaEntity extends BaseEntity {
     private TarjetaDeCreditoEntity tarjetaDeCredito ;
      
      @PodamExclude
-    @OneToOne(mappedBy = "contratista", orphanRemoval = true)
+    @OneToMany(mappedBy = "contratista", orphanRemoval = true)
     private List<CuentaDeCobroEntity> cuentaDeCobro ;
 
 
@@ -60,10 +60,6 @@ public class ContratistaEntity extends BaseEntity {
     
     
     
-    /**
-     * Variable que representa la contraseña del contratista.
-     */
-    private String contrasena;
     
      /**
      * Variable que representa la ruta de la imagen del contratista.
@@ -132,21 +128,7 @@ public class ContratistaEntity extends BaseEntity {
     public void setEmail(String email) {
         this.email = email;
     }
-    /**
-     * Obetener la contraseña del contratista.
-     * @return contraseña del contratista
-     */    
-    public String getContrasena() {
-        return contrasena;
-    }
-
-    /**
-     * Actualiza la contraseña del contratista.
-     * @param contrasena a modificar
-     */
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
-    }
+ 
     
      /**
      * Obtener la ruta de la imagen del contratista.

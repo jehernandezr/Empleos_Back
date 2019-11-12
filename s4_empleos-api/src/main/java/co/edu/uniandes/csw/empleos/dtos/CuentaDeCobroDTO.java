@@ -82,7 +82,7 @@ public class CuentaDeCobroDTO implements Serializable {
     
     //--------------------------------------------------------------------------------------------
     //Getters && Setters
-    //Mira que titulo más cool xd
+    
     //--------------------------------------------------------------------------------------------
     public Long getId() {
         return id;

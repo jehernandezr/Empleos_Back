@@ -61,6 +61,22 @@ public class OfertaResource {
         
     }
     
+    
+     /**
+     * Busca y devuelve todos los autores que existen en la aplicacion.
+     *
+     * @return JSONArray {@link OfertaDetailDTO} - Los autores encontrados en la
+     * aplicación. Si no hay ninguno retorna una lista vacía.
+     */
+    @GET
+    @Path("{palabra}")
+    public List<OfertaDetailDTO> getOfertasPalabraClave(@PathParam("palabra") String palabra) {
+        
+        return listEntity2DTO(logic.getOfertasPalabraClave(palabra.toLowerCase()));
+        
+    }
+    
+    
     /**
      *
      * @param oferta
@@ -69,10 +85,9 @@ public class OfertaResource {
      * @throws BusinessLogicException
      */
     @POST
-    public OfertaDTO crearOferta(OfertaDetailDTO oferta) throws BusinessLogicException {
-        OfertaEntity ofertaEntity = oferta.toEntity();
-        ofertaEntity = logic.createOferta(ofertaEntity);
-        return new OfertaDetailDTO(ofertaEntity);
+    public OfertaDTO crearOferta(OfertaDTO oferta) throws BusinessLogicException {
+        OfertaDTO e = new OfertaDTO(logic.createOferta(oferta.toEntity()));
+        return e;
     }
 
     
