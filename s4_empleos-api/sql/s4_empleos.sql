@@ -7,11 +7,17 @@ delete from EstudianteEntity;
 delete from TarjetaDeCreditoEntity;
 delete from CalificacionEntity;
 delete from FacturaEntity;
+delete from CUENTADECOBROENTITY;
 
 delete from EstudianteEntity;
 
 insert into CuentaDeCobroEntity (numeroCuentaDeCobro,contratista,fecha, valor,nombreEstudiante,concepto)
-values(1,null,null,23,'benito','ff');
+
+values(1,null,null,23,'benito','f');
+insert into CuentaDeCobroEntity (numeroCuentaDeCobro,contratista,fecha, valor,nombreEstudiante,concepto)
+values(2,'Lol',null,23,'Nicolas','SuperF');
 insert into EstudianteEntity (nombre, idMedioDePago, carrera, correo, calificacionPromedio, horarioDeTrabajo, semestre)
-values ('Miuel', 2, 'Diseño', 'aasd@uniandes.edu.co', 4.0, 'b', 6);
+values ('David', 0, 'Sistemas', 'awdawd@uniandes.edu.co', 2.0, 'a', 4);
+insert into EstudianteEntity (nombre, idMedioDePago, carrera, correo, calificacionPromedio, horarioDeTrabajo, semestre)
+values ('Nicolas', 2, 'Sistemas', 'lol@uniandes.edu.co', 5.0, '2:00', 4);
 
