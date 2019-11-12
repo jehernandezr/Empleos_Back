@@ -115,5 +115,6 @@ public class CuentaBancariaPersistence {
         CuentaBancariaEntity entity = em.find(CuentaBancariaEntity.class, id);
         em.remove(entity);
     }
+
     
 }
