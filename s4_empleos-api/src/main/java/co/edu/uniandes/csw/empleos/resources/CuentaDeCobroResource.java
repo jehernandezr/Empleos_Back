@@ -2,6 +2,7 @@ package co.edu.uniandes.csw.empleos.resources;
 
 import co.edu.uniandes.csw.empleos.dtos.CalificacionDTO;
 import co.edu.uniandes.csw.empleos.dtos.CuentaDeCobroDTO;
+import co.edu.uniandes.csw.empleos.dtos.FacturaDTO;
 import co.edu.uniandes.csw.empleos.ejb.CuentaDeCobroLogic;
 import co.edu.uniandes.csw.empleos.entities.CalificacionEntity;
 import co.edu.uniandes.csw.empleos.entities.CuentaDeCobroEntity;
@@ -37,8 +38,9 @@ public class CuentaDeCobroResource {
     private CuentaDeCobroLogic cuentaDeCobroLogic;
     
     @POST
-    public CuentaDeCobroDTO createCuentaDeCobro(CuentaDeCobroDTO cuenta) {
-        return cuenta;
+    public CuentaDeCobroDTO createCuentaDeCobro(CuentaDeCobroDTO cuenta) throws BusinessLogicException {
+        CuentaDeCobroDTO nuevacuentaDTO = new CuentaDeCobroDTO(cuentaDeCobroLogic.createCuentaDeCobro(cuenta.toEntity()));
+        return nuevacuentaDTO;
     }
     
     /**

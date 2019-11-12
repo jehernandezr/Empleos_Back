@@ -6,7 +6,7 @@ import java.util.Date;
 
 /**
  *
- * @author Santiago Tangarife Rincón
+ * @author Jonatan Hernandez
  */
 public class CuentaDeCobroDTO implements Serializable {
 
