@@ -13,108 +13,97 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import uk.co.jemos.podam.common.PodamExclude;
 
-
 /**
- *Clase que representa un contratista para poder ser guardado en la base de datos.
+ * Clase que representa un contratista para poder ser guardado en la base de
+ * datos.
+ *
  * @author je.berdugo10
  */
 @Entity
 public class ContratistaEntity extends BaseEntity {
-    
-    
-   
-    
-         
-     @PodamExclude
+
+    @PodamExclude
     @OneToMany(mappedBy = "contratista")
     private List<OfertaEntity> ofertas = new ArrayList<>();
-     
-     @PodamExclude
+
+    @PodamExclude
     @OneToOne(mappedBy = "contratista", orphanRemoval = true)
-    private TarjetaDeCreditoEntity tarjetaDeCredito ;
-     
-     @PodamExclude
+    private TarjetaDeCreditoEntity tarjetaDeCredito;
+
+    @PodamExclude
     @OneToMany(mappedBy = "contratista", orphanRemoval = true)
-    private List<CuentaDeCobroEntity> cuentaDeCobro ;
+    private List<CuentaDeCobroEntity> cuentaDeCobro;
 
-
-    
-     
-             
-    
     /**
      * Variable que representa si el contratista es externo.
      */
     private boolean esExterno;
-    
+
     /**
      * Variable que representa el nombre del contratista.
      */
- 
     private String nombre;
-    
+
     /**
      * Variable que representa el nombre del contratista.
      */
     private String email;
-    
-    
-    
-    
-     /**
+
+    /**
      * Variable que representa la ruta de la imagen del contratista.
      */
     private String rutaImagen;
 
     @PodamExclude
     @OneToOne(fetch = FetchType.LAZY)
-    private TarjetaDeCreditoEntity tarjetaCredito; 
+    private TarjetaDeCreditoEntity tarjetaCredito;
 
-    
-
-   
     /**
      * Constructor del contratista
      */
-    public ContratistaEntity(){
+    public ContratistaEntity() {
         //Constructor vacío para evitar fallos en compilacion. Se asignan valores a los parámetros a través de los metodos set
     }
-    
-      
-   /**
+
+    /**
      * Devuelve el nombre del contratista.
+     *
      * @return true si el contratista es externo y false si es interno.
      */
-   public String getNombre(){
-       return nombre;
-   }
-   
-   /**
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
      * Actualiza el nombre del contratista.
+     *
      * @param nombre del contratista.
      */
-   public void setNombre(String nombre){
-       this.nombre=nombre;
-   }
-  
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
     /**
      * Devuelve si el contratista es externo.
+     *
      * @return true si el contratista es externo y false si es interno.
      */
-   public boolean getEsExterno(){
-       return esExterno;
-   }
-   
+    public boolean getEsExterno() {
+        return esExterno;
+    }
+
     /**
      * Actualiza el estado del contratista.
+     *
      * @param esExterno true si el contratista es externo y false si es interno.
      */
-   public void setEsExterno(boolean esExterno){
-       this.esExterno=esExterno;
-   }
-   
+    public void setEsExterno(boolean esExterno) {
+        this.esExterno = esExterno;
+    }
+
     /**
      * Obetener el email del contratista.
+     *
      * @return email del contratista
      */
     public String getEmail() {
@@ -123,23 +112,22 @@ public class ContratistaEntity extends BaseEntity {
 
     /**
      * Actualiza el email del contratista.
+     *
      * @param email a modificar
      */
     public void setEmail(String email) {
         this.email = email;
     }
- 
-    
-     /**
+
+    /**
      * Obtener la ruta de la imagen del contratista.
+     *
      * @return ruta de la imagen del contratista
-     */ 
-     public String getRutaImagen() {
+     */
+    public String getRutaImagen() {
         return rutaImagen;
     }
-     
-     
-    
+
     public List<OfertaEntity> getOfertas() {
         return ofertas;
     }
@@ -147,17 +135,16 @@ public class ContratistaEntity extends BaseEntity {
     public void setOfertas(List<OfertaEntity> ofertas) {
         this.ofertas = ofertas;
     }
-   
 
-     /**
+    /**
      * Actualiza la ruta de la imagen del contratista.
+     *
      * @param rutaImagen a modificar
      */
     public void setRutaImagen(String rutaImagen) {
         this.rutaImagen = rutaImagen;
     }
 
-    
     /**
      * @return the cuentaDeCobro
      */
@@ -185,7 +172,5 @@ public class ContratistaEntity extends BaseEntity {
     public void setTarjetaCredito(TarjetaDeCreditoEntity tarjetaCredito) {
         this.tarjetaCredito = tarjetaCredito;
     }
-    
-   
-    
+
 }
