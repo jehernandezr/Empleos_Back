@@ -13,6 +13,8 @@ delete from EstudianteEntity;
 
 insert into CuentaDeCobroEntity (numeroCuentaDeCobro,contratista,fecha, valor,nombreEstudiante,concepto)
 
+insert into ContratistaEntity (contrasena,email,esexterno,nombre,rutaimagen) values ("2","asdas@f.com",2,"tocamela","dsaa")
+
 values(1,null,null,23,'benito','f');
 insert into CuentaDeCobroEntity (numeroCuentaDeCobro,contratista,fecha, valor,nombreEstudiante,concepto)
 values(2,'Lol',null,23,'Nicolas','SuperF');

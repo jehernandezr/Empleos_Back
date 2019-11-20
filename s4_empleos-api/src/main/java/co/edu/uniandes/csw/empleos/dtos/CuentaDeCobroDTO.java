@@ -1,5 +1,4 @@
 package co.edu.uniandes.csw.empleos.dtos;
-
 import co.edu.uniandes.csw.empleos.entities.CuentaDeCobroEntity;
 import java.io.Serializable;
 import java.util.Date;
@@ -40,11 +39,15 @@ public class CuentaDeCobroDTO implements Serializable {
      */
     private String concepto;
 
-
+/**
+ * la asociacion con contratista
+ */
+    private ContratistaDTO contratistaDTO;
+    
     /**
      * Constructor vacio
      */
-    public void CuentaDeCobroDTO()
+    public CuentaDeCobroDTO()
     {
         //Vacio
     }
@@ -59,6 +62,10 @@ public class CuentaDeCobroDTO implements Serializable {
            this.nombreEstudiante = entity.getNombreEstudiante(); 
            this.numeroCuentaDeCobro = entity.getNumeroCuentaDeCobro(); 
            this.valor = entity.getValor(); 
+      if(entity.getContratista()!=null)
+      {
+          contratistaDTO= new ContratistaDTO(entity.getContratista());
+      }
         }
     }
     
@@ -76,6 +83,7 @@ public class CuentaDeCobroDTO implements Serializable {
         cuentaDeCobroEntity.setFecha(this.fecha);
         cuentaDeCobroEntity.setNombreEstudiante(this.nombreEstudiante);
         cuentaDeCobroEntity.setValor(this.valor);
+        cuentaDeCobroEntity.setContratista(this.contratistaDTO.toEntity());
 
         return cuentaDeCobroEntity;
     }
@@ -130,5 +138,19 @@ public class CuentaDeCobroDTO implements Serializable {
 
     public void setConcepto(String concepto) {
         this.concepto = concepto;
+    }
+
+    /**
+     * @return the contratistaDTO
+     */
+    public ContratistaDTO getContratistaDTO() {
+        return contratistaDTO;
+    }
+
+    /**
+     * @param contratistaDTO the contratistaDTO to set
+     */
+    public void setContratistaDTO(ContratistaDTO contratistaDTO) {
+        this.contratistaDTO = contratistaDTO;
     }
 }

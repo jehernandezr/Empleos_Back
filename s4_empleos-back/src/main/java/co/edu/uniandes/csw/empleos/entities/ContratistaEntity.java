@@ -20,11 +20,7 @@ import uk.co.jemos.podam.common.PodamExclude;
  */
 @Entity
 public class ContratistaEntity extends BaseEntity {
-    
-    
-   
-    
-         
+
      @PodamExclude
     @OneToMany(mappedBy = "contratista")
     private List<OfertaEntity> ofertas = new ArrayList<>();
@@ -33,7 +29,7 @@ public class ContratistaEntity extends BaseEntity {
     @OneToOne(mappedBy = "contratista", orphanRemoval = true)
     private TarjetaDeCreditoEntity tarjetaDeCredito ;
      
-     @PodamExclude
+    @PodamExclude
     @OneToOne(mappedBy = "contratista", orphanRemoval = true)
     private List<CuentaDeCobroEntity> cuentaDeCobro ;
 

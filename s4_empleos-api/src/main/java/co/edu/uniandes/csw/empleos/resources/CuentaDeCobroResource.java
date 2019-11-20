@@ -32,7 +32,7 @@ import javax.ws.rs.WebApplicationException;
 @RequestScoped
 public class CuentaDeCobroResource {
    
-    private static final Logger LOGGER =Logger.getLogger(CuentaDeCobroResource.class.getName());
+    
     
     @Inject
     private CuentaDeCobroLogic cuentaDeCobroLogic;
