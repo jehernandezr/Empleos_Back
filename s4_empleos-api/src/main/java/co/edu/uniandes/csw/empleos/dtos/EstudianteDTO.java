@@ -22,6 +22,7 @@ public class EstudianteDTO implements Serializable{
     private double calificacionPromedio;
     private int semestre;
     private String horarioDeTrabajo;
+    private String token;
 
         /**
      * Constructor por defecto
@@ -46,7 +47,16 @@ public class EstudianteDTO implements Serializable{
             this.semestre = estudianteEntity.getSemestre();
             this.horarioDeTrabajo = estudianteEntity.getHorarioDeTrabajo();
             this.idMedioDepago = estudianteEntity.getIdMedioDepago();
+            this.token = null;
         }
+    }
+    
+    public String getToken() {
+        return token;
+    }
+    
+    public void setToken(String id) {
+        this.token = id;
     }
     
     /**
