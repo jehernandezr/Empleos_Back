@@ -7,7 +7,7 @@ package co.edu.uniandes.csw.empleos.entities;
 
 /**
  *
- * @author Estudiante
+ * @author je.hernandezr
  */
 public class CredencialesEntity extends BaseEntity{
     private String correo;

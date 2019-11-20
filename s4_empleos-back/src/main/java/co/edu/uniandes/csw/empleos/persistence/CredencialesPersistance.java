@@ -15,7 +15,7 @@ import javax.persistence.TypedQuery;
 
 /**
  *
- * @author Estudiante
+ * @author je.hernandezr
  */
 public class CredencialesPersistance {
     
