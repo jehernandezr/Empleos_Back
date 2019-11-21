@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.empleos.podam;
 
+import java.util.Random;
 import uk.co.jemos.podam.common.AttributeStrategy;
 
 /**
@@ -19,8 +20,9 @@ public class NumeroTarjetaStrategy implements AttributeStrategy<String>
         String numTarjeta = "";
         for(int i = 0 ; i < 16 ; i++)
         {
-             int numero = (int) (Math.random() * 9);
-             numTarjeta += "" + numero;
+             Random r = new Random();
+             int numero = (r.nextInt(9));
+             numTarjeta += String.format("", numero);
         }
         return numTarjeta;
     }

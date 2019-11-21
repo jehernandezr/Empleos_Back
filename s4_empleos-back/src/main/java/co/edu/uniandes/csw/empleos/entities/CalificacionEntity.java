@@ -5,7 +5,7 @@
  */
 package co.edu.uniandes.csw.empleos.entities;
 
-import javax.persistence.CascadeType;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -58,6 +58,8 @@ public class CalificacionEntity extends BaseEntity{
     public Double getNota() {
         return nota;
     }
+    
+    
 
     /**
      * Metodo que retorna al estudiante correspondiente
@@ -91,6 +93,18 @@ public class CalificacionEntity extends BaseEntity{
      */
     public void setEstudiante(EstudianteEntity e){
         this.estudiante = e;
+    }
+    
+    @Override
+    public boolean equals(Object obj)
+    {
+        return super.equals(obj);
+    }
+    
+    @Override
+    public int hashCode()
+    {
+        return super.hashCode();
     }
     
 }

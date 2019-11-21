@@ -6,6 +6,7 @@ package co.edu.uniandes.csw.empleos.podam;
  * and open the template in the editor.
  */
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.Random;
 import uk.co.jemos.podam.common.AttributeStrategy;
@@ -24,7 +25,7 @@ public class TipoCuentaStrategy implements AttributeStrategy<String> {
         int numero = Math.abs(num.nextInt(7)+4);
         byte[] array = new byte[numero];
         new Random().nextBytes(array);
-        String generatedString = new String(array, Charset.forName("UTF-8"));
+        String generatedString = new String(array, StandardCharsets.UTF_8 );
         
        
         return (generatedString);

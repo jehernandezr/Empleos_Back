@@ -92,7 +92,17 @@ public class TarjetaDeCreditoEntity extends BaseEntity implements Serializable {
         this.contratista = contratista;
     }
    
+    @Override
+    public boolean equals(Object obj)
+    {
+        return super.equals(obj);
+    }
     
+    @Override
+    public int hashCode()
+    {
+        return super.hashCode();
+    }
     
     
 }

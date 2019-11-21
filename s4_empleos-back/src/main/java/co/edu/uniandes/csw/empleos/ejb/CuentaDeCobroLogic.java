@@ -5,12 +5,11 @@
  */
 package co.edu.uniandes.csw.empleos.ejb;
 
-import co.edu.uniandes.csw.empleos.entities.CalificacionEntity;
+
 import co.edu.uniandes.csw.empleos.entities.CuentaDeCobroEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.empleos.persistence.CuentaDeCobroPersistence;
 import java.util.List;
-import java.util.logging.Level;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -25,7 +24,11 @@ public class CuentaDeCobroLogic {
     private CuentaDeCobroPersistence persistence;
 
     public CuentaDeCobroEntity createCuentaDeCobro(CuentaDeCobroEntity cuentaDeCobro) throws BusinessLogicException {
-        if (cuentaDeCobro != null) {
+        
+        if (cuentaDeCobro == null) {
+            throw new BusinessLogicException("La cuenta de cobro es nula.");
+        }
+        else {
             if (cuentaDeCobro.getContratista() == null) {
                 throw new BusinessLogicException("La cuenta de cobro no tiene contratista.");
             }
@@ -44,12 +47,10 @@ public class CuentaDeCobroLogic {
             if (cuentaDeCobro.getValor() <= 0) {
                 throw new BusinessLogicException("La cuenta de cobro no tiene valor o tiene un valor erroneo.");
             } else {
-                CuentaDeCobroEntity cuenta = persistence.create(cuentaDeCobro);
-                return cuenta;
+                
+                return persistence.create(cuentaDeCobro);
             }
-        } else {
-            throw new BusinessLogicException("La cuenta de cobro es nula.");
-        }
+        } 
     }
 
     /**
@@ -59,10 +60,8 @@ public class CuentaDeCobroLogic {
      * @return La cuenta encontrada, null si no la encuentra.
      */
     public CuentaDeCobroEntity getCuenta(Long cuentaId) {
-        CuentaDeCobroEntity cuentaEntity = persistence.find(cuentaId);
-        if (cuentaEntity == null) {
-        }
-        return cuentaEntity;
+        
+        return persistence.find(cuentaId);
     }
 
     /**
@@ -71,8 +70,8 @@ public class CuentaDeCobroLogic {
      * @return Lista de las entidades del tipo calificacion.
      */
     public List<CuentaDeCobroEntity> getCuentasDeCobro() {
-        List<CuentaDeCobroEntity> cuentas = persistence.findAll();
-        return cuentas;
+    
+        return persistence.findAll();
     }
 
     /**
@@ -87,6 +86,9 @@ public class CuentaDeCobroLogic {
     public CuentaDeCobroEntity updateCuentaDeCobro(Long cuentaId, CuentaDeCobroEntity cuentaEntity) throws BusinessLogicException {
 
         if (cuentaEntity != null) {
+            throw new BusinessLogicException("La cuenta de cobro es nula.");
+        }
+        else {
             if (cuentaEntity.getContratista() == null) {
                 throw new BusinessLogicException("La cuenta de cobro no tiene contratista.");
             }
@@ -105,12 +107,10 @@ public class CuentaDeCobroLogic {
             if (cuentaEntity.getValor() <= 0) {
                 throw new BusinessLogicException("La cuenta de cobro no tiene valor o tiene un valor erroneo.");
             } else {
-                CuentaDeCobroEntity cuenta = persistence.update(cuentaEntity);
-                return cuenta;
+                
+                return persistence.update(cuentaEntity);
             }
-        } else {
-            throw new BusinessLogicException("La cuenta de cobro es nula.");
-        }
+        } 
 
     }
 

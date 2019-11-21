@@ -13,6 +13,10 @@ import java.io.Serializable;
  * @author je.hernandezr
  */
 public class CuentaBancariaDTO implements Serializable {
+    
+    private final static String AHORROS = "Ahorros";
+    
+    private final static String CORRIENTE = "Corriente";
 
     private Long id;
 
@@ -38,10 +42,10 @@ public class CuentaBancariaDTO implements Serializable {
             String type = "";
             switch (cuentaBancariaEntity.getTipoCuenta()) {
                 case 2:
-                    type = "Ahorros";
+                    type = AHORROS;
                     break;
                 case 3:
-                    type = "Corriente";
+                    type = CORRIENTE;
                     break;
                 default:
                     type = "gggg";
@@ -110,9 +114,9 @@ public class CuentaBancariaDTO implements Serializable {
 
     public void setTipoCuenta(String pTipoCuenta) {
 
-        if (pTipoCuenta.equalsIgnoreCase("Ahorros")) {
+        if (pTipoCuenta.equalsIgnoreCase(AHORROS)) {
             tipoCuenta = 2;
-        } else if (pTipoCuenta.equalsIgnoreCase("Corriente")) {
+        } else if (pTipoCuenta.equalsIgnoreCase(CORRIENTE)) {
             tipoCuenta = 3;
         } else {
             tipoCuenta = 0;
@@ -127,10 +131,10 @@ public class CuentaBancariaDTO implements Serializable {
         String tipo = "";
         switch (this.getTipoCuenta()) {
             case 2:
-                tipo = "Ahorros";
+                tipo = AHORROS;
                 break;
             case 3:
-                tipo = "Corriente";
+                tipo = CORRIENTE;
                 break;
             default:
                 tipo = "ffff";

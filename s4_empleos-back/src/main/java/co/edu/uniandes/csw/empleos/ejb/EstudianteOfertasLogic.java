@@ -6,7 +6,6 @@ import co.edu.uniandes.csw.empleos.persistence.OfertaPersistence;
 import co.edu.uniandes.csw.empleos.entities.OfertaEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import java.util.List;
-import java.util.logging.Level;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 

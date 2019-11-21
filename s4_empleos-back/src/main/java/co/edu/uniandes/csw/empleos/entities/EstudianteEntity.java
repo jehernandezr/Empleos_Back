@@ -44,7 +44,7 @@ public class EstudianteEntity extends BaseEntity implements Serializable {
 
     @PodamExclude
     @OneToMany(mappedBy = "estudiante")
-    private List<CalificacionEntity> calificaciones = new ArrayList<CalificacionEntity>();
+    private List<CalificacionEntity> calificaciones = new ArrayList<>();
 
 
     // Atributo que representa la cuenta bancaria que tiene el estudiante
@@ -199,4 +199,15 @@ public class EstudianteEntity extends BaseEntity implements Serializable {
         this.cuentaBancaria = cuentaBancaria;
     }
 
+    @Override
+    public boolean equals(Object obj)
+    {
+        return super.equals(obj);
+    }
+    
+    @Override
+    public int hashCode()
+    {
+        return super.hashCode();
+    }
 }

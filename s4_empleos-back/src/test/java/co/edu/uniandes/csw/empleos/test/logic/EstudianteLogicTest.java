@@ -272,7 +272,7 @@ public class EstudianteLogicTest {
             estudianteLogic.updateEstudiante(newEntity);
             Assert.fail("No debería permitir crear un estudiante con un correo diferente a uniandes");
         } catch (BusinessLogicException e) {
-            Assert.assertEquals(e.getMessage(), "El correo no era de uniandes");
+            Assert.assertEquals( "El correo no era de uniandes", e.getMessage() );
         }
 
         newEntity = factory.manufacturePojo(EstudianteEntity.class);
@@ -283,7 +283,7 @@ public class EstudianteLogicTest {
             estudianteLogic.updateEstudiante(newEntity);
             Assert.fail("No debería permitir crear un estudiante con un semestre menor a 1");
         } catch (BusinessLogicException e) {
-            Assert.assertEquals(e.getMessage(), "No es un semestre válido");
+            Assert.assertEquals( "No es un semestre válido", e.getMessage());
         }
 
         newEntity = factory.manufacturePojo(EstudianteEntity.class);
@@ -294,7 +294,7 @@ public class EstudianteLogicTest {
             estudianteLogic.updateEstudiante(newEntity);
             Assert.fail("No debería permitir crear un estudiante con un semestre mayor a 12");
         } catch (BusinessLogicException e) {
-            Assert.assertEquals(e.getMessage(), "No es un semestre válido");
+            Assert.assertEquals("No es un semestre válido", e.getMessage());
         }
 
         newEntity = factory.manufacturePojo(EstudianteEntity.class);
@@ -306,7 +306,7 @@ public class EstudianteLogicTest {
             estudianteLogic.updateEstudiante(newEntity);
             Assert.fail("No debería permitir crear un estudiante con una carrera vacía");
         } catch (BusinessLogicException e) {
-            Assert.assertEquals(e.getMessage(), "No es una carrera válida");
+            Assert.assertEquals( "No es una carrera válida", e.getMessage());
         }
 
         newEntity = factory.manufacturePojo(EstudianteEntity.class);
@@ -318,7 +318,7 @@ public class EstudianteLogicTest {
             estudianteLogic.updateEstudiante(newEntity);
             Assert.fail("No debería permitir crear un estudiante con una calificación promedio menor a 0");
         } catch (BusinessLogicException e) {
-            Assert.assertEquals(e.getMessage(), "No es una calificación válida");
+            Assert.assertEquals("No es una calificación válida", e.getMessage());
         }
 
         newEntity = factory.manufacturePojo(EstudianteEntity.class);
@@ -330,7 +330,7 @@ public class EstudianteLogicTest {
             estudianteLogic.updateEstudiante(newEntity);
             Assert.fail("No debería permitir crear un estudiante con una calificación promedio mayor a 5");
         } catch (BusinessLogicException e) {
-            Assert.assertEquals(e.getMessage(), "No es una calificación válida");
+            Assert.assertEquals("No es una calificación válida", e.getMessage());
         }
 
         newEntity = factory.manufacturePojo(EstudianteEntity.class);
@@ -342,7 +342,7 @@ public class EstudianteLogicTest {
             estudianteLogic.updateEstudiante(newEntity);
             Assert.fail("No debería permitir crear un estudiante con un nombre vacío");
         } catch (BusinessLogicException e) {
-            Assert.assertEquals(e.getMessage(), "No es un nombre válido");
+            Assert.assertEquals("No es un nombre válido", e.getMessage());
         }
 
         newEntity = factory.manufacturePojo(EstudianteEntity.class);
@@ -354,7 +354,7 @@ public class EstudianteLogicTest {
             estudianteLogic.updateEstudiante(newEntity);
             Assert.fail("No debería permitir crear un estudiante con un horario de trabajo vacío");
         } catch (BusinessLogicException e) {
-            Assert.assertEquals(e.getMessage(), "No es un horario válido");
+            Assert.assertEquals("No es un horario válido", e.getMessage());
         }
     }
 }

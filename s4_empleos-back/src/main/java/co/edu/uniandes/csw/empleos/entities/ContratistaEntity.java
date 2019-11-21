@@ -172,5 +172,17 @@ public class ContratistaEntity extends BaseEntity {
     public void setTarjetaCredito(TarjetaDeCreditoEntity tarjetaCredito) {
         this.tarjetaCredito = tarjetaCredito;
     }
+    
+    @Override
+    public boolean equals(Object obj)
+    {
+        return super.equals(obj);
+    }
+    
+    @Override
+    public int hashCode()
+    {
+        return super.hashCode();
+    }
 
 }

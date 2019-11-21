@@ -50,8 +50,8 @@ public class FacturaLogic {
      */
     public List<FacturaEntity> getFacturas()
     {
-       List<FacturaEntity> facturas= persistence.findAll();
-       return facturas;
+       
+       return persistence.findAll();
     }
     
     /**
@@ -61,9 +61,7 @@ public class FacturaLogic {
      */
     public FacturaEntity getFactura(Long facturaId)
     {
-        FacturaEntity facturaEntity = persistence.find(facturaId);
-        
-        return  facturaEntity;
+        return  persistence.find(facturaId);
     }
     
      /**
@@ -86,8 +84,8 @@ public class FacturaLogic {
             throw new BusinessLogicException("La fecha no puede ser una valor nulo");
         }
         
-        FacturaEntity newEntity = persistence.update(facturaEntity);
-        return newEntity;
+
+        return persistence.update(facturaEntity);
     }
     
     /**

@@ -95,4 +95,15 @@ public class FacturaEntity extends BaseEntity{
         this.trabajo = trabajo;
     }
       
+    @Override
+    public boolean equals(Object obj)
+    {
+        return super.equals(obj);
+    }
+    
+    @Override
+    public int hashCode()
+    {
+        return super.hashCode();
+    }
 }

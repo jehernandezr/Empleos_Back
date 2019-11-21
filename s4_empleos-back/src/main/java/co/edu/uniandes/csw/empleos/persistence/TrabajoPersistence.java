@@ -55,11 +55,11 @@ public class TrabajoPersistence {
     
      public void delete(Long id) {
         LOGGER.log(Level.INFO, "Se eliminar\u00e1 el trabajo {0}", id); 
-        //TrabajoEntity e = read(id);
+        
         TrabajoEntity e = em.find(TrabajoEntity.class, id);
         em.remove(e);
         LOGGER.log(Level.INFO, "Se eliminó el trabajo {0}", id); 
-        //return e;
+        
     }
      
      public List<TrabajoEntity> findAll() {

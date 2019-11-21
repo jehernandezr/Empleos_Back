@@ -118,7 +118,7 @@ public class OfertaEntity extends BaseEntity{
      * Constructor de la oferta
      */
     public OfertaEntity(){
-        
+        //Constructor vacio.
     }
     
     /**
@@ -361,8 +361,19 @@ public class OfertaEntity extends BaseEntity{
      * @param estudiantes the estudiantes to set
      */
     public void setEstudiantes(List<EstudianteEntity> estudiantes) {
-        this.estudiantes = (ArrayList<EstudianteEntity>) estudiantes;
+        this.estudiantes = estudiantes;
     }
     
+    @Override
+    public boolean equals(Object obj)
+    {
+        return super.equals(obj);
+    }
+    
+    @Override
+    public int hashCode()
+    {
+        return super.hashCode();
+    }
     
 }

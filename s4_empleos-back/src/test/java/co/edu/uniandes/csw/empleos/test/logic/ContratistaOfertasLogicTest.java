@@ -185,7 +185,7 @@ public class ContratistaOfertasLogicTest {
     public void replaceOfertasTest() throws BusinessLogicException {
         ContratistaEntity entity = data.get(0);
         List<OfertaEntity> list = ofertasData.subList(1, 3);
-        contratistaOfertasLogic.replaceOfertas(entity.getId(), list);
+        contratistaOfertasLogic.replaceOfertas(entity.getId());
 
         entity = contratistaLogic.getContratista(entity.getId());
         

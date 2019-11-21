@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package co.edu.uniandes.csw.empleos.ejb;
-import co.edu.uniandes.csw.empleos.entities.CalificacionEntity;
 import co.edu.uniandes.csw.empleos.entities.TrabajoEntity;
 import co.edu.uniandes.csw.empleos.persistence.TrabajoPersistence;
 import java.util.List;

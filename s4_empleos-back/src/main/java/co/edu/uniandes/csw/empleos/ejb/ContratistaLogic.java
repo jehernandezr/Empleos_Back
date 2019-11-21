@@ -91,7 +91,6 @@ public class ContratistaLogic {
             InternetAddress emailAddr = new InternetAddress(email);
             emailAddr.validate();
         } catch (AddressException ex) {
-            result = false;
              throw new BusinessLogicException("El correo no es valido ");
         }
         return result;

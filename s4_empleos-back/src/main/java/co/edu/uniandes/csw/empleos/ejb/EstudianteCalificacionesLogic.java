@@ -11,7 +11,6 @@ import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.empleos.persistence.CalificacionPersistence;
 import co.edu.uniandes.csw.empleos.persistence.EstudiantePersistence;
 import java.util.List;
-import java.util.logging.Level;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 

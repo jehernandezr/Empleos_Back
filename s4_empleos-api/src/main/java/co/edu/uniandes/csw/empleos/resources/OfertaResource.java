@@ -15,7 +15,7 @@ import co.edu.uniandes.csw.empleos.entities.OfertaEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
@@ -39,12 +39,15 @@ import javax.ws.rs.WebApplicationException;
 @RequestScoped
 public class OfertaResource {
     
+    private final static String NO_EXISTE = " no existe.";
+    private final static String RECURSO = "El recurso /oferta/";
+    
    @Inject
     private OfertaLogic logic;
    
    @Inject
    private OfertaEstudianteLogic estudianteOfertasLogic;
-     private static final Logger LOGGER = Logger.getLogger(OfertaResource.class.getName());
+     
      
     
 
@@ -86,8 +89,8 @@ public class OfertaResource {
      */
     @POST
     public OfertaDTO crearOferta(OfertaDTO oferta) throws BusinessLogicException {
-        OfertaDTO e = new OfertaDTO(logic.createOferta(oferta.toEntity()));
-        return e;
+        
+        return new OfertaDTO(logic.createOferta(oferta.toEntity()));
     }
 
     
@@ -103,11 +106,11 @@ public class OfertaResource {
 
         OfertaEntity ofertaEntity = logic.getOferta(idOferta);
         if (ofertaEntity == null) {
-            throw new WebApplicationException("El recurso /oferta/" + idOferta + " no existe.", 404);
+            throw new WebApplicationException(RECURSO + idOferta + NO_EXISTE, 404);
         }
 
-        OfertaDetailDTO cuentaDTO = new OfertaDetailDTO(ofertaEntity);
-        return cuentaDTO;
+        
+        return new OfertaDetailDTO(ofertaEntity);
     
     }
     
@@ -129,7 +132,7 @@ public class OfertaResource {
     @Path("{ofertaId: \\d+}/estudiantes")
     public Class<EstudiantesOfertaResource> getEstudiantesOfertaResource(@PathParam("ofertaId") Long editorialsId) {
         if (estudianteOfertasLogic.getEstudiantes(editorialsId) == null) {
-            throw new WebApplicationException("El recurso /editorials/" + editorialsId + " no existe.", 404);
+            throw new WebApplicationException(RECURSO + editorialsId + NO_EXISTE, 404);
         }
         return EstudiantesOfertaResource.class;
     }
@@ -155,10 +158,10 @@ public class OfertaResource {
     public OfertaDetailDTO updateOferta(@PathParam("id") Long ofertaId, OfertaDetailDTO oferta) throws BusinessLogicException {
         oferta.setId(ofertaId);
         if (logic.getOferta(ofertaId) == null) {
-            throw new WebApplicationException("El recurso /oferta/" + ofertaId + " no existe.", 404);
+            throw new WebApplicationException(RECURSO + ofertaId + NO_EXISTE, 404);
         }
-        OfertaDetailDTO dto = new OfertaDetailDTO(logic.updateOferta(ofertaId,oferta.toEntity()));
-        return dto;
+        
+        return new OfertaDetailDTO(logic.updateOferta(ofertaId,oferta.toEntity()));
     }
     
      /**
@@ -174,7 +177,7 @@ public class OfertaResource {
     @Path("{ofertaId: \\d+}")
     public void deleteOferta(@PathParam("ofertaId") Long ofertaId) throws BusinessLogicException {
         if (logic.getOferta(ofertaId) == null) {
-            throw new WebApplicationException("El recurso /oferta/" + ofertaId + " no existe.", 404);
+            throw new WebApplicationException(RECURSO + ofertaId + NO_EXISTE, 404);
         }
          
         logic.deleteOferta(ofertaId);

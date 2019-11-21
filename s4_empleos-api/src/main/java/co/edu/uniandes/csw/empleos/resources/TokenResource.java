@@ -31,14 +31,17 @@ import javax.ws.rs.WebApplicationException;
 @RequestScoped
 public class TokenResource {
     
+    private final static String NO_EXISTE = " no existe.";
+    private final static String RECURSO = "El recurso /tokens/";
+    
        @Inject
     private TokenLogic tokenLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias. 
   
     
     @POST
     public TokenDTO createToken(TokenDTO token) throws BusinessLogicException {
-        TokenDTO nuevaCalificacionDTO = new TokenDTO(tokenLogic.createToken(token.toEntity()));
-        return nuevaCalificacionDTO;
+       
+        return new TokenDTO(tokenLogic.createToken(token.toEntity()));
     }
     
     
@@ -56,10 +59,10 @@ public class TokenResource {
     public TokenDTO getToken(@PathParam("tokensId") Long tokenId) {
         TokenEntity calEntity = tokenLogic.getToken(tokenId);
         if (calEntity == null) {
-            throw new WebApplicationException("El recurso /tokens/" + tokenId + " no existe.", 404);
+            throw new WebApplicationException(RECURSO + tokenId + NO_EXISTE, 404);
         }
-        TokenDTO calDTO = new TokenDTO(calEntity);
-        return calDTO;
+       
+        return new TokenDTO(calEntity);
     }
     
         /**
@@ -70,8 +73,8 @@ public class TokenResource {
      */
     @GET
     public List<TokenDTO> getCalificaciones() {
-        List<TokenDTO> listaCalificaciones = listEntity2DTO(tokenLogic.getTokens());
-        return listaCalificaciones;
+        
+        return listEntity2DTO(tokenLogic.getTokens());
     }
     
      /**
@@ -93,11 +96,10 @@ public class TokenResource {
     public TokenDTO updateToken(@PathParam("tokensId") Long tkoId, TokenDTO tok) throws BusinessLogicException {
         tok.setId(tkoId);
         if (tokenLogic.getToken(tkoId) == null) {
-            throw new WebApplicationException("El recurso /tokens/" + tkoId + " no existe.", 404);
+            throw new WebApplicationException(RECURSO + tkoId + NO_EXISTE, 404);
         }
-        TokenDTO dTO;
-           dTO = new TokenDTO(tokenLogic.updateToken(tkoId, tok.toEntity()));
-        return dTO;
+        
+        return new TokenDTO(tokenLogic.updateToken(tkoId, tok.toEntity()));
     }
     
            /**

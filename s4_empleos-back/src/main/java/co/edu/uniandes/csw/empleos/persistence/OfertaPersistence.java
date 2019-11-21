@@ -74,7 +74,7 @@ public class OfertaPersistence {
      * datos.
      */
     public List<OfertaEntity> findAllPalabra(String palabra) {
-        LOGGER.log(Level.INFO, "Consultando todas las ofertascon "+palabra);
+        LOGGER.log(Level.INFO, "Consultando todas las ofertas con {0}",palabra);
         
         TypedQuery query;
         query = em.createQuery("select e from OfertaEntity e where e.descripcion like :palabra OR e.nombre like :palabra1 OR e.categoria like :palabra2 OR e.requisitos like :palabra3", OfertaEntity.class);
