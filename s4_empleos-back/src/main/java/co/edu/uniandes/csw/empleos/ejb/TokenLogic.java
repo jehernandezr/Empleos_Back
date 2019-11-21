@@ -19,6 +19,9 @@ import javax.inject.Inject;
 @Stateless
 public class TokenLogic {
     
+    private static final String VACIO = "El campo no puede ser vacìo";
+    private static final String NULO = "El campo no puede ser nulo";
+    
      @Inject
     private TokenPersistence persistence;
     
@@ -32,24 +35,24 @@ public class TokenLogic {
        if(token!=null){
            
            if(token.getTipo()==null){
-            throw new BusinessLogicException("El campo no puede ser nulo");
+            throw new BusinessLogicException(NULO);
         }
         if(token.getToken()==null){
-            throw new BusinessLogicException("El campo no puede ser nulo");
+            throw new BusinessLogicException(NULO);
         
         }
         if(token.getTipo().equals("")){
-            throw new BusinessLogicException("El campo no puede ser vacìo");
+            throw new BusinessLogicException(VACIO);
         }
         if(token.getToken().equals("")){
-            throw new BusinessLogicException("El campo no puede ser vacìo");
+            throw new BusinessLogicException(VACIO);
         }
         
-                token = persistence.create(token);
+               
 
        }
        
-        return token;
+        return persistence.create(token);
     }
     
         /**
@@ -58,8 +61,8 @@ public class TokenLogic {
      */
     public List<TokenEntity> getTokens()
     {
-       List<TokenEntity> token= persistence.findAll();
-       return token;
+       
+       return persistence.findAll();
     }
     
         /**
@@ -69,9 +72,9 @@ public class TokenLogic {
      */
     public TokenEntity getToken(Long tokenId)
     {
-        TokenEntity tokenEntity = persistence.find(tokenId);
         
-        return  tokenEntity;
+        
+        return  persistence.find(tokenId);
     }
     
          /**
@@ -85,22 +88,22 @@ public class TokenLogic {
     public TokenEntity updateToken(Long tokenId, TokenEntity tokenEntity)throws BusinessLogicException {
         
          if(tokenEntity.getTipo()==null){
-            throw new BusinessLogicException("El campo no puede ser nulo");
+            throw new BusinessLogicException(NULO);
         }
         if(tokenEntity.getToken()==null){
-            throw new BusinessLogicException("El campo no puede ser nulo");
+            throw new BusinessLogicException(NULO);
         
         }
         if(tokenEntity.getTipo().equals("")){
-            throw new BusinessLogicException("El campo no puede ser vacìo");
+            throw new BusinessLogicException(VACIO);
         }
         if(tokenEntity.getToken().equals("")){
-            throw new BusinessLogicException("El campo no puede ser vacìo");
+            throw new BusinessLogicException(VACIO);
         }
         
         
-        TokenEntity newEntity = persistence.update(tokenEntity);
-        return newEntity;
+        
+        return persistence.update(tokenEntity);
     }
      
 }

@@ -22,6 +22,8 @@ public class CredencialesLogic {
     
      @Inject
     private CredencialesPersistence persistence;
+     
+     private static final String VACIO = "El campo no puede ser vacìo";
     
        /**
      * Guarda una token
@@ -40,10 +42,10 @@ public class CredencialesLogic {
         
         }
         if(credencial.getTipo().equals("")){
-            throw new BusinessLogicException("El campo no puede ser vacìo");
+            throw new BusinessLogicException(VACIO);
         }
         if(credencial.getCorreo().equals("")){
-            throw new BusinessLogicException("El campo no puede ser vacìo");
+            throw new BusinessLogicException(VACIO);
         }
         
                 credencial = persistence.create(credencial);
@@ -59,8 +61,8 @@ public class CredencialesLogic {
      */
     public List<CredencialesEntity> getCredenciales()
     {
-       List<CredencialesEntity> token= persistence.findAll();
-       return token;
+        
+       return persistence.findAll();
     }
     
         /**
@@ -70,9 +72,9 @@ public class CredencialesLogic {
      */
     public CredencialesEntity getCredencial(Long tokenId)
     {
-        CredencialesEntity credencialEntity = persistence.find(tokenId);
         
-        return  credencialEntity;
+        
+        return  persistence.find(tokenId);
     }
     
          /**
@@ -87,14 +89,14 @@ public class CredencialesLogic {
         
         
         if(credencialEntity.getTipo().equals("")){
-            throw new BusinessLogicException("El campo no puede ser vacìo");
+            throw new BusinessLogicException(VACIO);
         }
         if(credencialEntity.getCorreo().equals("")){
-            throw new BusinessLogicException("El campo no puede ser vacìo");
+            throw new BusinessLogicException(VACIO);
         }
         
-        CredencialesEntity newEntity = persistence.update(credencialEntity);
-        return newEntity;
+         
+        return persistence.update(credencialEntity);
     }
      
 }

@@ -39,8 +39,8 @@ import javax.ws.rs.WebApplicationException;
 @RequestScoped
 public class OfertaResource {
     
-    private final static String NO_EXISTE = " no existe.";
-    private final static String RECURSO = "El recurso /oferta/";
+    private static final String NO_EXISTE = " no existe.";
+    private static final String RECURSO = "El recurso /oferta/";
     
    @Inject
     private OfertaLogic logic;

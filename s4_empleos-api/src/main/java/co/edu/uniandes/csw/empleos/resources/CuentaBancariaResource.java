@@ -23,8 +23,8 @@ import javax.ws.rs.*;
 @RequestScoped
 public class CuentaBancariaResource {
 
-    private final static String NO_EXISTE = " no existe.";
-    private final static String RECURSO = "El recurso /cuentaBancaria/";
+    private static final  String NO_EXISTE = " no existe.";
+    private static final  String RECURSO = "El recurso /cuentaBancaria/";
     
     @Inject
     private CuentaBancariaLogic logic;
@@ -101,9 +101,7 @@ public class CuentaBancariaResource {
     public void deleteCuenta(@PathParam("cuentaId") Long cuentaId) throws BusinessLogicException {
 
         try {
-            CuentaBancariaEntity cuentaEntity = logic.getCuentaBancaria(cuentaId);
-
-            
+           logic.getCuentaBancaria(cuentaId);
 
         } catch (BusinessLogicException e) {
             throw new WebApplicationException(RECURSO + cuentaId + NO_EXISTE, 404);

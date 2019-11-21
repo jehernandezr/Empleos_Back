@@ -37,8 +37,8 @@ import javax.ws.rs.WebApplicationException;
 @RequestScoped
 public class ContratistaResource {
     
-    private final static String NO_EXISTE = " no existe.";
-    private final static String RECURSO = "El recurso /contratista/";
+    private static final  String NO_EXISTE = " no existe.";
+    private static final  String RECURSO = "El recurso /contratista/";
     // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
     @Inject
     private ContratistaLogic contratistaLogic; 

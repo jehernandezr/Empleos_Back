@@ -32,19 +32,19 @@ public class CuentaDeCobroLogic {
             if (cuentaDeCobro.getContratista() == null) {
                 throw new BusinessLogicException("La cuenta de cobro no tiene contratista.");
             }
-            if (cuentaDeCobro.getConcepto() == null || cuentaDeCobro.getConcepto().equals("")) {
+            else if (cuentaDeCobro.getConcepto() == null || cuentaDeCobro.getConcepto().equals("")) {
                 throw new BusinessLogicException("La cuenta de cobro no tiene concepto.");
             }
-            if (cuentaDeCobro.getFecha() == null) {
+            else if (cuentaDeCobro.getFecha() == null) {
                 throw new BusinessLogicException("La cuenta de cobro no tiene fecha.");
             }
-            if (cuentaDeCobro.getNombreEstudiante() == null || cuentaDeCobro.getNombreEstudiante().equals("")) {
+            else if (cuentaDeCobro.getNombreEstudiante() == null || cuentaDeCobro.getNombreEstudiante().equals("")) {
                 throw new BusinessLogicException("La cuenta de cobro no tiene la información del estudiante.");
             }
-            if (cuentaDeCobro.getNumeroCuentaDeCobro() <= 0) {
+            else if (cuentaDeCobro.getNumeroCuentaDeCobro() <= 0) {
                 throw new BusinessLogicException("La cuenta de cobro no tiene número o tiene un número erroneo.");
             }
-            if (cuentaDeCobro.getValor() <= 0) {
+            else if (cuentaDeCobro.getValor() <= 0) {
                 throw new BusinessLogicException("La cuenta de cobro no tiene valor o tiene un valor erroneo.");
             } else {
                 
@@ -92,19 +92,19 @@ public class CuentaDeCobroLogic {
             if (cuentaEntity.getContratista() == null) {
                 throw new BusinessLogicException("La cuenta de cobro no tiene contratista.");
             }
-            if (cuentaEntity.getNumeroCuentaDeCobro() <= 0) {
+            else if (cuentaEntity.getNumeroCuentaDeCobro() <= 0) {
                 throw new BusinessLogicException("La cuenta de cobro no tiene número o tiene un número erroneo.");
             }
-            if (cuentaEntity.getFecha() == null) {
+            else if (cuentaEntity.getFecha() == null) {
                 throw new BusinessLogicException("La cuenta de cobro no tiene fecha.");
             }
-            if (cuentaEntity.getConcepto() == null || cuentaEntity.getConcepto().equals("")) {
+            else if (cuentaEntity.getConcepto() == null || cuentaEntity.getConcepto().equals("")) {
                 throw new BusinessLogicException("La cuenta de cobro no tiene concepto.");
             }
-            if (cuentaEntity.getNombreEstudiante() == null || cuentaEntity.getNombreEstudiante().equals("")) {
+            else if (cuentaEntity.getNombreEstudiante() == null || cuentaEntity.getNombreEstudiante().equals("")) {
                 throw new BusinessLogicException("La cuenta de cobro no tiene la información del estudiante.");
             }
-            if (cuentaEntity.getValor() <= 0) {
+            else if (cuentaEntity.getValor() <= 0) {
                 throw new BusinessLogicException("La cuenta de cobro no tiene valor o tiene un valor erroneo.");
             } else {
                 

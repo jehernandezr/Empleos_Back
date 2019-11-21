@@ -31,8 +31,8 @@ import javax.ws.rs.WebApplicationException;
 @RequestScoped
 public class TokenResource {
     
-    private final static String NO_EXISTE = " no existe.";
-    private final static String RECURSO = "El recurso /tokens/";
+    private static final String NO_EXISTE = " no existe.";
+    private static final String RECURSO = "El recurso /tokens/";
     
        @Inject
     private TokenLogic tokenLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias. 

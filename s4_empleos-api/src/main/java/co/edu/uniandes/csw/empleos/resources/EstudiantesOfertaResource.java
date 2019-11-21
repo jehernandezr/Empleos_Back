@@ -36,8 +36,8 @@ import javax.ws.rs.core.MediaType;
 @Produces(MediaType.APPLICATION_JSON)
 class EstudiantesOfertaResource {
     
-    private final static String NO_EXISTE = " no existe.";
-    private final static String RECURSO = "El recurso /estudiantes/";
+    private static final  String NO_EXISTE = " no existe.";
+    private static final  String RECURSO = "El recurso /estudiantes/";
     
     private static final Logger LOGGER = Logger.getLogger(EstudiantesOfertaResource.class.getName());
 

@@ -14,9 +14,9 @@ import java.io.Serializable;
  */
 public class CuentaBancariaDTO implements Serializable {
     
-    private final static String AHORROS = "Ahorros";
+    private static final String AHORROS = "Ahorros";
     
-    private final static String CORRIENTE = "Corriente";
+    private static final String CORRIENTE = "Corriente";
 
     private Long id;
 

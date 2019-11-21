@@ -35,8 +35,8 @@ import javax.ws.rs.WebApplicationException;
 
 public class TarjetaDeCreditoResource {
     
-    private final static String NO_EXISTE = " no existe.";
-    private final static String RECURSO = "El recurso /tarjetas/";
+    private static final String NO_EXISTE = " no existe.";
+    private static final String RECURSO = "El recurso /tarjetas/";
 
     @Inject
     private TarjetaDeCreditoLogic tarjetaLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.

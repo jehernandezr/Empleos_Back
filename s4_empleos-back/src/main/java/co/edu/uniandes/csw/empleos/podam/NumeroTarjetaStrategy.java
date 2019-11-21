@@ -22,7 +22,7 @@ public class NumeroTarjetaStrategy implements AttributeStrategy<String>
         {
              Random r = new Random();
              int numero = (r.nextInt(9));
-             numTarjeta += String.format("", numero);
+             numTarjeta += String.format("%d", numero);
         }
         return numTarjeta;
     }
