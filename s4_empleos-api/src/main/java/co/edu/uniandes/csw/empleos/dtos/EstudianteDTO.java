@@ -20,7 +20,7 @@ public class EstudianteDTO implements Serializable{
     private String carrera;
     private String correo;
     private double calificacionPromedio;
-    private int semestre;
+    private Integer semestre;
     private String horarioDeTrabajo;
     private String token;
 

@@ -85,8 +85,9 @@ public class CuentaDeCobroLogic {
      */
     public CuentaDeCobroEntity updateCuentaDeCobro(Long cuentaId, CuentaDeCobroEntity cuentaEntity) throws BusinessLogicException {
 
-        if (cuentaEntity != null) {
-            throw new BusinessLogicException("La cuenta de cobro es nula.");
+        if (cuentaEntity == null) 
+        {
+            throw new BusinessLogicException("La cuenta de cobro es nula por lo que no se puede actualizar.");
         }
         else {
             if (cuentaEntity.getContratista() == null) {
