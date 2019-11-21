@@ -5,30 +5,33 @@
  */
 package co.edu.uniandes.csw.empleos.tests.postman;
 
-import co.edu.uniandes.csw.empleos.dtos.EstudianteDTO;
-import co.edu.uniandes.csw.empleos.dtos.FacturaDTO;
+
+import co.edu.uniandes.csw.empleos.dtos.CuentaDeCobroDTO;
 import co.edu.uniandes.csw.empleos.mappers.BusinessLogicExceptionMapper;
-import co.edu.uniandes.csw.empleos.resources.EstudianteResource;
-import co.edu.uniandes.csw.empleos.resources.FacturaResource;
+
+import co.edu.uniandes.csw.empleos.resources.CuentaDeCobroResource;
 import co.edu.uniandes.csw.empleos.resources.RestConfig;
 import co.edu.uniandes.csw.postman.tests.PostmanTestBuilder;
 import java.io.File;
 import java.io.IOException;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
+import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  *
- * @author David Dominguez
+ * @author je.hernandezr
  */
-public class EstudianteIT {
-    
-     private static final String COLLECTION = "EstudianteResourceTest.postman_collection";
+@RunWith(Arquillian.class)
+public class CuentaDeCobroIT {
+
+    private static final String COLLECTION = "CuentaDeCobroResourceTest.postman_collection";
     
      @Deployment(testable = true)
     public static WebArchive createDeployment() {
@@ -38,8 +41,8 @@ public class EstudianteIT {
                         .importRuntimeDependencies().resolve()
                         .withTransitivity().asFile())
                 // Se agregan los compilados de los paquetes de servicios
-                .addPackage(EstudianteResource.class.getPackage()) //No importa cual recurso usar, lo importante es agregar el paquet
-                .addPackage(EstudianteDTO.class.getPackage()) //No importa cual dto usar, lo importante es agregar el paquete.
+                .addPackage(CuentaDeCobroResource.class.getPackage()) //No importa cual recurso usar, lo importante es agregar el paquet
+                .addPackage(CuentaDeCobroDTO.class.getPackage()) //No importa cual dto usar, lo importante es agregar el paquete.
                 .addPackage(BusinessLogicExceptionMapper.class.getPackage())
                 // El archivo que contiene la configuracion a la base de datos.
                 .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
@@ -64,4 +67,7 @@ public class EstudianteIT {
 
         Assert.assertEquals("Error en Assertions de: " + COLLECTION, desiredResult, tp.getAssertions_failed());
     }
+    
 }
+
+

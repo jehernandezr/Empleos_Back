@@ -22,7 +22,7 @@ public class ContratistaDetailDTO extends ContratistaDTO implements Serializable
     private TarjetaDeCreditoDTO tarjetaDeCredito;
      
     
-   private CuentaBancariaDTO cuentaDeCobro;
+   private CuentaDeCobroDTO cuentaDeCobro;
      
          
      
@@ -88,6 +88,20 @@ public class ContratistaDetailDTO extends ContratistaDTO implements Serializable
      */
     public void setTarjetaDeCredito(TarjetaDeCreditoDTO tarjetaDeCredito) {
         this.tarjetaDeCredito = tarjetaDeCredito;
+    }
+
+    /**
+     * @return the cuentaDeCobro
+     */
+    public CuentaDeCobroDTO getCuentaDeCobro() {
+        return cuentaDeCobro;
+    }
+
+    /**
+     * @param cuentaDeCobro the cuentaDeCobro to set
+     */
+    public void setCuentaDeCobro(CuentaDeCobroDTO cuentaDeCobro) {
+        this.cuentaDeCobro = cuentaDeCobro;
     }
 
    

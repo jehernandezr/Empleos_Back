@@ -17,6 +17,7 @@ public class FacturaDTO implements Serializable{
     private Long id;
     private Date fecha;
     private Integer valor;
+    private String token;
 
     public FacturaDTO()
     {
@@ -34,6 +35,7 @@ public class FacturaDTO implements Serializable{
             this.id = facturaEntity.getId();
             this.fecha = facturaEntity.getFecha();
             this.valor = facturaEntity.getValor();
+            this.token = null;
        }
     }
     
@@ -54,6 +56,14 @@ public class FacturaDTO implements Serializable{
         
         return facturaEntity;
     }
+    public String getToken() {
+        return token;
+    }
+    
+    public void setToken(String id) {
+        this.token = id;
+    }
+    
     /**
      * @return the fecha
      */

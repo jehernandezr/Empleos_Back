@@ -20,10 +20,12 @@ public class CuentaBancariaDTO implements Serializable {
 
     private String nombreBanco;
 
-    private int tipoCuenta;
+    private Integer tipoCuenta;
 
     private EstudianteDTO estudiante;
 
+    private String token;
+    
     public CuentaBancariaDTO() {
     }
 
@@ -32,6 +34,7 @@ public class CuentaBancariaDTO implements Serializable {
             this.id = cuentaBancariaEntity.getId();
             this.nombreBanco = cuentaBancariaEntity.getNombreBanco();
             this.numeroCuenta = cuentaBancariaEntity.getNumeroCuenta();
+            this.token=null;
             String type = "";
             switch (cuentaBancariaEntity.getTipoCuenta()) {
                 case 2:
@@ -47,6 +50,14 @@ public class CuentaBancariaDTO implements Serializable {
         }
     }
 
+    public String getToken() {
+        return token;
+    }
+    
+    public void setToken(String id) {
+        this.token = id;
+    }
+    
     /**
      * @return the id
      */

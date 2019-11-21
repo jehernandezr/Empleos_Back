@@ -45,6 +45,11 @@ public class ContratistaDTO implements Serializable{
      */
     private String rutaImagen;
     
+     /**
+     * Token que definirá el inicio de sesión
+     */
+    private String token;
+    
     
     public ContratistaDTO(){
         
@@ -62,10 +67,19 @@ public class ContratistaDTO implements Serializable{
             this.email = contratistaEntity.getEmail();
             this.contrasena = contratistaEntity.getContrasena();
             this.rutaImagen = contratistaEntity.getRutaImagen();
+            this.token = null;
             
         }
     }
 
+    public String getToken() {
+        return token;
+    }
+    
+    public void setToken(String id) {
+        this.token = id;
+    }
+    
     /**
      * @return the esExterno
      */

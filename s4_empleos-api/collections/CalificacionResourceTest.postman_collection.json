@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "699681bf-b353-46f6-886f-90e6dfb43454",
+		"_postman_id": "578eb394-8e32-4fe4-b440-82326686e0ff",
 		"name": "CalificacionResourceTest",
 		"description": "Calificacion Resource Test",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -216,7 +216,7 @@
 						"exec": [
 							"var data= JSON.parse(responseBody);",
 							"tests[\"No genera error en el Get all\"] = responseCode.code === 200;",
-							"tests[\"calificaciones count\"] = data.length > 1;"
+							"tests[\"calificaciones count\"] = data.length >= 1;"
 						],
 						"type": "text/javascript"
 					}
@@ -513,5 +513,6 @@
 			},
 			"response": []
 		}
-	]
+	],
+	"protocolProfileBehavior": {}
 }

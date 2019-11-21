@@ -1,15 +1,22 @@
 package co.edu.uniandes.csw.empleos.resources;
 
+import co.edu.uniandes.csw.empleos.dtos.CalificacionDTO;
 import co.edu.uniandes.csw.empleos.dtos.CuentaDeCobroDTO;
+import co.edu.uniandes.csw.empleos.dtos.FacturaDTO;
 import co.edu.uniandes.csw.empleos.ejb.CuentaDeCobroLogic;
+import co.edu.uniandes.csw.empleos.entities.CalificacionEntity;
 import co.edu.uniandes.csw.empleos.entities.CuentaDeCobroEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -25,14 +32,15 @@ import javax.ws.rs.WebApplicationException;
 @RequestScoped
 public class CuentaDeCobroResource {
    
-    private static final Logger LOGGER =Logger.getLogger(CuentaDeCobroResource.class.getName());
+    
     
     @Inject
     private CuentaDeCobroLogic cuentaDeCobroLogic;
     
     @POST
-    public CuentaDeCobroDTO createCuentaDeCobro(CuentaDeCobroDTO cuenta) {
-        return cuenta;
+    public CuentaDeCobroDTO createCuentaDeCobro(CuentaDeCobroDTO cuenta) throws BusinessLogicException {
+        CuentaDeCobroDTO nuevacuentaDTO = new CuentaDeCobroDTO(cuentaDeCobroLogic.createCuentaDeCobro(cuenta.toEntity()));
+        return nuevacuentaDTO;
     }
     
     /**
@@ -59,5 +67,78 @@ public class CuentaDeCobroResource {
         
         return cuentaDTO;
     }
+    
+       /**
+     * Busca y devuelve todas las editoriales que existen en la aplicacion.
+     *
+     * @return JSONArray {@link EditorialDetailDTO} - Las editoriales
+     * encontradas en la aplicación. Si no hay ninguna retorna una lista vacía.
+     */
+    @GET
+    public List<CuentaDeCobroDTO> getCuentasDeCobro() {
+        List<CuentaDeCobroDTO> listaCuentas = listEntity2DTO(cuentaDeCobroLogic.getCuentasDeCobro());
+        return listaCuentas;
+    }
+    
+    /**
+     * Actualiza la calificacion con el id recibido en la URL con la información que se
+     * recibe en el cuerpo de la petición.
+     *
+     * @param calId Identificador de la Calificacion que se desea actualizar. Este debe
+     * ser una cadena de dígitos.
+     * @param calif {@link CalificacionDTO} La Calificacion que se desea guardar.
+     * @return JSON {@link CalificacionDTO} - La Calificacion guardada.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra la Calificacion a
+     * actualizar.
+     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
+     * Error de lógica que se genera cuando no se puede actualizar la Calificacion.
+     */
+    @PUT
+    @Path("{cuentasId: \\d+}")
+    public CuentaDeCobroDTO updateCuentaDeCobro(@PathParam("cuentasId") Long calId, CuentaDeCobroDTO calif) throws BusinessLogicException {
+        calif.setId(calId);
+        if (cuentaDeCobroLogic.getCuenta(calId) == null) {
+            throw new WebApplicationException("El recurso /cuentas/" + calId + " no existe.", 404);
+        }
+        CuentaDeCobroDTO detailDTO = new CuentaDeCobroDTO(cuentaDeCobroLogic.updateCuentaDeCobro(calId, calif.toEntity()));
+        return detailDTO;
+    }
+    
+     /**
+     * Borra La Calificacion con el id asociado recibido en la URL.
+     *
+     * @param calId Identificador del La Calificacion que se desea borrar. Este debe ser
+     * una cadena de dígitos
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra La Calificacion.
+     */
+    @DELETE
+    @Path("{cuentasId: \\d+}")
+    public void deleteCuentaDeCobro(@PathParam("cuentasId") Long calId) throws BusinessLogicException {
+        if (cuentaDeCobroLogic.getCuenta(calId) == null) {
+            throw new WebApplicationException("El recurso /cuentasDeCobro/" + calId + " no existe.", 404);
+        }
+        cuentaDeCobroLogic.deleteCuentaDeCobro(calId);
+    }
+       /**
+     * Convierte una lista de entidades a DTO.
+     *
+     * Este método convierte una lista de objetos BookEntity a una lista de
+     * objetos BookDetailDTO (json)
+     *
+     * @param entityList corresponde a la lista de libros de tipo Entity que
+     * vamos a convertir a DTO.
+     * @return la lista de libros en forma DTO (json)
+     */
+    private List<CuentaDeCobroDTO> listEntity2DTO(List<CuentaDeCobroEntity> entityList) {
+        List<CuentaDeCobroDTO> list = new ArrayList<>();
+        for (CuentaDeCobroEntity entity : entityList) {
+            list.add(new CuentaDeCobroDTO(entity));
+        }
+        return list;
+    }
+    
     
 }

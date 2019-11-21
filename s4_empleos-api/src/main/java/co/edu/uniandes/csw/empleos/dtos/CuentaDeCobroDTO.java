@@ -1,12 +1,11 @@
 package co.edu.uniandes.csw.empleos.dtos;
-
 import co.edu.uniandes.csw.empleos.entities.CuentaDeCobroEntity;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
- * @author Santiago Tangarife Rincón
+ * @author Jonatan Hernandez
  */
 public class CuentaDeCobroDTO implements Serializable {
 
@@ -40,11 +39,20 @@ public class CuentaDeCobroDTO implements Serializable {
      */
     private String concepto;
 
-
+/**
+ * la asociacion con contratista
+ */
+    private ContratistaDTO contratistaDTO;
+    
+     /**
+     * Token que definirá el inicio de sesión
+     */
+    private String token;
+    
     /**
      * Constructor vacio
      */
-    public void CuentaDeCobroDTO()
+    public CuentaDeCobroDTO()
     {
         //Vacio
     }
@@ -59,6 +67,11 @@ public class CuentaDeCobroDTO implements Serializable {
            this.nombreEstudiante = entity.getNombreEstudiante(); 
            this.numeroCuentaDeCobro = entity.getNumeroCuentaDeCobro(); 
            this.valor = entity.getValor(); 
+           this.token = null;
+      if(entity.getContratista()!=null)
+      {
+          contratistaDTO= new ContratistaDTO(entity.getContratista());
+      }
         }
     }
     
@@ -76,6 +89,7 @@ public class CuentaDeCobroDTO implements Serializable {
         cuentaDeCobroEntity.setFecha(this.fecha);
         cuentaDeCobroEntity.setNombreEstudiante(this.nombreEstudiante);
         cuentaDeCobroEntity.setValor(this.valor);
+        cuentaDeCobroEntity.setContratista(this.contratistaDTO.toEntity());
 
         return cuentaDeCobroEntity;
     }
@@ -84,6 +98,14 @@ public class CuentaDeCobroDTO implements Serializable {
     //Getters && Setters
     //Mira que titulo más cool xd
     //--------------------------------------------------------------------------------------------
+    public String getToken() {
+        return token;
+    }
+    
+    public void setToken(String id) {
+        this.token = id;
+    }
+    
     public Long getId() {
         return id;
     }
@@ -130,5 +152,19 @@ public class CuentaDeCobroDTO implements Serializable {
 
     public void setConcepto(String concepto) {
         this.concepto = concepto;
+    }
+
+    /**
+     * @return the contratistaDTO
+     */
+    public ContratistaDTO getContratistaDTO() {
+        return contratistaDTO;
+    }
+
+    /**
+     * @param contratistaDTO the contratistaDTO to set
+     */
+    public void setContratistaDTO(ContratistaDTO contratistaDTO) {
+        this.contratistaDTO = contratistaDTO;
     }
 }

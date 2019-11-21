@@ -36,6 +36,12 @@ public class CalificacionDTO implements Serializable{
     * dado que esta tiene cardinalidad 1.
      */
     private EstudianteDTO estudiante;
+    
+    
+    /**
+     * Token que definirá el inicio de sesión
+     */
+    private String token;
 
     public CalificacionDTO()
     {
@@ -53,6 +59,7 @@ public class CalificacionDTO implements Serializable{
             this.id = calificacionEntity.getId();
             this.comentario = calificacionEntity.getComentario();
             this.nota = calificacionEntity.getNota();
+            this.token=null;
        }
     }
     
@@ -70,6 +77,14 @@ public class CalificacionDTO implements Serializable{
         
         
         return calificacionEntity;
+    }
+    
+    public String getToken() {
+        return token;
+    }
+    
+    public void setToken(String id) {
+        this.token = id;
     }
     
     /**

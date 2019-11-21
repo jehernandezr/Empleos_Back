@@ -20,6 +20,7 @@ public class TarjetaDeCreditoDTO implements Serializable {
     private String numero;
     private String cvc;
     private String fecha;
+    private String token;
     
     public TarjetaDeCreditoDTO()
     {
@@ -37,6 +38,7 @@ public class TarjetaDeCreditoDTO implements Serializable {
             this.numero = tarjetaEntity.getNumero();
             this.cvc = tarjetaEntity.getCVC();
             this.fecha = tarjetaEntity.getFecha();
+            this.token = null;
         }
     }
 
@@ -94,8 +96,13 @@ public class TarjetaDeCreditoDTO implements Serializable {
         this.numero = numero;
     }
     
+    public String getToken() {
+        return token;
+    }
     
-    
+    public void setToken(String id) {
+        this.token = id;
+    }
     
     
 }
