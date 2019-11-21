@@ -13,14 +13,15 @@ import uk.co.jemos.podam.common.AttributeStrategy;
  * @author Miguel Angel Ramos Hurtado
  */
 public class NumeroTarjetaStrategy implements AttributeStrategy<String>
-{
+{   
+    Random r = new Random();
     @Override
     public String getValue()
     {
         String numTarjeta = "";
         for(int i = 0 ; i < 16 ; i++)
         {
-             Random r = new Random();
+             
              int numero = (r.nextInt(9));
              numTarjeta += String.format("%d", numero);
         }
