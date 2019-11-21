@@ -90,6 +90,11 @@ public class OfertaDTO implements Serializable {
      */
     private String rutaImagen;
     
+     /**
+     * Token que definirá el inicio de sesión
+     */
+    private String token;
+    
     public OfertaDTO(){
         
     }
@@ -144,10 +149,19 @@ public class OfertaDTO implements Serializable {
             this.rutaImagen = ofertaEntity.getRutaImagen();
             this.tiempoMaximoAplicacion = ofertaEntity.getTiempoMaximoAplicacion();
             this.tipoOferta = ofertaEntity.getTipoOferta();
+            this.token = null;
              
         }
     }
 
+    public String getToken() {
+        return token;
+    }
+    
+    public void setToken(String id) {
+        this.token = id;
+    }
+    
     private Long id;
 
     public Long getId() {

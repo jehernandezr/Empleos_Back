@@ -44,6 +44,11 @@ public class CuentaDeCobroDTO implements Serializable {
  */
     private ContratistaDTO contratistaDTO;
     
+     /**
+     * Token que definirá el inicio de sesión
+     */
+    private String token;
+    
     /**
      * Constructor vacio
      */
@@ -62,6 +67,7 @@ public class CuentaDeCobroDTO implements Serializable {
            this.nombreEstudiante = entity.getNombreEstudiante(); 
            this.numeroCuentaDeCobro = entity.getNumeroCuentaDeCobro(); 
            this.valor = entity.getValor(); 
+           this.token = null;
       if(entity.getContratista()!=null)
       {
           contratistaDTO= new ContratistaDTO(entity.getContratista());
@@ -92,6 +98,14 @@ public class CuentaDeCobroDTO implements Serializable {
     //Getters && Setters
     
     //--------------------------------------------------------------------------------------------
+    public String getToken() {
+        return token;
+    }
+    
+    public void setToken(String id) {
+        this.token = id;
+    }
+    
     public Long getId() {
         return id;
     }

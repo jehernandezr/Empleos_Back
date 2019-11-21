@@ -8,6 +8,7 @@ delete from TarjetaDeCreditoEntity;
 delete from CalificacionEntity;
 delete from FacturaEntity;
 delete from CUENTADECOBROENTITY;
+delete from OFERTAENTITY;
 
 delete from EstudianteEntity;
 

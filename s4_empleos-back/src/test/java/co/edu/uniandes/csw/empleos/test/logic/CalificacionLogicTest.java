@@ -32,20 +32,20 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class CalificacionLogicTest {
+
     @PersistenceContext
     private EntityManager em;
     @Inject
     private UserTransaction utx;
     @Inject
     private CalificacionLogic calificacionLogic;
-    
-    private PodamFactory factory =  new PodamFactoryImpl();
-    
+
+    private PodamFactory factory = new PodamFactoryImpl();
+
     private List<CalificacionEntity> data = new ArrayList<CalificacionEntity>();
-    
+
     @Deployment
-    private static JavaArchive createDeployment()
-    {
+    private static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(CalificacionEntity.class.getPackage())
                 .addPackage(CalificacionLogic.class.getPackage())
@@ -53,8 +53,8 @@ public class CalificacionLogicTest {
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-    
-     /**
+
+    /**
      * Configuración inicial de la prueba.
      */
     @Before
@@ -73,94 +73,103 @@ public class CalificacionLogicTest {
             }
         }
     }
-    
+
     /**
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
         em.createQuery("delete from CalificacionEntity").executeUpdate();
     }
-    
+
     /**
      * Inserta los datos iniciales para el correcto funcionamiento de las
      * pruebas.
      */
     private void insertData() {
-        
+
         for (int i = 0; i < 3; i++) {
             CalificacionEntity entity = factory.manufacturePojo(CalificacionEntity.class);
             em.persist(entity);
             data.add(entity);
         }
-        
+
     }
-    
+
     /**
      * Se verifica que se haya creado correctamente una calificacion.
-     * @throws BusinessLogicException Excepcion untilizada para representar errores en la lógica del negocio.
+     *
+     * @throws BusinessLogicException Excepcion untilizada para representar
+     * errores en la lógica del negocio.
      */
     @Test
-    public void createCalificacion()throws BusinessLogicException{
-      CalificacionEntity newEntity = factory.manufacturePojo(CalificacionEntity.class);
-      if(newEntity.getNota()<0){
-          newEntity.setNota(newEntity.getNota()*-1);}
-      CalificacionEntity result = calificacionLogic.createCalificacion(newEntity);
-      Assert.assertNotNull(result);
-      
-      CalificacionEntity entity = em.find(CalificacionEntity.class,result.getId());
-      Assert.assertEquals(entity.getNota(),result.getNota());
-      Assert.assertEquals(entity.getComentario(),result.getComentario());
+    public void createCalificacion() throws BusinessLogicException {
+        CalificacionEntity newEntity = factory.manufacturePojo(CalificacionEntity.class);
+        if (newEntity.getNota() < 0) {
+            newEntity.setNota(newEntity.getNota() * -1);
+        }
+        CalificacionEntity result = calificacionLogic.createCalificacion(newEntity);
+        Assert.assertNotNull(result);
+
+        CalificacionEntity entity = em.find(CalificacionEntity.class, result.getId());
+        Assert.assertEquals(entity.getNota(), result.getNota());
+        Assert.assertEquals(entity.getComentario(), result.getComentario());
     }
-   
+
     /**
      * Se crea una calificacion con una nota menor a 0
-     * @throws BusinessLogicException 
+     *
+     * @throws BusinessLogicException
      */
     @Test(expected = BusinessLogicException.class)
-    public void createCalificacionNotaNoMenoraCero()throws BusinessLogicException{
-        
-      CalificacionEntity newEntity = factory.manufacturePojo(CalificacionEntity.class);
-      newEntity.setNota(-1.0);
-      CalificacionEntity result = calificacionLogic.createCalificacion(newEntity);
+    public void createCalificacionNotaNoMenoraCero() throws BusinessLogicException {
+
+        CalificacionEntity newEntity = factory.manufacturePojo(CalificacionEntity.class);
+        newEntity.setNota(-1.0);
+        CalificacionEntity result = calificacionLogic.createCalificacion(newEntity);
     }
-    
+
     /**
      * Se crea una calificacion con una nota mayor a 5
-     * @throws BusinessLogicException 
+     *
+     * @throws BusinessLogicException
      */
     @Test(expected = BusinessLogicException.class)
-    public void createCalificacionNotaNoMayorCinco()throws BusinessLogicException{
-        
-      CalificacionEntity newEntity = factory.manufacturePojo(CalificacionEntity.class);
-      newEntity.setNota(5.5);
-      CalificacionEntity result = calificacionLogic.createCalificacion(newEntity);
+    public void createCalificacionNotaNoMayorCinco() throws BusinessLogicException {
+
+        CalificacionEntity newEntity = factory.manufacturePojo(CalificacionEntity.class);
+        newEntity.setNota(5.5);
+        CalificacionEntity result = calificacionLogic.createCalificacion(newEntity);
     }
-    
+
     /**
      * Se crea una calificacion con un Comentario no nulo
-     * @throws BusinessLogicException Excepcion untilizada para representar errores en la lógica del negocio.
+     *
+     * @throws BusinessLogicException Excepcion untilizada para representar
+     * errores en la lógica del negocio.
      */
     @Test(expected = BusinessLogicException.class)
-    public void createCalificacionComentarioNotNull()throws BusinessLogicException{
-        
-      CalificacionEntity newEntity = factory.manufacturePojo(CalificacionEntity.class);
-      newEntity.setComentario(null);
-      CalificacionEntity result = calificacionLogic.createCalificacion(newEntity);
+    public void createCalificacionComentarioNotNull() throws BusinessLogicException {
+
+        CalificacionEntity newEntity = factory.manufacturePojo(CalificacionEntity.class);
+        newEntity.setComentario(null);
+        CalificacionEntity result = calificacionLogic.createCalificacion(newEntity);
     }
-    
+
     /**
      * Se crea una calificacion con un Comentario no vacio
-     * @throws BusinessLogicException Excepcion untilizada para representar errores en la lógica del negocio.
+     *
+     * @throws BusinessLogicException Excepcion untilizada para representar
+     * errores en la lógica del negocio.
      */
     @Test(expected = BusinessLogicException.class)
-    public void createCalificacionComentarioNotVacio()throws BusinessLogicException{
-        
-      CalificacionEntity newEntity = factory.manufacturePojo(CalificacionEntity.class);
-      newEntity.setComentario("");
-      CalificacionEntity result = calificacionLogic.createCalificacion(newEntity);
+    public void createCalificacionComentarioNotVacio() throws BusinessLogicException {
+
+        CalificacionEntity newEntity = factory.manufacturePojo(CalificacionEntity.class);
+        newEntity.setComentario("");
+        CalificacionEntity result = calificacionLogic.createCalificacion(newEntity);
     }
-    
-     /**
+
+    /**
      * Prueba para consultar la lista de Calificaciones.
      */
     @Test
@@ -177,8 +186,8 @@ public class CalificacionLogicTest {
             Assert.assertTrue(found);
         }
     }
-    
-     /**
+
+    /**
      * Prueba para consultar una Calificacion.
      */
     @Test
@@ -189,9 +198,9 @@ public class CalificacionLogicTest {
         Assert.assertEquals(entity.getId(), resultEntity.getId());
         Assert.assertEquals(entity.getComentario(), resultEntity.getComentario());
         Assert.assertEquals(entity.getNota(), resultEntity.getNota());
-       
+
     }
-    
+
     /**
      * Prueba para actualizar una Calificacion.
      *
@@ -201,9 +210,9 @@ public class CalificacionLogicTest {
     public void updateCalificacion() throws BusinessLogicException {
         CalificacionEntity entity = data.get(0);
         CalificacionEntity pojoEntity = factory.manufacturePojo(CalificacionEntity.class);
-              if(pojoEntity.getNota()<0){
-          pojoEntity.setNota(pojoEntity.getNota()*-1);}
-    
+        if (pojoEntity.getNota() < 0) {
+            pojoEntity.setNota(pojoEntity.getNota() * -1);
+        }
 
         pojoEntity.setId(entity.getId());
         calificacionLogic.updateCalificacion(pojoEntity.getId(), pojoEntity);
@@ -216,7 +225,7 @@ public class CalificacionLogicTest {
 
         Assert.assertEquals(pojoEntity.getEstudiante(), resp.getEstudiante());
     }
-    
+
     /**
      * Prueba para actualizar una Calificacion.
      *
@@ -230,7 +239,7 @@ public class CalificacionLogicTest {
         pojoEntity.setId(entity.getId());
         calificacionLogic.updateCalificacion(pojoEntity.getId(), pojoEntity);
     }
-    
+
     /**
      * Prueba para actualizar una Calificacion.
      *
@@ -244,7 +253,7 @@ public class CalificacionLogicTest {
         pojoEntity.setId(entity.getId());
         calificacionLogic.updateCalificacion(pojoEntity.getId(), pojoEntity);
     }
-    
+
     /**
      * Prueba para actualizar una Calificacion.
      *
@@ -258,8 +267,8 @@ public class CalificacionLogicTest {
         pojoEntity.setId(entity.getId());
         calificacionLogic.updateCalificacion(pojoEntity.getId(), pojoEntity);
     }
-    
-        /**
+
+    /**
      * Prueba para actualizar una Calificacion.
      *
      * @throws BusinessLogicException
@@ -272,7 +281,7 @@ public class CalificacionLogicTest {
         pojoEntity.setId(entity.getId());
         calificacionLogic.updateCalificacion(pojoEntity.getId(), pojoEntity);
     }
-    
+
     /**
      * Prueba para eliminar una calificacion.
      *
