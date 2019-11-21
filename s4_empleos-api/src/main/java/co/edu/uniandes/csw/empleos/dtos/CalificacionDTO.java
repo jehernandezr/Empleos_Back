@@ -74,6 +74,7 @@ public class CalificacionDTO implements Serializable{
         calificacionEntity.setId(this.id);
         calificacionEntity.setNota(this.getNota());
         calificacionEntity.setComentario(this.getComentario());
+        //calificacionEntity.setToken(this.getToken());
         
         
         return calificacionEntity;

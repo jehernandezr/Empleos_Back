@@ -5,7 +5,6 @@
  */
 package co.edu.uniandes.csw.empleos.entities;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -17,6 +16,8 @@ import uk.co.jemos.podam.common.PodamExclude;
  */
 @Entity
 public class CalificacionEntity extends BaseEntity{
+    
+    
     
     /**
      * Atributo de la nota que será puesta a un estudiante.

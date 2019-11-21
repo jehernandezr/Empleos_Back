@@ -9,7 +9,9 @@ import co.edu.uniandes.csw.empleos.dtos.CalificacionDTO;
 import co.edu.uniandes.csw.empleos.ejb.CalificacionEstudianteLogic;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.empleos.ejb.CalificacionLogic;
+import co.edu.uniandes.csw.empleos.ejb.TokenLogic;
 import co.edu.uniandes.csw.empleos.entities.CalificacionEntity;
+import co.edu.uniandes.csw.empleos.entities.TokenEntity;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
@@ -26,50 +28,73 @@ import javax.ws.rs.WebApplicationException;
 
 /**
  *
- * @author Nicolas Munar */
+ * @author Nicolas Munar
+ */
 @Path("calificaciones")
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
 public class CalificacionResource {
-    
-    
+
     @Inject
     private CalificacionLogic calificacionLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
-    
+
     @Inject
     private CalificacionEstudianteLogic calificacionEstudianteLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
-    
 
-    
+    @Inject
+    private TokenLogic tokenLogic;
+
+ 
     @POST
     public CalificacionDTO createCalificacion(CalificacionDTO calificacion) throws BusinessLogicException {
-        CalificacionDTO nuevaCalificacionDTO = new CalificacionDTO(calificacionLogic.createCalificacion(calificacion.toEntity()));
-        return nuevaCalificacionDTO;
+
+       
+            String token = calificacion.getToken();
+            TokenEntity tok = tokenLogic.getTokenByToken(token);
+            if (tok.getTipo().equals("Contratista")) {
+                CalificacionEntity cl = calificacionLogic.createCalificacion(calificacion.toEntity());
+                CalificacionDTO nuevaCalificacionDTO = new CalificacionDTO(cl);
+                return nuevaCalificacionDTO;
+
+            } else {
+                throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
+            }
+
+     
     }
-    
-    
+
     /**
-     * Busca la calificaciòn con el id asociado recibido en la URL y lo devuelve.
+     * Busca la calificaciòn con el id asociado recibido en la URL y lo
+     * devuelve.
      *
-     * @param calificacionId Identificador del libro que se esta buscando. Este debe
-     * ser una cadena de dígitos.
+     * @param calificacionId Identificador del libro que se esta buscando. Este
+     * debe ser una cadena de dígitos.
      * @return JSON {@link BookDTO} - El libro buscado
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra el libro.
      */
     @GET
     @Path("{calificacionesId: \\d+}")
-    public CalificacionDTO getCalificacion(@PathParam("calificacionesId") Long calificacionId) {
+    public CalificacionDTO getCalificacion(@PathParam("calificacionesId") Long calificacionId) throws BusinessLogicException {
         CalificacionEntity calEntity = calificacionLogic.getCalificacion(calificacionId);
+
         if (calEntity == null) {
             throw new WebApplicationException("El recurso /calificaciones/" + calificacionId + " no existe.", 404);
         }
         CalificacionDTO calDTO = new CalificacionDTO(calEntity);
+
+        String token = calDTO.getToken();
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok == null) {
+
+            throw new BusinessLogicException("No se encuentra Registrado");
+        }
+
         return calDTO;
     }
-    
-        /**
+
+    /**
      * Busca y devuelve todas las editoriales que existen en la aplicacion.
      *
      * @return JSONArray {@link EditorialDetailDTO} - Las editoriales
@@ -80,37 +105,49 @@ public class CalificacionResource {
         List<CalificacionDTO> listaCalificaciones = listEntity2DTO(calificacionLogic.getCalificaciones());
         return listaCalificaciones;
     }
-    
-     /**
-     * Actualiza la calificacion con el id recibido en la URL con la información que se
-     * recibe en el cuerpo de la petición.
+
+    /**
+     * Actualiza la calificacion con el id recibido en la URL con la información
+     * que se recibe en el cuerpo de la petición.
      *
-     * @param calId Identificador de la Calificacion que se desea actualizar. Este debe
-     * ser una cadena de dígitos.
-     * @param calif {@link CalificacionDTO} La Calificacion que se desea guardar.
+     * @param calId Identificador de la Calificacion que se desea actualizar.
+     * Este debe ser una cadena de dígitos.
+     * @param calif {@link CalificacionDTO} La Calificacion que se desea
+     * guardar.
      * @return JSON {@link CalificacionDTO} - La Calificacion guardada.
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra la Calificacion a
      * actualizar.
      * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
-     * Error de lógica que se genera cuando no se puede actualizar la Calificacion.
+     * Error de lógica que se genera cuando no se puede actualizar la
+     * Calificacion.
      */
     @PUT
     @Path("{calificacionesId: \\d+}")
     public CalificacionDTO updateCalificacion(@PathParam("calificacionesId") Long calId, CalificacionDTO calif) throws BusinessLogicException {
-        calif.setId(calId);
-        if (calificacionLogic.getCalificacion(calId) == null) {
-            throw new WebApplicationException("El recurso /calificaciones/" + calId + " no existe.", 404);
-        }
-        CalificacionDTO detailDTO = new CalificacionDTO(calificacionLogic.updateCalificacion(calId, calif.toEntity()));
-        return detailDTO;
+
+            String token = calif.getToken();
+            TokenEntity tok = tokenLogic.getTokenByToken(token);
+            if (tok.getTipo().equals("Contratista")) {
+                calif.setId(calId);
+                if (calificacionLogic.getCalificacion(calId) == null) {
+                    throw new WebApplicationException("El recurso /calificaciones/" + calId + " no existe.", 404);
+                }
+                CalificacionDTO detailDTO = new CalificacionDTO(calificacionLogic.updateCalificacion(calId, calif.toEntity()));
+                return detailDTO;
+
+            } else {
+                throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
+            }
+
+
     }
-    
-     /**
+
+    /**
      * Borra La Calificacion con el id asociado recibido en la URL.
      *
-     * @param calId Identificador del La Calificacion que se desea borrar. Este debe ser
-     * una cadena de dígitos
+     * @param calId Identificador del La Calificacion que se desea borrar. Este
+     * debe ser una cadena de dígitos
      * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra La Calificacion.
@@ -118,59 +155,28 @@ public class CalificacionResource {
     @DELETE
     @Path("{calificacionesId: \\d+}")
     public void deleteCalificacion(@PathParam("calificacionesId") Long calId) throws BusinessLogicException {
-        if (calificacionLogic.getCalificacion(calId) == null) {
+        CalificacionEntity calEntity = calificacionLogic.getCalificacion(calId);
+        CalificacionDTO calDTO = new CalificacionDTO (calEntity);
+        
+        if (calEntity == null) {
             throw new WebApplicationException("El recurso /calificaciones/" + calId + " no existe.", 404);
         }
+        
+        String token = calDTO.getToken();
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok == null) {
+
+            throw new BusinessLogicException("No se encuentra Registrado");
+        }if( tok.getTipo().equals("Enstutdiante"))
+            {
+
+            throw new BusinessLogicException("No tiene permiso para esto");
+        }
+        
         calificacionLogic.deleteCalificacion(calId);
     }
-    
-    
+
     /**
-     * Conexión con el servicio de reseñas para una Calificacion. {@link ReviewResource}
-     *
-     * Este método conecta la ruta de /calificaciones con las rutas de /estudiantes que
-     * dependen del libro, es una redirección al servicio que maneja el segmento
-     * de la URL que se encarga de las reseñas.
-     *
-     * @param calId El ID de la Calificacion  con respecto al cual se accede al
-     * servicio.
-     * @return El servicio de Estudiantes para esa Calificacion en paricular.\
-     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
-     * Error de lógica que se genera cuando no se encuentra la Calificacion .
-     
-    @GET
-    @Path("{calificacionesId: \\d+}/estudiantes")
-    public Class<EstudianteResource> getEstudianteResource(@PathParam("calificacionesId") Long calId) {
-        if (calificacionLogic.getCalificacion(calId) == null) {
-            throw new WebApplicationException("El recurso /calificaciones/" + calId + "/estudiantes no existe.", 404);
-        }
-        return EstudianteResource.class;
-    }
-    */
-        /**
-     * Conexión con el servicio de estudiantes para una calificacion.
-     * {@link CalificacionEstudiantesResource}
-     *
-     * Este método conecta la ruta de /calificaciones con las rutas de /estudiantes que
-     * dependen de la calificacion.
-     *
-     * @param calId El ID de la calificacion con respecto al cual se accede al
-     * servicio.
-     * @return El servicio de autores para esa calificacion en paricular.\
-     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
-     * Error de lógica que se genera cuando no se encuentra la calificacion.
-     
-    @Path("{calificacionesId: \\d+}/estudiantes")
-    public Class<CalificacionEstudianteResource> getCalificacionEstudianteResource(@PathParam("calificacionesId") Long calId) {
-        if (calificacionLogic.getCalificacion(calId) == null) {
-            throw new WebApplicationException("El recurso /calificaciones/" + calId + " no existe.", 404);
-        }
-        return CalificacionEstudianteResource.class;
-    }
-    */
-    
-    
-        /**
      * Convierte una lista de entidades a DTO.
      *
      * Este método convierte una lista de objetos BookEntity a una lista de
@@ -187,5 +193,5 @@ public class CalificacionResource {
         }
         return list;
     }
-    
+
 }
