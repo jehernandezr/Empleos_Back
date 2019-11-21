@@ -25,19 +25,17 @@ values(2,'Lol',null,23,'Nicolas','SuperF');
 insert into EstudianteEntity (nombre, idMedioDePago, carrera, correo, calificacionPromedio, horarioDeTrabajo, semestre)
 values ('David', 0, 'Sistemas', 'awdawd@uniandes.edu.co', 2.0, 'a', 4);
 insert into EstudianteEntity (nombre, idMedioDePago, carrera, correo, calificacionPromedio, horarioDeTrabajo, semestre)
-<<<<<<< HEAD
+
 values ('David', 0, 'Sistemas', 'awdawd@uniandes.edu.co', 2.0, 'a', 4);
 
 select * from EstudianteEntity;
 delete from EstudianteEntity;
-=======
+
 values ('Nicolas', 2, 'Sistemas', 'lol@uniandes.edu.co', 5.0, '2:00', 4);
 
-<<<<<<< HEAD
 insert into TokenEntity(id,tipo,token)values(1,"Estudiante","Primero");
 
 insert into TokenEntity(ID,TIPO,TOKEN)
 values(2,"Contratista","Segundo");
-=======
->>>>>>> 00717e6451366835a6ee1e79ea3bdf388b6c85f6
->>>>>>> a1af53a2171658dfa9816baa6803110ecacb9c33
+
+
