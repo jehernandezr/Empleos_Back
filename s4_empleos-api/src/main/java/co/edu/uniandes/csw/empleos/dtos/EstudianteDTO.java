@@ -45,6 +45,7 @@ public class EstudianteDTO implements Serializable{
             this.semestre = estudianteEntity.getSemestre();
             this.horarioDeTrabajo = estudianteEntity.getHorarioDeTrabajo();
             this.idMedioDepago = estudianteEntity.getIdMedioDepago();
+            this.correo = estudianteEntity.getCorreo();
         }
     }
     
