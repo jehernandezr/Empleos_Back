@@ -36,7 +36,7 @@ public class TokenResource {
   
     
     @POST
-    public TokenDTO createCalificacion(TokenDTO token) throws BusinessLogicException {
+    public TokenDTO createToken(TokenDTO token) throws BusinessLogicException {
         TokenDTO nuevaCalificacionDTO = new TokenDTO(tokenLogic.createToken(token.toEntity()));
         return nuevaCalificacionDTO;
     }

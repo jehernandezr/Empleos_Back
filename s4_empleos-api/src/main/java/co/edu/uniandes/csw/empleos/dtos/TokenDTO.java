@@ -13,22 +13,21 @@ import java.io.Serializable;
  * @author Nicolas Munar
  */
 public class TokenDTO implements Serializable {
-    
-     private String token;
-    private String tipo;
-        private long id;
 
-    
-     public TokenDTO() {
+    private String token;
+    private String tipo;
+    private long id;
+
+    public TokenDTO() {
         //Constructor vacío Token
     }
-    
-     public TokenDTO(TokenEntity e) {
-        if (e!= null){
+
+    public TokenDTO(TokenEntity e) {
+        if (e != null) {
             this.id = e.getId();
             this.token = e.getToken();
             this.tipo = e.getTipo();
-        
+
         }
     }
 
@@ -73,12 +72,13 @@ public class TokenDTO implements Serializable {
     public void setId(long id) {
         this.id = id;
     }
-     
-         public TokenEntity toEntity() {
+
+    public TokenEntity toEntity() {
         TokenEntity e = new TokenEntity();
         e.setToken(token);
         e.setTipo(tipo);
+        e.setId(id);
         return e;
     }
-     
+
 }
