@@ -5,10 +5,13 @@
  */
 package co.edu.uniandes.csw.empleos.test.logic;
 
-import co.edu.uniandes.csw.empleos.ejb.TokenLogic;
-import co.edu.uniandes.csw.empleos.entities.TokenEntity;
+
+
+
+import co.edu.uniandes.csw.empleos.ejb.CredencialesLogic;
+import co.edu.uniandes.csw.empleos.entities.CredencialesEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
-import co.edu.uniandes.csw.empleos.persistence.TokenPersistence;
+import co.edu.uniandes.csw.empleos.persistence.CredencialesPersistence;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -28,15 +31,15 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
  *
- * @author Nicolas Munar
+ * @author je.hernandezr
  */
 @RunWith(Arquillian.class)
-public class TokenLogicTest {
+public class CredencialesLogicTest {
 
     private PodamFactory factory = new PodamFactoryImpl();
 
     @Inject
-    private TokenLogic tokenLogic;
+    private CredencialesLogic credencialLogic;
 
     @PersistenceContext
     private EntityManager em;
@@ -44,14 +47,14 @@ public class TokenLogicTest {
     @Inject
     private UserTransaction utx;
 
-    private List<TokenEntity> data = new ArrayList<TokenEntity>();
+    private List<CredencialesEntity> data = new ArrayList<CredencialesEntity>();
 
     @Deployment
     private static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
-                .addPackage(TokenEntity.class.getPackage())
-                .addPackage(TokenLogic.class.getPackage())
-                .addPackage(TokenPersistence.class.getPackage())
+                .addPackage(CredencialesEntity.class.getPackage())
+                .addPackage(CredencialesLogic.class.getPackage())
+                .addPackage(CredencialesPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
@@ -80,7 +83,7 @@ public class TokenLogicTest {
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
-        em.createQuery("delete from TokenEntity").executeUpdate();
+        em.createQuery("delete from CredencialesEntity").executeUpdate();
     }
 
     /**
@@ -90,7 +93,7 @@ public class TokenLogicTest {
     private void insertData() {
 
         for (int i = 0; i < 3; i++) {
-            TokenEntity entity = factory.manufacturePojo(TokenEntity.class);
+            CredencialesEntity entity = factory.manufacturePojo(CredencialesEntity.class);
             em.persist(entity);
             data.add(entity);
         }
@@ -104,14 +107,14 @@ public class TokenLogicTest {
      * errores en la lógica del negocio.
      */
     @Test
-    public void createToken() throws BusinessLogicException {
-        TokenEntity newEntity = factory.manufacturePojo(TokenEntity.class);
-        TokenEntity result = tokenLogic.createToken(newEntity);
+    public void createCredencial() throws BusinessLogicException {
+        CredencialesEntity newEntity = factory.manufacturePojo(CredencialesEntity.class);
+        CredencialesEntity result = credencialLogic.createCredencial(newEntity);
         Assert.assertNotNull(result);
 
-        TokenEntity entity = em.find(TokenEntity.class, result.getId());
+        CredencialesEntity entity = em.find(CredencialesEntity.class, result.getId());
         Assert.assertEquals(entity.getTipo(), result.getTipo());
-        Assert.assertEquals(entity.getToken(), result.getToken());
+        Assert.assertEquals(entity.getCorreo(), result.getCorreo());
     }
 
     /**
@@ -121,11 +124,11 @@ public class TokenLogicTest {
      * errores en la lógica del negocio.
      */
     @Test(expected = BusinessLogicException.class)
-    public void createTokenTipoNotNull() throws BusinessLogicException {
+    public void createCredencialTipoNotNull() throws BusinessLogicException {
 
-        TokenEntity newEntity = factory.manufacturePojo(TokenEntity.class);
+        CredencialesEntity newEntity = factory.manufacturePojo(CredencialesEntity.class);
         newEntity.setTipo(null);
-        TokenEntity result = tokenLogic.createToken(newEntity);
+        CredencialesEntity result = credencialLogic.createCredencial(newEntity);
     }
 
     /**
@@ -135,11 +138,11 @@ public class TokenLogicTest {
      * errores en la lógica del negocio.
      */
     @Test(expected = BusinessLogicException.class)
-    public void createTokenTokenNotNull() throws BusinessLogicException {
+    public void createCredencialCorreoNotNull() throws BusinessLogicException {
 
-        TokenEntity newEntity = factory.manufacturePojo(TokenEntity.class);
-        newEntity.setToken(null);
-        TokenEntity result = tokenLogic.createToken(newEntity);
+        CredencialesEntity newEntity = factory.manufacturePojo(CredencialesEntity.class);
+        newEntity.setCorreo(null);
+        CredencialesEntity result = credencialLogic.createCredencial(newEntity);
     }
 
     /**
@@ -149,11 +152,11 @@ public class TokenLogicTest {
      * errores en la lógica del negocio.
      */
     @Test(expected = BusinessLogicException.class)
-    public void createoTokenTipoNotVacio() throws BusinessLogicException {
+    public void createCredencialTipoNoVacio() throws BusinessLogicException {
 
-        TokenEntity newEntity = factory.manufacturePojo(TokenEntity.class);
+        CredencialesEntity newEntity = factory.manufacturePojo(CredencialesEntity.class);
         newEntity.setTipo("");
-        TokenEntity result = tokenLogic.createToken(newEntity);
+        CredencialesEntity result = credencialLogic.createCredencial(newEntity);
     }
 
     /**
@@ -163,23 +166,23 @@ public class TokenLogicTest {
      * errores en la lógica del negocio.
      */
     @Test(expected = BusinessLogicException.class)
-    public void createoTokenTokenNotVacio() throws BusinessLogicException {
+    public void createoCredencialCorreoNoVacio() throws BusinessLogicException {
 
-        TokenEntity newEntity = factory.manufacturePojo(TokenEntity.class);
-        newEntity.setToken("");
-        TokenEntity result = tokenLogic.createToken(newEntity);
+        CredencialesEntity newEntity = factory.manufacturePojo(CredencialesEntity.class);
+        newEntity.setCorreo("");
+        CredencialesEntity result = credencialLogic.createCredencial(newEntity);
     }
 
     /**
      * Prueba para consultar la lista de Calificaciones.
      */
     @Test
-    public void getTokensTest() {
-        List<TokenEntity> list = tokenLogic.getTokens();
+    public void getCredencialesTest() {
+        List<CredencialesEntity> list = credencialLogic.getCredenciales();
         Assert.assertEquals(data.size(), list.size());
-        for (TokenEntity entity : list) {
+        for (CredencialesEntity entity : list) {
             boolean found = false;
-            for (TokenEntity storedEntity : data) {
+            for (CredencialesEntity storedEntity : data) {
                 if (entity.getId().equals(storedEntity.getId())) {
                     found = true;
                 }
@@ -192,12 +195,12 @@ public class TokenLogicTest {
      * Prueba para consultar una Calificacion.
      */
     @Test
-    public void getTokenTest() {
-        TokenEntity entity = data.get(0);
-        TokenEntity resultEntity = tokenLogic.getToken(entity.getId());
+    public void getCredencialTest() {
+        CredencialesEntity entity = data.get(0);
+        CredencialesEntity resultEntity = credencialLogic.getCredencial(entity.getId());
         Assert.assertNotNull(resultEntity);
         Assert.assertEquals(entity.getId(), resultEntity.getId());
-        Assert.assertEquals(entity.getToken(), resultEntity.getToken());
+        Assert.assertEquals(entity.getCorreo(), resultEntity.getCorreo());
         Assert.assertEquals(entity.getTipo(), resultEntity.getTipo());
 
     }
@@ -208,18 +211,18 @@ public class TokenLogicTest {
      * @throws BusinessLogicException
      */
     @Test
-    public void updateToken() throws BusinessLogicException {
-        TokenEntity entity = data.get(0);
-        TokenEntity pojoEntity = factory.manufacturePojo(TokenEntity.class);
+    public void updateCredencial() throws BusinessLogicException {
+        CredencialesEntity entity = data.get(0);
+        CredencialesEntity pojoEntity = factory.manufacturePojo(CredencialesEntity.class);
 
         pojoEntity.setId(entity.getId());
-        tokenLogic.updateToken(pojoEntity.getId(), pojoEntity);
+        credencialLogic.updateCredencial(pojoEntity.getId(), pojoEntity);
 
-        TokenEntity resp = em.find(TokenEntity.class, entity.getId());
+       CredencialesEntity resp = em.find(CredencialesEntity.class, entity.getId());
 
         Assert.assertEquals(pojoEntity.getTipo(), resp.getTipo());
 
-        Assert.assertEquals(pojoEntity.getToken(), resp.getToken());
+        Assert.assertEquals(pojoEntity.getCorreo(), resp.getCorreo());
     }
 
 }
