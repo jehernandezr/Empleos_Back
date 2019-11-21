@@ -14,9 +14,11 @@ import co.edu.uniandes.csw.empleos.ejb.EstudianteCalificacionesLogic;
 import co.edu.uniandes.csw.empleos.ejb.EstudianteCuentaBancariaLogic;
 import co.edu.uniandes.csw.empleos.ejb.EstudianteLogic;
 import co.edu.uniandes.csw.empleos.ejb.EstudianteOfertasLogic;
+import co.edu.uniandes.csw.empleos.ejb.TokenLogic;
 import co.edu.uniandes.csw.empleos.ejb.Tokenizer;
 import co.edu.uniandes.csw.empleos.entities.CredencialesEntity;
 import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
+import co.edu.uniandes.csw.empleos.entities.TokenEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,61 +44,60 @@ import javax.ws.rs.WebApplicationException;
 @Consumes("application/json")
 @RequestScoped
 public class CredencialesResource {
-    
+
     // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
     @Inject
-    private CredencialesLogic credencialLogic; 
-   
-    
+    private CredencialesLogic credencialLogic;
+
+    @Inject
+    private TokenLogic tokenLogic;
 
     @POST
     public TokenDTO createCredencial(CredencialDTO credencial) throws BusinessLogicException {
         CredencialDTO c = new CredencialDTO(credencialLogic.createCredencial(credencial.toEntity()));
+
         String tipo = c.getTipo();
         String token = Tokenizer.getToken();
-        
-        //TODO:
-        /* 
-            1. Crear un tokenEntity en la tabla de token con tipo y token
-            2. Transformar el tokenEntity en tokenDTO
-            3. En vez de retornar el null de abajo, retornar el tokenDTO
-        */  
-        return null;
+
+        TokenEntity tokenE = new TokenEntity();
+        tokenE.setTipo(tipo);
+        tokenE.setToken(token);
+        TokenDTO nuevoTokenDTO = new TokenDTO(tokenLogic.createToken(tokenE));
+
+        return nuevoTokenDTO;
     }
-    
-    
+
     @GET
     public TokenDTO autenticar(@QueryParam("correo") String correo, @QueryParam("pass") String pass) throws BusinessLogicException {
         List<CredencialesEntity> c = credencialLogic.getCredenciales();
         CredencialesEntity credencialUsuario = null;
         boolean found = false;
-        for(CredencialesEntity credencial : c) {
-            if(credencial.getCorreo().equals(correo) && credencial.getContraseña().equals(pass)) {
+        for (CredencialesEntity credencial : c) {
+            if (credencial.getCorreo().equals(correo) && credencial.getContraseña().equals(pass)) {
                 found = true;
                 credencialUsuario = credencial;
             }
         }
-        if(!found) {
+        if (!found) {
             return null;
         } else {
             String tipo = credencialUsuario.getTipo();
             String token = Tokenizer.getToken();
-            
-            //TODO:
-            /* 
-                1. Crear un tokenEntity en la tabla de token con tipo y token
-                2. Transformar el tokenEntity en tokenDTO
-                3. En vez de retornar el null de abajo, retornar el tokenDTO
-            */  
-            return null;
+
+            TokenEntity tokenE = new TokenEntity();
+            tokenE.setTipo(tipo);
+            tokenE.setToken(token);
+            TokenDTO nuevoTokenDTO = new TokenDTO(tokenLogic.createToken(tokenE));
+ 
+            return nuevoTokenDTO;
         }
     }
-    
-     /**
+
+    /**
      * Busca el estudiante con el id asociado recibido en la URL y lo devuelve.
      *
-     * @param estudianteId Identificador del estudiante que se esta buscando. Este debe
-     * ser una cadena de dígitos.
+     * @param estudianteId Identificador del estudiante que se esta buscando.
+     * Este debe ser una cadena de dígitos.
      * @return JSON {@link EstudianteDTO} - El estudiante buscado
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra el estudiante.
@@ -112,12 +113,12 @@ public class CredencialesResource {
         EstudianteDetailDTO calDTO = new EstudianteDetailDTO(calEntity);
         return calDTO;
     }
-    */
+     */
     /**
      * Busca y devuelve todos los estudiantes que existen en la aplicacion.
      *
-     * @return JSONArray {@link EstudianteDTO} - Los estudiantes
-     * encontrados en la aplicación. Si no hay ninguna retorna una lista vacía.
+     * @return JSONArray {@link EstudianteDTO} - Los estudiantes encontrados en
+     * la aplicación. Si no hay ninguna retorna una lista vacía.
      */
     /*
     @GET
@@ -125,5 +126,5 @@ public class CredencialesResource {
         List<EstudianteDetailDTO> estudiantes = listEntity2DTO(estudianteLogic.getEstudiantes());
         return estudiantes;
     }
-    */
+     */
 }
