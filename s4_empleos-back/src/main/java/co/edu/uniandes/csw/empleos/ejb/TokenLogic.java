@@ -84,13 +84,20 @@ public class TokenLogic {
      */
     public TokenEntity updateToken(Long tokenId, TokenEntity tokenEntity)throws BusinessLogicException {
         
+         if(tokenEntity.getTipo()==null){
+            throw new BusinessLogicException("El campo no puede ser nulo");
+        }
+        if(tokenEntity.getToken()==null){
+            throw new BusinessLogicException("El campo no puede ser nulo");
         
+        }
         if(tokenEntity.getTipo().equals("")){
             throw new BusinessLogicException("El campo no puede ser vacìo");
         }
         if(tokenEntity.getToken().equals("")){
             throw new BusinessLogicException("El campo no puede ser vacìo");
         }
+        
         
         TokenEntity newEntity = persistence.update(tokenEntity);
         return newEntity;
