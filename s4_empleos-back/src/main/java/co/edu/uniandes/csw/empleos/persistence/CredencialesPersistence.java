@@ -6,8 +6,8 @@
 package co.edu.uniandes.csw.empleos.persistence;
 
 import co.edu.uniandes.csw.empleos.entities.CredencialesEntity;
-import co.edu.uniandes.csw.empleos.entities.CuentaBancariaEntity;
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -17,7 +17,8 @@ import javax.persistence.TypedQuery;
  *
  * @author je.hernandezr
  */
-public class CredencialesPersistance {
+@Stateless
+public class CredencialesPersistence {
     
     @PersistenceContext(unitName = "empleosPU")
     protected EntityManager em;

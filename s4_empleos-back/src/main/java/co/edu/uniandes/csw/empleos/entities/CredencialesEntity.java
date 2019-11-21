@@ -5,10 +5,13 @@
  */
 package co.edu.uniandes.csw.empleos.entities;
 
+import javax.persistence.Entity;
+
 /**
  *
  * @author je.hernandezr
  */
+@Entity
 public class CredencialesEntity extends BaseEntity{
     private String correo;
     
