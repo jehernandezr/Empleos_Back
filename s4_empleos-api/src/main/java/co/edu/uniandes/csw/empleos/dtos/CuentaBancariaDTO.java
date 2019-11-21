@@ -44,6 +44,7 @@ public class CuentaBancariaDTO implements Serializable {
                     type = "gggg";
             }
             this.setTipoCuenta(type);
+            this.estudiante= new EstudianteDTO(cuentaBancariaEntity.getEstudiante());
         }
     }
 

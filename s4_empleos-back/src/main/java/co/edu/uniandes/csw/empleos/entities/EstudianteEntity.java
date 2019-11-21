@@ -3,6 +3,7 @@ package co.edu.uniandes.csw.empleos.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -48,7 +49,7 @@ public class EstudianteEntity extends BaseEntity implements Serializable {
 
     // Atributo que representa la cuenta bancaria que tiene el estudiante
     @PodamExclude
-    @javax.persistence.OneToOne(fetch = FetchType.LAZY)
+    @javax.persistence.OneToOne( cascade = CascadeType.PERSIST ,fetch = FetchType.LAZY)
     private CuentaBancariaEntity cuentaBancaria;
 
   
