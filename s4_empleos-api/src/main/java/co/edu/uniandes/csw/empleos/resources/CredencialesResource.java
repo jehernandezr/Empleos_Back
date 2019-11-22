@@ -73,7 +73,7 @@ public class CredencialesResource {
         CredencialesEntity credencialUsuario = null;
         boolean found = false;
         for (CredencialesEntity credencial : c) {
-            if (credencial.getCorreo().equals(correo) && credencial.getContraseña().equals(pass)) {
+            if (credencial.getCorreo().equals(correo) && credencial.getContrasena().equals(pass)) {
                 found = true;
                 credencialUsuario = credencial;
             }
