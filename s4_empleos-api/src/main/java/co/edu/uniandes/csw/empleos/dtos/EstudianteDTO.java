@@ -14,12 +14,12 @@ import java.io.Serializable;
  */
 public class EstudianteDTO implements Serializable {
 
-    private long id;
-    private long idMedioDepago;
+    private Long id;
+    private Long idMedioDepago;
     private String nombre;
     private String carrera;
     private String correo;
-    private double calificacionPromedio;
+    private Double calificacionPromedio;
     private Integer semestre;
     private String horarioDeTrabajo;
     private String token;
@@ -84,7 +84,7 @@ public class EstudianteDTO implements Serializable {
     /**
      * @param id the idMedioDepago to set
      */
-    public void setIdMedioDepago(long idMedioDepago) {
+    public void setIdMedioDepago(Long idMedioDepago) {
         this.idMedioDepago = idMedioDepago;
     }
 
@@ -140,7 +140,7 @@ public class EstudianteDTO implements Serializable {
     /**
      * @param calificacionPromedio the calificacionPromedio to set
      */
-    public void setCalificacionPromedio(double calificacionPromedio) {
+    public void setCalificacionPromedio(Double calificacionPromedio) {
         this.calificacionPromedio = calificacionPromedio;
     }
 
@@ -154,7 +154,7 @@ public class EstudianteDTO implements Serializable {
     /**
      * @param semestre the semestre to set
      */
-    public void setSemestre(int semestre) {
+    public void setSemestre(Integer semestre) {
         this.semestre = semestre;
     }
 

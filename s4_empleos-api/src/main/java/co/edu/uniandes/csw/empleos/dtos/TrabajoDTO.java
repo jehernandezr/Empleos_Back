@@ -14,9 +14,9 @@ import java.io.Serializable;
  */
 public class TrabajoDTO implements Serializable {
 
-    private boolean verificado;
-    private boolean cumplido;
-    private long id;
+    private Boolean verificado;
+    private Boolean cumplido;
+    private Long id;
     private String token;
 
     public TrabajoDTO() {
@@ -37,23 +37,23 @@ public class TrabajoDTO implements Serializable {
         return id;
     }
     
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public boolean isVerificado() {
+    public Boolean isVerificado() {
         return verificado;
     }
 
-    public void setVerificado(boolean verificado) {
+    public void setVerificado(Boolean verificado) {
         this.verificado = verificado;
     }
 
-    public boolean isCumplido() {
+    public Boolean isCumplido() {
         return cumplido;
     }
 
-    public void setCumplido(boolean cumplido) {
+    public void setCumplido(Boolean cumplido) {
         this.cumplido = cumplido;
     }
     

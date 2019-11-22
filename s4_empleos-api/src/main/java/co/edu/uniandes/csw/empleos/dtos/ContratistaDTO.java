@@ -23,7 +23,7 @@ public class ContratistaDTO implements Serializable{
     /**
      * Variable que representa si el contratista es externo.
      */
-    private boolean esExterno;
+    private Boolean esExterno;
     
     /**
      * Variable que representa el nombre del contratista.
@@ -80,14 +80,14 @@ public class ContratistaDTO implements Serializable{
     /**
      * @return the esExterno
      */
-    public boolean isEsExterno() {
+    public Boolean isEsExterno() {
         return esExterno;
     }
 
     /**
      * @param esExterno the esExterno to set
      */
-    public void setEsExterno(boolean esExterno) {
+    public void setEsExterno(Boolean esExterno) {
         this.esExterno = esExterno;
     }
 

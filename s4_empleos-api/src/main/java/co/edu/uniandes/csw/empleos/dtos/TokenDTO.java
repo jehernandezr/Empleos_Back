@@ -16,7 +16,7 @@ public class TokenDTO implements Serializable {
 
     private String token;
     private String tipo;
-    private long id;
+    private Long id;
 
     public TokenDTO() {
         //Constructor vacío Token
@@ -62,7 +62,7 @@ public class TokenDTO implements Serializable {
     /**
      * @return the id
      */
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

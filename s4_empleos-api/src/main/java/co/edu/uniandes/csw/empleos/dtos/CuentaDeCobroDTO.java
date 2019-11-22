@@ -17,7 +17,7 @@ public class CuentaDeCobroDTO implements Serializable {
     /**
      * número de la cuenta de cobro
      */
-    private int numeroCuentaDeCobro;
+    private Integer numeroCuentaDeCobro;
 
     /**
      * fecha de la cuenta de cobro
@@ -27,7 +27,7 @@ public class CuentaDeCobroDTO implements Serializable {
     /**
      * Valor que se debe.
      */
-    private int valor;
+    private Integer valor;
 
     /**
      * Nombre del nombreEstudiante a quien se le debe el valor
@@ -102,7 +102,7 @@ public class CuentaDeCobroDTO implements Serializable {
         return token;
     }
     
-    public void setNumeroCuentaDeCobro(int numeroCuentaDeCobro) {
+    public void setNumeroCuentaDeCobro(Integer numeroCuentaDeCobro) {
         this.numeroCuentaDeCobro = numeroCuentaDeCobro;
     }
     
@@ -122,7 +122,7 @@ public class CuentaDeCobroDTO implements Serializable {
         this.id = id;
     }
 
-    public int getNumeroCuentaDeCobro() {
+    public Integer getNumeroCuentaDeCobro() {
         return numeroCuentaDeCobro;
     }
 
@@ -130,11 +130,11 @@ public class CuentaDeCobroDTO implements Serializable {
         this.fecha = fecha;
     }
 
-    public int getValor() {
+    public Integer getValor() {
         return valor;
     }
 
-    public void setValor(int valor) {
+    public void setValor(Integer valor) {
         this.valor = valor;
     }
 

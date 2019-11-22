@@ -24,7 +24,7 @@ public class OfertaDTO implements Serializable {
     /**
      * Variable que representa el tipo de oferta (Normal o Express).
      */
-    private int tipoOferta;
+    private Integer tipoOferta;
 
     /**
      * Variable que representa el pago por hora de la oferta.
@@ -35,7 +35,7 @@ public class OfertaDTO implements Serializable {
      * Variable que representa sel numero de vacantes de una oferta.
      * numeroDeVacantes>1
      */
-    private int numeroDeVacantes;
+    private Integer numeroDeVacantes;
     /**
      * Variable que representa el nombre de la oferta.
      */
@@ -45,7 +45,7 @@ public class OfertaDTO implements Serializable {
      * Variable que si una oferta esta abierta al publico.
      *
      */
-    private boolean estaAbierta;
+    private Boolean estaAbierta;
 
     /**
      * Variable que representa a categoria de empleo de la oferta.
@@ -56,13 +56,13 @@ public class OfertaDTO implements Serializable {
      * Variable que representa el porcentaje de pago extra de una oferta
      * Express.
      */
-    private int porcentajePagoAdicional;
+    private Integer porcentajePagoAdicional;
 
     /**
      * Variable que representa el tiempo maximo de aplicacion de una oferta
      * Express.
      */
-    private int tiempoMaximoAplicacion;
+    private Integer tiempoMaximoAplicacion;
 
     /**
      * Variable que representa los requisitos de un aplicante (Separados por un
@@ -164,21 +164,21 @@ public class OfertaDTO implements Serializable {
     /**
      * @return the tipoOferta
      */
-    public int getTipoOferta() {
+    public Integer getTipoOferta() {
         return tipoOferta;
     }
 
     /**
      * @param tipoOferta the tipoOferta to set
      */
-    public void setTipoOferta(int tipoOferta) {
+    public void setTipoOferta(Integer tipoOferta) {
         this.tipoOferta = tipoOferta;
     }
 
     /**
      * @param numeroDeVacantes the numeroDeVacantes to set
      */
-    public void setNumeroDeVacantes(int numeroDeVacantes) {
+    public void setNumeroDeVacantes(Integer numeroDeVacantes) {
         this.numeroDeVacantes = numeroDeVacantes;
     }
 
@@ -234,7 +234,7 @@ public class OfertaDTO implements Serializable {
     /**
      * @return the tiempoMaximoAplicacion
      */
-    public int getTiempoMaximoAplicacion() {
+    public Integer getTiempoMaximoAplicacion() {
         return tiempoMaximoAplicacion;
     }
 
@@ -255,21 +255,21 @@ public class OfertaDTO implements Serializable {
     /**
      * @return the porcentajePagoAdicional
      */
-    public int getPorcentajePagoAdicional() {
+    public Integer getPorcentajePagoAdicional() {
         return porcentajePagoAdicional;
     }
 
     /**
      * @param tiempoMaximoAplicacion the tiempoMaximoAplicacion to set
      */
-    public void setTiempoMaximoAplicacion(int tiempoMaximoAplicacion) {
+    public void setTiempoMaximoAplicacion(Integer tiempoMaximoAplicacion) {
         this.tiempoMaximoAplicacion = tiempoMaximoAplicacion;
     }
 
     /**
      * @param porcentajePagoAdicional the porcentajePagoAdicional to set
      */
-    public void setPorcentajePagoAdicional(int porcentajePagoAdicional) {
+    public void setPorcentajePagoAdicional(Integer porcentajePagoAdicional) {
         this.porcentajePagoAdicional = porcentajePagoAdicional;
     }
 
@@ -283,7 +283,7 @@ public class OfertaDTO implements Serializable {
     /**
      * @param estaAbierta the estaAbierta to set
      */
-    public void setEstaAbierta(boolean estaAbierta) {
+    public void setEstaAbierta(Boolean estaAbierta) {
         this.estaAbierta = estaAbierta;
     }
 
@@ -340,7 +340,7 @@ public class OfertaDTO implements Serializable {
     /**
      * @return the numeroDeVacantes
      */
-    public int getNumeroDeVacantes() {
+    public Integer getNumeroDeVacantes() {
         return numeroDeVacantes;
     }
 
