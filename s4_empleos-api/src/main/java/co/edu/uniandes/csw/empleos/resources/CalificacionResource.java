@@ -167,7 +167,7 @@ public class CalificacionResource {
         if (tok == null) {
 
             throw new BusinessLogicException("No se encuentra Registrado");
-        }if( tok.getTipo().equals("Enstutdiante"))
+        }if( !tok.getTipo().equals("Contratista"))
             {
 
             throw new BusinessLogicException("No tiene permiso para esto");
