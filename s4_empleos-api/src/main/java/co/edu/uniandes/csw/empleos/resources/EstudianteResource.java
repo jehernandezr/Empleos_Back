@@ -63,6 +63,7 @@ public class EstudianteResource {
 
     @POST
     public EstudianteDTO createEstudiante(EstudianteDTO estudiante) throws BusinessLogicException {
+        System.out.println("**** Arrive here");
         return new EstudianteDTO(estudianteLogic.crearEstudiante(estudiante.toEntity()));
     }
 

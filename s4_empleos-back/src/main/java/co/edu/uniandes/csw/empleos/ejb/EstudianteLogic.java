@@ -35,6 +35,7 @@ public class EstudianteLogic {
     
     // Intenta crear al estudiante
     public EstudianteEntity crearEstudiante(EstudianteEntity entity) throws BusinessLogicException {
+        System.out.println("**** :)");
             verificarReglasNegocio(entity);
             entity = persistence.create(entity);
             return entity;    

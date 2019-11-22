@@ -115,7 +115,7 @@ public class EstudianteLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void crearCalificacionPromedioMenorCero() throws BusinessLogicException {
         EstudianteEntity newEntity = factory.manufacturePojo(EstudianteEntity.class);
-        newEntity.setCalificacionPromedio(-1);
+        newEntity.setCalificacionPromedio(-1d);
         EstudianteEntity result = estudianteLogic.crearEstudiante(newEntity);
     }
 
@@ -128,7 +128,7 @@ public class EstudianteLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void crearCalificacionPromedioMayorCinco() throws BusinessLogicException {
         EstudianteEntity newEntity = factory.manufacturePojo(EstudianteEntity.class);
-        newEntity.setCalificacionPromedio(6);
+        newEntity.setCalificacionPromedio(new Double(6));
         EstudianteEntity result = estudianteLogic.crearEstudiante(newEntity);
     }
 
@@ -313,7 +313,7 @@ public class EstudianteLogicTest {
         newEntity.setCorreo("algo@uniandes.edu.co");
         newEntity.setSemestre(5);
         newEntity.setId(id);
-        newEntity.setCalificacionPromedio(-1);
+        newEntity.setCalificacionPromedio(-1d);
         try {
             estudianteLogic.updateEstudiante(newEntity);
             Assert.fail("No debería permitir crear un estudiante con una calificación promedio menor a 0");
@@ -325,7 +325,7 @@ public class EstudianteLogicTest {
         newEntity.setCorreo("algo@uniandes.edu.co");
         newEntity.setSemestre(5);
         newEntity.setId(id);
-        newEntity.setCalificacionPromedio(6);
+        newEntity.setCalificacionPromedio(6d);
         try {
             estudianteLogic.updateEstudiante(newEntity);
             Assert.fail("No debería permitir crear un estudiante con una calificación promedio mayor a 5");

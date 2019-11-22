@@ -76,14 +76,14 @@ public class EstudianteEntity extends BaseEntity implements Serializable {
     /**
      * @return the idMedioDepago
      */
-    public long getIdMedioDepago() {
+    public Long getIdMedioDepago() {
         return this.idMedioDepago;
     }
 
     /**
      * @param idMedioDepago the idMedioDepago to set
      */
-    public void setIdMedioDepago(long idMedioDepago) {
+    public void setIdMedioDepago(Long idMedioDepago) {
         this.idMedioDepago = idMedioDepago;
     }
 
@@ -118,14 +118,14 @@ public class EstudianteEntity extends BaseEntity implements Serializable {
     /**
      * @return the calificacionPromedio
      */
-    public double getCalificacionPromedio() {
+    public Double getCalificacionPromedio() {
         return this.calificacionPromedio;
     }
 
     /**
      * @param calificacionPromedio the calificacionPromedio to set
      */
-    public void setCalificacionPromedio(double calificacionPromedio) {
+    public void setCalificacionPromedio(Double calificacionPromedio) {
         this.calificacionPromedio = calificacionPromedio;
     }
 
@@ -146,14 +146,14 @@ public class EstudianteEntity extends BaseEntity implements Serializable {
     /**
      * @return the semestre
      */
-    public int getSemestre() {
+    public Integer getSemestre() {
         return this.semestre;
     }
 
     /**
      * @param semestre the semestre to set
      */
-    public void setSemestre(int semestre) {
+    public void setSemestre(Integer semestre) {
         this.semestre = semestre;
     }
 
