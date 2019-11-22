@@ -35,24 +35,18 @@ public class EstudianteLogic {
     
     // Intenta crear al estudiante
     public EstudianteEntity crearEstudiante(EstudianteEntity entity) throws BusinessLogicException {
-        try {
             verificarReglasNegocio(entity);
             entity = persistence.create(entity);
-            return entity;
-        } catch(BusinessLogicException ex) {
-            throw ex;
-        }
+            return entity;    
     }
     
     //Intenta actualizar al estudiante
     public EstudianteEntity updateEstudiante(EstudianteEntity entity) throws BusinessLogicException {
-         try {
+         
             verificarReglasNegocio(entity);
             entity = persistence.update(entity);
             return entity;
-        } catch(BusinessLogicException ex) {
-            throw ex;
-        }
+         
     }
     
     //No hay reglas de negocio sobre leer un estudiante

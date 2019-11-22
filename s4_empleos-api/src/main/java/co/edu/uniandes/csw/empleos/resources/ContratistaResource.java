@@ -37,6 +37,8 @@ import javax.ws.rs.WebApplicationException;
 @RequestScoped
 public class ContratistaResource {
     
+    private static final  String NO_EXISTE = " no existe.";
+    private static final  String RECURSO = "El recurso /contratista/";
     // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
     @Inject
     private ContratistaLogic contratistaLogic; 
@@ -47,11 +49,9 @@ public class ContratistaResource {
     
      @POST
     public ContratistaDTO createContratista(ContratistaDTO contratista) throws BusinessLogicException {
-       
-            ContratistaDTO e = new ContratistaDTO(contratistaLogic.createContratista(contratista.toEntity()));
+
+       return new ContratistaDTO(contratistaLogic.createContratista(contratista.toEntity()));
         
-       return e;
-        //return "hola" + (contratista != null ? ("not null nombre: " + contratista.getNombre()) : "null");
     }
     
      /**
@@ -62,8 +62,8 @@ public class ContratistaResource {
      */
     @GET
     public List<ContratistaDetailDTO> getContratistas() {
-        List<ContratistaDetailDTO> contratistas = listEntity2DTO(contratistaLogic.getContratistas());
-        return contratistas;
+       
+        return listEntity2DTO(contratistaLogic.getContratistas());
     }
     
     /**
@@ -80,10 +80,10 @@ public class ContratistaResource {
     public ContratistaDetailDTO getContratista(@PathParam("id") Long contratistaId) throws BusinessLogicException {
         ContratistaEntity calEntity = contratistaLogic.getContratista(contratistaId);
         if (calEntity == null) {
-            throw new WebApplicationException("El recurso /contratista/" + contratistaId + " no existe.", 404);
+            throw new WebApplicationException(RECURSO + contratistaId + NO_EXISTE, 404);
         }
-        ContratistaDetailDTO calDTO = new ContratistaDetailDTO(calEntity);
-        return calDTO;
+        
+        return new ContratistaDetailDTO(calEntity);
     }
     
      /**
@@ -105,10 +105,10 @@ public class ContratistaResource {
     public ContratistaDetailDTO updateContratista(@PathParam("contratistaId") Long contratistaId, ContratistaDetailDTO contratista) throws BusinessLogicException {
         contratista.setId(contratistaId);
         if (contratistaLogic.getContratista(contratistaId) == null) {
-            throw new WebApplicationException("El recurso /contratista/" + contratistaId + " no existe.", 404);
+            throw new WebApplicationException(RECURSO + contratistaId + NO_EXISTE, 404);
         }
-        ContratistaDetailDTO dto = new ContratistaDetailDTO(contratistaLogic.updateContratista(contratista.getId(),contratista.toEntity()));
-        return dto;
+        
+        return new ContratistaDetailDTO(contratistaLogic.updateContratista(contratista.getId(),contratista.toEntity()));
     }
     
      /**
@@ -124,7 +124,7 @@ public class ContratistaResource {
     @Path("{contratistaId: \\d+}")
     public void deleteContratista(@PathParam("contratistaId") Long contratistaId) throws BusinessLogicException {
         if (contratistaLogic.getContratista(contratistaId) == null) {
-            throw new WebApplicationException("El recurso /contratista/" + contratistaId + " no existe.", 404);
+            throw new WebApplicationException(RECURSO + contratistaId + NO_EXISTE, 404);
         }
        
         contratistaLogic.deleteContratista(contratistaId);

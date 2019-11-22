@@ -2,13 +2,14 @@ package co.edu.uniandes.csw.empleos.resources;
 
 import co.edu.uniandes.csw.empleos.dtos.CalificacionDTO;
 import co.edu.uniandes.csw.empleos.dtos.CuentaDeCobroDTO;
+
 import co.edu.uniandes.csw.empleos.ejb.CuentaDeCobroLogic;
-import co.edu.uniandes.csw.empleos.entities.CalificacionEntity;
+
 import co.edu.uniandes.csw.empleos.entities.CuentaDeCobroEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -31,14 +32,15 @@ import javax.ws.rs.WebApplicationException;
 @RequestScoped
 public class CuentaDeCobroResource {
    
-    private static final Logger LOGGER =Logger.getLogger(CuentaDeCobroResource.class.getName());
+    
     
     @Inject
     private CuentaDeCobroLogic cuentaDeCobroLogic;
     
     @POST
-    public CuentaDeCobroDTO createCuentaDeCobro(CuentaDeCobroDTO cuenta) {
-        return cuenta;
+    public CuentaDeCobroDTO createCuentaDeCobro(CuentaDeCobroDTO cuenta) throws BusinessLogicException {
+
+        return new CuentaDeCobroDTO(cuentaDeCobroLogic.createCuentaDeCobro(cuenta.toEntity()));
     }
     
     /**
@@ -61,9 +63,9 @@ public class CuentaDeCobroResource {
             throw new WebApplicationException("El recurso /cuentas/" + cuentaId + "no existe.", 404);
         }
         
-        CuentaDeCobroDTO cuentaDTO = new CuentaDeCobroDTO(entity);
+       
         
-        return cuentaDTO;
+        return new CuentaDeCobroDTO(entity);
     }
     
        /**
@@ -74,8 +76,8 @@ public class CuentaDeCobroResource {
      */
     @GET
     public List<CuentaDeCobroDTO> getCuentasDeCobro() {
-        List<CuentaDeCobroDTO> listaCuentas = listEntity2DTO(cuentaDeCobroLogic.getCuentasDeCobro());
-        return listaCuentas;
+        
+        return listEntity2DTO(cuentaDeCobroLogic.getCuentasDeCobro());
     }
     
     /**
@@ -99,8 +101,8 @@ public class CuentaDeCobroResource {
         if (cuentaDeCobroLogic.getCuenta(calId) == null) {
             throw new WebApplicationException("El recurso /cuentas/" + calId + " no existe.", 404);
         }
-        CuentaDeCobroDTO detailDTO = new CuentaDeCobroDTO(cuentaDeCobroLogic.updateCuentaDeCobro(calId, calif.toEntity()));
-        return detailDTO;
+        
+        return new CuentaDeCobroDTO(cuentaDeCobroLogic.updateCuentaDeCobro(calId, calif.toEntity()));
     }
     
      /**

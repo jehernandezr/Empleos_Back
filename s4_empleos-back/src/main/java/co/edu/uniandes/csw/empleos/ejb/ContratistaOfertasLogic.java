@@ -81,7 +81,7 @@ public class ContratistaOfertasLogic {
      * @param ofertas
      * @return La de las ofertas actualizada.
      */
-    public List<OfertaEntity> replaceOfertas(Long contratistaId, List<OfertaEntity> ofertas) {
+    public List<OfertaEntity> replaceOfertas(Long contratistaId) {
 
         ContratistaEntity contratistaEntity = contratistaPersistence.find(contratistaId);
         List<OfertaEntity> ofertaList = ofertaPersistance.findAll();

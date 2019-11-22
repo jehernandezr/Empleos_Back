@@ -3,6 +3,7 @@ package co.edu.uniandes.csw.empleos.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
@@ -43,12 +44,12 @@ public class EstudianteEntity extends BaseEntity implements Serializable {
 
     @PodamExclude
     @OneToMany(mappedBy = "estudiante")
-    private List<CalificacionEntity> calificaciones = new ArrayList<CalificacionEntity>();
+    private List<CalificacionEntity> calificaciones = new ArrayList<>();
 
 
     // Atributo que representa la cuenta bancaria que tiene el estudiante
     @PodamExclude
-    @javax.persistence.OneToOne(fetch = FetchType.LAZY)
+    @javax.persistence.OneToOne( cascade = CascadeType.PERSIST ,fetch = FetchType.LAZY)
     private CuentaBancariaEntity cuentaBancaria;
 
   
@@ -198,4 +199,15 @@ public class EstudianteEntity extends BaseEntity implements Serializable {
         this.cuentaBancaria = cuentaBancaria;
     }
 
+    @Override
+    public boolean equals(Object obj)
+    {
+        return super.equals(obj);
+    }
+    
+    @Override
+    public int hashCode()
+    {
+        return super.hashCode();
+    }
 }

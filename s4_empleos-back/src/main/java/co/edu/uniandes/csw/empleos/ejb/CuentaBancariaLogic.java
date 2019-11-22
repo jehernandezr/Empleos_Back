@@ -6,10 +6,8 @@
 package co.edu.uniandes.csw.empleos.ejb;
 
 import co.edu.uniandes.csw.empleos.entities.CuentaBancariaEntity;
-import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.empleos.persistence.CuentaBancariaPersistence;
-import co.edu.uniandes.csw.empleos.persistence.EstudiantePersistence;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -124,9 +122,9 @@ public class CuentaBancariaLogic {
             throw new BusinessLogicException("el nombre de banco no puede ser vacío");
         }
 
-        CuentaBancariaEntity newCuentaBancariaEntity = persistence.update(cuentaBancoEntity);
+        
 
-        return newCuentaBancariaEntity;
+        return persistence.update(cuentaBancoEntity);
     }
 
     /**
@@ -138,7 +136,7 @@ public class CuentaBancariaLogic {
      * @param cuentaId
      * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
      */
-    public void delete(Long cuentaId) throws BusinessLogicException {
+    public void delete(Long cuentaId) {
 
         persistence.delete(cuentaId);
     }

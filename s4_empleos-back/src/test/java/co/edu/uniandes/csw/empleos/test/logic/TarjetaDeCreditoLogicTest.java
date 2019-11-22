@@ -130,6 +130,7 @@ public class TarjetaDeCreditoLogicTest {
         TarjetaDeCreditoEntity newEntity2 = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
         newEntity2.setNumero("4234567891234567");
         TarjetaDeCreditoEntity result = tarjetaCreditoLogic.createTarjetaDeCredito(newEntity2);
+        Assert.assertNull(tarjetaCreditoLogic.getTarjetaCredito(newEntity2.getId()));
     }
 
     @Test(expected = BusinessLogicException.class)
@@ -165,17 +166,23 @@ public class TarjetaDeCreditoLogicTest {
         TarjetaDeCreditoEntity entity = em.find(TarjetaDeCreditoEntity.class, result.getId());
         Assert.assertEquals(entity.getCVC(), result.getCVC());
     }
+    
     @Test (expected = BusinessLogicException.class)
     public void createTarjetaDeCreditoNullCVC() throws BusinessLogicException
     {
         TarjetaDeCreditoEntity newEntity = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
+        newEntity.setNumero("5234567890123456");
+        newEntity.setFecha("12/12");
         newEntity.setCVC(null);
         TarjetaDeCreditoEntity result = tarjetaCreditoLogic.createTarjetaDeCredito(newEntity);
     }
     
+    
     @Test (expected = BusinessLogicException.class)
     public void createTarjetaDeCreditoMalCVC() throws BusinessLogicException {
         TarjetaDeCreditoEntity newEntity = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
+        newEntity.setNumero("5234567890123456");
+        newEntity.setFecha("12/12");
         newEntity.setCVC("12345");
         TarjetaDeCreditoEntity result = tarjetaCreditoLogic.createTarjetaDeCredito(newEntity);
     }
@@ -183,6 +190,8 @@ public class TarjetaDeCreditoLogicTest {
     @Test (expected = BusinessLogicException.class)
     public void createTarjetaDeCreditoVacioCVC() throws BusinessLogicException {
         TarjetaDeCreditoEntity newEntity = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
+        newEntity.setNumero("5234567890123456");
+        newEntity.setFecha("12/12");
         newEntity.setCVC("");
         TarjetaDeCreditoEntity result = tarjetaCreditoLogic.createTarjetaDeCredito(newEntity);
     }
@@ -204,6 +213,8 @@ public class TarjetaDeCreditoLogicTest {
     public void createTarjetaDeCreditoFechaNull() throws BusinessLogicException
     {
         TarjetaDeCreditoEntity newEntity = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
+        newEntity.setNumero("4234567890123456");
+        newEntity.setCVC("123");
         newEntity.setFecha(null);
         TarjetaDeCreditoEntity result = tarjetaCreditoLogic.createTarjetaDeCredito(newEntity);
     }
@@ -212,6 +223,8 @@ public class TarjetaDeCreditoLogicTest {
     public void createTarjetaDeCreditoFechaVacia() throws BusinessLogicException
     {
         TarjetaDeCreditoEntity newEntity = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
+        newEntity.setNumero("4234567890123456");
+        newEntity.setCVC("123");
         newEntity.setFecha("");
         TarjetaDeCreditoEntity result = tarjetaCreditoLogic.createTarjetaDeCredito(newEntity);
     }
@@ -220,6 +233,8 @@ public class TarjetaDeCreditoLogicTest {
     public void createTarjetaDeCreditoFechaLenght() throws BusinessLogicException
     {
         TarjetaDeCreditoEntity newEntity = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
+        newEntity.setNumero("4234567890123456");
+        newEntity.setCVC("123");
         newEntity.setFecha("12/123");
         TarjetaDeCreditoEntity result = tarjetaCreditoLogic.createTarjetaDeCredito(newEntity);
     }
@@ -255,7 +270,238 @@ public class TarjetaDeCreditoLogicTest {
         Assert.assertEquals(pojoEntity.getCVC(), result.getCVC());
         Assert.assertEquals(pojoEntity.getFecha(), result.getFecha());
     }
-             
+    
+    @Test (expected = BusinessLogicException.class)
+    public void updateTarjetaDeCreditoNumeroLenght() throws BusinessLogicException{
+        TarjetaDeCreditoEntity tarjetaEntity = data.get(0);
+        TarjetaDeCreditoEntity pojoEntity = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
+        
+        pojoEntity.setId(tarjetaEntity.getId());
+        pojoEntity.setNumero("52345678901234561");
+        pojoEntity.setCVC("523");
+        pojoEntity.setFecha("12/12");
+        tarjetaCreditoLogic.updateTarjetaCredito(pojoEntity.getId(), pojoEntity);
+        
+        TarjetaDeCreditoEntity result = em.find(TarjetaDeCreditoEntity.class, tarjetaEntity.getId() );
+        
+        Assert.assertEquals(pojoEntity.getId(), result.getId());
+        Assert.assertEquals(pojoEntity.getNumero(), result.getNumero());
+        Assert.assertEquals(pojoEntity.getCVC(), result.getCVC());
+        Assert.assertEquals(pojoEntity.getFecha(), result.getFecha());
+    }
+    
+    @Test (expected = BusinessLogicException.class)
+    public void updateTarjetaDeCreditoNumeroNull() throws BusinessLogicException{
+        TarjetaDeCreditoEntity tarjetaEntity = data.get(0);
+        TarjetaDeCreditoEntity pojoEntity = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
+        
+        pojoEntity.setId(tarjetaEntity.getId());
+        pojoEntity.setNumero(null);
+        pojoEntity.setCVC("523");
+        pojoEntity.setFecha("12/12");
+        tarjetaCreditoLogic.updateTarjetaCredito(pojoEntity.getId(), pojoEntity);
+        
+        TarjetaDeCreditoEntity result = em.find(TarjetaDeCreditoEntity.class, tarjetaEntity.getId() );
+        
+        Assert.assertEquals(pojoEntity.getId(), result.getId());
+        Assert.assertEquals(pojoEntity.getNumero(), result.getNumero());
+        Assert.assertEquals(pojoEntity.getCVC(), result.getCVC());
+        Assert.assertEquals(pojoEntity.getFecha(), result.getFecha());
+    }
+    
+    @Test (expected = BusinessLogicException.class)
+    public void updateTarjetaDeCreditoNumeroVacio() throws BusinessLogicException{
+        TarjetaDeCreditoEntity tarjetaEntity = data.get(0);
+        TarjetaDeCreditoEntity pojoEntity = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
+        
+        pojoEntity.setId(tarjetaEntity.getId());
+        pojoEntity.setNumero("");
+        pojoEntity.setCVC("523");
+        pojoEntity.setFecha("12/12");
+        tarjetaCreditoLogic.updateTarjetaCredito(pojoEntity.getId(), pojoEntity);
+        
+        TarjetaDeCreditoEntity result = em.find(TarjetaDeCreditoEntity.class, tarjetaEntity.getId() );
+        
+        Assert.assertEquals(pojoEntity.getId(), result.getId());
+        Assert.assertEquals(pojoEntity.getNumero(), result.getNumero());
+        Assert.assertEquals(pojoEntity.getCVC(), result.getCVC());
+        Assert.assertEquals(pojoEntity.getFecha(), result.getFecha());
+    }
+    
+    @Test (expected = BusinessLogicException.class)
+    public void updateTarjetaDeCreditoNumeroMal() throws BusinessLogicException{
+        TarjetaDeCreditoEntity tarjetaEntity = data.get(0);
+        TarjetaDeCreditoEntity pojoEntity = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
+        
+        pojoEntity.setId(tarjetaEntity.getId());
+        pojoEntity.setNumero("2234567890123456");
+        pojoEntity.setCVC("523");
+        pojoEntity.setFecha("12/12");
+        tarjetaCreditoLogic.updateTarjetaCredito(pojoEntity.getId(), pojoEntity);
+        
+        TarjetaDeCreditoEntity result = em.find(TarjetaDeCreditoEntity.class, tarjetaEntity.getId() );
+        
+        Assert.assertEquals(pojoEntity.getId(), result.getId());
+        Assert.assertEquals(pojoEntity.getNumero(), result.getNumero());
+        Assert.assertEquals(pojoEntity.getCVC(), result.getCVC());
+        Assert.assertEquals(pojoEntity.getFecha(), result.getFecha());
+    }
+    
+    @Test (expected = BusinessLogicException.class)
+    public void updateTarjetaDeCreditoCVCLenght() throws BusinessLogicException{
+        TarjetaDeCreditoEntity tarjetaEntity = data.get(0);
+        TarjetaDeCreditoEntity pojoEntity = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
+        
+        pojoEntity.setId(tarjetaEntity.getId());
+        pojoEntity.setNumero("5234567890123456");
+        pojoEntity.setCVC("5231");
+        pojoEntity.setFecha("12/12");
+        tarjetaCreditoLogic.updateTarjetaCredito(pojoEntity.getId(), pojoEntity);
+        
+        TarjetaDeCreditoEntity result = em.find(TarjetaDeCreditoEntity.class, tarjetaEntity.getId() );
+        
+        Assert.assertEquals(pojoEntity.getId(), result.getId());
+        Assert.assertEquals(pojoEntity.getNumero(), result.getNumero());
+        Assert.assertEquals(pojoEntity.getCVC(), result.getCVC());
+        Assert.assertEquals(pojoEntity.getFecha(), result.getFecha());
+    }
+    
+    @Test (expected = BusinessLogicException.class)
+    public void updateTarjetaDeCreditoCVCVacio() throws BusinessLogicException{
+        TarjetaDeCreditoEntity tarjetaEntity = data.get(0);
+        TarjetaDeCreditoEntity pojoEntity = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
+        
+        pojoEntity.setId(tarjetaEntity.getId());
+        pojoEntity.setNumero("5234567890123456");
+        pojoEntity.setCVC("");
+        pojoEntity.setFecha("12/12");
+        tarjetaCreditoLogic.updateTarjetaCredito(pojoEntity.getId(), pojoEntity);
+        
+        TarjetaDeCreditoEntity result = em.find(TarjetaDeCreditoEntity.class, tarjetaEntity.getId() );
+        
+        Assert.assertEquals(pojoEntity.getId(), result.getId());
+        Assert.assertEquals(pojoEntity.getNumero(), result.getNumero());
+        Assert.assertEquals(pojoEntity.getCVC(), result.getCVC());
+        Assert.assertEquals(pojoEntity.getFecha(), result.getFecha());
+    }
+    
+    @Test (expected = BusinessLogicException.class)
+    public void updateTarjetaDeCreditoCVCNulo() throws BusinessLogicException{
+        TarjetaDeCreditoEntity tarjetaEntity = data.get(0);
+        TarjetaDeCreditoEntity pojoEntity = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
+        
+        pojoEntity.setId(tarjetaEntity.getId());
+        pojoEntity.setNumero("5234567890123456");
+        pojoEntity.setCVC(null);
+        pojoEntity.setFecha("12/12");
+        tarjetaCreditoLogic.updateTarjetaCredito(pojoEntity.getId(), pojoEntity);
+        
+        TarjetaDeCreditoEntity result = em.find(TarjetaDeCreditoEntity.class, tarjetaEntity.getId() );
+        
+        Assert.assertEquals(pojoEntity.getId(), result.getId());
+        Assert.assertEquals(pojoEntity.getNumero(), result.getNumero());
+        Assert.assertEquals(pojoEntity.getCVC(), result.getCVC());
+        Assert.assertEquals(pojoEntity.getFecha(), result.getFecha());
+    }
+    
+    @Test (expected = BusinessLogicException.class)
+    public void updateTarjetaDeCreditoFechaLenght() throws BusinessLogicException{
+        TarjetaDeCreditoEntity tarjetaEntity = data.get(0);
+        TarjetaDeCreditoEntity pojoEntity = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
+        
+        pojoEntity.setId(tarjetaEntity.getId());
+        pojoEntity.setNumero("5234567890123456");
+        pojoEntity.setCVC("523");
+        pojoEntity.setFecha("12/121");
+        tarjetaCreditoLogic.updateTarjetaCredito(pojoEntity.getId(), pojoEntity);
+        
+        TarjetaDeCreditoEntity result = em.find(TarjetaDeCreditoEntity.class, tarjetaEntity.getId() );
+        
+        Assert.assertEquals(pojoEntity.getId(), result.getId());
+        Assert.assertEquals(pojoEntity.getNumero(), result.getNumero());
+        Assert.assertEquals(pojoEntity.getCVC(), result.getCVC());
+        Assert.assertEquals(pojoEntity.getFecha(), result.getFecha());
+    }
+    
+    @Test (expected = BusinessLogicException.class)
+    public void updateTarjetaDeCreditoFechaVacia() throws BusinessLogicException{
+        TarjetaDeCreditoEntity tarjetaEntity = data.get(0);
+        TarjetaDeCreditoEntity pojoEntity = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
+        
+        pojoEntity.setId(tarjetaEntity.getId());
+        pojoEntity.setNumero("5234567890123456");
+        pojoEntity.setCVC("523");
+        pojoEntity.setFecha("");
+        tarjetaCreditoLogic.updateTarjetaCredito(pojoEntity.getId(), pojoEntity);
+        
+        TarjetaDeCreditoEntity result = em.find(TarjetaDeCreditoEntity.class, tarjetaEntity.getId() );
+        
+        Assert.assertEquals(pojoEntity.getId(), result.getId());
+        Assert.assertEquals(pojoEntity.getNumero(), result.getNumero());
+        Assert.assertEquals(pojoEntity.getCVC(), result.getCVC());
+        Assert.assertEquals(pojoEntity.getFecha(), result.getFecha());
+    }
+    
+    @Test (expected = BusinessLogicException.class)
+    public void updateTarjetaDeCreditoFechaNull() throws BusinessLogicException{
+        TarjetaDeCreditoEntity tarjetaEntity = data.get(0);
+        TarjetaDeCreditoEntity pojoEntity = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
+        
+        pojoEntity.setId(tarjetaEntity.getId());
+        pojoEntity.setNumero("5234567890123456");
+        pojoEntity.setCVC("523");
+        pojoEntity.setFecha(null);
+        tarjetaCreditoLogic.updateTarjetaCredito(pojoEntity.getId(), pojoEntity);
+        
+        TarjetaDeCreditoEntity result = em.find(TarjetaDeCreditoEntity.class, tarjetaEntity.getId() );
+        
+        Assert.assertEquals(pojoEntity.getId(), result.getId());
+        Assert.assertEquals(pojoEntity.getNumero(), result.getNumero());
+        Assert.assertEquals(pojoEntity.getCVC(), result.getCVC());
+        Assert.assertEquals(pojoEntity.getFecha(), result.getFecha());
+    }
+    
+    @Test (expected = BusinessLogicException.class)
+    public void updateTarjetaDeCreditoFechaMal() throws BusinessLogicException{
+        TarjetaDeCreditoEntity tarjetaEntity = data.get(0);
+        TarjetaDeCreditoEntity pojoEntity = factory.manufacturePojo(TarjetaDeCreditoEntity.class);
+        
+        pojoEntity.setId(tarjetaEntity.getId());
+        pojoEntity.setNumero("5234567890123456");
+        pojoEntity.setCVC("523");
+        pojoEntity.setFecha("12121");
+        tarjetaCreditoLogic.updateTarjetaCredito(pojoEntity.getId(), pojoEntity);
+        
+        TarjetaDeCreditoEntity result = em.find(TarjetaDeCreditoEntity.class, tarjetaEntity.getId() );
+        
+        Assert.assertEquals(pojoEntity.getId(), result.getId());
+        Assert.assertEquals(pojoEntity.getNumero(), result.getNumero());
+        Assert.assertEquals(pojoEntity.getCVC(), result.getCVC());
+        Assert.assertEquals(pojoEntity.getFecha(), result.getFecha());
+    }
+    
+    @Test
+    public void getTarjetasTest() {
+        List<TarjetaDeCreditoEntity> list = tarjetaCreditoLogic.getTarjetas();
+        Assert.assertEquals(data.size(), list.size());
+        for (TarjetaDeCreditoEntity entity : list) {
+            boolean found = false;
+            for (TarjetaDeCreditoEntity storedEntity : data) {
+                if (entity.getId().equals(storedEntity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
+    }
+    
+    @Test
+    public void deleteTarjetaTest() throws BusinessLogicException {
+        TarjetaDeCreditoEntity entity = data.get(0);
+        tarjetaCreditoLogic.deleteTarjetaCredito(entity.getId());
+        TarjetaDeCreditoEntity deleted = em.find(TarjetaDeCreditoEntity.class, entity.getId());
+        Assert.assertNull(deleted);
+    }
     
             
     

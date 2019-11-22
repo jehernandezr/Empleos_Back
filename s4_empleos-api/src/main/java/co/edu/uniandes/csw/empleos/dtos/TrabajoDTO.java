@@ -17,6 +17,7 @@ public class TrabajoDTO implements Serializable {
     private boolean verificado;
     private boolean cumplido;
     private long id;
+    private String token;
 
     public TrabajoDTO() {
         //Constructor vacío
@@ -27,6 +28,7 @@ public class TrabajoDTO implements Serializable {
             this.id = e.getId();
             this.verificado = e.isVerificado();
             this.cumplido = e.isCumplido();
+            this.token = null;
         
         }
     }
@@ -53,6 +55,14 @@ public class TrabajoDTO implements Serializable {
 
     public void setCumplido(boolean cumplido) {
         this.cumplido = cumplido;
+    }
+    
+    public String getToken() {
+        return token;
+    }
+    
+    public void setToken(String id) {
+        this.token = id;
     }
 
     public TrabajoEntity toEntity() {

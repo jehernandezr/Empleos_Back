@@ -103,5 +103,17 @@ public class CuentaBancariaEntity extends BaseEntity {
     public void setNombreBanco(String nombreBanco) {
         this.nombreBanco = nombreBanco;
     }
+    
+    @Override
+    public boolean equals(Object obj)
+    {
+        return super.equals(obj);
+    }
+    
+    @Override
+    public int hashCode()
+    {
+        return super.hashCode();
+    }
 
 }

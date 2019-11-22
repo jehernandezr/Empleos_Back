@@ -84,7 +84,7 @@ public class OfertaLogic {
      * @return Colección de objetos de OfertaEntity.
      */
     public List<OfertaEntity> getOfertasPalabraClave(String palabra) {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los ofertas por palabra: "+palabra);
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los ofertas por palabra: {0}", palabra);
         List<OfertaEntity> lista = persistence.findAllPalabra(palabra);
         LOGGER.log(Level.INFO, "Termina proceso de consultar todos los ofertas");
         return lista;
@@ -101,7 +101,7 @@ public class OfertaLogic {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar el oferta con id = {0}", ofertaId);
         OfertaEntity ofertaEntity = persistence.find(ofertaId);
         if (ofertaEntity == null) {
-            throw new BusinessLogicException("No existe el oferta con el id "+ofertaId);
+            throw new BusinessLogicException("No existe el oferta con el id"+ofertaId);
         }
         LOGGER.log(Level.INFO, "Termina proceso de consultar del oferta con id = {0}", ofertaId);
         return ofertaEntity;

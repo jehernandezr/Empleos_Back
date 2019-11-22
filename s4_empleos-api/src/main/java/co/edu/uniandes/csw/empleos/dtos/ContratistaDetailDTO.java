@@ -18,19 +18,14 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  *
  * @author Contratista
  */
-public class ContratistaDetailDTO extends ContratistaDTO implements Serializable{
-    
-    
-     
+public class ContratistaDetailDTO extends ContratistaDTO implements Serializable {
+
     private TarjetaDeCreditoDTO tarjetaDeCredito;
-     
-    
-   private List<CuentaDeCobroDTO> cuentaDeCobro;
-     
-         
-     
-    private List<OfertaDTO> ofertas ;
-    
+
+    private List<CuentaDeCobroDTO> cuentaDeCobro;
+
+    private List<OfertaDTO> ofertas;
+
     /**
      * Constructor vacio
      *
@@ -38,37 +33,38 @@ public class ContratistaDetailDTO extends ContratistaDTO implements Serializable
     public ContratistaDetailDTO() {
         //Vacio
     }
-    
+
     /**
      * Constructor para transformar un Entity a un DTO
      *
-     * @param contratistaEntity La entidad del contratista para transformar a DTO.
+     * @param contratistaEntity La entidad del contratista para transformar a
+     * DTO.
      */
     public ContratistaDetailDTO(ContratistaEntity contratistaEntity) {
         super(contratistaEntity);
         if (contratistaEntity != null) {
-            if (contratistaEntity.getTarjetaCredito()!= null) {
+            if (contratistaEntity.getTarjetaCredito() != null) {
                 tarjetaDeCredito = new TarjetaDeCreditoDTO(contratistaEntity.getTarjetaCredito());
-                
+
             }
-            
-            if (contratistaEntity.getOfertas()!= null) {
+
+            if (contratistaEntity.getOfertas() != null) {
                 ofertas = new ArrayList<>();
                 for (OfertaEntity entityBook : contratistaEntity.getOfertas()) {
                     ofertas.add(new OfertaDTO(entityBook));
                 }
             }
-            
-            if (contratistaEntity.getCuentaDeCobro() != null){
-               cuentaDeCobro = new ArrayList<>();
+
+            if (contratistaEntity.getCuentaDeCobro() != null) {
+                cuentaDeCobro = new ArrayList<>();
                 for (CuentaDeCobroEntity entityBook : contratistaEntity.getCuentaDeCobro()) {
                     cuentaDeCobro.add(new CuentaDeCobroDTO(entityBook));
                 }
             }
         }
     }
-    
-     /**
+
+    /**
      * Transformar un DTO a un Entity
      *
      * @return El DTO de la editorial para transformar a Entity
@@ -76,9 +72,9 @@ public class ContratistaDetailDTO extends ContratistaDTO implements Serializable
     @Override
     public ContratistaEntity toEntity() {
         ContratistaEntity contratistaEntity = super.toEntity();
-        if ( cuentaDeCobro != null) {
+        if (cuentaDeCobro != null) {
             List<CuentaDeCobroEntity> cuentaDeCobroEntity = new ArrayList<>();
-            for (CuentaDeCobroDTO dtoCuentas :cuentaDeCobro) {
+            for (CuentaDeCobroDTO dtoCuentas : cuentaDeCobro) {
                 cuentaDeCobroEntity.add(dtoCuentas.toEntity());
             }
             contratistaEntity.setCuentaDeCobro(cuentaDeCobroEntity);
@@ -90,7 +86,9 @@ public class ContratistaDetailDTO extends ContratistaDTO implements Serializable
             }
             contratistaEntity.setOfertas(ofertasEntity);
         }
-        if (tarjetaDeCredito != null) contratistaEntity.setTarjetaCredito(tarjetaDeCredito.toEntity());
+        if (tarjetaDeCredito != null) {
+            contratistaEntity.setTarjetaCredito(tarjetaDeCredito.toEntity());
+        }
         return contratistaEntity;
     }
 
@@ -125,6 +123,7 @@ public class ContratistaDetailDTO extends ContratistaDTO implements Serializable
     /**
      * @return the cuentaDeCobro
      */
+
     public List<CuentaDeCobroDTO> getCuentaDeCobro() {
         return cuentaDeCobro;
     }
@@ -132,11 +131,12 @@ public class ContratistaDetailDTO extends ContratistaDTO implements Serializable
     /**
      * @param cuentaDeCobro the cuentaDeCobro to set
      */
+
     public void setCuentaDeCobro(List<CuentaDeCobroDTO> cuentaDeCobro) {
         this.cuentaDeCobro = cuentaDeCobro;
     }
 
-     @Override
+    @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }

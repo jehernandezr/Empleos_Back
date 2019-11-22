@@ -13,6 +13,10 @@ import java.io.Serializable;
  * @author je.hernandezr
  */
 public class CuentaBancariaDTO implements Serializable {
+    
+    private static final String AHORROS = "Ahorros";
+    
+    private static final String CORRIENTE = "Corriente";
 
     private Long id;
 
@@ -24,6 +28,8 @@ public class CuentaBancariaDTO implements Serializable {
 
     private EstudianteDTO estudiante;
 
+    private String token;
+    
     public CuentaBancariaDTO() {
     }
 
@@ -32,21 +38,31 @@ public class CuentaBancariaDTO implements Serializable {
             this.id = cuentaBancariaEntity.getId();
             this.nombreBanco = cuentaBancariaEntity.getNombreBanco();
             this.numeroCuenta = cuentaBancariaEntity.getNumeroCuenta();
+            this.token=null;
             String type = "";
             switch (cuentaBancariaEntity.getTipoCuenta()) {
                 case 2:
-                    type = "Ahorros";
+                    type = AHORROS;
                     break;
                 case 3:
-                    type = "Corriente";
+                    type = CORRIENTE;
                     break;
                 default:
                     type = "gggg";
             }
             this.setTipoCuenta(type);
+            this.estudiante= new EstudianteDTO(cuentaBancariaEntity.getEstudiante());
         }
     }
 
+    public String getToken() {
+        return token;
+    }
+    
+    public void setToken(String id) {
+        this.token = id;
+    }
+    
     /**
      * @return the id
      */
@@ -98,9 +114,9 @@ public class CuentaBancariaDTO implements Serializable {
 
     public void setTipoCuenta(String pTipoCuenta) {
 
-        if (pTipoCuenta.equalsIgnoreCase("Ahorros")) {
+        if (pTipoCuenta.equalsIgnoreCase(AHORROS)) {
             tipoCuenta = 2;
-        } else if (pTipoCuenta.equalsIgnoreCase("Corriente")) {
+        } else if (pTipoCuenta.equalsIgnoreCase(CORRIENTE)) {
             tipoCuenta = 3;
         } else {
             tipoCuenta = 0;
@@ -115,10 +131,10 @@ public class CuentaBancariaDTO implements Serializable {
         String tipo = "";
         switch (this.getTipoCuenta()) {
             case 2:
-                tipo = "Ahorros";
+                tipo = AHORROS;
                 break;
             case 3:
-                tipo = "Corriente";
+                tipo = CORRIENTE;
                 break;
             default:
                 tipo = "ffff";

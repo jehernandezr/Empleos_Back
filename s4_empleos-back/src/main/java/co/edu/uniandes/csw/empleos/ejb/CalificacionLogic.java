@@ -51,9 +51,8 @@ public class CalificacionLogic {
      * @return  Lista de las entidades del tipo calificacion.
      */
     public List<CalificacionEntity> getCalificaciones()
-    {
-       List<CalificacionEntity> calificaciones= persistence.findAll();
-       return calificaciones;
+    {      
+       return persistence.findAll();
     }
     
     /**
@@ -63,9 +62,9 @@ public class CalificacionLogic {
      */
     public CalificacionEntity getCalificacion(Long calificacionId)
     {
-        CalificacionEntity calificacionEntity = persistence.find(calificacionId);
         
-        return  calificacionEntity;
+        
+        return  persistence.find(calificacionId);
     }
     
      /**
@@ -82,17 +81,17 @@ public class CalificacionLogic {
        if(calificacionEntity.getNota()<0){
             throw new BusinessLogicException("La nota del estudiante no puede tener valores negativos");
         }
-        if(calificacionEntity.getComentario()==null){
+       if(calificacionEntity.getComentario()==null){
             throw new BusinessLogicException("El comentario de un estudainte no puede ser nulo");
         }
-        if(calificacionEntity.getNota()>5){
+       if(calificacionEntity.getNota()>5){
             throw new BusinessLogicException("La nota es en una escala de 1-5");
         }
-        if(calificacionEntity.getComentario().equals("")){
+       if(calificacionEntity.getComentario().equals("")){
             throw new BusinessLogicException("El comentario no puede ser vacìo");
         }
-        CalificacionEntity newEntity = persistence.update(calificacionEntity);
-        return newEntity;
+        
+        return persistence.update(calificacionEntity);
     }
     
     /**

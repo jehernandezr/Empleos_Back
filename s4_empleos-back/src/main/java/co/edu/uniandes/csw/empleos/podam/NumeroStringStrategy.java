@@ -5,9 +5,8 @@
  */
 package co.edu.uniandes.csw.empleos.podam;
 
-import java.nio.charset.Charset;
+
 import java.security.SecureRandom;
-import java.util.Random;
 import uk.co.jemos.podam.common.AttributeStrategy;
 
 /**

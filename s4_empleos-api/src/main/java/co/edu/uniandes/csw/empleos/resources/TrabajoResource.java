@@ -36,7 +36,9 @@ import javax.ws.rs.WebApplicationException;
 @RequestScoped
 public class TrabajoResource {
 
-     
+     private static final String NO_EXISTE = " no existe.";
+    private static final String RECURSO = "El recurso /trabajo/";
+    
     // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
     @Inject
     private TrabajoLogic trabajoLogic; 
@@ -52,8 +54,8 @@ public class TrabajoResource {
     
     @POST
     public TrabajoDTO createTrabajo(TrabajoDTO trabajo) throws BusinessLogicException {
-        TrabajoDTO t = new TrabajoDTO(trabajoLogic.crearTrabajo(trabajo.toEntity()));
-        return t;
+     
+        return new TrabajoDTO(trabajoLogic.crearTrabajo(trabajo.toEntity()));
     }
     
      /**
@@ -70,10 +72,10 @@ public class TrabajoResource {
     public TrabajoDetailDTO getTrabajo(@PathParam("trabajoId") Long trabajoId) {
         TrabajoEntity calEntity = trabajoLogic.getTrabajo(trabajoId);
         if (calEntity == null) {
-            throw new WebApplicationException("El recurso /trabajo/" + trabajoId + " no existe.", 404);
+            throw new WebApplicationException(RECURSO + trabajoId + NO_EXISTE, 404);
         }
-        TrabajoDetailDTO calDTO = new TrabajoDetailDTO(calEntity);
-        return calDTO;
+        
+        return new TrabajoDetailDTO(calEntity);
     }
     
     /**
@@ -84,8 +86,8 @@ public class TrabajoResource {
      */
     @GET
     public List<TrabajoDetailDTO> getTrabajos() {
-        List<TrabajoDetailDTO> trabajos = listEntity2DTO(trabajoLogic.getTrabajos());
-        return trabajos;
+       
+        return listEntity2DTO(trabajoLogic.getTrabajos());
     }
     
      /**
@@ -107,10 +109,11 @@ public class TrabajoResource {
     public TrabajoDetailDTO updateTrabajo(@PathParam("trabajoId") Long trabajoId, TrabajoDetailDTO trabajo) throws BusinessLogicException {
         trabajo.setId(trabajoId);
         if (trabajoLogic.getTrabajo(trabajoId) == null) {
-            throw new WebApplicationException("El recurso /trabajo/" + trabajoId + " no existe.", 404);
+            throw new WebApplicationException(RECURSO + trabajoId + NO_EXISTE, 404);
         }
-        TrabajoDetailDTO dto = new TrabajoDetailDTO(trabajoLogic.updateTrabajo(trabajo.toEntity()));
-        return dto;
+        
+        return new TrabajoDetailDTO(trabajoLogic.updateTrabajo(trabajo.toEntity()));
+                
     }
     
      /**
@@ -126,7 +129,7 @@ public class TrabajoResource {
     @Path("{trabajoId: \\d+}")
     public void deleteTrabajo(@PathParam("trabajoId") Long trabajoId) throws BusinessLogicException {
         if (trabajoLogic.getTrabajo(trabajoId) == null) {
-            throw new WebApplicationException("El recurso /trabajo/" + trabajoId + " no existe.", 404);
+            throw new WebApplicationException(RECURSO + trabajoId + NO_EXISTE, 404);
         }
         trabajoOfertaLogic.removeOferta(trabajoId);
         trabajoFacturaLogic.removeFactura(trabajoId);

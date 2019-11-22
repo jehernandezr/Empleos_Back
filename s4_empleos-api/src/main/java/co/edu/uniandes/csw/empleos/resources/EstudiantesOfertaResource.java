@@ -36,6 +36,9 @@ import javax.ws.rs.core.MediaType;
 @Produces(MediaType.APPLICATION_JSON)
 class EstudiantesOfertaResource {
     
+    private static final  String NO_EXISTE = " no existe.";
+    private static final  String RECURSO = "El recurso /estudiantes/";
+    
     private static final Logger LOGGER = Logger.getLogger(EstudiantesOfertaResource.class.getName());
 
     @Inject
@@ -61,7 +64,7 @@ class EstudiantesOfertaResource {
     public EstudianteDTO addEstudiante(@PathParam("ofertasId") Long ofertasId, @PathParam("estudiantesId") Long estudiantesId) {
         LOGGER.log(Level.INFO, "EstudiantesOfertaResource addEstudiante: input: estudianteID: {0} , estudiantesId: {1}", new Object[]{ofertasId, estudiantesId});
         if (estudianteLogic.getEstudiante(estudiantesId) == null) {
-            throw new WebApplicationException("El recurso /estudiantes/" + estudiantesId + " no existe.", 404);
+            throw new WebApplicationException(RECURSO + estudiantesId + NO_EXISTE, 404);
         }
         EstudianteDTO estudianteDTO = new EstudianteDTO(estudiantesOfertaLogic.addEstudiante(estudiantesId, ofertasId));
         LOGGER.log(Level.INFO, "EstudiantesOfertaResource addEstudiante: output: {0}", estudianteDTO);
@@ -103,7 +106,7 @@ class EstudiantesOfertaResource {
     public EstudianteDetailDTO getEstudiante(@PathParam("ofertasId") Long ofertasId, @PathParam("estudiantesId") Long estudiantesId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "EstudiantesOfertaResource getEstudiante: input: ofertasID: {0} , estudiantesId: {1}", new Object[]{ofertasId, estudiantesId});
         if (estudianteLogic.getEstudiante(estudiantesId) == null) {
-            throw new WebApplicationException("El recurso /ofertas/" + ofertasId + "/estudiantes/" + estudiantesId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /ofertas/" + ofertasId + "/estudiantes/" + estudiantesId + NO_EXISTE, 404);
         }
         EstudianteDetailDTO estudianteDetailDTO = new EstudianteDetailDTO(estudiantesOfertaLogic.getEstudiante(ofertasId, estudiantesId));
         LOGGER.log(Level.INFO, "EstudiantesOfertaResource getEstudiante: output: {0}", estudianteDetailDTO);
@@ -127,7 +130,7 @@ class EstudiantesOfertaResource {
         LOGGER.log(Level.INFO, "EstudiantesOfertaResource replaceEstudiantes: input: ofertasId: {0} , estudiantes: {1}", new Object[]{ofertasId, estudiantes});
         for (EstudianteDetailDTO estudiante : estudiantes) {
             if (estudianteLogic.getEstudiante(estudiante.getId()) == null) {
-                throw new WebApplicationException("El recurso /estudiantes/" + estudiante.getId() + " no existe.", 404);
+                throw new WebApplicationException(RECURSO + estudiante.getId() + NO_EXISTE, 404);
             }
         }
         List<EstudianteDetailDTO> listaDetailDTOs = estudiantesListEntity2DTO(estudiantesOfertaLogic.replaceEstudiantes(ofertasId, estudiantesListDTO2Entity(estudiantes)));
