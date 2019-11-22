@@ -108,7 +108,7 @@ public class CuentaBancariaDTO implements Serializable {
     /**
      * @return the tipoCuenta
      */
-    public int getTipoCuenta() {
+    public Integer getTipoCuenta() {
         return tipoCuenta;
     }
 
