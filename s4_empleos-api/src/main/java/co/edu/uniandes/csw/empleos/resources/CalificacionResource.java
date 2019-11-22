@@ -45,23 +45,20 @@ public class CalificacionResource {
     @Inject
     private TokenLogic tokenLogic;
 
- 
     @POST
     public CalificacionDTO createCalificacion(CalificacionDTO calificacion) throws BusinessLogicException {
 
-       
-            String token = calificacion.getToken();
-            TokenEntity tok = tokenLogic.getTokenByToken(token);
-            if (tok.getTipo().equals("Contratista")) {
-                CalificacionEntity cl = calificacionLogic.createCalificacion(calificacion.toEntity());
-                CalificacionDTO nuevaCalificacionDTO = new CalificacionDTO(cl);
-                return nuevaCalificacionDTO;
+        String token = calificacion.getToken();
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok.getTipo().equals("Contratista")) {
+            CalificacionEntity cl = calificacionLogic.createCalificacion(calificacion.toEntity());
+            CalificacionDTO nuevaCalificacionDTO = new CalificacionDTO(cl);
+            return nuevaCalificacionDTO;
 
-            } else {
-                throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
-            }
+        } else {
+            throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
+        }
 
-     
     }
 
     /**
@@ -126,20 +123,19 @@ public class CalificacionResource {
     @Path("{calificacionesId: \\d+}")
     public CalificacionDTO updateCalificacion(@PathParam("calificacionesId") Long calId, CalificacionDTO calif) throws BusinessLogicException {
 
-            String token = calif.getToken();
-            TokenEntity tok = tokenLogic.getTokenByToken(token);
-            if (tok.getTipo().equals("Contratista")) {
-                calif.setId(calId);
-                if (calificacionLogic.getCalificacion(calId) == null) {
-                    throw new WebApplicationException("El recurso /calificaciones/" + calId + " no existe.", 404);
-                }
-                CalificacionDTO detailDTO = new CalificacionDTO(calificacionLogic.updateCalificacion(calId, calif.toEntity()));
-                return detailDTO;
-
-            } else {
-                throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
+        String token = calif.getToken();
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok.getTipo().equals("Contratista")) {
+            calif.setId(calId);
+            if (calificacionLogic.getCalificacion(calId) == null) {
+                throw new WebApplicationException("El recurso /calificaciones/" + calId + " no existe.", 404);
             }
+            CalificacionDTO detailDTO = new CalificacionDTO(calificacionLogic.updateCalificacion(calId, calif.toEntity()));
+            return detailDTO;
 
+        } else {
+            throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
+        }
 
     }
 
@@ -156,23 +152,23 @@ public class CalificacionResource {
     @Path("{calificacionesId: \\d+}")
     public void deleteCalificacion(@PathParam("calificacionesId") Long calId) throws BusinessLogicException {
         CalificacionEntity calEntity = calificacionLogic.getCalificacion(calId);
-        CalificacionDTO calDTO = new CalificacionDTO (calEntity);
-        
+        CalificacionDTO calDTO = new CalificacionDTO(calEntity);
+
         if (calEntity == null) {
             throw new WebApplicationException("El recurso /calificaciones/" + calId + " no existe.", 404);
         }
-        
+
         String token = calDTO.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok == null) {
 
             throw new BusinessLogicException("No se encuentra Registrado");
-        }if( !tok.getTipo().equals("Contratista"))
-            {
+        }
+        if (!tok.getTipo().equals("Contratista")) {
 
             throw new BusinessLogicException("No tiene permiso para esto");
         }
-        
+
         calificacionLogic.deleteCalificacion(calId);
     }
 

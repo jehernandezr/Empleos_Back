@@ -5,7 +5,6 @@
  */
 package co.edu.uniandes.csw.empleos.resources;
 
-
 import co.edu.uniandes.csw.empleos.dtos.ContratistaDTO;
 import co.edu.uniandes.csw.empleos.dtos.ContratistaDetailDTO;
 import co.edu.uniandes.csw.empleos.ejb.ContratistaLogic;
@@ -30,35 +29,34 @@ import javax.ws.rs.WebApplicationException;
  *
  * @author Juan Berdugo
  */
-
 @Path("contratistas")
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
 public class ContratistaResource {
-    
+
     // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
     @Inject
-    private ContratistaLogic contratistaLogic; 
-    
+    private ContratistaLogic contratistaLogic;
+
     // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
     @Inject
-    private ContratistaOfertasLogic contratistaOfertasLogic; 
-    
-     @Inject
+    private ContratistaOfertasLogic contratistaOfertasLogic;
+
+    @Inject
     private TokenLogic tokenLogic;
-    
+
     @POST
     public ContratistaDTO createContratista(ContratistaDTO contratista) throws BusinessLogicException {
         ContratistaDTO contratistaFinal = new ContratistaDTO(contratistaLogic.createContratista(contratista.toEntity()));
         return contratistaFinal;
     }
-    
+
     /**
      * Busca el contratista con el id asociado recibido en la URL y lo devuelve.
      *
-     * @param contratistaId Identificador del contratista que se esta buscando. Este debe
-     * ser una cadena de dígitos.
+     * @param contratistaId Identificador del contratista que se esta buscando.
+     * Este debe ser una cadena de dígitos.
      * @return JSON {@link ContratistaDTO} - El contratista buscado
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra el contratista.
@@ -66,13 +64,13 @@ public class ContratistaResource {
     @GET
     @Path("{id: \\d+}")
     public ContratistaDTO getContratista(@PathParam("id") Long contratistaId) throws BusinessLogicException {
-      
+
         ContratistaEntity calEntity = contratistaLogic.getContratista(contratistaId);
         if (calEntity == null) {
             throw new WebApplicationException("El recurso /contratista/" + contratistaId + " no existe.", 404);
         }
         ContratistaDTO calDTO = new ContratistaDTO(calEntity);
-       
+
         String token = calDTO.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok == null) {
@@ -80,12 +78,11 @@ public class ContratistaResource {
             throw new BusinessLogicException("No se encuentra Registrado");
         }
 
-       return calDTO;
-    
+        return calDTO;
+
     }
-    
-    
-   /**
+
+    /**
      * Actualiza el estudiante con el id recibido en la URL con la información
      * que se recibe en el cuerpo de la petición.
      *
@@ -119,9 +116,7 @@ public class ContratistaResource {
         }
 
     }
-    
-    
-    
+
     /**
      * Borra el Estudiante con el id asociado recibido en la URL.
      *
@@ -134,28 +129,27 @@ public class ContratistaResource {
     @DELETE
     @Path("{id: \\d+}")
     public void deleteContratista(@PathParam("id") Long id) throws BusinessLogicException {
-        
-    
-         ContratistaEntity contratistaEntity = contratistaLogic.getContratista(id);
-        ContratistaDetailDTO estDTO = new ContratistaDetailDTO (contratistaEntity);
-        
-       if (contratistaLogic.getContratista(id) == null) {
+
+        ContratistaEntity contratistaEntity = contratistaLogic.getContratista(id);
+        ContratistaDetailDTO estDTO = new ContratistaDetailDTO(contratistaEntity);
+
+        if (contratistaLogic.getContratista(id) == null) {
             throw new WebApplicationException("El recurso contratista" + id + " no existe.", 404);
         }
-        
+
         String token = estDTO.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok == null) {
 
             throw new BusinessLogicException("No se encuentra Registrado");
-        }if(!(tok.getTipo().equals("Contratista")|| tok.getTipo().equals("Administrador")))
-            {
+        }
+        if (!(tok.getTipo().equals("Contratista") || tok.getTipo().equals("Administrador"))) {
 
             throw new BusinessLogicException("No tiene permiso para esto");
         }
-        
-         contratistaLogic.deleteContratista(id);
-        
+
+        contratistaLogic.deleteContratista(id);
+
     }
-    
+
 }

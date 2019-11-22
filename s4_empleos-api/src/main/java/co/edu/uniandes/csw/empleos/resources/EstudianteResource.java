@@ -157,32 +157,30 @@ public class EstudianteResource {
     @DELETE
     @Path("{estudianteId: \\d+}")
     public void deleteEstudiante(@PathParam("estudianteId") Long estudianteId) throws BusinessLogicException {
-        
+
         //estudianteCalificacionesLogic.removeCalificaciones(estudianteId); 
         //estudianteOfertasLogic.removeOfertas(estudianteId);
         //estudianteCuentaBancariaLogic.removeCuentaBancaria(estudianteId); 
-       
-        
-         EstudianteEntity estudianteEntity = estudianteLogic.getEstudiante(estudianteId);
-        EstudianteDetailDTO estDTO = new EstudianteDetailDTO (estudianteEntity);
-        
-       if (estudianteLogic.getEstudiante(estudianteId) == null) {
+        EstudianteEntity estudianteEntity = estudianteLogic.getEstudiante(estudianteId);
+        EstudianteDetailDTO estDTO = new EstudianteDetailDTO(estudianteEntity);
+
+        if (estudianteLogic.getEstudiante(estudianteId) == null) {
             throw new WebApplicationException("El recurso estudiante" + estudianteId + " no existe.", 404);
         }
-        
+
         String token = estDTO.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok == null) {
 
             throw new BusinessLogicException("No se encuentra Registrado");
-        }if(!(tok.getTipo().equals("Estudiante")|| tok.getTipo().equals("Administrador")))
-            {
+        }
+        if (!(tok.getTipo().equals("Estudiante") || tok.getTipo().equals("Administrador"))) {
 
             throw new BusinessLogicException("No tiene permiso para esto");
         }
-        
-         estudianteLogic.deleteEstudiante(estudianteId);
-        
+
+        estudianteLogic.deleteEstudiante(estudianteId);
+
     }
 
     /**
