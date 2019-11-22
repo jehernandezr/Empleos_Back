@@ -5,9 +5,6 @@
  */
 package co.edu.uniandes.csw.empleos.test.logic;
 
-
-
-
 import co.edu.uniandes.csw.empleos.ejb.CredencialesLogic;
 import co.edu.uniandes.csw.empleos.entities.CredencialesEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
@@ -115,6 +112,7 @@ public class CredencialesLogicTest {
         CredencialesEntity entity = em.find(CredencialesEntity.class, result.getId());
         Assert.assertEquals(entity.getTipo(), result.getTipo());
         Assert.assertEquals(entity.getCorreo(), result.getCorreo());
+        Assert.assertEquals(entity.getContrasena(), result.getContrasena());
     }
 
     /**
@@ -146,6 +144,20 @@ public class CredencialesLogicTest {
     }
 
     /**
+     * Se crea una token con un Tipo no nulo
+     *
+     * @throws BusinessLogicException Excepcion untilizada para representar
+     * errores en la lógica del negocio.
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createCredencialContrasenaNotNull() throws BusinessLogicException {
+
+        CredencialesEntity newEntity = factory.manufacturePojo(CredencialesEntity.class);
+        newEntity.setContrasena(null);
+        CredencialesEntity result = credencialLogic.createCredencial(newEntity);
+    }
+
+    /**
      * Se crea una token con un Tipo no vacio
      *
      * @throws BusinessLogicException Excepcion untilizada para representar
@@ -170,6 +182,20 @@ public class CredencialesLogicTest {
 
         CredencialesEntity newEntity = factory.manufacturePojo(CredencialesEntity.class);
         newEntity.setCorreo("");
+        CredencialesEntity result = credencialLogic.createCredencial(newEntity);
+    }
+
+    /**
+     * Se crea una token con un Tipo no vacio
+     *
+     * @throws BusinessLogicException Excepcion untilizada para representar
+     * errores en la lógica del negocio.
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createoCredencialContrasenaNoVacio() throws BusinessLogicException {
+
+        CredencialesEntity newEntity = factory.manufacturePojo(CredencialesEntity.class);
+        newEntity.setContrasena("");
         CredencialesEntity result = credencialLogic.createCredencial(newEntity);
     }
 
@@ -218,11 +244,13 @@ public class CredencialesLogicTest {
         pojoEntity.setId(entity.getId());
         credencialLogic.updateCredencial(pojoEntity.getId(), pojoEntity);
 
-       CredencialesEntity resp = em.find(CredencialesEntity.class, entity.getId());
+        CredencialesEntity resp = em.find(CredencialesEntity.class, entity.getId());
 
         Assert.assertEquals(pojoEntity.getTipo(), resp.getTipo());
 
         Assert.assertEquals(pojoEntity.getCorreo(), resp.getCorreo());
+
+        Assert.assertEquals(pojoEntity.getContrasena(), resp.getContrasena());
     }
 
 }

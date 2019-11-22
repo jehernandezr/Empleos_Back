@@ -114,7 +114,7 @@ public class CredencialesPersistenceTest {
 
         Assert.assertEquals(credencial.getTipo(), entity.getTipo());
         Assert.assertEquals(credencial.getCorreo(), entity.getCorreo());
-        Assert.assertEquals(credencial.getContraseña(), entity.getContraseña());
+        Assert.assertEquals(credencial.getContrasena(), entity.getContrasena());
     }
 
     /**
