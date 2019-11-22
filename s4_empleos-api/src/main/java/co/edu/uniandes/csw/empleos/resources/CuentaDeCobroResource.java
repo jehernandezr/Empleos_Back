@@ -1,4 +1,5 @@
 package co.edu.uniandes.csw.empleos.resources;
+
 import co.edu.uniandes.csw.empleos.dtos.CalificacionDTO;
 import co.edu.uniandes.csw.empleos.dtos.CuentaDeCobroDTO;
 import co.edu.uniandes.csw.empleos.ejb.CuentaDeCobroLogic;
@@ -39,7 +40,6 @@ public class CuentaDeCobroResource {
     @POST
     public CuentaDeCobroDTO createCuentaDeCobro(CuentaDeCobroDTO cuenta) throws BusinessLogicException {
 
-
         String token = cuenta.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok.getTipo().equals("Contratista")) {
@@ -72,7 +72,6 @@ public class CuentaDeCobroResource {
             throw new WebApplicationException("El recurso /cuentas/" + cuentaId + "no existe.", 404);
         }
 
-
         CuentaDeCobroDTO cuentaDTO = new CuentaDeCobroDTO(entity);
 
         String token = cuentaDTO.getToken();
@@ -94,7 +93,7 @@ public class CuentaDeCobroResource {
      */
     @GET
     public List<CuentaDeCobroDTO> getCuentasDeCobro() {
-        
+
         return listEntity2DTO(cuentaDeCobroLogic.getCuentasDeCobro());
     }
 
@@ -146,9 +145,9 @@ public class CuentaDeCobroResource {
     @DELETE
     @Path("{cuentasId: \\d+}")
     public void deleteCuentaDeCobro(@PathParam("cuentasId") Long calId) throws BusinessLogicException {
-       CuentaDeCobroEntity calEntity = cuentaDeCobroLogic.getCuenta(calId);
-       CuentaDeCobroDTO calDTO = new CuentaDeCobroDTO (calEntity);
-        
+        CuentaDeCobroEntity calEntity = cuentaDeCobroLogic.getCuenta(calId);
+        CuentaDeCobroDTO calDTO = new CuentaDeCobroDTO(calEntity);
+
         if (calEntity == null) {
             throw new WebApplicationException("El recurso /cuentasDeCobro/" + calId + " no existe.", 404);
         }
@@ -157,8 +156,8 @@ public class CuentaDeCobroResource {
         if (tok == null) {
 
             throw new BusinessLogicException("No se encuentra Registrado");
-        }if( tok.getTipo().equals("Enstutdiante"))
-            {
+        }
+        if (tok.getTipo().equals("Enstutdiante")) {
 
             throw new BusinessLogicException("No tiene permiso para esto");
         }

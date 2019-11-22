@@ -13,6 +13,8 @@
     <class>co.edu.uniandes.csw.empleos.entities.OfertaEntity</class>
     <class>co.edu.uniandes.csw.empleos.entities.TarjetaDeCreditoEntity</class>
     <class>co.edu.uniandes.csw.empleos.entities.TrabajoEntity</class>
+    <class>co.edu.uniandes.csw.empleos.entities.TokenEntity</class>
+    <class>co.edu.uniandes.csw.empleos.entities.CredencialesEntity</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>

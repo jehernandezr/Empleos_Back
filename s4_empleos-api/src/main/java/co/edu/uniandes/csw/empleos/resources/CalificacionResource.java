@@ -36,10 +36,8 @@ import javax.ws.rs.WebApplicationException;
 @RequestScoped
 public class CalificacionResource {
 
-    
     private static final String NO_EXISTE = " no existe.";
-    private static final  String RECURSO = "El recurso /calificaciones/";
-    
+    private static final String RECURSO = "El recurso /calificaciones/";
 
     @Inject
     private CalificacionLogic calificacionLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
@@ -95,6 +93,7 @@ public class CalificacionResource {
         }
 
         return calDTO;
+
     }
 
     /**
@@ -104,7 +103,7 @@ public class CalificacionResource {
      * encontradas en la aplicación. Si no hay ninguna retorna una lista vacía.
      */
     @GET
-    public List<CalificacionDTO> getCalificaciones() {      
+    public List<CalificacionDTO> getCalificaciones() {
         return listEntity2DTO(calificacionLogic.getCalificaciones());
     }
 
@@ -127,7 +126,6 @@ public class CalificacionResource {
     @PUT
     @Path("{calificacionesId: \\d+}")
     public CalificacionDTO updateCalificacion(@PathParam("calificacionesId") Long calId, CalificacionDTO calif) throws BusinessLogicException {
-
 
         String token = calif.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
@@ -162,8 +160,8 @@ public class CalificacionResource {
         CalificacionDTO calDTO = new CalificacionDTO(calEntity);
 
         if (calEntity == null) {
-            throw new WebApplicationException(RECURSO + calId + NO_EXISTE, 404);
 
+            throw new WebApplicationException(RECURSO + calId + NO_EXISTE, 404);
         }
 
         String token = calDTO.getToken();

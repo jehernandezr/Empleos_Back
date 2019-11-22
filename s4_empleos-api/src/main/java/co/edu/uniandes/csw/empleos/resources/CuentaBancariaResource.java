@@ -25,9 +25,9 @@ import javax.ws.rs.*;
 @RequestScoped
 public class CuentaBancariaResource {
 
-    private static final  String NO_EXISTE = " no existe.";
-    private static final  String RECURSO = "El recurso /cuentaBancaria/";
-    
+    private static final String NO_EXISTE = " no existe.";
+    private static final String RECURSO = "El recurso /cuentaBancaria/";
+
     @Inject
     private CuentaBancariaLogic logic;
     @Inject
@@ -61,90 +61,88 @@ public class CuentaBancariaResource {
         CuentaBancariaEntity cuentaEntity = logic.getCuentaBancaria(cuentaId);
 
         if (cuentaEntity == null) {
+
             throw new WebApplicationException(RECURSO + cuentaId + NO_EXISTE, 404);
         }
         CuentaBancariaDTO cuentaDTO = new CuentaBancariaDTO(cuentaEntity);
 
-            String token = cuentaDTO.getToken();
-            TokenEntity tok = tokenLogic.getTokenByToken(token);
-            if (tok == null) {
+        String token = cuentaDTO.getToken();
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok == null) {
 
-                throw new BusinessLogicException("No se encuentra Registrado");
-            }
-            return cuentaDTO;
+            throw new BusinessLogicException("No se encuentra Registrado");
         }
-        
-    
-        /**
-         * Actualiza la cuentaBancaria con el id recibido en la URL con la
-         * información que se recibe en el cuerpo de la petición.
-         *
-         * @param cuentaId
-         * @param cuenta
-         * @return JSON {@link PrizeDetailDTO} - El premio guardada.
-         * @throws WebApplicationException {@link WebApplicationExceptionMapper}
-         * - Error de lógica que se genera cuando no se encuentra la cuenta a
-         * actualizar.
-         * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
-         * Error de lógica que se genera cuando no se puede actualizar la
-         * cuenta.
-         */
-        @PUT
-        @Path("{cuentaId: \\d+}")
+        return cuentaDTO;
+    }
 
-        public CuentaBancariaDTO updateCuenta (@PathParam("cuentaId") Long cuentaId, CuentaBancariaDTO cuenta) throws BusinessLogicException {
+    /**
+     * Actualiza la cuentaBancaria con el id recibido en la URL con la
+     * información que se recibe en el cuerpo de la petición.
+     *
+     * @param cuentaId
+     * @param cuenta
+     * @return JSON {@link PrizeDetailDTO} - El premio guardada.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra la cuenta a
+     * actualizar.
+     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
+     * Error de lógica que se genera cuando no se puede actualizar la cuenta.
+     */
+    @PUT
+    @Path("{cuentaId: \\d+}")
 
-             String token = cuenta.getToken();
-            TokenEntity tok = tokenLogic.getTokenByToken(token);
-            if (tok.getTipo().equals("Estudiante")) {
-                cuenta.setId(cuentaId);
-                if (logic.getCuentaBancaria(cuentaId) == null) {
-            throw new WebApplicationException(RECURSO + cuentaId + NO_EXISTE, 404);
-                }
-                CuentaBancariaDTO detailDTO = new CuentaBancariaDTO(logic.updateCuentaBancaria(cuentaId, cuenta.toEntity()));
-                return detailDTO;
+    public CuentaBancariaDTO updateCuenta(@PathParam("cuentaId") Long cuentaId, CuentaBancariaDTO cuenta) throws BusinessLogicException {
 
-            } else {
-                throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
+        String token = cuenta.getToken();
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok.getTipo().equals("Estudiante")) {
+            cuenta.setId(cuentaId);
+            if (logic.getCuentaBancaria(cuentaId) == null) {
+                throw new WebApplicationException(RECURSO + cuentaId + NO_EXISTE, 404);
             }
+            CuentaBancariaDTO detailDTO = new CuentaBancariaDTO(logic.updateCuentaBancaria(cuentaId, cuenta.toEntity()));
+            return detailDTO;
+
+        } else {
+            throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
 
         }
 
-        /**
-         * Borra el premio con el id asociado recibido en la URL.
-         *
-         * @param cuentaId
-         * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
-         * @throws WebApplicationException {@link WebApplicationExceptionMapper}
-         * Error de lógica que se genera cuando no se encuentra el premio.
-         */
-        @DELETE
-        @Path("{cuentaId: \\d+}")
-        public void deleteCuenta
-        (@PathParam("cuentaId")
-        Long cuentaId) throws BusinessLogicException {
+    }
 
+    /**
+     * Borra el premio con el id asociado recibido en la URL.
+     *
+     * @param cuentaId
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper}
+     * Error de lógica que se genera cuando no se encuentra el premio.
+     */
+    @DELETE
+    @Path("{cuentaId: \\d+}")
+    public void deleteCuenta(@PathParam("cuentaId") Long cuentaId) throws BusinessLogicException {
 
-            CuentaBancariaEntity cuentaEntity = logic.getCuentaBancaria(cuentaId);
+        CuentaBancariaEntity cuentaEntity = logic.getCuentaBancaria(cuentaId);
+
         CuentaBancariaDTO cuentaDto = new CuentaBancariaDTO(cuentaEntity);
-        
+
         if (cuentaEntity == null) {
+
             throw new WebApplicationException(RECURSO + cuentaId + NO_EXISTE, 404);
 
         }
-        
+
         String token = cuentaDto.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok == null) {
 
             throw new BusinessLogicException("No se encuentra Registrado");
-        }if( !tok.getTipo().equals("Enstutdiante"))
-            {
+        }
+        if (!tok.getTipo().equals("Enstutdiante")) {
 
             throw new BusinessLogicException("No tiene permiso para esto");
         }
-        
+
         logic.delete(cuentaId);
     }
 }
-

@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @author David Dominguez
  */
 public class CredencialDTO implements Serializable {
-    
+
     private String correo;
     private String contrasenia;
     private String tipo;

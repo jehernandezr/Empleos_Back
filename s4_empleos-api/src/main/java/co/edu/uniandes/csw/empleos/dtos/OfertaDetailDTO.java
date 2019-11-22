@@ -14,64 +14,54 @@ import java.util.List;
 /**
  *
  * @author Estudiante
- * 
- * 
-{
-   "tipoOferta": number  ,
-   "numeroDeVacantes":  string ,
-   "pagoPorHora": number   ,
-   "nombre":   string  ,
-   "descripcion":   string  ,
-   "categoria":   string  ,
-   "tiempoMaximoAplicacion":   number  ,
-   "porcentajePagoAdicional":  number  ,
-   "estaAbierta":   boolean    ,
-   "requisitos":  string    ,
-   "horario":  string  ,
-   "horasDeTrabajo":  number ,
-   "rutaImagen": string,
-   "trabajo": {
-   },
-   "estudiantes":{
-   
-    }
-   
-}
+ *
+ *
+ * {
+ * "tipoOferta": number , "numeroDeVacantes": string , "pagoPorHora": number ,
+ * "nombre": string , "descripcion": string , "categoria": string ,
+ * "tiempoMaximoAplicacion": number , "porcentajePagoAdicional": number ,
+ * "estaAbierta": boolean , "requisitos": string , "horario": string ,
+ * "horasDeTrabajo": number , "rutaImagen": string, "trabajo": { },
+ * "estudiantes":{
+ *
+ * }
+ *
+ * }
  */
 public class OfertaDetailDTO extends OfertaDTO implements Serializable {
-    
+
     private TrabajoDTO trabajo;
-    
+
     private List<EstudianteDTO> estudiantes;
-    
+
     private ContratistaDTO contratista;
-    
-    
-    
-    public OfertaDetailDTO(){
-        
+
+    public OfertaDetailDTO() {
+
     }
 
     public OfertaDetailDTO(OfertaEntity ofertaEntity) {
-       super(ofertaEntity);
+        super(ofertaEntity);
         if (ofertaEntity != null) {
-            
-            if (ofertaEntity.getEstudiantes()!= null) {
+
+            if (ofertaEntity.getEstudiantes() != null) {
                 estudiantes = new ArrayList<>();
                 for (EstudianteEntity entityBook : ofertaEntity.getEstudiantes()) {
                     estudiantes.add(new EstudianteDTO(entityBook));
                 }
             }
-            
-            if (ofertaEntity.getTrabajo()!= null)
+
+            if (ofertaEntity.getTrabajo() != null) {
                 trabajo = new TrabajoDTO(ofertaEntity.getTrabajo());
-            
-            if (ofertaEntity.getContratista()!= null)
+            }
+
+            if (ofertaEntity.getContratista() != null) {
                 contratista = new ContratistaDTO(ofertaEntity.getContratista());
+            }
         }
     }
-    
-      /**
+
+    /**
      * Transformar un DTO a un Entity
      *
      * @return El DTO de la editorial para transformar a Entity
@@ -86,14 +76,15 @@ public class OfertaDetailDTO extends OfertaDTO implements Serializable {
             }
             ofertaEntity.setEstudiantes(estudiantesEntity);
         }
-        
-        if (contratista != null) ofertaEntity.setContratista(contratista.toEntity());
-        if (trabajo != null) ofertaEntity.setTrabajo(trabajo.toEntity());
-        
+
+        if (contratista != null) {
+            ofertaEntity.setContratista(contratista.toEntity());
+        }
+        if (trabajo != null) {
+            ofertaEntity.setTrabajo(trabajo.toEntity());
+        }
+
         return ofertaEntity;
     }
-    
-    
-    
-    
+
 }

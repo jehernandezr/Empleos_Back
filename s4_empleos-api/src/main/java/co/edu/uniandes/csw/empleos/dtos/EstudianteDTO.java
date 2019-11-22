@@ -12,8 +12,8 @@ import java.io.Serializable;
  *
  * @author David Domínguez
  */
-public class EstudianteDTO implements Serializable{
-    
+public class EstudianteDTO implements Serializable {
+
     private long id;
     private long idMedioDepago;
     private String nombre;
@@ -24,7 +24,7 @@ public class EstudianteDTO implements Serializable{
     private String horarioDeTrabajo;
     private String token;
 
-        /**
+    /**
      * Constructor por defecto
      */
     public EstudianteDTO() {
@@ -51,15 +51,15 @@ public class EstudianteDTO implements Serializable{
             this.token = null;
         }
     }
-    
+
     public String getToken() {
         return token;
     }
-    
+
     public void setToken(String id) {
         this.token = id;
     }
-    
+
     /**
      * @return the id
      */
@@ -73,7 +73,7 @@ public class EstudianteDTO implements Serializable{
     public void setId(long id) {
         this.id = id;
     }
-    
+
     /**
      * @return the idMedioDepago
      */
@@ -178,7 +178,7 @@ public class EstudianteDTO implements Serializable{
      * @return Un Entity con los valores del DTO
      */
     public EstudianteEntity toEntity() {
-    
+
         EstudianteEntity estudianteEntity = new EstudianteEntity();
         estudianteEntity.setId(this.id);
         estudianteEntity.setIdMedioDepago(this.idMedioDepago);
@@ -191,5 +191,5 @@ public class EstudianteDTO implements Serializable{
         estudianteEntity.setIdMedioDepago(this.idMedioDepago);
         return estudianteEntity;
     }
-    
+
 }

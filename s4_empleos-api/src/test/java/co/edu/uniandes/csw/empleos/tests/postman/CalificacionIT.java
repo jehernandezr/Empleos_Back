@@ -28,10 +28,10 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class CalificacionIT {
- 
+
     private static final String COLLECTION = "CalificacionResourceTest.postman_collection";
-    
-     @Deployment(testable = true)
+
+    @Deployment(testable = true)
     public static WebArchive createDeployment() {
         return ShrinkWrap.create(WebArchive.class, "s4_empleos-api.war")//War del modulo api
                 // Se agrega las dependencias
@@ -50,7 +50,7 @@ public class CalificacionIT {
                 .setWebXML(new File("src/main/webapp/WEB-INF/web.xml"))
                 .addAsWebInfResource(new File("src/main/webapp/WEB-INF/glassfish-resources.xml"));
     }
-    
+
     @Test
     @RunAsClient
     public void postman() throws IOException {
@@ -65,5 +65,5 @@ public class CalificacionIT {
 
         Assert.assertEquals("Error en Assertions de: " + COLLECTION, desiredResult, tp.getAssertions_failed());
     }
-    
+
 }

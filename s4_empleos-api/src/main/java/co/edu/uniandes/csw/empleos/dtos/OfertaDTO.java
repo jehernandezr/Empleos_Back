@@ -13,29 +13,24 @@ import java.io.Serializable;
  * @oferta Estudiante
  */
 public class OfertaDTO implements Serializable {
+
     /**
-     * Variable que representa los horarios de trabajo.
-     * Franjas DDS:HH:MM-DDS:HH:MM donde DDS es el dia de la semana:
-     * LUN-lunes
-     * MAR-martes
-     * MIE-miercoles
-     * JUE-jueves
-     * VIE-viernes
+     * Variable que representa los horarios de trabajo. Franjas
+     * DDS:HH:MM-DDS:HH:MM donde DDS es el dia de la semana: LUN-lunes
+     * MAR-martes MIE-miercoles JUE-jueves VIE-viernes
      */
     private String horario;
-    
+
     /**
      * Variable que representa el tipo de oferta (Normal o Express).
      */
     private int tipoOferta;
-    
-    
-    
+
     /**
      * Variable que representa el pago por hora de la oferta.
      */
     private Double pagoPorHora;
-    
+
     /**
      * Variable que representa sel numero de vacantes de una oferta.
      * numeroDeVacantes>1
@@ -45,72 +40,65 @@ public class OfertaDTO implements Serializable {
      * Variable que representa el nombre de la oferta.
      */
     private String nombre;
-    
+
     /**
      * Variable que si una oferta esta abierta al publico.
-     * 
+     *
      */
     private boolean estaAbierta;
-   
-    
+
     /**
      * Variable que representa a categoria de empleo de la oferta.
      */
     private String categoria;
-    
-     /**
-     * Variable que representa el porcentaje de pago extra de una oferta Express.
+
+    /**
+     * Variable que representa el porcentaje de pago extra de una oferta
+     * Express.
      */
     private int porcentajePagoAdicional;
-    
-     /**
-     * Variable que representa el tiempo maximo de aplicacion de una oferta Express.
+
+    /**
+     * Variable que representa el tiempo maximo de aplicacion de una oferta
+     * Express.
      */
     private int tiempoMaximoAplicacion;
-    
-   
-    
-    
-    
+
     /**
-     * Variable que representa los requisitos de un aplicante (Separados por un guion (-)).
-     * 
+     * Variable que representa los requisitos de un aplicante (Separados por un
+     * guion (-)).
+     *
      */
     private String requisitos;
-    
-     /**
+
+    /**
      * Variable que representa la descripcion de la oferta.
      */
     private String descripcion;
-    
-    
-    
+
     /**
-     * Variable que representa las horas totales de trabajo, calculadas con el horario.
-     * 
+     * Variable que representa las horas totales de trabajo, calculadas con el
+     * horario.
+     *
      */
     private Double horasDeTrabajo;
-    
-     /**
+
+    /**
      * Token que definirá el inicio de sesión
      */
     private String token;
-    
+
     /**
      * Variable que representa la ruta de la imagen principal de la oferta.
-     * 
+     *
      */
     private String rutaImagen;
-    
-    
-    
-    public OfertaDTO(){
-        
+
+    public OfertaDTO() {
+
     }
 
-  
-    
-     /**
+    /**
      * Convierte un objeto OfertaDTO a OfertaEntity.
      *
      * @return Nueva objeto OfertaEntity.
@@ -134,8 +122,8 @@ public class OfertaDTO implements Serializable {
         ofertaEntity.setTipoOferta(this.getTipoOferta());
         return ofertaEntity;
     }
-    
-      /**
+
+    /**
      * Crea un objeto AuthorDTO a partir de un objeto AuthorEntity.
      *
      * @param ofertaEntity Entidad AuthorEntity desde la cual se va a crear el
@@ -159,12 +147,10 @@ public class OfertaDTO implements Serializable {
             this.tiempoMaximoAplicacion = ofertaEntity.getTiempoMaximoAplicacion();
             this.tipoOferta = ofertaEntity.getTipoOferta();
             this.token = null;
-             
+
         }
     }
 
-    
-    
     private Long id;
 
     public Long getId() {
@@ -174,7 +160,7 @@ public class OfertaDTO implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
+
     /**
      * @return the tipoOferta
      */
@@ -188,8 +174,6 @@ public class OfertaDTO implements Serializable {
     public void setTipoOferta(int tipoOferta) {
         this.tipoOferta = tipoOferta;
     }
-
-   
 
     /**
      * @param numeroDeVacantes the numeroDeVacantes to set
@@ -205,7 +189,6 @@ public class OfertaDTO implements Serializable {
         return pagoPorHora;
     }
 
-   
     /**
      * @return the nombre
      */
@@ -213,8 +196,7 @@ public class OfertaDTO implements Serializable {
         return nombre;
     }
 
-    
-/**
+    /**
      * @param requisitos the requisitos to set
      */
     public void setRequisitos(String requisitos) {
@@ -227,7 +209,6 @@ public class OfertaDTO implements Serializable {
     public String getHorario() {
         return horario;
     }
-    
 
     /**
      * @param descripcion the descripcion to set
@@ -235,7 +216,7 @@ public class OfertaDTO implements Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    
+
     /**
      * @param nombre the nombre to set
      */
@@ -250,15 +231,14 @@ public class OfertaDTO implements Serializable {
         return categoria;
     }
 
-    
-
     /**
      * @return the tiempoMaximoAplicacion
      */
     public int getTiempoMaximoAplicacion() {
         return tiempoMaximoAplicacion;
     }
-     /**
+
+    /**
      * @param pagoPorHora the pagoPorHora to set
      */
     public void setPagoPorHora(Double pagoPorHora) {
@@ -271,21 +251,20 @@ public class OfertaDTO implements Serializable {
     public void setRutaImagen(String rutaImagen) {
         this.rutaImagen = rutaImagen;
     }
-    
+
     /**
      * @return the porcentajePagoAdicional
      */
     public int getPorcentajePagoAdicional() {
         return porcentajePagoAdicional;
     }
+
     /**
      * @param tiempoMaximoAplicacion the tiempoMaximoAplicacion to set
      */
     public void setTiempoMaximoAplicacion(int tiempoMaximoAplicacion) {
         this.tiempoMaximoAplicacion = tiempoMaximoAplicacion;
     }
-
-    
 
     /**
      * @param porcentajePagoAdicional the porcentajePagoAdicional to set
@@ -307,13 +286,15 @@ public class OfertaDTO implements Serializable {
     public void setEstaAbierta(boolean estaAbierta) {
         this.estaAbierta = estaAbierta;
     }
-public String getToken() {
+
+    public String getToken() {
         return token;
     }
-    
+
     public void setToken(String id) {
         this.token = id;
     }
+
     /**
      * @return the requisitos
      */
@@ -321,20 +302,20 @@ public String getToken() {
         return requisitos;
     }
 
-    
-
     /**
      * @param horario the horario to set
      */
     public void setHorario(String horario) {
         this.horario = horario;
     }
-/**
+
+    /**
      * @return the descripcion
      */
     public String getDescripcion() {
         return descripcion;
     }
+
     /**
      * @return the horasDeTrabajo
      */
@@ -355,12 +336,14 @@ public String getToken() {
     public String getRutaImagen() {
         return rutaImagen;
     }
-     /**
+
+    /**
      * @return the numeroDeVacantes
      */
     public int getNumeroDeVacantes() {
         return numeroDeVacantes;
     }
+
     /**
      * @param categoria the categoria to set
      */
@@ -368,7 +351,4 @@ public String getToken() {
         this.categoria = categoria;
     }
 
-    
-    
-    
 }

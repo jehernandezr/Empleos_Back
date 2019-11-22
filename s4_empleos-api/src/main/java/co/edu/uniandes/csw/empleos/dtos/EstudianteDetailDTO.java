@@ -18,16 +18,15 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  *
  * @author David Domínguez
  */
-public class EstudianteDetailDTO extends EstudianteDTO implements Serializable{
-    
+public class EstudianteDetailDTO extends EstudianteDTO implements Serializable {
+
     private List<CalificacionDTO> calificacioness;
-    
+
     private List<OfertaDTO> ofertas;
-    
+
     private CuentaBancariaDTO cuentaBancaria;
-    
-    public EstudianteDetailDTO()
-    {
+
+    public EstudianteDetailDTO() {
         //Constructor vacio
     }
 
@@ -39,26 +38,27 @@ public class EstudianteDetailDTO extends EstudianteDTO implements Serializable{
     public EstudianteDetailDTO(EstudianteEntity estudianteEntity) {
         super(estudianteEntity);
         if (estudianteEntity != null) {
-            if (estudianteEntity.getCalificaciones()!= null) {
+            if (estudianteEntity.getCalificaciones() != null) {
                 calificacioness = new ArrayList<>();
                 for (CalificacionEntity entityBook : estudianteEntity.getCalificaciones()) {
                     calificacioness.add(new CalificacionDTO(entityBook));
                 }
             }
-            
-            if (estudianteEntity.getOfertas()!= null) {
+
+            if (estudianteEntity.getOfertas() != null) {
                 ofertas = new ArrayList<>();
                 for (OfertaEntity entityBook : estudianteEntity.getOfertas()) {
                     ofertas.add(new OfertaDTO(entityBook));
                 }
             }
-            
-            if (estudianteEntity.getCuentaBancaria() != null)
+
+            if (estudianteEntity.getCuentaBancaria() != null) {
                 cuentaBancaria = new CuentaBancariaDTO(estudianteEntity.getCuentaBancaria());
+            }
         }
     }
-    
-        /**
+
+    /**
      * Transformar un DTO a un Entity
      *
      * @return El DTO de la editorial para transformar a Entity
@@ -80,7 +80,9 @@ public class EstudianteDetailDTO extends EstudianteDTO implements Serializable{
             }
             estudianteEntity.setOfertas(ofertasEntity);
         }
-        if (cuentaBancaria != null) estudianteEntity.setCuentaBancaria(cuentaBancaria.toEntity());
+        if (cuentaBancaria != null) {
+            estudianteEntity.setCuentaBancaria(cuentaBancaria.toEntity());
+        }
         return estudianteEntity;
     }
 
@@ -97,7 +99,7 @@ public class EstudianteDetailDTO extends EstudianteDTO implements Serializable{
     public void setCalificaciones(List<CalificacionDTO> calificacioness) {
         this.calificacioness = calificacioness;
     }
-    
+
     /**
      * @return the ofertas
      */
@@ -111,7 +113,7 @@ public class EstudianteDetailDTO extends EstudianteDTO implements Serializable{
     public void setOfertas(List<OfertaDTO> ofertas) {
         this.ofertas = ofertas;
     }
-    
+
     /**
      * @return the cuenta bancaria
      */
@@ -125,10 +127,10 @@ public class EstudianteDetailDTO extends EstudianteDTO implements Serializable{
     public void setCuentaBancaria(CuentaBancariaDTO cuentaBancaria) {
         this.cuentaBancaria = cuentaBancaria;
     }
-    
+
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
-    
+
 }

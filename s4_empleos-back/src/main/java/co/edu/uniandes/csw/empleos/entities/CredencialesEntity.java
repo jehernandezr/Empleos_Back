@@ -12,23 +12,23 @@ import javax.persistence.Entity;
  * @author je.hernandezr
  */
 @Entity
-public class CredencialesEntity extends BaseEntity{
+public class CredencialesEntity extends BaseEntity {
+
     private String correo;
-    
+
     private String contrasenia;
 
     private String tipo;
 
-    
-    public CredencialesEntity(){
+    public CredencialesEntity() {
         //Constructor vacio
     }
+
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return super.hashCode();
     }
-    
+
     /**
      * @return the correo
      */
@@ -42,12 +42,14 @@ public class CredencialesEntity extends BaseEntity{
     public void setCorreo(String correo) {
         this.correo = correo;
     }
-/**
+
+    /**
      * @return the tipo
      */
     public String getTipo() {
         return tipo;
     }
+
     /**
      * @return the contrasena
      */
@@ -58,15 +60,12 @@ public class CredencialesEntity extends BaseEntity{
     }
 
     /**
-     * @param contraseña the contrasena to set
+     * @param contrasenia
      */
-
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
 
     }
-
-    
 
     /**
      * @param tipo the tipo to set
@@ -74,14 +73,10 @@ public class CredencialesEntity extends BaseEntity{
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-    
+
     @Override
-    public boolean equals(Object obj)
-    {
+    public boolean equals(Object obj) {
         return super.equals(obj);
     }
-    
-    
-    
-    
+
 }

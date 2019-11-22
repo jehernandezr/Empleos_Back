@@ -40,7 +40,6 @@ public class TarjetaDeCreditoResource {
     private static final String NO_EXISTE = " no existe.";
     private static final String RECURSO = "El recurso /tarjetas/";
 
-
     @Inject
     private TarjetaDeCreditoLogic tarjetaLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
 
@@ -60,7 +59,6 @@ public class TarjetaDeCreditoResource {
      */
     @POST
     public TarjetaDeCreditoDTO createTarjeta(TarjetaDeCreditoDTO tarjeta) throws BusinessLogicException {
-
 
         String token = tarjeta.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
@@ -130,7 +128,6 @@ public class TarjetaDeCreditoResource {
     @PUT
     @Path("{tarjetasId: \\d+}")
     public TarjetaDeCreditoDTO updateTarjeta(@PathParam("tarjetasId") Long tarjetaId, TarjetaDeCreditoDTO tarjeta) throws BusinessLogicException {
-
         String token = tarjeta.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok.getTipo().equals("Contratista")) {
@@ -145,7 +142,6 @@ public class TarjetaDeCreditoResource {
         } else {
             throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
         }
-
 
     }
 

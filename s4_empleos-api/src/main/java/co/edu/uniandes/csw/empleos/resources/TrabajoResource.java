@@ -38,44 +38,43 @@ import javax.ws.rs.WebApplicationException;
 @RequestScoped
 public class TrabajoResource {
 
-     private static final String NO_EXISTE = " no existe.";
+    private static final String NO_EXISTE = " no existe.";
     private static final String RECURSO = "El recurso /trabajo/";
-    
+
     // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
     @Inject
-    private TrabajoLogic trabajoLogic; 
-    
+    private TrabajoLogic trabajoLogic;
+
     // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
     @Inject
-    private TrabajoFacturaLogic trabajoFacturaLogic; 
-    
+    private TrabajoFacturaLogic trabajoFacturaLogic;
+
     // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
     @Inject
-    private TrabajoOfertaLogic trabajoOfertaLogic; 
-    
+    private TrabajoOfertaLogic trabajoOfertaLogic;
+
     @Inject
     private TokenLogic tokenLogic;
-    
+
     @POST
     public TrabajoDTO createTrabajo(TrabajoDTO trabajo) throws BusinessLogicException {
 
-        
         String token = trabajo.getToken();
-            TokenEntity tok = tokenLogic.getTokenByToken(token);
-            if (tok.getTipo().equals("Contratista")) {
-        TrabajoDTO t = new TrabajoDTO(trabajoLogic.crearTrabajo(trabajo.toEntity()));
-        return t;
-        
-           } else {
-                throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
-            }
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok.getTipo().equals("Contratista")) {
+            TrabajoDTO t = new TrabajoDTO(trabajoLogic.crearTrabajo(trabajo.toEntity()));
+            return t;
+
+        } else {
+            throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
+        }
     }
-    
-     /**
+
+    /**
      * Busca el trabajo con el id asociado recibido en la URL y lo devuelve.
      *
-     * @param trabajoId Identificador del trabajo que se esta buscando. Este debe
-     * ser una cadena de dígitos.
+     * @param trabajoId Identificador del trabajo que se esta buscando. Este
+     * debe ser una cadena de dígitos.
      * @return JSON {@link TrabajoDTO} - El trabajo buscado
      * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
@@ -89,8 +88,8 @@ public class TrabajoResource {
             throw new WebApplicationException(RECURSO + trabajoId + NO_EXISTE, 404);
         }
         TrabajoDetailDTO calDTO = new TrabajoDetailDTO(calEntity);
-        
-         String token = calDTO.getToken();
+
+        String token = calDTO.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok == null) {
 
@@ -98,25 +97,25 @@ public class TrabajoResource {
         }
         return calDTO;
     }
-    
+
     /**
      * Busca y devuelve todos los trabajos que existen en la aplicacion.
      *
-     * @return JSONArray {@link TrabajoDTO} - Los trabajos
-     * encontrados en la aplicación. Si no hay ninguno retorna una lista vacía.
+     * @return JSONArray {@link TrabajoDTO} - Los trabajos encontrados en la
+     * aplicación. Si no hay ninguno retorna una lista vacía.
      */
     @GET
     public List<TrabajoDetailDTO> getTrabajos() {
-       
+
         return listEntity2DTO(trabajoLogic.getTrabajos());
     }
-    
-     /**
-     * Actualiza el trabajo con el id recibido en la URL con la información que se
-     * recibe en el cuerpo de la petición.
+
+    /**
+     * Actualiza el trabajo con el id recibido en la URL con la información que
+     * se recibe en el cuerpo de la petición.
      *
-     * @param trabajoId Identificador del trabajo que se desea actualizar. Este debe
-     * ser una cadena de dígitos.
+     * @param trabajoId Identificador del trabajo que se desea actualizar. Este
+     * debe ser una cadena de dígitos.
      * @param trabajo{@link EstudianteDTO} El trabajo que se desea guardar.
      * @return JSON {@link EstudianteDTO} - El trabajo guardada.
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
@@ -128,27 +127,27 @@ public class TrabajoResource {
     @PUT
     @Path("{trabajoId: \\d+}")
     public TrabajoDetailDTO updateTrabajo(@PathParam("trabajoId") Long trabajoId, TrabajoDetailDTO trabajo) throws BusinessLogicException {
-        
+
         String token = trabajo.getToken();
-            TokenEntity tok = tokenLogic.getTokenByToken(token);
-            if (tok.getTipo().equals("Contratista")) {
-        trabajo.setId(trabajoId);
-        if (trabajoLogic.getTrabajo(trabajoId) == null) {
-            throw new WebApplicationException(RECURSO + trabajoId + NO_EXISTE, 404);
-        }
-        TrabajoDetailDTO dto = new TrabajoDetailDTO(trabajoLogic.updateTrabajo(trabajo.toEntity()));
-        return dto;
-         } else {
-                throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok.getTipo().equals("Contratista")) {
+            trabajo.setId(trabajoId);
+            if (trabajoLogic.getTrabajo(trabajoId) == null) {
+                throw new WebApplicationException(RECURSO + trabajoId + NO_EXISTE, 404);
             }
+            TrabajoDetailDTO dto = new TrabajoDetailDTO(trabajoLogic.updateTrabajo(trabajo.toEntity()));
+            return dto;
+        } else {
+            throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
+        }
     }
-    
-     /**
+
+    /**
      * Borra el Estudiante con el id asociado recibido en la URL.
      *
      * @param trabajoId
-     * @param calId Identificador del estudiante que se desea borrar. Este debe ser
-     * una cadena de dígitos
+     * @param calId Identificador del estudiante que se desea borrar. Este debe
+     * ser una cadena de dígitos
      * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra al estudiante.
@@ -157,26 +156,26 @@ public class TrabajoResource {
     @Path("{trabajoId: \\d+}")
     public void deleteTrabajo(@PathParam("trabajoId") Long trabajoId) throws BusinessLogicException {
         TrabajoEntity traEntity = trabajoLogic.getTrabajo(trabajoId);
-        TrabajoDTO traDTO = new TrabajoDTO (traEntity);
+        TrabajoDTO traDTO = new TrabajoDTO(traEntity);
         if (trabajoLogic.getTrabajo(trabajoId) == null) {
             throw new WebApplicationException(RECURSO + trabajoId + NO_EXISTE, 404);
         }
-         String token = traDTO.getToken();
+        String token = traDTO.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok == null) {
 
             throw new BusinessLogicException("No se encuentra Registrado");
-        }if( tok.getTipo().equals("Enstutdiante"))
-            {
+        }
+        if (tok.getTipo().equals("Enstutdiante")) {
 
             throw new BusinessLogicException("No tiene permiso para esto");
         }
-        
+
         trabajoOfertaLogic.removeOferta(trabajoId);
         trabajoFacturaLogic.removeFactura(trabajoId);
         trabajoLogic.deleteTrabajo(trabajoId);
-    }  
-    
+    }
+
     /**
      * Convierte una lista de entidades a DTO.
      *
@@ -189,8 +188,9 @@ public class TrabajoResource {
      */
     private List<TrabajoDetailDTO> listEntity2DTO(List<TrabajoEntity> entityList) {
         List<TrabajoDetailDTO> list = new ArrayList<>();
-        for (TrabajoEntity entity : entityList) 
+        for (TrabajoEntity entity : entityList) {
             list.add(new TrabajoDetailDTO(entity));
+        }
         return list;
     }
 }

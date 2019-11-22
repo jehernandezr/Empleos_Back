@@ -37,9 +37,8 @@ import javax.ws.rs.WebApplicationException;
 @RequestScoped
 public class ContratistaResource {
 
-    
-    private static final  String NO_EXISTE = " no existe.";
-    private static final  String RECURSO = "El recurso /contratistas/";
+    private static final String NO_EXISTE = " no existe.";
+    private static final String RECURSO = "El recurso /contratistas/";
 
     // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
     @Inject
@@ -55,21 +54,8 @@ public class ContratistaResource {
 
     @POST
     public ContratistaDTO createContratista(ContratistaDTO contratista) throws BusinessLogicException {
-
-       return new ContratistaDTO(contratistaLogic.createContratista(contratista.toEntity()));
-        
-    }
-    
-     /**
-     * Busca y devuelve todos los contratistas que existen en la aplicacion.
-     *
-     * @return JSONArray {@link ContratistaDTO} - Los contratistas
-     * encontrados en la aplicación. Si no hay ninguna retorna una lista vacía.
-     */
-    @GET
-    public List<ContratistaDetailDTO> getContratistas() {
-       
-        return listEntity2DTO(contratistaLogic.getContratistas());
+        ContratistaDTO contratistaFinal = new ContratistaDTO(contratistaLogic.createContratista(contratista.toEntity()));
+        return contratistaFinal;
     }
 
     /**
@@ -89,19 +75,28 @@ public class ContratistaResource {
 
         ContratistaEntity calEntity = contratistaLogic.getContratista(contratistaId);
         if (calEntity == null) {
+
             throw new WebApplicationException(RECURSO + contratistaId + NO_EXISTE, 404);
         }
-        
-        return new ContratistaDetailDTO(calEntity);
+        ContratistaDTO calDTO = new ContratistaDTO(calEntity);
+
+        String token = calDTO.getToken();
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok == null) {
+
+            throw new BusinessLogicException("No se encuentra Registrado");
+        }
+
+        return calDTO;
+
     }
-   
 
     /**
      * Actualiza el estudiante con el id recibido en la URL con la información
      * que se recibe en el cuerpo de la petición.
      *
-     * @param id Identificador del estudiante que se desea actualizar. Este
-     * debe ser una cadena de dígitos.
+     * @param id Identificador del estudiante que se desea actualizar. Este debe
+     * ser una cadena de dígitos.
      * @param contratista
      * @return JSON {@link EstudianteDTO} - El estudiante guardada.
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
@@ -134,8 +129,8 @@ public class ContratistaResource {
     /**
      * Borra el Estudiante con el id asociado recibido en la URL.
      *
-     * @param id Identificador del estudiante que se desea borrar. Este debe
-     * ser una cadena de dígitos
+     * @param id Identificador del estudiante que se desea borrar. Este debe ser
+     * una cadena de dígitos
      * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra al estudiante.
@@ -165,7 +160,7 @@ public class ContratistaResource {
         contratistaLogic.deleteContratista(id);
 
     }
-    
+
     /**
      * Convierte una lista de entidades a DTO.
      *

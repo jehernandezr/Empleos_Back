@@ -25,16 +25,15 @@ public class CredencialesLogic {
 
     private static final String VACIO = "El campo no puede ser vacìo";
     private static final String NULO = "El campo no puede ser nulo";
-    
-       /**
 
+    /**
+     *
      * Guarda una token
      *
      * @param credencial la entidad de tipo Token a persistir
      * @return entidad luego de persistirla
      * @throws BusinessLogicException Si alguna regla de negocio se rompe.
      */
-
     public CredencialesEntity createCredencial(CredencialesEntity credencial) throws BusinessLogicException {
         if (credencial != null) {
 
@@ -60,7 +59,6 @@ public class CredencialesLogic {
             }
 
             credencial = persistence.create(credencial);
-
         }
 
         return credencial;
@@ -71,7 +69,6 @@ public class CredencialesLogic {
      *
      * @return Lista de las entidades del tipo token.
      */
-
     public List<CredencialesEntity> getCredenciales() {
         List<CredencialesEntity> token = persistence.findAll();
         return token;
@@ -84,7 +81,6 @@ public class CredencialesLogic {
      * @param tokenId El id de la token a buscar.
      * @return La token encontrada, null si no se encuentra.
      */
-
     public CredencialesEntity getCredencial(Long tokenId) {
         CredencialesEntity credencialEntity = persistence.find(tokenId);
 
@@ -100,7 +96,6 @@ public class CredencialesLogic {
      * @return La entidad de la calificacion luego de actualizarla
      * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
      */
-
     public CredencialesEntity updateCredencial(Long credencialId, CredencialesEntity credencialEntity) throws BusinessLogicException {
         CredencialesEntity newEntity = null;
         if (credencialEntity != null) {

@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package co.edu.uniandes.csw.empleos.resources;
+
 import co.edu.uniandes.csw.empleos.dtos.OfertaDTO;
 import co.edu.uniandes.csw.empleos.dtos.OfertaDetailDTO;
 import co.edu.uniandes.csw.empleos.ejb.OfertaEstudianteLogic;
@@ -35,21 +36,18 @@ import javax.ws.rs.WebApplicationException;
 @Consumes("application/json")
 @RequestScoped
 public class OfertaResource {
-    
+
     private static final String NO_EXISTE = " no existe.";
     private static final String RECURSO = "El recurso /oferta/";
-    
-   @Inject
+
+    @Inject
     private OfertaLogic logic;
-   
-     @Inject
+
+    @Inject
     private TokenLogic tokenLogic;
-   
-   @Inject
-   private OfertaEstudianteLogic estudianteOfertasLogic;
-     
-     
-    
+
+    @Inject
+    private OfertaEstudianteLogic estudianteOfertasLogic;
 
     /**
      * Busca y devuelve todos los autores que existen en la aplicacion.
@@ -59,13 +57,12 @@ public class OfertaResource {
      */
     @GET
     public List<OfertaDetailDTO> getOfertas() {
-        
+
         return listEntity2DTO(logic.getOfertas());
-        
+
     }
-    
-    
-     /**
+
+    /**
      * Busca y devuelve todos los autores que existen en la aplicacion.
      *
      * @param palabra
@@ -75,12 +72,11 @@ public class OfertaResource {
     @GET
     @Path("{palabra}")
     public List<OfertaDetailDTO> getOfertasPalabraClave(@PathParam("palabra") String palabra) {
-        
+
         return listEntity2DTO(logic.getOfertasPalabraClave(palabra.toLowerCase()));
-        
+
     }
-    
-    
+
     /**
      *
      * @param oferta
@@ -88,23 +84,21 @@ public class OfertaResource {
      * @return
      * @throws BusinessLogicException
      */
-    @POST
     public OfertaDTO crearOferta(OfertaDetailDTO oferta) throws BusinessLogicException {
-         String token = oferta.getToken();
-            TokenEntity tok = tokenLogic.getTokenByToken(token);
-            if (tok.getTipo().equals("Contratista")) {
-        
-        OfertaEntity ofertaEntity = oferta.toEntity();
-        ofertaEntity = logic.createOferta(ofertaEntity);
-        return new OfertaDetailDTO(ofertaEntity);
-        
-         } else {
-                throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
-            }
+        String token = oferta.getToken();
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok.getTipo().equals("Contratista")) {
+
+            OfertaEntity ofertaEntity = oferta.toEntity();
+            ofertaEntity = logic.createOferta(ofertaEntity);
+            return new OfertaDetailDTO(ofertaEntity);
+
+        } else {
+            throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
+        }
 
     }
 
-    
     /**
      *
      * @param idOferta
@@ -120,12 +114,10 @@ public class OfertaResource {
             throw new WebApplicationException(RECURSO + idOferta + NO_EXISTE, 404);
         }
 
-        
         return new OfertaDetailDTO(ofertaEntity);
-    
+
     }
-    
-    
+
     /**
      * Conexión con el servicio de libros para una editorial.
      * {@link EstudiantesOfertaResource}
@@ -147,15 +139,13 @@ public class OfertaResource {
         }
         return EstudiantesOfertaResource.class;
     }
-    
-   
-    
+
     /**
-     * Actualiza el oferta con el id recibido en la URL con la información que se
-     * recibe en el cuerpo de la petición.
+     * Actualiza el oferta con el id recibido en la URL con la información que
+     * se recibe en el cuerpo de la petición.
      *
-     * @param ofertaId Identificador del oferta que se desea actualizar. Este debe
-     * ser una cadena de dígitos.
+     * @param ofertaId Identificador del oferta que se desea actualizar. Este
+     * debe ser una cadena de dígitos.
      * @param oferta {@link OfertaDTO} El oferta que se desea guardar.
      * @return JSON {@link OfertaDTO} - El oferta guardada.
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
@@ -167,29 +157,29 @@ public class OfertaResource {
     @PUT
     @Path("{id: \\d+}")
     public OfertaDetailDTO updateOferta(@PathParam("id") Long ofertaId, OfertaDetailDTO oferta) throws BusinessLogicException {
-        
-        String token = oferta.getToken();
-            TokenEntity tok = tokenLogic.getTokenByToken(token);
-            if (tok.getTipo().equals("Contratista")) {
-        oferta.setId(ofertaId);
-        if (logic.getOferta(ofertaId) == null) {
-            throw new WebApplicationException(RECURSO + ofertaId + NO_EXISTE, 404);
-        }
 
-        OfertaDetailDTO dto = new OfertaDetailDTO(logic.updateOferta(ofertaId,oferta.toEntity()));
-        return dto;
-        
-        } else {
-                throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
+        String token = oferta.getToken();
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok.getTipo().equals("Contratista")) {
+            oferta.setId(ofertaId);
+            if (logic.getOferta(ofertaId) == null) {
+                throw new WebApplicationException(RECURSO + ofertaId + NO_EXISTE, 404);
             }
 
+            OfertaDetailDTO dto = new OfertaDetailDTO(logic.updateOferta(ofertaId, oferta.toEntity()));
+            return dto;
+
+        } else {
+            throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
+        }
+
     }
-    
-     /**
+
+    /**
      * Borra el Oferta con el id asociado recibido en la URL.
      *
-     * @param ofertaId Identificador del oferta que se desea borrar. Este debe ser
-     * una cadena de dígitos
+     * @param ofertaId Identificador del oferta que se desea borrar. Este debe
+     * ser una cadena de dígitos
      * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra al oferta.
@@ -197,28 +187,28 @@ public class OfertaResource {
     @DELETE
     @Path("{ofertaId: \\d+}")
     public void deleteOferta(@PathParam("ofertaId") Long ofertaId) throws BusinessLogicException {
-        
+
         OfertaEntity calEntity = logic.getOferta(ofertaId);
-        OfertaDTO calDTO = new OfertaDTO (calEntity);
+        OfertaDTO calDTO = new OfertaDTO(calEntity);
         if (logic.getOferta(ofertaId) == null) {
             throw new WebApplicationException(RECURSO + ofertaId + NO_EXISTE, 404);
         }
-         
+
         String token = calDTO.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok == null) {
 
             throw new BusinessLogicException("No se encuentra Registrado");
-        }if( tok.getTipo().equals("Enstutdiante"))
-            {
+        }
+        if (tok.getTipo().equals("Enstutdiante")) {
 
             throw new BusinessLogicException("No tiene permiso para esto");
         }
-        
+
         logic.deleteOferta(ofertaId);
     }
-    
-     /**
+
+    /**
      * Convierte una lista de OfertaEntity a una lista de OfertaDetailDTO.
      *
      * @param entityList Lista de OfertaEntity a convertir.
@@ -231,5 +221,5 @@ public class OfertaResource {
         }
         return list;
     }
-    
+
 }

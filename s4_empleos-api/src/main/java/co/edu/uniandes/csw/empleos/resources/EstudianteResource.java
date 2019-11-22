@@ -39,8 +39,8 @@ import javax.ws.rs.WebApplicationException;
 @RequestScoped
 public class EstudianteResource {
 
-    private static final  String NO_EXISTE = " no existe.";
-    private static final  String RECURSO = "El recurso /estudiantes/";
+    private static final String NO_EXISTE = " no existe.";
+    private static final String RECURSO = "El recurso /estudiantes/";
 
     // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
     @Inject
@@ -56,17 +56,10 @@ public class EstudianteResource {
 
     // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
     @Inject
-
     private EstudianteCuentaBancariaLogic estudianteCuentaBancariaLogic;
 
     @Inject
     private TokenLogic tokenLogic;
-
-    /*@POST
-    public EstudianteDTO createEstudiante(EstudianteDTO estudiante) throws BusinessLogicException {
-        EstudianteDTO e = new EstudianteDTO(estudianteLogic.crearEstudiante(estudiante.toEntity()));
-        return e;
-    }*/
 
     @POST
     public EstudianteDTO createEstudiante(EstudianteDTO estudiante) throws BusinessLogicException {
@@ -102,6 +95,7 @@ public class EstudianteResource {
         }
 
         return calDTO;
+
     }
 
     /**
@@ -112,7 +106,7 @@ public class EstudianteResource {
      */
     @GET
     public List<EstudianteDetailDTO> getEstudiantes() {
-        
+
         return listEntity2DTO(estudianteLogic.getEstudiantes());
     }
 
@@ -120,9 +114,10 @@ public class EstudianteResource {
      * Actualiza el estudiante con el id recibido en la URL con la información
      * que se recibe en el cuerpo de la petición.
      *
-     * @param estudianteId Identificador del estudiante que se desea actualizar. Este
-     * debe ser una cadena de dígitos.
-     * @param estudiante {@link EstudianteDTO} El estudiante que se desea guardar.
+     * @param estudianteId Identificador del estudiante que se desea actualizar.
+     * Este debe ser una cadena de dígitos.
+     * @param estudiante {@link EstudianteDTO} El estudiante que se desea
+     * guardar.
      * @return JSON {@link EstudianteDTO} - El estudiante guardada.
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra el estudiante a
@@ -141,7 +136,7 @@ public class EstudianteResource {
         if (tok.getTipo().equals("Estudiante")) {
             estudiante.setId(estudianteId);
             if (estudianteLogic.getEstudiante(estudianteId) == null) {
-            throw new WebApplicationException(RECURSO + estudianteId + NO_EXISTE, 404);
+                throw new WebApplicationException(RECURSO + estudianteId + NO_EXISTE, 404);
             }
             EstudianteDetailDTO dto = new EstudianteDetailDTO(estudianteLogic.updateEstudiante(estudiante.toEntity()));
             return dto;
@@ -155,8 +150,8 @@ public class EstudianteResource {
     /**
      * Borra el Estudiante con el id asociado recibido en la URL.
      *
-     * @param estudianteId Identificador del estudiante que se desea borrar. Este debe
-     * ser una cadena de dígitos
+     * @param estudianteId Identificador del estudiante que se desea borrar.
+     * Este debe ser una cadena de dígitos
      * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra al estudiante.
@@ -172,7 +167,7 @@ public class EstudianteResource {
         EstudianteDetailDTO estDTO = new EstudianteDetailDTO(estudianteEntity);
 
         if (estudianteLogic.getEstudiante(estudianteId) == null) {
-            throw new WebApplicationException(RECURSO+ estudianteId + NO_EXISTE, 404);
+            throw new WebApplicationException(RECURSO + estudianteId + NO_EXISTE, 404);
         }
 
         String token = estDTO.getToken();

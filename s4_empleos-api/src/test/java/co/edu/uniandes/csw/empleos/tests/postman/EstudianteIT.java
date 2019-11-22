@@ -27,10 +27,10 @@ import org.junit.Test;
  * @author David Dominguez
  */
 public class EstudianteIT {
-    
-     private static final String COLLECTION = "EstudianteResourceTest.postman_collection";
-    
-     @Deployment(testable = true)
+
+    private static final String COLLECTION = "EstudianteResourceTest.postman_collection";
+
+    @Deployment(testable = true)
     public static WebArchive createDeployment() {
         return ShrinkWrap.create(WebArchive.class, "s4_empleos-api.war")//War del modulo api
                 // Se agrega las dependencias
@@ -49,7 +49,7 @@ public class EstudianteIT {
                 .setWebXML(new File("src/main/webapp/WEB-INF/web.xml"))
                 .addAsWebInfResource(new File("src/main/webapp/WEB-INF/glassfish-resources.xml"));
     }
-    
+
     @Test
     @RunAsClient
     public void postman() throws IOException {
