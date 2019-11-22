@@ -2,14 +2,13 @@ package co.edu.uniandes.csw.empleos.resources;
 
 import co.edu.uniandes.csw.empleos.dtos.CalificacionDTO;
 import co.edu.uniandes.csw.empleos.dtos.CuentaDeCobroDTO;
-import co.edu.uniandes.csw.empleos.dtos.FacturaDTO;
 import co.edu.uniandes.csw.empleos.ejb.CuentaDeCobroLogic;
-import co.edu.uniandes.csw.empleos.entities.CalificacionEntity;
+import co.edu.uniandes.csw.empleos.ejb.TokenLogic;
 import co.edu.uniandes.csw.empleos.entities.CuentaDeCobroEntity;
+import co.edu.uniandes.csw.empleos.entities.TokenEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -31,44 +30,59 @@ import javax.ws.rs.WebApplicationException;
 @Consumes("application/json")
 @RequestScoped
 public class CuentaDeCobroResource {
-   
-    
-    
+
+    @Inject
+    private TokenLogic tokenLogic;
+
     @Inject
     private CuentaDeCobroLogic cuentaDeCobroLogic;
-    
+
     @POST
     public CuentaDeCobroDTO createCuentaDeCobro(CuentaDeCobroDTO cuenta) throws BusinessLogicException {
-        CuentaDeCobroDTO nuevacuentaDTO = new CuentaDeCobroDTO(cuentaDeCobroLogic.createCuentaDeCobro(cuenta.toEntity()));
-        return nuevacuentaDTO;
+
+        String token = cuenta.getToken();
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok.getTipo().equals("Contratista")) {
+            CuentaDeCobroDTO nuevacuentaDTO = new CuentaDeCobroDTO(cuentaDeCobroLogic.createCuentaDeCobro(cuenta.toEntity()));
+            return nuevacuentaDTO;
+
+        } else {
+            throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
+        }
     }
-    
+
     /**
      * Busca la tarjeta con el id asociado recibido en la URL y lo devuelve.
      *
-     * @param tarjetaId Identificador de la tarjeta que se esta buscando. Este debe
-     * ser una cadena de dígitos.
+     * @param tarjetaId Identificador de la tarjeta que se esta buscando. Este
+     * debe ser una cadena de dígitos.
      * @return JSON {@link TarjetaDeCreditoDTO} - El libro buscado
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra la tarjeta.
      */
     @GET
     @Path("{cuentasId: \\d+}")
-    public CuentaDeCobroDTO getCuentaDeCobro(@PathParam("cuentasId") Long cuentaId) throws BusinessLogicException 
-    {
-        
+    public CuentaDeCobroDTO getCuentaDeCobro(@PathParam("cuentasId") Long cuentaId) throws BusinessLogicException {
+
         CuentaDeCobroEntity entity = cuentaDeCobroLogic.getCuenta(cuentaId);
-        
+
         if (entity == null) {
             throw new WebApplicationException("El recurso /cuentas/" + cuentaId + "no existe.", 404);
         }
-        
+
         CuentaDeCobroDTO cuentaDTO = new CuentaDeCobroDTO(entity);
-        
+
+        String token = cuentaDTO.getToken();
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok == null) {
+            throw new BusinessLogicException("No se encuentra Registrado");
+
+        }
+
         return cuentaDTO;
     }
-    
-       /**
+
+    /**
      * Busca y devuelve todas las editoriales que existen en la aplicacion.
      *
      * @return JSONArray {@link EditorialDetailDTO} - Las editoriales
@@ -79,37 +93,48 @@ public class CuentaDeCobroResource {
         List<CuentaDeCobroDTO> listaCuentas = listEntity2DTO(cuentaDeCobroLogic.getCuentasDeCobro());
         return listaCuentas;
     }
-    
+
     /**
-     * Actualiza la calificacion con el id recibido en la URL con la información que se
-     * recibe en el cuerpo de la petición.
+     * Actualiza la calificacion con el id recibido en la URL con la información
+     * que se recibe en el cuerpo de la petición.
      *
-     * @param calId Identificador de la Calificacion que se desea actualizar. Este debe
-     * ser una cadena de dígitos.
-     * @param calif {@link CalificacionDTO} La Calificacion que se desea guardar.
+     * @param calId Identificador de la Calificacion que se desea actualizar.
+     * Este debe ser una cadena de dígitos.
+     * @param calif {@link CalificacionDTO} La Calificacion que se desea
+     * guardar.
      * @return JSON {@link CalificacionDTO} - La Calificacion guardada.
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra la Calificacion a
      * actualizar.
      * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
-     * Error de lógica que se genera cuando no se puede actualizar la Calificacion.
+     * Error de lógica que se genera cuando no se puede actualizar la
+     * Calificacion.
      */
     @PUT
     @Path("{cuentasId: \\d+}")
     public CuentaDeCobroDTO updateCuentaDeCobro(@PathParam("cuentasId") Long calId, CuentaDeCobroDTO calif) throws BusinessLogicException {
-        calif.setId(calId);
-        if (cuentaDeCobroLogic.getCuenta(calId) == null) {
-            throw new WebApplicationException("El recurso /cuentas/" + calId + " no existe.", 404);
+
+        String token = calif.getToken();
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok.getTipo().equals("Contratista")) {
+            calif.setId(calId);
+            if (cuentaDeCobroLogic.getCuenta(calId) == null) {
+                throw new WebApplicationException("El recurso /cuentas/" + calId + " no existe.", 404);
+            }
+            CuentaDeCobroDTO detailDTO = new CuentaDeCobroDTO(cuentaDeCobroLogic.updateCuentaDeCobro(calId, calif.toEntity()));
+            return detailDTO;
+
+        } else {
+            throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
         }
-        CuentaDeCobroDTO detailDTO = new CuentaDeCobroDTO(cuentaDeCobroLogic.updateCuentaDeCobro(calId, calif.toEntity()));
-        return detailDTO;
+
     }
-    
-     /**
+
+    /**
      * Borra La Calificacion con el id asociado recibido en la URL.
      *
-     * @param calId Identificador del La Calificacion que se desea borrar. Este debe ser
-     * una cadena de dígitos
+     * @param calId Identificador del La Calificacion que se desea borrar. Este
+     * debe ser una cadena de dígitos
      * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra La Calificacion.
@@ -117,12 +142,26 @@ public class CuentaDeCobroResource {
     @DELETE
     @Path("{cuentasId: \\d+}")
     public void deleteCuentaDeCobro(@PathParam("cuentasId") Long calId) throws BusinessLogicException {
-        if (cuentaDeCobroLogic.getCuenta(calId) == null) {
+       CuentaDeCobroEntity calEntity = cuentaDeCobroLogic.getCuenta(calId);
+       CuentaDeCobroDTO calDTO = new CuentaDeCobroDTO (calEntity);
+        
+        if (calEntity == null) {
             throw new WebApplicationException("El recurso /cuentasDeCobro/" + calId + " no existe.", 404);
+        }
+        String token = calDTO.getToken();
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok == null) {
+
+            throw new BusinessLogicException("No se encuentra Registrado");
+        }if( tok.getTipo().equals("Enstutdiante"))
+            {
+
+            throw new BusinessLogicException("No tiene permiso para esto");
         }
         cuentaDeCobroLogic.deleteCuentaDeCobro(calId);
     }
-       /**
+
+    /**
      * Convierte una lista de entidades a DTO.
      *
      * Este método convierte una lista de objetos BookEntity a una lista de
@@ -139,6 +178,5 @@ public class CuentaDeCobroResource {
         }
         return list;
     }
-    
-    
+
 }

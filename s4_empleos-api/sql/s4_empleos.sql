@@ -33,9 +33,9 @@ delete from EstudianteEntity;
 
 values ('Nicolas', 2, 'Sistemas', 'lol@uniandes.edu.co', 5.0, '2:00', 4);
 
-insert into TokenEntity(id,tipo,token)values(40,"Estudiante","Primero");
+insert into TokenEntity(id,tipo,token)values(40,'Estudiante','Primero');
 
 insert into TokenEntity(ID,TIPO,TOKEN)
-values(2,"Contratista","Segundo");
+values(2,'Contratista','Segundo');
 
 
