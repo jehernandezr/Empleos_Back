@@ -1,13 +1,14 @@
- /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package co.edu.uniandes.csw.empleos.tests.postman;
 
-import co.edu.uniandes.csw.empleos.dtos.OfertaDTO;
+import co.edu.uniandes.csw.empleos.dtos.CalificacionDTO;
 import co.edu.uniandes.csw.empleos.mappers.BusinessLogicExceptionMapper;
-import co.edu.uniandes.csw.empleos.resources.OfertaResource;
+import co.edu.uniandes.csw.empleos.resources.RestConfig;
+import co.edu.uniandes.csw.empleos.resources.TokenResource;
 import co.edu.uniandes.csw.postman.tests.PostmanTestBuilder;
 import java.io.File;
 import java.io.IOException;
@@ -23,11 +24,12 @@ import org.junit.runner.RunWith;
 
 /**
  *
- * @author Juan Berdugo
+ * @author Nicolas Munar
  */
 @RunWith(Arquillian.class)
-public class OfertaIT {
-    private static final String COLLECTION = "OfertaResourceTest.postman_collection";
+public class TokenIT {
+ 
+    private static final String COLLECTION = "TokenResourceTest.postman_collection";
     
      @Deployment(testable = true)
     public static WebArchive createDeployment() {
@@ -37,8 +39,8 @@ public class OfertaIT {
                         .importRuntimeDependencies().resolve()
                         .withTransitivity().asFile())
                 // Se agregan los compilados de los paquetes de servicios
-                .addPackage(OfertaResource.class.getPackage()) //No importa cual recurso usar, lo importante es agregar el paquet
-                .addPackage(OfertaDTO.class.getPackage()) //No importa cual dto usar, lo importante es agregar el paquete.
+                .addPackage(TokenResource.class.getPackage()) //No importa cual recurso usar, lo importante es agregar el paquet
+                .addPackage(CalificacionDTO.class.getPackage()) //No importa cual dto usar, lo importante es agregar el paquete.
                 .addPackage(BusinessLogicExceptionMapper.class.getPackage())
                 // El archivo que contiene la configuracion a la base de datos.
                 .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
@@ -63,6 +65,5 @@ public class OfertaIT {
 
         Assert.assertEquals("Error en Assertions de: " + COLLECTION, desiredResult, tp.getAssertions_failed());
     }
-    
     
 }

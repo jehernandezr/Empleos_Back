@@ -18,6 +18,8 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Entity
 public class CalificacionEntity extends BaseEntity{
     
+    
+    
     /**
      * Atributo de la nota que será puesta a un estudiante.
      */

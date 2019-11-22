@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "7a77a380-6761-4316-be01-62e8264c6303",
+		"_postman_id": "649625d6-62f5-46d2-a330-c8c2e9bacb7a",
 		"name": "TarjetaDeCreditoResourceTest",
 		"description": "Tarjeta de Credito Resource Test",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -34,7 +34,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"numero\":\"5123456789018769\",\n\t\"fecha\":\"23/11\",\n\t\"cvc\":\"614\"\n}",
+					"raw": "{\n\t\"numero\":\"5123456789018769\",\n\t\"fecha\":\"23/11\",\n\t\"cvc\":\"614\",\n\t\"token\":\"Segundo\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -85,7 +85,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"numero\":\"4123567890987654\",\n\t\"fecha\":\"18/11\",\n\t\"cvc\":\"214\"\n}",
+					"raw": "{\n\t\"numero\":\"4123567890987654\",\n\t\"fecha\":\"18/11\",\n\t\"cvc\":\"214\",\n\t\"token\":\"Segundo\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -135,7 +135,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"numero\":\"4123567890987654\",\n\t\"fecha\":\"20/07\",\n\t\"cvc\":\"814\"\n}",
+					"raw": "{\n\t\"numero\":\"4123567890987654\",\n\t\"fecha\":\"20/07\",\n\t\"cvc\":\"814\",\n\t\"token\":\"Segundo\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -185,7 +185,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"numero\":\"51234511190123491\",\n\t\"fecha\":\"12/02\",\n\t\"cvc\":\"999\"\n}",
+					"raw": "{\n\t\"numero\":\"51234511190123491\",\n\t\"fecha\":\"12/02\",\n\t\"cvc\":\"999\",\n\t\"token\":\"Segundo\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -235,7 +235,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"numero\":\"5123451116662341\",\n\t\"fecha\":\"13/02\",\n\t\"cvc\":\"0010\"\n}",
+					"raw": "{\n\t\"numero\":\"5123451116662341\",\n\t\"fecha\":\"13/02\",\n\t\"cvc\":\"0010\",\n\t\"token\":\"Segundo\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -285,7 +285,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"numero\":\"5123451119012309\",\n\t\"fecha\":\"12/02\",\n\t\"cvc\":\"\"\n}",
+					"raw": "{\n\t\"numero\":\"5123451119012309\",\n\t\"fecha\":\"12/02\",\n\t\"cvc\":\"\",\n\t\"token\":\"Segundo\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -335,7 +335,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"numero\":\"\",\n\t\"fecha\":\"20/02\",\n\t\"cvc\":\"992\"\n}",
+					"raw": "{\n\t\"numero\":\"\",\n\t\"fecha\":\"20/02\",\n\t\"cvc\":\"992\",\n\t\"token\":\"Segundo\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -385,7 +385,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"numero\":\"2123451119012341\",\n\t\"fecha\":\"02/02\",\n\t\"cvc\":\"929\"\n}",
+					"raw": "{\n\t\"numero\":\"2123451119012341\",\n\t\"fecha\":\"02/02\",\n\t\"cvc\":\"929\",\n\t\"token\":\"Segundo\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -435,7 +435,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"numero\":\"4123251119812341\",\n\t\"fecha\":\"\",\n\t\"cvc\":\"921\"\n}",
+					"raw": "{\n\t\"numero\":\"4123251119812341\",\n\t\"fecha\":\"\",\n\t\"cvc\":\"921\",\n\t\"token\":\"Segundo\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -485,7 +485,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"numero\":\"4223151119882341\",\n\t\"fecha\":\"111/0\",\n\t\"cvc\":\"121\"\n}",
+					"raw": "{\n\t\"numero\":\"4223151119882341\",\n\t\"fecha\":\"111/0\",\n\t\"cvc\":\"121\",\n\t\"token\":\"Segundo\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -535,7 +535,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"numero\":\"5113151119882341\",\n\t\"fecha\":\"02/2019\",\n\t\"cvc\":\"121\"\n}",
+					"raw": "{\n\t\"numero\":\"5113151119882341\",\n\t\"fecha\":\"02/2019\",\n\t\"cvc\":\"121\",\n\t\"token\":\"Segundo\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -586,7 +586,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"numero\":\"4123567890987654\",\n\t\"fecha\":\"18/11\",\n\t\"cvc\":\"294\"\n}",
+					"raw": "{\n\t\"numero\":\"4123567890987654\",\n\t\"fecha\":\"18/11\",\n\t\"cvc\":\"294\",\n\t\"token\":\"Segundo\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -637,7 +637,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"numero\":\"4123567890987654\",\n\t\"fecha\":\"18/11\",\n\t\"cvc\":\"294\"\n}",
+					"raw": "{\n\t\"numero\":\"4123567890987654\",\n\t\"fecha\":\"18/11\",\n\t\"cvc\":\"294\",\n\t\"token\":\"Segundo\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "578eb394-8e32-4fe4-b440-82326686e0ff",
+		"_postman_id": "3cbad29c-cf42-4d4e-a56f-e82f8e469eea",
 		"name": "CalificacionResourceTest",
 		"description": "Calificacion Resource Test",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -38,7 +38,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nota\":5,\n\t\"comentario\":\"El estudiante tuvo un excelente desempeño\"\n}"
+					"raw": "{\n\t\"nota\":5,\n\t\"comentario\":\"El estudiante tuvo un excelente desempeño\",\n\t\"estudiante\":{},\n\t\"token\":\"Segundo\"\n\t\n}"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/calificaciones",
@@ -83,7 +83,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nota\":6,\n\t\"comentario\":\"Estudiante tuvo un desempeño increible\" \n}",
+					"raw": "{\n\t\"nota\":6,\n\t\"comentario\":\"Estudiante tuvo un desempeño increible\",\n\t\"estudiante\":{},\n\t\"token\":\"Segundo\" \n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -133,7 +133,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nota\":5,\n\t\"comentario\":\"\"\n}",
+					"raw": "{\n\t\"nota\":5,\n\t\"comentario\":\"\",\n\t\"estudiante\":{},\n\t\"token\":\"Segundo\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -183,7 +183,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nota\":-1,\n\t\"comentario\":\"Estudiante tuvo un desempeño deficiente\" \n}",
+					"raw": "{\n\t\"nota\":-1,\n\t\"comentario\":\"Estudiante tuvo un desempeño deficiente\",\n\t\"estudiante\":{},\n\t\"token\":\"Segundo\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -216,7 +216,7 @@
 						"exec": [
 							"var data= JSON.parse(responseBody);",
 							"tests[\"No genera error en el Get all\"] = responseCode.code === 200;",
-							"tests[\"calificaciones count\"] = data.length >= 1;"
+							"tests[\"calificaciones count\"] = data.length > 1;"
 						],
 						"type": "text/javascript"
 					}

@@ -1,6 +1,10 @@
 {
 	"info": {
+<<<<<<< HEAD
 		"_postman_id": "160ec823-4396-4196-b12c-82c37d4353f4",
+=======
+		"_postman_id": "c6a2b476-4844-43c7-9106-1a205bd17009",
+>>>>>>> develop
 		"name": "CuentaBancariaResourceTest",
 		"description": "Cuenta Bancaria Resource Test",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -73,7 +77,11 @@
 				],
 				"body": {
 					"mode": "raw",
+<<<<<<< HEAD
 					"raw": "{\n\t\"numeroCuenta\": \"124456789123\",\n\t\"nombreBanco\":  \"Bancolombia\",\n\t\"tipoCuenta\" : \"Ahorros\",\n\t\"estudiante\":{  \n    \n\t}\n}",
+=======
+					"raw": "{\n\t\"numeroCuenta\": \"123456789123\",\n\t\"nombreBanco\":  \"Bancolombia\",\n\t\"tipoCuenta\" : \"Ahorros\",\n\t\"token\":\"Primero\"\n}",
+>>>>>>> develop
 					"options": {
 						"raw": {
 							"language": "json"
@@ -125,7 +133,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"numeroCuenta\": \"123456789123\",\n\t\"nombreBanco\":  \"Bancolombia\",\n\t\"tipoCuenta\" : \"Ahorros\"\n\n}",
+					"raw": "{\n\t\"numeroCuenta\": \"123456789123\",\n\t\"nombreBanco\":  \"Bancolombia\",\n\t\"tipoCuenta\" : \"Ahorros\",\n\t\"token\":\"Primero\"\n\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -176,7 +184,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\n\t\"nombreBanco\":  \"Bancolombia\",\n\t\"tipoCuenta\" : \"Ahorros\"\n\n}",
+					"raw": "{\n\n\t\"nombreBanco\":  \"Bancolombia\",\n\t\"tipoCuenta\" : \"Ahorros\",\n\t\"token\":\"Primero\"\n\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -227,7 +235,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"numeroCuenta\": \"-123456789124\",\n\t\"nombreBanco\":  \"Bancolombia\",\n\t\"tipoCuenta\" : \"Ahorros\"\n}",
+					"raw": "{\n\t\"numeroCuenta\": \"-123456789124\",\n\t\"nombreBanco\":  \"Bancolombia\",\n\t\"tipoCuenta\" : \"Ahorros\",\n\t\"token\":\"Primero\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -369,7 +377,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"numeroCuenta\": \"123456789123\",\n\t\"nombreBanco\":  \"Bancolombia\",\n\t\"tipoCuenta\" : \"Ahorros\"\n\t\n}",
+					"raw": "{\n\t\"numeroCuenta\": \"123456789123\",\n\t\"nombreBanco\":  \"Bancolombia\",\n\t\"tipoCuenta\" : \"Ahorros\",\n\t\"token\":\"Primero\"\n\t\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -420,7 +428,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"numeroCuenta\": \"123456789123\",\n\t\"nombreBanco\":  \"Bancolombia\",\n\t\"tipoCuenta\" : \"Ahorros\"\n}",
+					"raw": "{\n\t\"numeroCuenta\": \"123456789123\",\n\t\"nombreBanco\":  \"Bancolombia\",\n\t\"tipoCuenta\" : \"Ahorros\",\n\t\"token\":\"Primero\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"

@@ -16,7 +16,7 @@ public class CredencialesEntity extends BaseEntity{
     private String correo;
     
     private String contrasenia;
-    
+
     private String tipo;
 
     
@@ -49,17 +49,21 @@ public class CredencialesEntity extends BaseEntity{
         return tipo;
     }
     /**
-     * @return the contraseña
+     * @return the contrasena
      */
+
     public String getContrasenia() {
         return contrasenia;
+
     }
 
     /**
-     * @param contraseña the contraseña to set
+     * @param contraseña the contrasena to set
      */
+
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
+
     }
 
     

@@ -7,7 +7,9 @@ package co.edu.uniandes.csw.empleos.resources;
 
 import co.edu.uniandes.csw.empleos.dtos.FacturaDTO;
 import co.edu.uniandes.csw.empleos.ejb.FacturaLogic;
+import co.edu.uniandes.csw.empleos.ejb.TokenLogic;
 import co.edu.uniandes.csw.empleos.entities.FacturaEntity;
+import co.edu.uniandes.csw.empleos.entities.TokenEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,58 +34,83 @@ import javax.ws.rs.WebApplicationException;
 @Consumes("application/json")
 @RequestScoped
 public class FacturaResource {
+
     
     private static final  String NO_EXISTE = " no existe.";
     private static final  String RECURSO = "El recurso /facturas/";
     
+
     @Inject
     private FacturaLogic facturaLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
-    
-    
+
+    @Inject
+    private TokenLogic tokenLogic;
+
     @POST
-    public FacturaDTO createFactura(FacturaDTO factura) throws BusinessLogicException    {
-        
-        return new FacturaDTO(facturaLogic.createFactura(factura.toEntity()));
+    public FacturaDTO createFactura(FacturaDTO factura) throws BusinessLogicException {
+
+        String token = factura.getToken();
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok.getTipo().equals("Contratista")) {
+            FacturaDTO nuevaFacturaDTO = new FacturaDTO(facturaLogic.createFactura(factura.toEntity()));
+            return nuevaFacturaDTO;
+        } else {
+            throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
+        }
+
     }
-    
-     /**
+
+    /**
      * Busca la factura con el id asociado recibido en la URL y lo devuelve.
      *
-     * @param facturaId Identificador de la factura que se esta buscando. Este debe
-     * ser una cadena de dígitos.
+     * @param facturaId Identificador de la factura que se esta buscando. Este
+     * debe ser una cadena de dígitos.
      * @return JSON {@link FacturaDTO} - La factura buscada
+     * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra la factura.
      */
     @GET
     @Path("{facturasId: \\d+}")
-    public FacturaDTO getFactura(@PathParam("facturasId") Long facturaId) {
+    public FacturaDTO getFactura(@PathParam("facturasId") Long facturaId) throws BusinessLogicException {
         FacturaEntity facEntity = facturaLogic.getFactura(facturaId);
         if (facEntity == null) {
             throw new WebApplicationException(RECURSO+ facturaId + NO_EXISTE, 404);
         }
-        
-        return new FacturaDTO(facEntity);
+
+        FacturaDTO facDTO = new FacturaDTO(facEntity);
+
+        String token = facDTO.getToken();
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok == null) {
+
+            throw new BusinessLogicException("No se encuentra Registrado");
+        }
+
+        return facDTO;
+
     }
-    
-        /**
+
+    /**
      * Busca y devuelve todas las facuras que existen en la aplicacion.
      *
-     * @return JSONArray {@link FacturaDTO} - Las editoriales
-     * encontradas en la aplicación. Si no hay ninguna retorna una lista vacía.
+     * @return JSONArray {@link FacturaDTO} - Las editoriales encontradas en la
+     * aplicación. Si no hay ninguna retorna una lista vacía.
      */
     @GET
-    public List<FacturaDTO> getEditorials() {
-        
-        return listEntity2DTO(facturaLogic.getFacturas());
+
+    public List<FacturaDTO> getFacturas() {
+        List<FacturaDTO> listaFacturas = listEntity2DTO(facturaLogic.getFacturas());
+        return listaFacturas;
+
     }
-    
-      /**
-     * Actualiza la calificacion con el id recibido en la URL con la información que se
-     * recibe en el cuerpo de la petición.
+
+    /**
+     * Actualiza la calificacion con el id recibido en la URL con la información
+     * que se recibe en el cuerpo de la petición.
      *
-     * @param factId Identificador de la Factura que se desea actualizar. Este debe
-     * ser una cadena de dígitos.
+     * @param factId Identificador de la Factura que se desea actualizar. Este
+     * debe ser una cadena de dígitos.
      * @param factura {@link FacturaDTO} La Factura que se desea guardar.
      * @return JSON {@link FacturaDTO} - La Factura guardada.
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
@@ -95,34 +122,56 @@ public class FacturaResource {
     @PUT
     @Path("{facturasId: \\d+}")
     public FacturaDTO updateFactura(@PathParam("facturasId") Long factId, FacturaDTO factura) throws BusinessLogicException {
-        factura.setId(factId);
-        if (facturaLogic.getFactura(factId) == null) {
+
+
+        String token = factura.getToken();
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok.getTipo().equals("Contratista")) {
+            factura.setId(factId);
+            if (facturaLogic.getFactura(factId) == null) {
             throw new WebApplicationException(RECURSO + factId + NO_EXISTE, 404);
+            }
+            FacturaDTO detailDTO = new FacturaDTO(facturaLogic.updateFactura(factId, factura.toEntity()));
+            return detailDTO;
+
+        } else {
+            throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
         }
-        
-        return new FacturaDTO(facturaLogic.updateFactura(factId, factura.toEntity()));
+
     }
-    
+
     /**
      * Borra La factura con el id asociado recibido en la URL.
      *
-     * @param factId Identificador del La Factura que se desea borrar. Este debe ser
-     * una cadena de dígitos
+     * @param factId Identificador del La Factura que se desea borrar. Este debe
+     * ser una cadena de dígitos
      * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra La Factura.
      */
     @DELETE
     @Path("{facturasId: \\d+}")
-    public void deleteFactura (@PathParam("facturasId") Long factId) throws BusinessLogicException {
+    public void deleteFactura(@PathParam("facturasId") Long factId) throws BusinessLogicException {
         FacturaEntity entity = facturaLogic.getFactura(factId);
+        FacturaDTO facDTO = new FacturaDTO(entity);
         if (entity == null) {
             throw new WebApplicationException(RECURSO + factId + NO_EXISTE, 404);
         }
-        facturaLogic.deleteFactura(factId);
+        String token = facDTO.getToken();
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok == null) {
+
+            throw new BusinessLogicException("No se encuentra Registrado");
         }
-    
-     /**
+        if (tok.getTipo().equals("Enstutdiante")) {
+
+            throw new BusinessLogicException("No tiene permiso para esto");
+        }
+
+        facturaLogic.deleteFactura(factId);
+    }
+
+    /**
      * Convierte una lista de entidades a DTO.
      *
      * Este método convierte una lista de objetos BookEntity a una lista de
@@ -139,5 +188,5 @@ public class FacturaResource {
         }
         return list;
     }
-    
+
 }
