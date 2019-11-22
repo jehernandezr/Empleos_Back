@@ -102,8 +102,16 @@ public class CuentaDeCobroDTO implements Serializable {
         return token;
     }
     
+    public void setNumeroCuentaDeCobro(int numeroCuentaDeCobro) {
+        this.numeroCuentaDeCobro = numeroCuentaDeCobro;
+    }
+    
     public void setToken(String id) {
         this.token = id;
+    }
+    
+    public Date getFecha() {
+        return fecha;
     }
     
     public Long getId() {
@@ -116,14 +124,6 @@ public class CuentaDeCobroDTO implements Serializable {
 
     public int getNumeroCuentaDeCobro() {
         return numeroCuentaDeCobro;
-    }
-
-    public void setNumeroCuentaDeCobro(int numeroCuentaDeCobro) {
-        this.numeroCuentaDeCobro = numeroCuentaDeCobro;
-    }
-
-    public Date getFecha() {
-        return fecha;
     }
 
     public void setFecha(Date fecha) {

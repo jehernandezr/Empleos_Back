@@ -70,6 +70,14 @@ public class CuentaDeCobroEntity extends BaseEntity implements Serializable {
     //-------------------------------------------------
     //GETTERS & SETTERS
     //-------------------------------------------------
+    
+    /**
+     * @param contratista the contratista to set
+     */
+    public void setContratista(ContratistaEntity contratista) {
+        this.contratista = contratista;
+    }
+    
     /**
      *
      * @return numeroCuentaDeCobro de la tarjeta
@@ -78,21 +86,13 @@ public class CuentaDeCobroEntity extends BaseEntity implements Serializable {
         return numeroCuentaDeCobro;
     }
 
-    /**
-     * cambia el numeroCuentaDeCobro de la tarjeta al ingresado por parametro
-     *
-     * @param numeroCuentaDeCobro nuevo numeroCuentaDeCobro de la tarjeta
-     */
-    public void setNumeroCuentaDeCobro(int numeroCuentaDeCobro) {
-        this.numeroCuentaDeCobro = numeroCuentaDeCobro;
+     @Override
+    public boolean equals(Object obj)
+    {
+        return super.equals(obj);
     }
     
-    /**
-     * @return the Fecha
-     */
-    public Date getFecha() {
-        return fecha;
-    }
+    
 
     /**
      * @param fecha the Fecha to set
@@ -149,24 +149,29 @@ public class CuentaDeCobroEntity extends BaseEntity implements Serializable {
     public ContratistaEntity getContratista() {
         return contratista;
     }
-
-    /**
-     * @param contratista the contratista to set
+/**
+     * @return the Fecha
      */
-    public void setContratista(ContratistaEntity contratista) {
-        this.contratista = contratista;
+    public Date getFecha() {
+        return fecha;
     }
+    
 
-    @Override
-    public boolean equals(Object obj)
-    {
-        return super.equals(obj);
-    }
+   
     
     @Override
     public int hashCode()
     {
         return super.hashCode();
+    }
+    
+    /**
+     * cambia el numeroCuentaDeCobro de la tarjeta al ingresado por parametro
+     *
+     * @param numeroCuentaDeCobro nuevo numeroCuentaDeCobro de la tarjeta
+     */
+    public void setNumeroCuentaDeCobro(int numeroCuentaDeCobro) {
+        this.numeroCuentaDeCobro = numeroCuentaDeCobro;
     }
     
 }

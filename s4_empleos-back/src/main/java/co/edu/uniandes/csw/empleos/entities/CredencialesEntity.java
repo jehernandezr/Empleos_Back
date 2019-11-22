@@ -23,7 +23,11 @@ public class CredencialesEntity extends BaseEntity{
     public CredencialesEntity(){
         //Constructor vacio
     }
-    
+    @Override
+    public int hashCode()
+    {
+        return super.hashCode();
+    }
     
     /**
      * @return the correo
@@ -38,7 +42,12 @@ public class CredencialesEntity extends BaseEntity{
     public void setCorreo(String correo) {
         this.correo = correo;
     }
-
+/**
+     * @return the tipo
+     */
+    public String getTipo() {
+        return tipo;
+    }
     /**
      * @return the contraseña
      */
@@ -53,12 +62,7 @@ public class CredencialesEntity extends BaseEntity{
         this.contrasenia = contrasenia;
     }
 
-    /**
-     * @return the tipo
-     */
-    public String getTipo() {
-        return tipo;
-    }
+    
 
     /**
      * @param tipo the tipo to set
@@ -73,11 +77,7 @@ public class CredencialesEntity extends BaseEntity{
         return super.equals(obj);
     }
     
-    @Override
-    public int hashCode()
-    {
-        return super.hashCode();
-    }
+    
     
     
 }

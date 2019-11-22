@@ -29,6 +29,11 @@ public class TokenEntity  extends BaseEntity implements Serializable {
         return token;
     }
 
+    @Override
+    public boolean equals(Object obj)
+    {
+        return super.equals(obj);
+    }
     /**
      * @param token the correo to set
      */
@@ -50,11 +55,6 @@ public class TokenEntity  extends BaseEntity implements Serializable {
         this.tipo = tipo;
     }
     
-    @Override
-    public boolean equals(Object obj)
-    {
-        return super.equals(obj);
-    }
     
     @Override
     public int hashCode()

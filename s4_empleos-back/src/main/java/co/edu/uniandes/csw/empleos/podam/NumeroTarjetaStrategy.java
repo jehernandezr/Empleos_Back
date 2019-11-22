@@ -18,13 +18,14 @@ public class NumeroTarjetaStrategy implements AttributeStrategy<String>
     @Override
     public String getValue()
     {
-        String numTarjeta = "";
+        StringBuilder bld = new StringBuilder();
         for(int i = 0 ; i < 16 ; i++)
         {
              
              int numero = (r.nextInt(9));
-             numTarjeta += String.format("%d", numero);
+             bld.append(String.format("%d", numero));
+             
         }
-        return numTarjeta;
+        return bld.toString();
     }
 }
