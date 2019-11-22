@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -7,7 +8,9 @@ package co.edu.uniandes.csw.empleos.resources;
 
 import co.edu.uniandes.csw.empleos.dtos.TarjetaDeCreditoDTO;
 import co.edu.uniandes.csw.empleos.ejb.TarjetaDeCreditoLogic;
+import co.edu.uniandes.csw.empleos.ejb.TokenLogic;
 import co.edu.uniandes.csw.empleos.entities.TarjetaDeCreditoEntity;
+import co.edu.uniandes.csw.empleos.entities.TokenEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,72 +35,92 @@ import javax.ws.rs.WebApplicationException;
 @Consumes("application/json")
 @RequestScoped
 
-
 public class TarjetaDeCreditoResource {
+
     
     private static final String NO_EXISTE = " no existe.";
     private static final String RECURSO = "El recurso /tarjetas/";
 
+
     @Inject
     private TarjetaDeCreditoLogic tarjetaLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
-    
 
-    
+    @Inject
+    private TokenLogic tokenLogic;
 
     /**
-     * Crea una nueva tarjeta de credito con la informacion que se recibe en el cuerpo de la
-     * petición y se regresa un objeto identico con un id auto-generado por la
-     * base de datos.
+     * Crea una nueva tarjeta de credito con la informacion que se recibe en el
+     * cuerpo de la petición y se regresa un objeto identico con un id
+     * auto-generado por la base de datos.
      *
-     * @param tarjeta {@link TarjetaDeCreditoDTO} - La tarjeta que se desea guardar.
-     * @return JSON {@link TarjetaDeCreditoDTO} - La tarjeta guardado con el atributo id
-     * autogenerado.
+     * @param tarjeta {@link TarjetaDeCreditoDTO} - La tarjeta que se desea
+     * guardar.
+     * @return JSON {@link TarjetaDeCreditoDTO} - La tarjeta guardado con el
+     * atributo id autogenerado.
      * @throws BusinessLogicException {@link BusinessLogicExceptionMapper}
      */
     @POST
     public TarjetaDeCreditoDTO createTarjeta(TarjetaDeCreditoDTO tarjeta) throws BusinessLogicException {
-   
-        return new TarjetaDeCreditoDTO(tarjetaLogic.createTarjetaDeCredito(tarjeta.toEntity()));
+
+        String token = tarjeta.getToken();
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok.getTipo().equals("Contratista")) {
+            TarjetaDeCreditoDTO nuevaTarjetaDTO = new TarjetaDeCreditoDTO(tarjetaLogic.createTarjetaDeCredito(tarjeta.toEntity()));
+            return nuevaTarjetaDTO;
+
+        } else {
+            throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
+        }
+
     }
-    
+
     @GET
     public List<TarjetaDeCreditoDTO> getTarjetas() {
-        
+
         return listEntity2DTO(tarjetaLogic.getTarjetas());
-        
+
     }
 
     /**
      * Busca la tarjeta con el id asociado recibido en la URL y lo devuelve.
      *
-     * @param tarjetaId Identificador de la tarjeta que se esta buscando. Este debe
-     * ser una cadena de dígitos.
+     * @param tarjetaId Identificador de la tarjeta que se esta buscando. Este
+     * debe ser una cadena de dígitos.
      * @return JSON {@link TarjetaDeCreditoDTO} - El libro buscado
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra la tarjeta.
      */
     @GET
     @Path("{tarjetasId: \\d+}")
-    public TarjetaDeCreditoDTO getTarjeta(@PathParam("tarjetasId") Long tarjetaId) throws BusinessLogicException 
-    {
-        
+    public TarjetaDeCreditoDTO getTarjeta(@PathParam("tarjetasId") Long tarjetaId) throws BusinessLogicException {
+
         TarjetaDeCreditoEntity entity = tarjetaLogic.getTarjetaCredito(tarjetaId);
-        
+
         if (entity == null) {
             throw new WebApplicationException(RECURSO + tarjetaId + NO_EXISTE, 404);
         }
-        
-     
-        
-        return new TarjetaDeCreditoDTO(entity);
+
+
+        TarjetaDeCreditoDTO tarjetaDTO = new TarjetaDeCreditoDTO(entity);
+
+        String token = tarjetaDTO.getToken();
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok == null) {
+
+            throw new BusinessLogicException("No se encuentra Registrado");
+        }
+
+        return tarjetaDTO;
+
     }
 
-   /**
+    /**
      * Actualiza una tarjeta con la informacion que se recibe en el cuerpo de la
      * petición y se regresa el objeto actualizado.
      *
      * @param tarjetaId El ID del libro del cual se guarda la reseña
-     * @param tarjeta {@link TarjetaDeCreditoDTO} - La reseña que se desea guardar.
+     * @param tarjeta {@link TarjetaDeCreditoDTO} - La reseña que se desea
+     * guardar.
      * @return JSON {@link TarjetaDeCreditoDTO} - La reseña actualizada.
      * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
      * Error de lógica que se genera cuando ya existe la tarjeta.
@@ -107,15 +130,23 @@ public class TarjetaDeCreditoResource {
     @PUT
     @Path("{tarjetasId: \\d+}")
     public TarjetaDeCreditoDTO updateTarjeta(@PathParam("tarjetasId") Long tarjetaId, TarjetaDeCreditoDTO tarjeta) throws BusinessLogicException {
-        
-        tarjeta.setId(tarjetaId);
-        TarjetaDeCreditoEntity entity = tarjetaLogic.getTarjetaCredito(tarjetaId);
-        if (entity == null) {
-            throw new WebApplicationException(RECURSO + tarjetaId + NO_EXISTE, 404);
+
+
+        String token = tarjeta.getToken();
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok.getTipo().equals("Contratista")) {
+            tarjeta.setId(tarjetaId);
+            TarjetaDeCreditoEntity entity = tarjetaLogic.getTarjetaCredito(tarjetaId);
+            if (entity == null) {
+                throw new WebApplicationException("El recurso /tarjetas/" + tarjetaId + " no existe.", 404);
+            }
+            TarjetaDeCreditoDTO tarjetaDTO = new TarjetaDeCreditoDTO(tarjetaLogic.updateTarjetaCredito(tarjetaId, tarjeta.toEntity()));
+            return tarjetaDTO;
+
+        } else {
+            throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
         }
- 
-        
-        return new TarjetaDeCreditoDTO(tarjetaLogic.updateTarjetaCredito(tarjetaId, tarjeta.toEntity()));
+
 
     }
 
@@ -130,20 +161,34 @@ public class TarjetaDeCreditoResource {
      */
     @DELETE
     @Path("{tarjetasId: \\d+}")
-    public void deleteTarjeta(@PathParam("tarjetasId") Long tarjetaId ) throws BusinessLogicException {
+    public void deleteTarjeta(@PathParam("tarjetasId") Long tarjetaId) throws BusinessLogicException {
+
         TarjetaDeCreditoEntity entity = tarjetaLogic.getTarjetaCredito(tarjetaId);
+        TarjetaDeCreditoDTO calDTO = new TarjetaDeCreditoDTO(entity);
+
         if (entity == null) {
             throw new WebApplicationException(RECURSO + tarjetaId + NO_EXISTE, 404);
         }
+
+        String token = calDTO.getToken();
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok == null) {
+
+            throw new BusinessLogicException("No se encuentra Registrado");
+        }
+        if (!tok.getTipo().equals("Contratista")) {
+
+            throw new BusinessLogicException("No tiene permiso para esto");
+        }
+
         tarjetaLogic.deleteTarjetaCredito(tarjetaId);
     }
-
 
     /**
      * Lista de entidades a DTO.
      *
-     * Este método convierte una lista de objetos TarjetaDeCreditoEntity a una lista de
-     * objetos TarjetaDeCreditoDTO (json)
+     * Este método convierte una lista de objetos TarjetaDeCreditoEntity a una
+     * lista de objetos TarjetaDeCreditoDTO (json)
      *
      * @param entityList corresponde a la lista de tarjetas de tipo Entity que
      * vamos a convertir a DTO.

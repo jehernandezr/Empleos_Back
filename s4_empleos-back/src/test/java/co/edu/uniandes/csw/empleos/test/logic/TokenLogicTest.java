@@ -187,6 +187,20 @@ public class TokenLogicTest {
             Assert.assertTrue(found);
         }
     }
+    
+        /**
+     * Prueba para consultar una Calificacion.
+     */
+    @Test
+    public void getTokenByTokenTest() {
+        TokenEntity entity = data.get(0);
+        TokenEntity resultEntity = tokenLogic.getTokenByToken(entity.getToken());
+        Assert.assertNotNull(resultEntity);
+        Assert.assertEquals(entity.getId(), resultEntity.getId());
+        Assert.assertEquals(entity.getToken(), resultEntity.getToken());
+        Assert.assertEquals(entity.getTipo(), resultEntity.getTipo());
+
+    }
 
     /**
      * Prueba para consultar una Calificacion.

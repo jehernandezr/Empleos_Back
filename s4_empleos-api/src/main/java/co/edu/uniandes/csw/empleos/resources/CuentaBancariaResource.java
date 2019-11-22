@@ -7,7 +7,9 @@ package co.edu.uniandes.csw.empleos.resources;
 
 import co.edu.uniandes.csw.empleos.dtos.CuentaBancariaDTO;
 import co.edu.uniandes.csw.empleos.ejb.CuentaBancariaLogic;
+import co.edu.uniandes.csw.empleos.ejb.TokenLogic;
 import co.edu.uniandes.csw.empleos.entities.CuentaBancariaEntity;
+import co.edu.uniandes.csw.empleos.entities.TokenEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -23,17 +25,27 @@ import javax.ws.rs.*;
 @RequestScoped
 public class CuentaBancariaResource {
 
-    private static final  String NO_EXISTE = " no existe.";
-    private static final  String RECURSO = "El recurso /cuentaBancaria/";
-    
+    private static final String NO_EXISTE = " no existe.";
+    private static final String RECURSO = "El recurso /cuentaBancaria/";
+
     @Inject
     private CuentaBancariaLogic logic;
+    @Inject
+    private TokenLogic tokenLogic;
 
     @POST
     public CuentaBancariaDTO createCuentaBancaria(CuentaBancariaDTO cuentaBancaria) throws BusinessLogicException {
-        CuentaBancariaEntity cuentaBancariaEntity = cuentaBancaria.toEntity();
-        cuentaBancariaEntity = logic.createCuentaBancaria(cuentaBancariaEntity);
-        return new CuentaBancariaDTO(cuentaBancariaEntity);
+
+        String token = cuentaBancaria.getToken();
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok.getTipo().equals("Estudiante")) {
+            CuentaBancariaEntity cb = logic.createCuentaBancaria(cuentaBancaria.toEntity());
+            CuentaBancariaDTO nuevaCuentaBancariaDTO = new CuentaBancariaDTO(cb);
+            return nuevaCuentaBancariaDTO;
+
+        } else {
+            throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
+        }
     }
 
     /**
@@ -45,15 +57,23 @@ public class CuentaBancariaResource {
     @GET
     @Path("{cuentaId: \\d+}")
     public CuentaBancariaDTO getCuntaBancaria(@PathParam("cuentaId") Long cuentaId) throws BusinessLogicException {
-        try {
-            CuentaBancariaEntity cuentaEntity = logic.getCuentaBancaria(cuentaId);
 
-            
-            return new CuentaBancariaDTO(cuentaEntity);
-        } catch (Exception e) {
-            throw new WebApplicationException(RECURSO + cuentaId + NO_EXISTE, 404);
+        CuentaBancariaEntity cuentaEntity = logic.getCuentaBancaria(cuentaId);
+
+        if (cuentaEntity == null) {
+            throw new WebApplicationException("El recurso /cuentaBancaria/" + cuentaId + " no existe.", 404);
+
+        }
+        CuentaBancariaDTO cuentaDTO = new CuentaBancariaDTO(cuentaEntity);
+
+        String token = cuentaDTO.getToken();
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok == null) {
+
+            throw new BusinessLogicException("No se encuentra Registrado");
         }
 
+        return cuentaDTO;
     }
 
     /**
@@ -74,16 +94,18 @@ public class CuentaBancariaResource {
 
     public CuentaBancariaDTO updateCuenta(@PathParam("cuentaId") Long cuentaId, CuentaBancariaDTO cuenta) throws BusinessLogicException {
 
-        if (cuentaId.equals(cuenta.getId())) {
-            throw new BusinessLogicException("La id de la cuenta no coincide.");
-        }
-        try {
-            CuentaBancariaEntity cuentaEntity = logic.getCuentaBancaria(cuentaId);
+        String token = cuenta.getToken();
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok.getTipo().equals("Estudiante")) {
+            cuenta.setId(cuentaId);
+            if (logic.getCuentaBancaria(cuentaId) == null) {
+                throw new WebApplicationException("El recurso /cuentaBancaria/" + cuentaId + " no existe.", 404);
+            }
+            CuentaBancariaDTO detailDTO = new CuentaBancariaDTO(logic.updateCuentaBancaria(cuentaId, cuenta.toEntity()));
+            return detailDTO;
 
-            
-            return new CuentaBancariaDTO(cuentaEntity);
-        } catch (Exception e) {
-            throw new WebApplicationException(RECURSO + cuentaId + NO_EXISTE, 404);
+        } else {
+            throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
         }
 
     }
@@ -100,14 +122,25 @@ public class CuentaBancariaResource {
     @Path("{cuentaId: \\d+}")
     public void deleteCuenta(@PathParam("cuentaId") Long cuentaId) throws BusinessLogicException {
 
-        try {
-           logic.getCuentaBancaria(cuentaId);
+        CuentaBancariaEntity cuentaEntity = logic.getCuentaBancaria(cuentaId);
+        CuentaBancariaDTO cuentaDto = new CuentaBancariaDTO(cuentaEntity);
 
-        } catch (BusinessLogicException e) {
-            throw new WebApplicationException(RECURSO + cuentaId + NO_EXISTE, 404);
+        if (cuentaEntity == null) {
+            throw new WebApplicationException("El recurso /cuentaBancaria/" + cuentaId + " no existe.", 404);
+
+        }
+
+        String token = cuentaDto.getToken();
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok == null) {
+
+            throw new BusinessLogicException("No se encuentra Registrado");
+        }
+        if (!tok.getTipo().equals("Enstutdiante")) {
+
+            throw new BusinessLogicException("No tiene permiso para esto");
         }
 
         logic.delete(cuentaId);
-
     }
 }

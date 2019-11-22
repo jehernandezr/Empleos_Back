@@ -15,7 +15,9 @@ import javax.persistence.Entity;
 public class CredencialesEntity extends BaseEntity{
     private String correo;
     
-    private String contrasenia;
+
+    private String contrasena;
+
     
     private String tipo;
 
@@ -49,17 +51,21 @@ public class CredencialesEntity extends BaseEntity{
         return tipo;
     }
     /**
-     * @return the contraseña
+     * @return the contrasena
      */
-    public String getContrasenia() {
-        return contrasenia;
+
+    public String getContrasena() {
+        return contrasena;
+
     }
 
     /**
-     * @param contraseña the contraseña to set
+     * @param contraseña the contrasena to set
      */
-    public void setContrasenia(String contrasenia) {
-        this.contrasenia = contrasenia;
+
+    public void setContrasena(String contraseña) {
+        this.contrasena = contraseña;
+
     }
 
     

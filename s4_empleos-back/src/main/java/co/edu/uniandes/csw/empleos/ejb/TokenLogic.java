@@ -77,6 +77,20 @@ public class TokenLogic {
         return  persistence.find(tokenId);
     }
     
+      public TokenEntity getTokenByToken(String token)
+    {
+        TokenEntity tokenEntityRet = null;
+        List<TokenEntity> tokenEntity = persistence.findAll();
+        for (TokenEntity tokenEntity1 : tokenEntity) {
+           if(tokenEntity1.getToken().equals(token)) 
+              {
+                  tokenEntityRet=tokenEntity1;
+              }
+               
+        }
+        return  tokenEntityRet;
+    }
+    
          /**
      * Actualizar una calificacion por ID
      *
