@@ -34,24 +34,24 @@ public class CredencialesLogic {
         if (credencial != null) {
 
             if (credencial.getTipo() == null) {
-                throw new BusinessLogicException("El campo no puede ser nulo");
+                throw new BusinessLogicException("El campo1 no puede ser nulo");
             }
             if (credencial.getCorreo() == null) {
-                throw new BusinessLogicException("El campo no puede ser nulo");
+                throw new BusinessLogicException("El campo2 no puede ser nulo");
 
             }
             if (credencial.getContrasena() == null) {
-                throw new BusinessLogicException("El campo no puede ser nulo");
+                throw new BusinessLogicException("El campo3 no puede ser nulo");
 
             }
             if (credencial.getTipo().equals("")) {
-                throw new BusinessLogicException("El campo no puede ser vacìo");
+                throw new BusinessLogicException("El campo4 no puede ser vacìo");
             }
             if (credencial.getCorreo().equals("")) {
-                throw new BusinessLogicException("El campo no puede ser vacìo");
+                throw new BusinessLogicException("El campo5 no puede ser vacìo");
             }
             if (credencial.getContrasena().equals("")) {
-                throw new BusinessLogicException("El campo no puede ser vacìo");
+                throw new BusinessLogicException("El campo6 no puede ser vacìo");
             }
 
             credencial = persistence.create(credencial);

@@ -69,7 +69,7 @@ public class CredencialDTO implements Serializable {
     /**
      * @param contraseña the contraseña to set
      */
-    public void setId(String contraseña) {
+    public void setContraseña(String contraseña) {
         this.contraseña = contraseña;
     }
 
