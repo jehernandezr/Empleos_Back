@@ -189,12 +189,7 @@ public class OfertaDTO implements Serializable {
         this.tipoOferta = tipoOferta;
     }
 
-    /**
-     * @return the numeroDeVacantes
-     */
-    public int getNumeroDeVacantes() {
-        return numeroDeVacantes;
-    }
+   
 
     /**
      * @param numeroDeVacantes the numeroDeVacantes to set
@@ -210,13 +205,7 @@ public class OfertaDTO implements Serializable {
         return pagoPorHora;
     }
 
-    /**
-     * @param pagoPorHora the pagoPorHora to set
-     */
-    public void setPagoPorHora(Double pagoPorHora) {
-        this.pagoPorHora = pagoPorHora;
-    }
-
+   
     /**
      * @return the nombre
      */
@@ -224,12 +213,7 @@ public class OfertaDTO implements Serializable {
         return nombre;
     }
 
-    /**
-     * @param nombre the nombre to set
-     */
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+    
 /**
      * @param requisitos the requisitos to set
      */
@@ -251,6 +235,13 @@ public class OfertaDTO implements Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+    
+    /**
+     * @param nombre the nombre to set
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
     /**
      * @return the categoria
@@ -267,7 +258,13 @@ public class OfertaDTO implements Serializable {
     public int getTiempoMaximoAplicacion() {
         return tiempoMaximoAplicacion;
     }
-    
+     /**
+     * @param pagoPorHora the pagoPorHora to set
+     */
+    public void setPagoPorHora(Double pagoPorHora) {
+        this.pagoPorHora = pagoPorHora;
+    }
+
     /**
      * @param rutaImagen the rutaImagen to set
      */
@@ -358,7 +355,12 @@ public String getToken() {
     public String getRutaImagen() {
         return rutaImagen;
     }
-    
+     /**
+     * @return the numeroDeVacantes
+     */
+    public int getNumeroDeVacantes() {
+        return numeroDeVacantes;
+    }
     /**
      * @param categoria the categoria to set
      */
