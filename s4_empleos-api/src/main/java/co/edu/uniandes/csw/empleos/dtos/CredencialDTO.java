@@ -15,7 +15,7 @@ import java.io.Serializable;
 public class CredencialDTO implements Serializable {
     
     private String correo;
-    private String contraseña;
+    private String contrasenia;
     private String tipo;
 
     public CredencialDTO() {
@@ -25,7 +25,7 @@ public class CredencialDTO implements Serializable {
     public CredencialDTO(CredencialesEntity e) {
         if (e != null) {
             this.correo = e.getCorreo();
-            this.contraseña = e.getContrasena();
+            this.contrasenia = e.getContrasena();
             this.tipo = e.getTipo();
 
         }
@@ -60,22 +60,22 @@ public class CredencialDTO implements Serializable {
     }
 
     /**
-     * @return the contraseña
+     * @return the contrasenia
      */
     public String getContraseña() {
-        return contraseña;
+        return contrasenia;
     }
 
     /**
-     * @param contraseña the contraseña to set
+     * @param contraseña the contrasenia to set
      */
     public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+        this.contrasenia = contraseña;
     }
 
     public CredencialesEntity toEntity() {
         CredencialesEntity e = new CredencialesEntity();
-        e.setContrasena(contraseña);
+        e.setContrasena(contrasenia);
         e.setTipo(tipo);
         e.setCorreo(correo);
         return e;
