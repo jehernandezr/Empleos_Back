@@ -1,61 +1,11 @@
 {
 	"info": {
-		"_postman_id": "607742a0-9c48-4de1-8fa3-83cb58b733c8",
+		"_postman_id": "95607087-6568-4e3a-8b13-1ae46d81faeb",
 		"name": "FacturaResourceTest",
 		"description": "Factura Resource Test",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
-		{
-			"name": "Crear una factura con valor negativo",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "c2b3b626-fa2c-4c1e-b6b7-57c7e8d3cfff",
-						"exec": [
-							"tests[\"No crea con valor negativo\"] = responseCode.code === 412;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has (\"El valor de la factura no puede tener valores negativos\");"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"fecha\":\"2000-08-20T00:00:00-05:00\",\n\t\"valor\":-200000\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/facturas",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s4_empleos-api",
-						"api",
-						"facturas"
-					]
-				}
-			},
-			"response": []
-		},
 		{
 			"name": "Crear una factura",
 			"event": [
@@ -85,7 +35,57 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"fecha\":\"2000-08-20T00:00:00-05:00\",\n\t\"valor\":890000\n}",
+					"raw": "{\n\t\"fecha\":\"2000-08-20T00:00:00-05:00\",\n\t\"valor\":890000,\n\t\"token\":\"Segundo\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/facturas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_empleos-api",
+						"api",
+						"facturas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear una factura con valor negativo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c2b3b626-fa2c-4c1e-b6b7-57c7e8d3cfff",
+						"exec": [
+							"tests[\"No crea con valor negativo\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has (\"El valor de la factura no puede tener valores negativos\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"fecha\":\"2000-08-20T00:00:00-05:00\",\n\t\"valor\":-200000,\n\t\"token\":\"Segundo\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -281,7 +281,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"fecha\":\"2000-08-20T00:00:00-05:00\",\n\t\"valor\":900000\n}",
+					"raw": "{\n\t\"fecha\":\"2000-08-20T00:00:00-05:00\",\n\t\"valor\":900000,\n\t\"token\":\"Segundo\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -332,7 +332,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"fecha\":\"2000-08-20T00:00:00-05:00\",\n\t\"valor\":900000\n}",
+					"raw": "{\n\t\"fecha\":\"2000-08-20T00:00:00-05:00\",\n\t\"valor\":900000,\n\t\"token\":\"Segundo\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"

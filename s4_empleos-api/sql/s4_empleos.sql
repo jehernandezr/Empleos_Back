@@ -9,6 +9,7 @@ delete from CalificacionEntity;
 delete from FacturaEntity;
 delete from CUENTADECOBROENTITY;
 delete from OFERTAENTITY;
+delete from CUENTABANCARIAENTITY;
 delete from TokenEntity;
 
 
