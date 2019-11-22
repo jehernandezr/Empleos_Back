@@ -10,8 +10,10 @@ import co.edu.uniandes.csw.empleos.dtos.OfertaDetailDTO;
 
 import co.edu.uniandes.csw.empleos.ejb.OfertaEstudianteLogic;
 import co.edu.uniandes.csw.empleos.ejb.OfertaLogic;
+import co.edu.uniandes.csw.empleos.ejb.TokenLogic;
 
 import co.edu.uniandes.csw.empleos.entities.OfertaEntity;
+import co.edu.uniandes.csw.empleos.entities.TokenEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +44,9 @@ public class OfertaResource {
    @Inject
     private OfertaLogic logic;
    
+     @Inject
+    private TokenLogic tokenLogic;
+   
    @Inject
    private OfertaEstudianteLogic estudianteOfertasLogic;
      private static final Logger LOGGER = Logger.getLogger(OfertaResource.class.getName());
@@ -70,9 +75,18 @@ public class OfertaResource {
      */
     @POST
     public OfertaDTO crearOferta(OfertaDetailDTO oferta) throws BusinessLogicException {
+         String token = oferta.getToken();
+            TokenEntity tok = tokenLogic.getTokenByToken(token);
+            if (tok.getTipo().equals("Contratista")) {
+        
         OfertaEntity ofertaEntity = oferta.toEntity();
         ofertaEntity = logic.createOferta(ofertaEntity);
         return new OfertaDetailDTO(ofertaEntity);
+        
+         } else {
+                throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
+            }
+
     }
 
     
@@ -138,12 +152,21 @@ public class OfertaResource {
     @PUT
     @Path("{id: \\d+}")
     public OfertaDetailDTO updateOferta(@PathParam("id") Long ofertaId, OfertaDetailDTO oferta) throws BusinessLogicException {
+        
+        String token = oferta.getToken();
+            TokenEntity tok = tokenLogic.getTokenByToken(token);
+            if (tok.getTipo().equals("Contratista")) {
         oferta.setId(ofertaId);
         if (logic.getOferta(ofertaId) == null) {
             throw new WebApplicationException("El recurso /oferta/" + ofertaId + " no existe.", 404);
         }
         OfertaDetailDTO dto = new OfertaDetailDTO(logic.updateOferta(ofertaId,oferta.toEntity()));
         return dto;
+        
+        } else {
+                throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
+            }
+
     }
     
      /**
@@ -158,10 +181,24 @@ public class OfertaResource {
     @DELETE
     @Path("{ofertaId: \\d+}")
     public void deleteOferta(@PathParam("ofertaId") Long ofertaId) throws BusinessLogicException {
+        
+        OfertaEntity calEntity = logic.getOferta(ofertaId);
+        OfertaDTO calDTO = new OfertaDTO (calEntity);
         if (logic.getOferta(ofertaId) == null) {
             throw new WebApplicationException("El recurso /oferta/" + ofertaId + " no existe.", 404);
         }
          
+        String token = calDTO.getToken();
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok == null) {
+
+            throw new BusinessLogicException("No se encuentra Registrado");
+        }if( tok.getTipo().equals("Enstutdiante"))
+            {
+
+            throw new BusinessLogicException("No tiene permiso para esto");
+        }
+        
         logic.deleteOferta(ofertaId);
     }
     

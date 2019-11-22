@@ -62,14 +62,14 @@ public class CredencialDTO implements Serializable {
     /**
      * @return the contrasenia
      */
-    public String getContraseña() {
+    public String getContrasenia() {
         return contrasenia;
     }
 
     /**
      * @param contraseña the contrasenia to set
      */
-    public void setContraseña(String contraseña) {
+    public void setContrasenia(String contraseña) {
         this.contrasenia = contraseña;
     }
 
