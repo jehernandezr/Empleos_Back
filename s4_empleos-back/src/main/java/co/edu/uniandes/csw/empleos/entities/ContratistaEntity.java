@@ -37,7 +37,7 @@ public class ContratistaEntity extends BaseEntity {
     /**
      * Variable que representa si el contratista es externo.
      */
-    private boolean esExterno;
+    private Boolean esExterno;
 
     /**
      * Variable que representa el nombre del contratista.
@@ -83,23 +83,7 @@ public class ContratistaEntity extends BaseEntity {
         this.nombre = nombre;
     }
 
-    /**
-     * Devuelve si el contratista es externo.
-     *
-     * @return true si el contratista es externo y false si es interno.
-     */
-    public boolean getEsExterno() {
-        return esExterno;
-    }
-
-    /**
-     * Actualiza el estado del contratista.
-     *
-     * @param esExterno true si el contratista es externo y false si es interno.
-     */
-    public void setEsExterno(boolean esExterno) {
-        this.esExterno = esExterno;
-    }
+  
 
     /**
      * Obetener el email del contratista.
@@ -183,6 +167,20 @@ public class ContratistaEntity extends BaseEntity {
     public int hashCode()
     {
         return super.hashCode();
+    }
+
+    /**
+     * @return the esExterno
+     */
+    public Boolean getEsExterno() {
+        return esExterno;
+    }
+
+    /**
+     * @param esExterno the esExterno to set
+     */
+    public void setEsExterno(Boolean esExterno) {
+        this.esExterno = esExterno;
     }
 
 }

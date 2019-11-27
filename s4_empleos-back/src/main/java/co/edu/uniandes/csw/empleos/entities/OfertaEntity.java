@@ -25,13 +25,13 @@ public class OfertaEntity extends BaseEntity {
     /**
      * Variable que representa el tipo de oferta (Normal o Express).
      */
-    private int tipoOferta;
+    private Integer tipoOferta;
 
     /**
      * Variable que representa sel numero de vacantes de una oferta.
      * numeroDeVacantes>1
      */
-    private int numeroDeVacantes;
+    private Integer numeroDeVacantes;
 
     /**
      * Variable que representa el pago por hora de la oferta.
@@ -57,19 +57,19 @@ public class OfertaEntity extends BaseEntity {
      * Variable que representa el tiempo maximo de aplicacion de una oferta
      * Express.
      */
-    private int tiempoMaximoAplicacion;
+    private Integer tiempoMaximoAplicacion;
 
     /**
      * Variable que representa el porcentaje de pago extra de una oferta
      * Express.
      */
-    private int porcentajePagoAdicional;
+    private Integer porcentajePagoAdicional;
 
     /**
      * Variable que si una oferta esta abierta al publico.
      *
      */
-    private boolean estaAbierta;
+    private Boolean estaAbierta;
 
     /**
      * Variable que representa los requisitos de un aplicante (Separados por un
@@ -125,7 +125,7 @@ public class OfertaEntity extends BaseEntity {
      *
      * @return 1 si es NORMAL o 2 si es EXPRESS
      */
-    public int getTipoOferta() {
+    public Integer getTipoOferta() {
         return tipoOferta;
     }
 
@@ -134,7 +134,7 @@ public class OfertaEntity extends BaseEntity {
      *
      * @param tipoOferta ruta de la imagen a modificar
      */
-    public void setTipoOferta(int tipoOferta) {
+    public void setTipoOferta(Integer tipoOferta) {
         this.tipoOferta = tipoOferta;
     }
 
@@ -151,7 +151,7 @@ public class OfertaEntity extends BaseEntity {
      *
      * @return el numero de vanates disponibles.
      */
-    public int getNumeroDeVacantes() {
+    public Integer getNumeroDeVacantes() {
         return numeroDeVacantes;
     }
 
@@ -160,7 +160,7 @@ public class OfertaEntity extends BaseEntity {
      *
      * @param numeroDeVacantes numero de vacantes a modificar
      */
-    public void setNumeroDeVacantes(int numeroDeVacantes) {
+    public void setNumeroDeVacantes(Integer numeroDeVacantes) {
         this.numeroDeVacantes = numeroDeVacantes;
     }
 
@@ -185,7 +185,7 @@ public class OfertaEntity extends BaseEntity {
     /**
      * Devuelve el nombre de la oferta.
      *
-     * @return true si el contratista es externo y false si es interno.
+     * @return true si el contratista es externo y false si es Integererno.
      */
     public String getNombre() {
         return nombre;
@@ -241,7 +241,7 @@ public class OfertaEntity extends BaseEntity {
      *
      * @return el tiempo maximo de aplicacion de una oferta Express.
      */
-    public int getTiempoMaximoAplicacion() {
+    public Integer getTiempoMaximoAplicacion() {
         return tiempoMaximoAplicacion;
     }
 
@@ -251,7 +251,7 @@ public class OfertaEntity extends BaseEntity {
      * @param tiempoMaximoAplicacion el tiempo maximo de aplicacion de una
      * oferta Express.
      */
-    public void setTiempoMaximoAplicacion(int tiempoMaximoAplicacion) {
+    public void setTiempoMaximoAplicacion(Integer tiempoMaximoAplicacion) {
         this.tiempoMaximoAplicacion = tiempoMaximoAplicacion;
     }
 
@@ -260,7 +260,7 @@ public class OfertaEntity extends BaseEntity {
      *
      * @return el tiempo maximo de aplicacion de una oferta Express.
      */
-    public int getPorcentajePagoAdicional() {
+    public Integer getPorcentajePagoAdicional() {
         return porcentajePagoAdicional;
     }
 
@@ -270,7 +270,7 @@ public class OfertaEntity extends BaseEntity {
      * @param porcentajePagoAdicional el porcentaje de pago adicional de una
      * oferta Express.
      */
-    public void setPorcentajePagoAdicional(int porcentajePagoAdicional) {
+    public void setPorcentajePagoAdicional(Integer porcentajePagoAdicional) {
         this.porcentajePagoAdicional = porcentajePagoAdicional;
     }
 
@@ -279,7 +279,7 @@ public class OfertaEntity extends BaseEntity {
      *
      * @return estado de la oferta.
      */
-    public boolean getEstaAbierta() {
+    public Boolean getEstaAbierta() {
         return estaAbierta;
     }
 
@@ -288,7 +288,7 @@ public class OfertaEntity extends BaseEntity {
      *
      * @param estaAbierta estado a modificar
      */
-    public void setEstaAbierta(boolean estaAbierta) {
+    public void setEstaAbierta(Boolean estaAbierta) {
         this.estaAbierta = estaAbierta;
     }
 
