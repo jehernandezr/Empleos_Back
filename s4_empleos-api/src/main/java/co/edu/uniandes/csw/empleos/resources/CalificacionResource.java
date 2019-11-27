@@ -164,17 +164,6 @@ public class CalificacionResource {
             throw new WebApplicationException(RECURSO + calId + NO_EXISTE, 404);
         }
 
-        String token = calDTO.getToken();
-        TokenEntity tok = tokenLogic.getTokenByToken(token);
-        if (tok == null) {
-
-            throw new BusinessLogicException("No se encuentra Registrado");
-        }
-        if (!tok.getTipo().equals("Contratista")) {
-
-            throw new BusinessLogicException("No tiene permiso para esto");
-        }
-
         calificacionLogic.deleteCalificacion(calId);
     }
 

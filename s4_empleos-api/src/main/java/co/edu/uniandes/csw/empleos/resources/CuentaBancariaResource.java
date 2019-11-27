@@ -132,16 +132,6 @@ public class CuentaBancariaResource {
 
         }
 
-        String token = cuentaDto.getToken();
-        TokenEntity tok = tokenLogic.getTokenByToken(token);
-        if (tok == null) {
-
-            throw new BusinessLogicException("No se encuentra Registrado");
-        }
-        if (!tok.getTipo().equals("Enstutdiante")) {
-
-            throw new BusinessLogicException("No tiene permiso para esto");
-        }
 
         logic.delete(cuentaId);
     }

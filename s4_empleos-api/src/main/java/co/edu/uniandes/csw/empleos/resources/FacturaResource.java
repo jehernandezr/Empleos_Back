@@ -152,16 +152,7 @@ public class FacturaResource {
         if (entity == null) {
             throw new WebApplicationException(RECURSO + factId + NO_EXISTE, 404);
         }
-        String token = facDTO.getToken();
-        TokenEntity tok = tokenLogic.getTokenByToken(token);
-        if (tok == null) {
-
-            throw new BusinessLogicException("No se encuentra Registrado");
-        }
-        if (tok.getTipo().equals("Enstutdiante")) {
-
-            throw new BusinessLogicException("No tiene permiso para esto");
-        }
+       
 
         facturaLogic.deleteFactura(factId);
     }

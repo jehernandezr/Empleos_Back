@@ -20,9 +20,9 @@ import uk.co.jemos.podam.common.PodamStrategyValue;
 @Entity
 public class CuentaBancariaEntity extends BaseEntity {
 
-    private static final int CUENTA_AHORROS = 2;
+    private static final Integer CUENTA_AHORROS = 2;
 
-    private static final int CUENTA_CORRIENTE = 3;
+    private static final Integer CUENTA_CORRIENTE = 3;
 
     @PodamStrategyValue(NumeroStringStrategy.class)
     private String numeroCuenta;

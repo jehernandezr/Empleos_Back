@@ -23,7 +23,7 @@ public class CuentaDeCobroLogic {
     @Inject
     private CuentaDeCobroPersistence persistence;
     
-    public List<CuentaDeCobroEntity> getCuentasDeCobro;
+    private List<CuentaDeCobroEntity> getCuentasDeCobro;
 
     public CuentaDeCobroEntity createCuentaDeCobro(CuentaDeCobroEntity cuentaDeCobro) throws BusinessLogicException {
         

@@ -27,7 +27,7 @@ public class CuentaDeCobroEntity extends BaseEntity implements Serializable {
      * numeroCuentaDeCobro
      */
     @PodamLongValue(minValue = 1)
-    private int numeroCuentaDeCobro;
+    private Integer numeroCuentaDeCobro;
 
 
     /**
@@ -48,7 +48,7 @@ public class CuentaDeCobroEntity extends BaseEntity implements Serializable {
      * Valor que de debe.
      */
     @PodamLongValue(minValue = 1)
-    private int valor;
+    private Integer valor;
     
     /**
      * Nombre del nombreEstudiante a quien se le debe el valor
@@ -82,7 +82,7 @@ public class CuentaDeCobroEntity extends BaseEntity implements Serializable {
      *
      * @return numeroCuentaDeCobro de la tarjeta
      */
-    public int getNumeroCuentaDeCobro() {
+    public Integer getNumeroCuentaDeCobro() {
         return numeroCuentaDeCobro;
     }
 
@@ -104,7 +104,7 @@ public class CuentaDeCobroEntity extends BaseEntity implements Serializable {
     /**
      * @return el valor de la cuenta de cobro 
      */
-    public int getValor() {
+    public Integer getValor() {
         return valor;
     }
 
@@ -125,7 +125,7 @@ public class CuentaDeCobroEntity extends BaseEntity implements Serializable {
     /**
      * @param valor de la cuenta de cobro
      */
-    public void setValor(int valor) {
+    public void setValor(Integer valor) {
         this.valor = valor;
     }
 
@@ -170,7 +170,7 @@ public class CuentaDeCobroEntity extends BaseEntity implements Serializable {
      *
      * @param numeroCuentaDeCobro nuevo numeroCuentaDeCobro de la tarjeta
      */
-    public void setNumeroCuentaDeCobro(int numeroCuentaDeCobro) {
+    public void setNumeroCuentaDeCobro(Integer numeroCuentaDeCobro) {
         this.numeroCuentaDeCobro = numeroCuentaDeCobro;
     }
     
