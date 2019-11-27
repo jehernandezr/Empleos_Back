@@ -83,6 +83,7 @@ public class ContratistaEntity extends BaseEntity {
         this.nombre = nombre;
     }
 
+
     /**
      * Devuelve si el contratista es externo.
      *
@@ -100,6 +101,7 @@ public class ContratistaEntity extends BaseEntity {
     public void setEsExterno(Boolean esExterno) {
         this.esExterno = esExterno;
     }
+
 
     /**
      * Obetener el email del contratista.
@@ -185,4 +187,5 @@ public class ContratistaEntity extends BaseEntity {
         return super.hashCode();
     }
 
+  
 }

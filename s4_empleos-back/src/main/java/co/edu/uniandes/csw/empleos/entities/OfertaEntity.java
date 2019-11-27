@@ -185,7 +185,7 @@ public class OfertaEntity extends BaseEntity {
     /**
      * Devuelve el nombre de la oferta.
      *
-     * @return true si el contratista es externo y false si es interno.
+     * @return true si el contratista es externo y false si es Integererno.
      */
     public String getNombre() {
         return nombre;
@@ -288,7 +288,7 @@ public class OfertaEntity extends BaseEntity {
      *
      * @param estaAbierta estado a modificar
      */
-    public void setEstaAbierta(boolean estaAbierta) {
+    public void setEstaAbierta(Boolean estaAbierta) {
         this.estaAbierta = estaAbierta;
     }
 
