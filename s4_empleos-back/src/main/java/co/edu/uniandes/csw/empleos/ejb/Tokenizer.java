@@ -7,7 +7,6 @@ package co.edu.uniandes.csw.empleos.ejb;
 
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 
 /**
  *
