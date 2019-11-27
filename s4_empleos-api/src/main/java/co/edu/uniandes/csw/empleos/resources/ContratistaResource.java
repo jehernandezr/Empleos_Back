@@ -80,13 +80,6 @@ public class ContratistaResource {
         }
         ContratistaDTO calDTO = new ContratistaDTO(calEntity);
 
-        String token = calDTO.getToken();
-        TokenEntity tok = tokenLogic.getTokenByToken(token);
-        if (tok == null) {
-
-            throw new BusinessLogicException("No se encuentra Registrado");
-        }
-
         return calDTO;
 
     }

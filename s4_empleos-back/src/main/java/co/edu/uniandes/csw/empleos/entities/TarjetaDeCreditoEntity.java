@@ -36,6 +36,7 @@ public class TarjetaDeCreditoEntity extends BaseEntity implements Serializable {
    
     
     /**
+     * @return 
      * @Return el nnmero de la tarjeta de credito.
      */
    public String getNumero(){
@@ -50,6 +51,7 @@ public class TarjetaDeCreditoEntity extends BaseEntity implements Serializable {
    }
    
    /**
+     * @return 
     * @Return el cvc de la tarjeta de credito.
     */
    public String getCVC(){
@@ -70,8 +72,7 @@ public class TarjetaDeCreditoEntity extends BaseEntity implements Serializable {
        return fecha;
    }
    /**
-    * @param pDia es el día de vencimiento de la tarjeta.
-    * @param pAño es el año de vencimiento de la tarjeta.
+    * @param pFecha es la fecha de vencimiento de la tarjeta.
     */
    public void setFecha(String pFecha)
    {

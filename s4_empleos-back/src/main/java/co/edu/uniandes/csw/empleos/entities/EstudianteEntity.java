@@ -1,5 +1,4 @@
 package co.edu.uniandes.csw.empleos.entities;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

@@ -13,9 +13,9 @@ import uk.co.jemos.podam.common.PodamExclude;
 public class TrabajoEntity extends BaseEntity implements Serializable {
     
     //Atributo que representa si un trabajo ya fue terminado
-    private boolean cumplido;
+    private Boolean cumplido;
     //Atributo que representa si un trabajo ya ha sido "aprobado" por el contratista
-    private boolean verificado;
+    private Boolean verificado;
 
     @PodamExclude
     @OneToOne
@@ -33,28 +33,28 @@ public class TrabajoEntity extends BaseEntity implements Serializable {
     /**
      * @return the cumplido
      */
-    public boolean isCumplido() {
+    public Boolean isCumplido() {
         return cumplido;
     }
 
     /**
      * @param cumplido the cumplido to set
      */
-    public void setCumplido(boolean cumplido) {
+    public void setCumplido(Boolean cumplido) {
         this.cumplido = cumplido;
     }
 
     /**
      * @return the verificado
      */
-    public boolean isVerificado() {
+    public Boolean isVerificado() {
         return verificado;
     }
 
     /**
      * @param verificado the verificado to set
      */
-    public void setVerificado(boolean verificado) {
+    public void setVerificado(Boolean verificado) {
         this.verificado = verificado;
     }
 

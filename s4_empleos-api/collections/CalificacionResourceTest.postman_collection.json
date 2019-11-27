@@ -1,11 +1,121 @@
 {
 	"info": {
-		"_postman_id": "3cbad29c-cf42-4d4e-a56f-e82f8e469eea",
+		"_postman_id": "d98ecf2d-0fd2-44cd-8cfb-4d6db9b256ec",
 		"name": "CalificacionResourceTest",
 		"description": "Calificacion Resource Test",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "Crear un Token Primero",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2fce4f12-5e31-4fb6-b865-a2b1cbd20d2e",
+						"exec": [
+							"tests[\"No genera error en el post\"] = responseCode.code===200;",
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_t\",data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"token\":\"Primero\",\n\t\"tipo\":\"Estudiante\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/tokens",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_empleos-api",
+						"api",
+						"tokens"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear un Token Segundo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2fce4f12-5e31-4fb6-b865-a2b1cbd20d2e",
+						"exec": [
+							"tests[\"No genera error en el post\"] = responseCode.code===200;",
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_t\",data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"token\":\"Segundo\",\n\t\"tipo\":\"Contratista\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/tokens",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_empleos-api",
+						"api",
+						"tokens"
+					]
+				}
+			},
+			"response": []
+		},
 		{
 			"name": "Crear una calificacion",
 			"event": [
@@ -365,7 +475,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nota\":4,\n\t\"comentario\":\"El estudiante bajó el desempeño\"\n}",
+					"raw": "{\n\t\"nota\":4,\n\t\"comentario\":\"El estudiante bajó el desempeño\",\n\t\"token\":\"Segundo\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -416,7 +526,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nota\":2,\n\t\"comentario\":\"El estudiante tuvo un desempeño regular\"\n}",
+					"raw": "{\n\t\"nota\":2,\n\t\"comentario\":\"El estudiante tuvo un desempeño regular\",\n\t\"token\":\"Segundo\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -435,44 +545,6 @@
 						"api",
 						"calificaciones",
 						"0"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Borrar una calificacion",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "28e5d65b-d3f4-4b9d-951f-7e68abf3a06e",
-						"exec": [
-							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/calificaciones/{{new_id_c}}",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s4_empleos-api",
-						"api",
-						"calificaciones",
-						"{{new_id_c}}"
 					]
 				}
 			},
@@ -508,6 +580,56 @@
 						"api",
 						"calificaciones",
 						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar una calificacion",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "28e5d65b-d3f4-4b9d-951f-7e68abf3a06e",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/calificaciones/{{new_id_c}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_empleos-api",
+						"api",
+						"calificaciones",
+						"{{new_id_c}}"
 					]
 				}
 			},
