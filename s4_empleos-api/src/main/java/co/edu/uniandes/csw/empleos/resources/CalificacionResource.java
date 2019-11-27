@@ -55,8 +55,8 @@ public class CalificacionResource {
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok.getTipo().equals("Contratista")) {
             CalificacionEntity cl = calificacionLogic.createCalificacion(calificacion.toEntity());
-            CalificacionDTO nuevaCalificacionDTO = new CalificacionDTO(cl);
-            return nuevaCalificacionDTO;
+            
+            return new CalificacionDTO(cl);
 
         } else {
             throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");

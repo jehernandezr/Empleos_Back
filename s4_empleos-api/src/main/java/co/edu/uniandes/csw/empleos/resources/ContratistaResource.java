@@ -13,8 +13,6 @@ import co.edu.uniandes.csw.empleos.ejb.TokenLogic;
 import co.edu.uniandes.csw.empleos.entities.ContratistaEntity;
 import co.edu.uniandes.csw.empleos.entities.TokenEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -54,8 +52,8 @@ public class ContratistaResource {
 
     @POST
     public ContratistaDTO createContratista(ContratistaDTO contratista) throws BusinessLogicException {
-        ContratistaDTO contratistaFinal = new ContratistaDTO(contratistaLogic.createContratista(contratista.toEntity()));
-        return contratistaFinal;
+        return new ContratistaDTO(contratistaLogic.createContratista(contratista.toEntity()));
+     
     }
 
     /**
@@ -78,9 +76,8 @@ public class ContratistaResource {
 
             throw new WebApplicationException(RECURSO + contratistaId + NO_EXISTE, 404);
         }
-        ContratistaDTO calDTO = new ContratistaDTO(calEntity);
 
-        return calDTO;
+        return new ContratistaDTO(calEntity);
 
     }
 
@@ -154,22 +151,6 @@ public class ContratistaResource {
 
     }
 
-    /**
-     * Convierte una lista de entidades a DTO.
-     *
-     * Este método convierte una lista de objetos BookEntity a una lista de
-     * objetos BookDetailDTO (json)
-     *
-     * @param entityList corresponde a la lista de libros de tipo Entity que
-     * vamos a convertir a DTO.
-     * @return la lista de libros en forma DTO (json)
-     */
-    private List<ContratistaDetailDTO> listEntity2DTO(List<ContratistaEntity> entityList) {
-        List<ContratistaDetailDTO> list = new ArrayList<>();
-        for (ContratistaEntity entity : entityList) {
-            list.add(new ContratistaDetailDTO(entity));
-        }
-        return list;
-    }
+    
 
 }

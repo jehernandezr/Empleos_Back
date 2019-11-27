@@ -50,16 +50,15 @@ public class CredencialesResource {
         TokenEntity tokenE = new TokenEntity();
         tokenE.setTipo(tipo);
         tokenE.setToken(token);
-        TokenDTO nuevoTokenDTO = new TokenDTO(tokenLogic.createToken(tokenE));
+        return  new TokenDTO(tokenLogic.createToken(tokenE));
 
-        return nuevoTokenDTO;
     }
 
     @GET
     public TokenDTO autenticar(@QueryParam("correo") String correo, @QueryParam("pass") String pass) throws BusinessLogicException {
         List<CredencialesEntity> c = credencialLogic.getCredenciales();
         CredencialesEntity credencialUsuario = null;
-        boolean found = false;
+        Boolean found = false;
         for (CredencialesEntity credencial : c) {
             if (credencial.getCorreo().equals(correo) && credencial.getContrasenia().equals(pass)) {
                 found = true;
@@ -75,9 +74,8 @@ public class CredencialesResource {
             TokenEntity tokenE = new TokenEntity();
             tokenE.setTipo(tipo);
             tokenE.setToken(token);
-            TokenDTO nuevoTokenDTO = new TokenDTO(tokenLogic.createToken(tokenE));
+            return new TokenDTO(tokenLogic.createToken(tokenE));
  
-            return nuevoTokenDTO;
         }
     }
 

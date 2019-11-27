@@ -94,7 +94,7 @@ public class CuentaDeCobroResource {
     @GET
     public List<CuentaDeCobroDTO> getCuentasDeCobro() {
 
-        return listEntity2DTO(cuentaDeCobroLogic.getCuentasDeCobro());
+        return listEntity2DTO(cuentaDeCobroLogic.getCuentassDeCobro());
     }
 
     /**

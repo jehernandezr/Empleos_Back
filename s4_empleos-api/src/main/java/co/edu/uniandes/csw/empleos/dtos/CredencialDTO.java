@@ -67,10 +67,10 @@ public class CredencialDTO implements Serializable {
     }
 
     /**
-     * @param contraseña the contrasenia to set
+     * @param contrasenia the contrasenia to set
      */
-    public void setContrasenia(String contraseña) {
-        this.contrasenia = contraseña;
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
     }
 
     public CredencialesEntity toEntity() {
