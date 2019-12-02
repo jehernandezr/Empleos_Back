@@ -40,3 +40,7 @@ insert into TokenEntity(ID,TIPO,TOKEN)
 values(2,'Contratista','Segundo');
 
 
+insert into CredencialesEntity (correo, contrasenia, tipo) values ('algo@uniandes.edu.co', 'contrasenia', 'Estudiante');
+insert into CredencialesEntity (correo, contrasenia, tipo) values ('algo2@uniandes.edu.co', 'contrasenia', 'Contratista');
+delete from CredencialesEntity;
+select * from CredencialesEntity;
