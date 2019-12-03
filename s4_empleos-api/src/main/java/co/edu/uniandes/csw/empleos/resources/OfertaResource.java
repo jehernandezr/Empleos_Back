@@ -84,6 +84,7 @@ public class OfertaResource {
      * @return
      * @throws BusinessLogicException
      */
+    @POST
     public OfertaDTO crearOferta(OfertaDetailDTO oferta) throws BusinessLogicException {
         String token = oferta.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
