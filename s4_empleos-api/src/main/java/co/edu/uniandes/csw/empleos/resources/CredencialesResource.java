@@ -5,9 +5,14 @@
  */
 package co.edu.uniandes.csw.empleos.resources;
 
+import co.edu.uniandes.csw.empleos.dtos.ContratistaDTO;
 import co.edu.uniandes.csw.empleos.dtos.CredencialDTO;
+import co.edu.uniandes.csw.empleos.dtos.EstudianteDTO;
 import co.edu.uniandes.csw.empleos.dtos.TokenDTO;
+import co.edu.uniandes.csw.empleos.dtos.UsuarioDTO;
+import co.edu.uniandes.csw.empleos.ejb.ContratistaLogic;
 import co.edu.uniandes.csw.empleos.ejb.CredencialesLogic;
+import co.edu.uniandes.csw.empleos.ejb.EstudianteLogic;
 import co.edu.uniandes.csw.empleos.ejb.TokenLogic;
 import co.edu.uniandes.csw.empleos.ejb.Tokenizer;
 import co.edu.uniandes.csw.empleos.entities.CredencialesEntity;
@@ -36,12 +41,31 @@ public class CredencialesResource {
     // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
     @Inject
     private CredencialesLogic credencialLogic;
+    
+    // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
+    @Inject
+    private EstudianteLogic estudianteLogic;
+    
+    // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
+    @Inject
+    private ContratistaLogic contratistaLogic;
 
     @Inject
     private TokenLogic tokenLogic;
+    
+    TokenDTO fooDTO(String m) {
+        TokenDTO t = new TokenDTO();
+        t.setToken(m);
+        return t;
+    }
 
     @POST
-    public TokenDTO createCredencial(CredencialDTO credencial) throws BusinessLogicException {
+    public TokenDTO createCredencial(UsuarioDTO usuario, @QueryParam("correo") String correo, @QueryParam("pass") String pass, @QueryParam("tipo") String type) throws BusinessLogicException {
+        CredencialDTO credencial = new CredencialDTO();
+        credencial.setCorreo(correo);
+        credencial.setTipo(type);
+        credencial.setContrasenia(pass);
+        
         CredencialDTO c = new CredencialDTO(credencialLogic.createCredencial(credencial.toEntity()));
 
         String tipo = c.getTipo();
@@ -51,21 +75,49 @@ public class CredencialesResource {
         tokenE.setTipo(tipo);
         tokenE.setToken(token);
         TokenDTO nuevoTokenDTO = new TokenDTO(tokenLogic.createToken(tokenE));
-
+        
+        if(type.equals("Estudiante")) {
+            EstudianteDTO estudiante = new EstudianteDTO();
+            estudiante.setId(usuario.getId());
+            estudiante.setIdMedioDepago(usuario.getIdMedioDepago());
+            estudiante.setNombre(usuario.getNombre());
+            estudiante.setCarrera(usuario.getCarrera());
+            estudiante.setCalificacionPromedio(usuario.getCalificacionPromedio());
+            estudiante.setSemestre(usuario.getSemestre());
+            estudiante.setHorarioDeTrabajo(usuario.getHorarioDeTrabajo()); 
+            estudiante.setCorreo(usuario.getEmail());
+            estudianteLogic.crearEstudiante(estudiante.toEntity());
+        } else if (type.equals("Contratista")) {
+            ContratistaDTO contratista = new ContratistaDTO();
+            contratista.setId(usuario.getId());
+            contratista.setEsExterno(usuario.getEsExterno());
+            contratista.setNombre(usuario.getNombre());
+            contratista.setEmail(usuario.getEmail());
+            contratista.setRutaImagen(usuario.getRutaImagen());
+            contratistaLogic.createContratista(contratista.toEntity());
+        }
+        
         return nuevoTokenDTO;
     }
 
     @GET
-    public TokenDTO autenticar(@QueryParam("correo") String correo, @QueryParam("pass") String pass) throws BusinessLogicException {
+    public TokenDTO autenticar(@QueryParam("correo") String correo, @QueryParam("pass") String pass) throws BusinessLogicException {        
         List<CredencialesEntity> c = credencialLogic.getCredenciales();
         CredencialesEntity credencialUsuario = null;
         boolean found = false;
         for (CredencialesEntity credencial : c) {
-            if (credencial.getCorreo().equals(correo) && credencial.getContrasenia().equals(pass)) {
-                found = true;
-                credencialUsuario = credencial;
-            }
+            if(credencial != null) {
+               String c_correo = credencial.getCorreo();
+                String c_pass = credencial.getContrasenia();
+                if(c_correo != null && c_pass != null) {
+                    if (c_correo.equals(correo) && c_pass.equals(pass)) {
+                        found = true;
+                        credencialUsuario = credencial;
+                    }
+                }
+            } 
         }
+
         if (!found) {
             return null;
         } else {
