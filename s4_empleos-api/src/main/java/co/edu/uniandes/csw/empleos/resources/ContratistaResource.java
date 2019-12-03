@@ -57,6 +57,17 @@ public class ContratistaResource {
         ContratistaDTO contratistaFinal = new ContratistaDTO(contratistaLogic.createContratista(contratista.toEntity()));
         return contratistaFinal;
     }
+    
+     /**
+     * Busca y devuelve todas las editoriales que existen en la aplicacion.
+     *
+     * @return JSONArray {@link EditorialDetailDTO} - Las editoriales
+     * encontradas en la aplicación. Si no hay ninguna retorna una lista vacía.
+     */
+    @GET
+    public List<ContratistaDetailDTO> getContratistas() {
+        return listEntity2DTO(contratistaLogic.getContratistas());
+    }
 
     /**
      * Busca el contratista con el id asociado recibido en la URL y lo devuelve.
