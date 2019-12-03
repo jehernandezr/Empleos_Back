@@ -16,6 +16,7 @@
     <class>co.edu.uniandes.csw.empleos.entities.TokenEntity</class>
     <class>co.edu.uniandes.csw.empleos.entities.CredencialesEntity</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <shared-cache-mode>NONE</shared-cache-mode>
     <properties>
       <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
       <property name="eclipselink.target-database" value="Derby"/>
@@ -25,7 +26,7 @@
       <property name="javax.persistence.jdbc.password" value="APP"/>
       <property name="eclipselink.logging.level" value="FINE"/>
       <property name="eclipselink.logging.parameters" value="true"/>
-      <shared-cache-mode>NONE</shared-cache-mode>
+      
     </properties>
   </persistence-unit>
 </persistence>
