@@ -25,7 +25,6 @@ package co.edu.uniandes.csw.empleos.tests.postman;
 
 import co.edu.uniandes.csw.empleos.mappers.BusinessLogicExceptionMapper;
 import co.edu.uniandes.csw.empleos.dtos.TarjetaDeCreditoDTO;
-import co.edu.uniandes.csw.empleos.resources.RestConfig;
 import co.edu.uniandes.csw.empleos.resources.TarjetaDeCreditoResource;
 import co.edu.uniandes.csw.postman.tests.PostmanTestBuilder;
 import java.io.File;
