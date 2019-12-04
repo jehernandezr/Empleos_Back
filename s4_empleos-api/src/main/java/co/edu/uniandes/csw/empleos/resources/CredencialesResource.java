@@ -108,9 +108,9 @@ public class CredencialesResource {
         Boolean found = false;
         for (CredencialesEntity credencial : c) {
             if(credencial != null) {
-               String c_correo = credencial.getCorreo();
-                String c_pass = credencial.getContrasenia();
-                if(c_correo != null && c_pass != null && c_correo.equals(correo) && c_pass.equals(pass)) {
+               String cCorreo = credencial.getCorreo();
+                String cPass = credencial.getContrasenia();
+                if(cCorreo != null && cPass != null && cCorreo.equals(correo) && cPass.equals(pass)) {
                         found = true;
                         credencialUsuario = credencial;
                     

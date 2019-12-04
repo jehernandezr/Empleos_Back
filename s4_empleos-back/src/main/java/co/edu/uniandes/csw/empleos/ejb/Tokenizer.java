@@ -26,20 +26,24 @@ public class Tokenizer {
     
     public static String getToken() {
         String date = currentDate();
-        String token = "";
         String[] lines = date.split(" ");
+        StringBuilder bld = new StringBuilder();
         for(int i = 0; i < lines.length - 1; i++) {
-            token += parseString(lines[i]);
+           bld.append(parseString(lines[i]));
         }
-        String millis[] = lines[lines.length - 1].split("\\.");
+        String token = bld.toString();
+        String[] millis = lines[lines.length - 1].split("\\.");
         token += parseString(millis[0]) + parseString(millis[1]);
         return token;
     }
     
     public static String parseString(String str) {
-        String result = "";
+        StringBuilder bld = new StringBuilder();
         for (int i = 0; i < str.length(); i++)
-            result += parseNumber(String.valueOf(str.charAt(i)));
+        {
+            bld.append(parseNumber(String.valueOf(str.charAt(i))));
+        }
+        String result = bld.toString();
         return result;
     }
     

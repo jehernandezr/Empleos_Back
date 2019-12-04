@@ -87,7 +87,7 @@ public class OfertaLogic {
     public List<OfertaEntity> getOfertasPalabraClave(String palabra) {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los ofertas por palabra: {0}", palabra);
         List<OfertaEntity> lista = getOfertas();
-        List<OfertaEntity> listaPalabra = new ArrayList<OfertaEntity>();
+        List<OfertaEntity> listaPalabra = new ArrayList<>();
         for(OfertaEntity u:lista){
             if(u.getCategoria().toUpperCase().contains(palabra.toUpperCase())||u.getDescripcion().toUpperCase().contains(palabra.toUpperCase())||u.getNombre().toUpperCase().contains(palabra.toUpperCase())||u.getRequisitos().toUpperCase().contains(palabra.toUpperCase())){
                 listaPalabra.add(u);

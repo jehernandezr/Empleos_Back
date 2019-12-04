@@ -49,8 +49,8 @@ public class FacturaResource {
         String token = factura.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok.getTipo().equals("Contratista")) {
-            FacturaDTO nuevaFacturaDTO = new FacturaDTO(facturaLogic.createFactura(factura.toEntity()));
-            return nuevaFacturaDTO;
+            return new FacturaDTO(facturaLogic.createFactura(factura.toEntity()));
+           
         } else {
             throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
         }
@@ -96,8 +96,8 @@ public class FacturaResource {
     @GET
 
     public List<FacturaDTO> getFacturas() {
-        List<FacturaDTO> listaFacturas = listEntity2DTO(facturaLogic.getFacturas());
-        return listaFacturas;
+        return listEntity2DTO(facturaLogic.getFacturas());
+        
 
     }
 
@@ -126,8 +126,8 @@ public class FacturaResource {
             if (facturaLogic.getFactura(factId) == null) {
                 throw new WebApplicationException(RECURSO + factId + NO_EXISTE, 404);
             }
-            FacturaDTO detailDTO = new FacturaDTO(facturaLogic.updateFactura(factId, factura.toEntity()));
-            return detailDTO;
+            return new FacturaDTO(facturaLogic.updateFactura(factId, factura.toEntity()));
+            
 
         } else {
             throw new WebApplicationException("No tiene permitido acceder a "+RECURSO);
@@ -148,7 +148,7 @@ public class FacturaResource {
     @Path("{facturasId: \\d+}")
     public void deleteFactura(@PathParam("facturasId") Long factId) throws BusinessLogicException {
         FacturaEntity entity = facturaLogic.getFactura(factId);
-        FacturaDTO facDTO = new FacturaDTO(entity);
+        
         if (entity == null) {
             throw new WebApplicationException(RECURSO + factId + NO_EXISTE, 404);
         }

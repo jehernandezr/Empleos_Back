@@ -40,8 +40,8 @@ public class CuentaBancariaResource {
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok.getTipo().equals("Estudiante")) {
             CuentaBancariaEntity cb = logic.createCuentaBancaria(cuentaBancaria.toEntity());
-            CuentaBancariaDTO nuevaCuentaBancariaDTO = new CuentaBancariaDTO(cb);
-            return nuevaCuentaBancariaDTO;
+            return new CuentaBancariaDTO(cb);
+            
 
         } else {
             throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
@@ -100,8 +100,8 @@ public class CuentaBancariaResource {
             if (logic.getCuentaBancaria(cuentaId) == null) {
                 throw new WebApplicationException(RECURSO + cuentaId + NO_EXISTE, 404);
             }
-            CuentaBancariaDTO detailDTO = new CuentaBancariaDTO(logic.updateCuentaBancaria(cuentaId, cuenta.toEntity()));
-            return detailDTO;
+            return new CuentaBancariaDTO(logic.updateCuentaBancaria(cuentaId, cuenta.toEntity()));
+            
 
         } else {
             throw new WebApplicationException("No tiene permitido acceder a "+RECURSO);

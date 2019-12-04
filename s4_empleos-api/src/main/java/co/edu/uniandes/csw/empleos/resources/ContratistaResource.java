@@ -120,8 +120,8 @@ public class ContratistaResource {
             if (contratistaLogic.getContratista(id) == null) {
                 throw new WebApplicationException(RECURSO + id + NO_EXISTE, 404);
             }
-            ContratistaDetailDTO dto = new ContratistaDetailDTO(contratistaLogic.updateContratista(id, contratista.toEntity()));
-            return dto;
+            return new ContratistaDetailDTO(contratistaLogic.updateContratista(id, contratista.toEntity()));
+            
 
         } else {
             throw new WebApplicationException("No tiene permitido acceder a "+RECURSO);

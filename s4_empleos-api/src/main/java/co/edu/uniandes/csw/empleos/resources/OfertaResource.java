@@ -167,8 +167,8 @@ public class OfertaResource {
                 throw new WebApplicationException(RECURSO + ofertaId + NO_EXISTE, 404);
             }
 
-            OfertaDetailDTO dto = new OfertaDetailDTO(logic.updateOferta(ofertaId, oferta.toEntity()));
-            return dto;
+            return new OfertaDetailDTO(logic.updateOferta(ofertaId, oferta.toEntity()));
+            
 
         } else {
             throw new WebApplicationException("No tiene permitido acceder a "+RECURSO);

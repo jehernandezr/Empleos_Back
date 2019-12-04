@@ -45,8 +45,7 @@ public class CuentaDeCobroResource {
         String token = cuenta.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok.getTipo().equals("Contratista")) {
-            CuentaDeCobroDTO nuevacuentaDTO = new CuentaDeCobroDTO(cuentaDeCobroLogic.createCuentaDeCobro(cuenta.toEntity()));
-            return nuevacuentaDTO;
+            return new CuentaDeCobroDTO(cuentaDeCobroLogic.createCuentaDeCobro(cuenta.toEntity()));
 
         } else {
             throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
@@ -126,8 +125,7 @@ public class CuentaDeCobroResource {
             if (cuentaDeCobroLogic.getCuenta(calId) == null) {
                 throw new WebApplicationException(RECURSO + calId + NO_EXISTE, 404);
             }
-            CuentaDeCobroDTO detailDTO = new CuentaDeCobroDTO(cuentaDeCobroLogic.updateCuentaDeCobro(calId, calif.toEntity()));
-            return detailDTO;
+            return new CuentaDeCobroDTO(cuentaDeCobroLogic.updateCuentaDeCobro(calId, calif.toEntity()));
 
         } else {
            throw new WebApplicationException("No tiene permitido acceder a "+RECURSO);

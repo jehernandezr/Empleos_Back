@@ -63,7 +63,7 @@ public class EstudianteResource {
 
     @POST
     public EstudianteDTO createEstudiante(EstudianteDTO estudiante) throws BusinessLogicException {
-        System.out.println("**** Arrive here");
+       
         return new EstudianteDTO(estudianteLogic.crearEstudiante(estudiante.toEntity()));
     }
 
@@ -139,8 +139,8 @@ public class EstudianteResource {
             if (estudianteLogic.getEstudiante(estudianteId) == null) {
                 throw new WebApplicationException(RECURSO + estudianteId + NO_EXISTE, 404);
             }
-            EstudianteDetailDTO dto = new EstudianteDetailDTO(estudianteLogic.updateEstudiante(estudiante.toEntity()));
-            return dto;
+            return new EstudianteDetailDTO(estudianteLogic.updateEstudiante(estudiante.toEntity()));
+            
 
         } else {
             throw new WebApplicationException("No tiene permitido acceder a "+RECURSO);
@@ -161,9 +161,7 @@ public class EstudianteResource {
     @Path("{estudianteId: \\d+}")
     public void deleteEstudiante(@PathParam("estudianteId") Long estudianteId) throws BusinessLogicException {
 
-        //estudianteCalificacionesLogic.removeCalificaciones(estudianteId); 
-        //estudianteOfertasLogic.removeOfertas(estudianteId);
-        //estudianteCuentaBancariaLogic.removeCuentaBancaria(estudianteId); 
+        
         EstudianteEntity estudianteEntity = estudianteLogic.getEstudiante(estudianteId);
         EstudianteDetailDTO estDTO = new EstudianteDetailDTO(estudianteEntity);
 

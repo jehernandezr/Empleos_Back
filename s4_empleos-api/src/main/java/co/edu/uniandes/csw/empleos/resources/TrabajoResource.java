@@ -62,8 +62,8 @@ public class TrabajoResource {
         String token = trabajo.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok.getTipo().equals("Contratista")) {
-            TrabajoDTO t = new TrabajoDTO(trabajoLogic.crearTrabajo(trabajo.toEntity()));
-            return t;
+            return new TrabajoDTO(trabajoLogic.crearTrabajo(trabajo.toEntity()));
+           
 
         } else {
             throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
@@ -135,8 +135,7 @@ public class TrabajoResource {
             if (trabajoLogic.getTrabajo(trabajoId) == null) {
                 throw new WebApplicationException(RECURSO + trabajoId + NO_EXISTE, 404);
             }
-            TrabajoDetailDTO dto = new TrabajoDetailDTO(trabajoLogic.updateTrabajo(trabajo.toEntity()));
-            return dto;
+            return new TrabajoDetailDTO(trabajoLogic.updateTrabajo(trabajo.toEntity()));
         } else {
            throw new WebApplicationException("No tiene permitido acceder a "+RECURSO);
         }

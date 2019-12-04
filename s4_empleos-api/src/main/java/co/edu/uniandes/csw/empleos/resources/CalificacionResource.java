@@ -134,8 +134,7 @@ public class CalificacionResource {
             if (calificacionLogic.getCalificacion(calId) == null) {
                 throw new WebApplicationException(RECURSO + calId + NO_EXISTE, 404);
             }
-            CalificacionDTO detailDTO = new CalificacionDTO(calificacionLogic.updateCalificacion(calId, calif.toEntity()));
-            return detailDTO;
+            return new CalificacionDTO(calificacionLogic.updateCalificacion(calId, calif.toEntity()));
 
         } else {
             throw new WebApplicationException("No se encuentra registrado");
