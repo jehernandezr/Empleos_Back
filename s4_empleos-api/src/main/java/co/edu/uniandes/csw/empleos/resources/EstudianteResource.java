@@ -179,7 +179,7 @@ public class EstudianteResource {
         }
         if (!(tok.getTipo().equals("Estudiante") || tok.getTipo().equals("Administrador"))) {
 
-            throw new BusinessLogicException("No tiene permiso para esto");
+            throw new WebApplicationException("No tiene permitido acceder a "+RECURSO);
         }
 
         estudianteLogic.deleteEstudiante(estudianteId);

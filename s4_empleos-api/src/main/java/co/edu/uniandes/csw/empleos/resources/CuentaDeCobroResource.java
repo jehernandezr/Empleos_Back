@@ -31,6 +31,8 @@ import javax.ws.rs.WebApplicationException;
 @RequestScoped
 public class CuentaDeCobroResource {
 
+    private static final String NO_EXISTE = " no existe.";
+    private static final String RECURSO = "El recurso /cuentasDeCobro/";
     @Inject
     private TokenLogic tokenLogic;
 
@@ -122,13 +124,13 @@ public class CuentaDeCobroResource {
         if (tok.getTipo().equals("Contratista")) {
             calif.setId(calId);
             if (cuentaDeCobroLogic.getCuenta(calId) == null) {
-                throw new WebApplicationException("El recurso /cuentas/" + calId + " no existe.", 404);
+                throw new WebApplicationException(RECURSO + calId + NO_EXISTE, 404);
             }
             CuentaDeCobroDTO detailDTO = new CuentaDeCobroDTO(cuentaDeCobroLogic.updateCuentaDeCobro(calId, calif.toEntity()));
             return detailDTO;
 
         } else {
-            throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
+           throw new WebApplicationException("No tiene permitido acceder a "+RECURSO);
         }
 
     }
@@ -149,7 +151,7 @@ public class CuentaDeCobroResource {
         CuentaDeCobroDTO calDTO = new CuentaDeCobroDTO(calEntity);
 
         if (calEntity == null) {
-            throw new WebApplicationException("El recurso /cuentasDeCobro/" + calId + " no existe.", 404);
+            throw new WebApplicationException(RECURSO + calId + NO_EXISTE, 404);
         }
         String token = calDTO.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
