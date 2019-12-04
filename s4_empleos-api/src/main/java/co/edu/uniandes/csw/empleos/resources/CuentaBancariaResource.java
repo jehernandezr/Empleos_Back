@@ -58,6 +58,7 @@ public class CuentaBancariaResource {
     @Path("{cuentaId: \\d+}")
     public CuentaBancariaDTO getCuntaBancaria(@PathParam("cuentaId") Long cuentaId) throws BusinessLogicException {
 
+        
         CuentaBancariaEntity cuentaEntity = logic.getCuentaBancaria(cuentaId);
 
         if (cuentaEntity == null) {
@@ -66,12 +67,7 @@ public class CuentaBancariaResource {
         }
         CuentaBancariaDTO cuentaDTO = new CuentaBancariaDTO(cuentaEntity);
 
-        String token = cuentaDTO.getToken();
-        TokenEntity tok = tokenLogic.getTokenByToken(token);
-        if (tok == null) {
-
-            throw new BusinessLogicException("No se encuentra Registrado");
-        }
+     
         return cuentaDTO;
     }
 

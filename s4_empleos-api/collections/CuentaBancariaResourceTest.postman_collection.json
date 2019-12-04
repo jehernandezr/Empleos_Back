@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "b1acc4fc-c2f8-43c8-9cd1-35864d0f60df",
+		"_postman_id": "3c018ca0-4d34-4bc1-bab1-6202a7c0c178",
 		"name": "CuentaBancariaResourceTest",
 		"description": "Cuenta Bancaria Resource Test",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -118,6 +118,20 @@
 		},
 		{
 			"name": "crear  estudiante prueba",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5444bdef-9e19-4e11-ac21-9799147da29c",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en elcreate estudiante prueba\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -424,7 +438,7 @@
 					"script": {
 						"id": "71bfc3e4-ab95-4f21-8c50-1475aaa63aeb",
 						"exec": [
-							"tests[\"No consulta con id que no existe\"] = responseCode.code === 404;",
+							"tests[\"No consulta con id que no existe\"] = responseCode.code === 412;",
 							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No existe una cuentabacaria Con esa id\");"
 						],
 						"type": "text/javascript"
@@ -511,7 +525,7 @@
 					"script": {
 						"id": "197b415a-ea1a-4d50-9837-dbb4f29e032a",
 						"exec": [
-							"tests[\"No actualiza con id que no existe\"] = responseCode.code === 404;",
+							"tests[\"No actualiza con id que no existe\"] = responseCode.code === 412;",
 							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No existe una cuentabacaria Con esa id\");"
 						],
 						"type": "text/javascript"
@@ -596,8 +610,8 @@
 					"script": {
 						"id": "755978e5-c946-4ec0-9bf2-552a9c3cfc83",
 						"exec": [
-							"tests[\"No borra con id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /cuentaBancaria/0 no existe.\");"
+							"tests[\"No borra con id que no existe\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No existe una cuentabacaria Con esa id\");"
 						],
 						"type": "text/javascript"
 					}
