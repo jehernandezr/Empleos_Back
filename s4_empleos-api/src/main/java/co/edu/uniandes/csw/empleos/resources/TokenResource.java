@@ -40,7 +40,7 @@ public class TokenResource {
     
     @POST
     public TokenDTO createToken(TokenDTO token) throws BusinessLogicException {
-       
+        System.out.println("******************** 1");
         return new TokenDTO(tokenLogic.createToken(token.toEntity()));
     }
     

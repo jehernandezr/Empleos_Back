@@ -3,6 +3,7 @@
 insert into ContratistaEntity (id, contrasena, email, esExterno, rutaImagen) values(20, 'Dsdf', 'dsa@hotmail.com', 'true','dsfs');
 SELECT * FROM COntratistaEntity
 SELECT * FROM CuentaDeCobroEntity;
+
 delete from EstudianteEntity;
 delete from TarjetaDeCreditoEntity;
 delete from CalificacionEntity;
@@ -10,12 +11,12 @@ delete from FacturaEntity;
 delete from CUENTADECOBROENTITY;
 delete from OFERTAENTITY;
 delete from CUENTABANCARIAENTITY;
+
 delete from TokenEntity;
+delete from CredencialesEntity;
 
 
 Select * from TokenEntity;
-
-delete from EstudianteEntity;
 
 insert into CuentaDeCobroEntity (numeroCuentaDeCobro,contratista,fecha, valor,nombreEstudiante,concepto)
 
@@ -42,5 +43,4 @@ values(2,'Contratista','Segundo');
 
 insert into CredencialesEntity (correo, contrasenia, tipo) values ('algo@uniandes.edu.co', 'contrasenia', 'Estudiante');
 insert into CredencialesEntity (correo, contrasenia, tipo) values ('algo2@uniandes.edu.co', 'contrasenia', 'Contratista');
-delete from CredencialesEntity;
 select * from CredencialesEntity;

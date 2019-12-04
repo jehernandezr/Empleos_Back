@@ -61,6 +61,24 @@ public class OfertaDetailDTO extends OfertaDTO implements Serializable {
         }
     }
 
+    public ContratistaDTO getContratista() {
+        return contratista;
+    }
+
+    public void setContratista(ContratistaDTO contratista) {
+        this.contratista = contratista;
+    }
+
+    public List<EstudianteDTO> getEstudiantes() {
+        return estudiantes;
+    }
+
+    public void setEstudiantes(List<EstudianteDTO> estudiantes) {
+        this.estudiantes = estudiantes;
+    }
+    
+    
+
     /**
      * Transformar un DTO a un Entity
      *
