@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.empleos.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
@@ -20,7 +21,7 @@ import uk.co.jemos.podam.common.PodamExclude;
  * @author je.berdugo10
  */
 @Entity
-public class ContratistaEntity extends BaseEntity {
+public class ContratistaEntity extends BaseEntity implements  Serializable{
 
     @PodamExclude
     @OneToMany(mappedBy = "contratista")

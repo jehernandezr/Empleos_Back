@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.empleos.tests.postman;
 import co.edu.uniandes.csw.empleos.dtos.CuentaBancariaDTO;
 import co.edu.uniandes.csw.empleos.mappers.BusinessLogicExceptionMapper;
 import co.edu.uniandes.csw.empleos.resources.CuentaBancariaResource;
+import co.edu.uniandes.csw.empleos.resources.RestConfig;
 import co.edu.uniandes.csw.postman.tests.PostmanTestBuilder;
 import java.io.File;
 import java.io.IOException;
@@ -38,6 +39,7 @@ public class CuentaBancariaIT {
                         .importRuntimeDependencies().resolve()
                         .withTransitivity().asFile())
                 // Se agregan los compilados de los paquetes de servicios
+                .addPackage(RestConfig.class.getPackage())
                 .addPackage(CuentaBancariaResource.class.getPackage()) //No importa cual recurso usar, lo importante es agregar el paquet
                 .addPackage(CuentaBancariaDTO.class.getPackage()) //No importa cual dto usar, lo importante es agregar el paquete.
                 .addPackage(BusinessLogicExceptionMapper.class.getPackage())

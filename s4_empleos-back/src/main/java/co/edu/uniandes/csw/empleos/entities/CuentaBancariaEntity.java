@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.empleos.entities;
 
 import co.edu.uniandes.csw.empleos.podam.NumeroStringStrategy;
 import co.edu.uniandes.csw.empleos.podam.TipoCuentaStrategy;
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
@@ -18,7 +19,7 @@ import uk.co.jemos.podam.common.PodamStrategyValue;
  * @author je.hernandezr
  */
 @Entity
-public class CuentaBancariaEntity extends BaseEntity {
+public class CuentaBancariaEntity extends BaseEntity implements  Serializable {
 
     private static final Integer CUENTA_AHORROS = 2;
 

@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.empleos.entities;
 
 import co.edu.uniandes.csw.empleos.podam.DateStrategy;
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,7 +21,7 @@ import uk.co.jemos.podam.common.PodamStrategyValue;
  * @author Estudiante
  */
 @Entity
-public class FacturaEntity extends BaseEntity{
+public class FacturaEntity extends BaseEntity implements  Serializable{
     
     /**
      * La fecha que se le atribuirá a una factura. De esta manera se tiene un control por fechas

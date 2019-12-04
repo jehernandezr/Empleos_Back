@@ -1,5 +1,6 @@
 package co.edu.uniandes.csw.empleos.entities;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,7 +14,7 @@ import uk.co.jemos.podam.common.PodamExclude;
  * @author je.berdugo10
  */
 @Entity
-public class OfertaEntity extends BaseEntity {
+public class OfertaEntity extends BaseEntity implements  Serializable{
 
     /**
      * Contratista que creo la oferta.
