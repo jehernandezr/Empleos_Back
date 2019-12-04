@@ -157,7 +157,6 @@ public class CalificacionResource {
     public void deleteCalificacion(@PathParam("calificacionesId") Long calId) throws BusinessLogicException {
 
         CalificacionEntity calEntity = calificacionLogic.getCalificacion(calId);
-        CalificacionDTO calDTO = new CalificacionDTO(calEntity);
 
         if (calEntity == null) {
 

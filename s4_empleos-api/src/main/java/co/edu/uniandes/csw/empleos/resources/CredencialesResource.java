@@ -110,11 +110,10 @@ public class CredencialesResource {
             if(credencial != null) {
                String c_correo = credencial.getCorreo();
                 String c_pass = credencial.getContrasenia();
-                if(c_correo != null && c_pass != null) {
-                    if (c_correo.equals(correo) && c_pass.equals(pass)) {
+                if(c_correo != null && c_pass != null && c_correo.equals(correo) && c_pass.equals(pass)) {
                         found = true;
                         credencialUsuario = credencial;
-                    }
+                    
                 }
             } 
         }
@@ -133,38 +132,5 @@ public class CredencialesResource {
         }
     }
 
-    /**
-     * Busca el estudiante con el id asociado recibido en la URL y lo devuelve.
-     *
-     * @param estudianteId Identificador del estudiante que se esta buscando.
-     * Este debe ser una cadena de dígitos.
-     * @return JSON {@link EstudianteDTO} - El estudiante buscado
-     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
-     * Error de lógica que se genera cuando no se encuentra el estudiante.
-     */
-    /*
-    @GET
-    @Path("{estudiantesId: \\d+}")
-    public EstudianteDetailDTO getEstudiante(@PathParam("estudiantesId") Long estudianteId) {
-        EstudianteEntity calEntity = estudianteLogic.getEstudiante(estudianteId);
-        if (calEntity == null) {
-            throw new WebApplicationException("El recurso /estudiantes/" + estudianteId + " no existe.", 404);
-        }
-        EstudianteDetailDTO calDTO = new EstudianteDetailDTO(calEntity);
-        return calDTO;
-    }
-     */
-    /**
-     * Busca y devuelve todos los estudiantes que existen en la aplicacion.
-     *
-     * @return JSONArray {@link EstudianteDTO} - Los estudiantes encontrados en
-     * la aplicación. Si no hay ninguna retorna una lista vacía.
-     */
-    /*
-    @GET
-    public List<EstudianteDetailDTO> getEstudiantes() {
-        List<EstudianteDetailDTO> estudiantes = listEntity2DTO(estudianteLogic.getEstudiantes());
-        return estudiantes;
-    }
-     */
+
 }

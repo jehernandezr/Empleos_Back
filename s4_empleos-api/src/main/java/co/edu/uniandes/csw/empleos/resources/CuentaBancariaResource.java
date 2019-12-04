@@ -124,8 +124,6 @@ public class CuentaBancariaResource {
 
         CuentaBancariaEntity cuentaEntity = logic.getCuentaBancaria(cuentaId);
 
-        CuentaBancariaDTO cuentaDto = new CuentaBancariaDTO(cuentaEntity);
-
         if (cuentaEntity == null) {
 
             throw new WebApplicationException(RECURSO + cuentaId + NO_EXISTE, 404);
