@@ -55,20 +55,21 @@ public class CuentaBancariaEntity extends BaseEntity implements  Serializable {
         this.numeroCuenta = numeroCuenta;
     }
 
-    /**
-     * @return the estudiante
+  
+     /**
+     * @return the nombreBanco
      */
-    public EstudianteEntity getEstudiante() {
-        return estudiante;
+    public String getNombreBanco() {
+        return nombreBanco;
     }
 
     /**
-     * @param pEstudiante estudiante to set
+     * @param nombreBanco the nombreBanco to set
      */
-    public void setEstudiante(EstudianteEntity pEstudiante) {
-        this.estudiante = pEstudiante;
+    public void setNombreBanco(String nombreBanco) {
+        this.nombreBanco = nombreBanco;
     }
-
+    
     /**
      * @return the tipoCuenta
      */
@@ -90,21 +91,21 @@ public class CuentaBancariaEntity extends BaseEntity implements  Serializable {
         }
 
     }
-
-    /**
-     * @return the nombreBanco
-     */
-    public String getNombreBanco() {
-        return nombreBanco;
-    }
-
-    /**
-     * @param nombreBanco the nombreBanco to set
-     */
-    public void setNombreBanco(String nombreBanco) {
-        this.nombreBanco = nombreBanco;
-    }
     
+      /**
+     * @return the estudiante
+     */
+    public EstudianteEntity getEstudiante() {
+        return estudiante;
+    }
+
+    /**
+     * @param pEstudiante estudiante to set
+     */
+    public void setEstudiante(EstudianteEntity pEstudiante) {
+        this.estudiante = pEstudiante;
+    }
+
     @Override
     public boolean equals(Object obj)
     {
