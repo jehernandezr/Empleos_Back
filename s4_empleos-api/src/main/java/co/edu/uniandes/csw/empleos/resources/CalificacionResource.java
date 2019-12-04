@@ -83,10 +83,7 @@ public class CalificacionResource {
             throw new WebApplicationException(RECURSO + calificacionId + NO_EXISTE, 404);
         }
 
-        CalificacionDTO calDTO = new CalificacionDTO(calEntity);
-
-        
-        return calDTO;
+        return new CalificacionDTO(calEntity);
 
     }
 

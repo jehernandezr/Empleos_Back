@@ -43,8 +43,8 @@ public class Tokenizer {
         {
             bld.append(parseNumber(String.valueOf(str.charAt(i))));
         }
-        String result = bld.toString();
-        return result;
+         
+        return bld.toString();
     }
     
     public static String parseNumber(String number) {
