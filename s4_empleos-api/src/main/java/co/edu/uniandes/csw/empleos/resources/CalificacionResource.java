@@ -85,13 +85,7 @@ public class CalificacionResource {
 
         CalificacionDTO calDTO = new CalificacionDTO(calEntity);
 
-        String token = calDTO.getToken();
-        TokenEntity tok = tokenLogic.getTokenByToken(token);
-        if (tok == null) {
-
-            throw new BusinessLogicException("No se encuentra Registrado");
-        }
-
+        
         return calDTO;
 
     }

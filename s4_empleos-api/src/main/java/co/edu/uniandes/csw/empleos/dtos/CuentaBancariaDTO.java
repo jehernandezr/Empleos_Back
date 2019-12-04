@@ -24,9 +24,9 @@ public class CuentaBancariaDTO implements Serializable {
 
     private String nombreBanco;
 
-    private Integer tipoCuenta;
-
     private EstudianteDTO estudiante;
+    
+    private Integer tipoCuenta;
 
     private String token;
     
