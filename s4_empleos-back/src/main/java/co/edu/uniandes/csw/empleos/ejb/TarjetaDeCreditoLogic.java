@@ -35,6 +35,14 @@ public class TarjetaDeCreditoLogic {
         {
             throw new BusinessLogicException("El número de la tarjeta de crédito no puede ser nulo.");
         }
+        else if(tarjetaCredito.getFecha() == null  )
+        {
+            throw new BusinessLogicException("La fecha no debe estar nula");
+        }
+        else if(tarjetaCredito.getFecha().equals(""))
+        {
+            throw new BusinessLogicException("La fecha no debe estar vacia");
+        }
         else if(tarjetaCredito.getFecha().length() != 5 )
         {
             throw new BusinessLogicException("La fecha debe contener el día y el año en el formato dd/aa");
@@ -68,14 +76,7 @@ public class TarjetaDeCreditoLogic {
             throw new BusinessLogicException("El cvc no debe estar vacio");
         }
             
-        else if(tarjetaCredito.getFecha() == null  )
-        {
-            throw new BusinessLogicException("La fecha no debe estar nula");
-        }
-        else if(tarjetaCredito.getFecha().equals(""))
-        {
-            throw new BusinessLogicException("La fecha no debe estar vacia");
-        }
+
         
         
         

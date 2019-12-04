@@ -152,7 +152,7 @@ public class CalificacionLogicTest {
 
         CalificacionEntity newEntity = factory.manufacturePojo(CalificacionEntity.class);
         newEntity.setComentario(null);
-        CalificacionEntity result = calificacionLogic.createCalificacion(newEntity);
+        calificacionLogic.createCalificacion(newEntity);
     }
 
     /**
@@ -166,7 +166,7 @@ public class CalificacionLogicTest {
 
         CalificacionEntity newEntity = factory.manufacturePojo(CalificacionEntity.class);
         newEntity.setComentario("");
-        CalificacionEntity result = calificacionLogic.createCalificacion(newEntity);
+        calificacionLogic.createCalificacion(newEntity);
     }
 
     /**

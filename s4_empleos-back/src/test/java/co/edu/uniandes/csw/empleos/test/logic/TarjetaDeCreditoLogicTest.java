@@ -216,7 +216,7 @@ public class TarjetaDeCreditoLogicTest {
         newEntity.setNumero("4234567890123456");
         newEntity.setCVC("123");
         newEntity.setFecha(null);
-        TarjetaDeCreditoEntity result = tarjetaCreditoLogic.createTarjetaDeCredito(newEntity);
+        tarjetaCreditoLogic.createTarjetaDeCredito(newEntity);
     }
     
     @Test (expected = BusinessLogicException.class)
@@ -226,7 +226,7 @@ public class TarjetaDeCreditoLogicTest {
         newEntity.setNumero("4234567890123456");
         newEntity.setCVC("123");
         newEntity.setFecha("");
-        TarjetaDeCreditoEntity result = tarjetaCreditoLogic.createTarjetaDeCredito(newEntity);
+        tarjetaCreditoLogic.createTarjetaDeCredito(newEntity);
     }
     
     @Test (expected = BusinessLogicException.class)
@@ -236,7 +236,7 @@ public class TarjetaDeCreditoLogicTest {
         newEntity.setNumero("4234567890123456");
         newEntity.setCVC("123");
         newEntity.setFecha("12/123");
-        TarjetaDeCreditoEntity result = tarjetaCreditoLogic.createTarjetaDeCredito(newEntity);
+        tarjetaCreditoLogic.createTarjetaDeCredito(newEntity);
     }
     
     @Test
