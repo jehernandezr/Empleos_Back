@@ -157,11 +157,11 @@ public class CuentaDeCobroResource {
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok == null) {
 
-            throw new BusinessLogicException("No se encuentra Registrado");
+            throw new WebApplicationException("No se encuentra registrado");
         }
         if (tok.getTipo().equals("Enstutdiante")) {
 
-            throw new BusinessLogicException("No tiene permiso para esto");
+           throw new WebApplicationException("No tiene permitido acceder a "+RECURSO);
         }
         cuentaDeCobroLogic.deleteCuentaDeCobro(calId);
     }

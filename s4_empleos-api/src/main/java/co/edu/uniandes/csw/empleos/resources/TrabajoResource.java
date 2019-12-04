@@ -138,7 +138,7 @@ public class TrabajoResource {
             TrabajoDetailDTO dto = new TrabajoDetailDTO(trabajoLogic.updateTrabajo(trabajo.toEntity()));
             return dto;
         } else {
-            throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
+           throw new WebApplicationException("No tiene permitido acceder a "+RECURSO);
         }
     }
 
