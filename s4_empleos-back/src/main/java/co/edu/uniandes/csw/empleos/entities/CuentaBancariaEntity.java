@@ -34,7 +34,7 @@ public class CuentaBancariaEntity extends BaseEntity {
     private EstudianteEntity estudiante;
 
     @PodamStrategyValue(TipoCuentaStrategy.class)
-    private int tipoCuenta;
+    private Integer tipoCuenta;
 
     public CuentaBancariaEntity() {
         //Constructor vacío para evitar fallos en compilacion. Se asignan valores a los parámetros a través de los metodos set
