@@ -98,11 +98,11 @@ public class OfertaResource {
      * @throws BusinessLogicException
      */
     @POST
-    public OfertaDTO crearOferta(OfertaDetailDTO oferta) throws BusinessLogicException {
+    public OfertaDTO crearOferta(OfertaDetailDTO oferta, @QueryParam("idCon") long idCon) throws BusinessLogicException {
         String token = oferta.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok.getTipo().equals("Contratista")) {
-contratistaOL.addOferta(tok.getIdLog(), oferta.getId());
+contratistaOL.addOferta(idCon, oferta.getId());
             OfertaEntity ofertaEntity = oferta.toEntity();
             ofertaEntity = logic.createOferta(ofertaEntity);
             return new OfertaDetailDTO(ofertaEntity);
