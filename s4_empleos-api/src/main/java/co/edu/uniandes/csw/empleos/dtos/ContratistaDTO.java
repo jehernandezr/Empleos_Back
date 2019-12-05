@@ -62,6 +62,7 @@ public class ContratistaDTO implements Serializable{
         if (contratistaEntity != null) {
             this.id = contratistaEntity.getId();
             this.nombre = contratistaEntity.getNombre();
+            this.esExterno= contratistaEntity.getEsExterno();
             this.email = contratistaEntity.getEmail();
             this.rutaImagen = contratistaEntity.getRutaImagen();
             this.token = null;
@@ -80,17 +81,18 @@ public class ContratistaDTO implements Serializable{
     /**
      * @return the esExterno
      */
-    public Boolean isEsExterno() {
+    public Boolean esExterno() {
         return esExterno;
     }
 
-    /**
-     * @param esExterno the esExterno to set
+   
+ /**
+     * @param email the email to set
      */
-    public void setEsExterno(Boolean esExterno) {
-        this.esExterno = esExterno;
+    public void setEmail(String email) {
+        this.email = email;
     }
-
+    
     /**
      * @return the nombre
      */
@@ -98,12 +100,7 @@ public class ContratistaDTO implements Serializable{
         return nombre;
     }
 
-    /**
-     * @param nombre the nombre to set
-     */
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+    
 
     /**
      * @return the email
@@ -112,21 +109,9 @@ public class ContratistaDTO implements Serializable{
         return email;
     }
 
-    /**
-     * @param email the email to set
-     */
-    public void setEmail(String email) {
-        this.email = email;
-    }
+   
 
-    
-    /**
-     * @return the rutaImagen
-     */
-    public String getRutaImagen() {
-        return rutaImagen;
-    }
-
+   
     /**
      * @param rutaImagen the rutaImagen to set
      */
@@ -134,6 +119,29 @@ public class ContratistaDTO implements Serializable{
         this.rutaImagen = rutaImagen;
     }
     
+    /**
+     * @param nombre the nombre to set
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    
+    
+     /**
+     * @param esExterno the esExterno to set
+     */
+    public void setEsExterno(Boolean esExterno) {
+        this.esExterno = esExterno;
+    }
+    
+     
+    /**
+     * @return the rutaImagen
+     */
+    public String getRutaImagen() {
+        return rutaImagen;
+    }
+
     /**
      * Convertir DTO a Entity
      *

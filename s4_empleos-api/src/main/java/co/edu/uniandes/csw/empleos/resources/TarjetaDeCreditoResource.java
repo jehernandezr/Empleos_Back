@@ -1,4 +1,5 @@
 
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -24,6 +25,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 
 /**
@@ -39,6 +41,7 @@ public class TarjetaDeCreditoResource {
 
     private static final String NO_EXISTE = " no existe.";
     private static final String RECURSO = "El recurso /tarjetas/";
+    private static final String CONTRATISTA = "Contratista";
 
     @Inject
     private TarjetaDeCreditoLogic tarjetaLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
@@ -62,9 +65,8 @@ public class TarjetaDeCreditoResource {
 
         String token = tarjeta.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
-        if (tok.getTipo().equals("Contratista")) {
-            TarjetaDeCreditoDTO nuevaTarjetaDTO = new TarjetaDeCreditoDTO(tarjetaLogic.createTarjetaDeCredito(tarjeta.toEntity()));
-            return nuevaTarjetaDTO;
+        if (tok.getTipo().equals(CONTRATISTA)) {
+            return new TarjetaDeCreditoDTO(tarjetaLogic.createTarjetaDeCredito(tarjeta.toEntity()));
 
         } else {
             throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
@@ -130,17 +132,17 @@ public class TarjetaDeCreditoResource {
     public TarjetaDeCreditoDTO updateTarjeta(@PathParam("tarjetasId") Long tarjetaId, TarjetaDeCreditoDTO tarjeta) throws BusinessLogicException {
         String token = tarjeta.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
-        if (tok.getTipo().equals("Contratista")) {
+        if (tok.getTipo().equals(CONTRATISTA)) {
             tarjeta.setId(tarjetaId);
             TarjetaDeCreditoEntity entity = tarjetaLogic.getTarjetaCredito(tarjetaId);
             if (entity == null) {
-                throw new WebApplicationException("El recurso /tarjetas/" + tarjetaId + " no existe.", 404);
+                throw new WebApplicationException(RECURSO + tarjetaId + NO_EXISTE, 404);
             }
-            TarjetaDeCreditoDTO tarjetaDTO = new TarjetaDeCreditoDTO(tarjetaLogic.updateTarjetaCredito(tarjetaId, tarjeta.toEntity()));
-            return tarjetaDTO;
+            return new TarjetaDeCreditoDTO(tarjetaLogic.updateTarjetaCredito(tarjetaId, tarjeta.toEntity()));
+            
 
         } else {
-            throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
+            throw new WebApplicationException("No tiene permitido acceder a "+RECURSO);
         }
 
     }
@@ -156,22 +158,22 @@ public class TarjetaDeCreditoResource {
      */
     @DELETE
     @Path("{tarjetasId: \\d+}")
-    public void deleteTarjeta(@PathParam("tarjetasId") Long tarjetaId) throws BusinessLogicException {
+    public void deleteTarjeta(@QueryParam("token") String pToken, @PathParam("tarjetasId") Long tarjetaId) throws BusinessLogicException {
 
         TarjetaDeCreditoEntity entity = tarjetaLogic.getTarjetaCredito(tarjetaId);
-        TarjetaDeCreditoDTO calDTO = new TarjetaDeCreditoDTO(entity);
+        
 
         if (entity == null) {
             throw new WebApplicationException(RECURSO + tarjetaId + NO_EXISTE, 404);
         }
 
-        String token = calDTO.getToken();
+        String token = pToken;
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok == null) {
 
             throw new BusinessLogicException("No se encuentra Registrado");
         }
-        if (!tok.getTipo().equals("Contratista")) {
+        if (!tok.getTipo().equals(CONTRATISTA)) {
 
             throw new BusinessLogicException("No tiene permiso para esto");
         }

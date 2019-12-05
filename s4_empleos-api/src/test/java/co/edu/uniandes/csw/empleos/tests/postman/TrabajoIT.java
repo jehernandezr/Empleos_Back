@@ -24,8 +24,8 @@ SOFTWARE.
 package co.edu.uniandes.csw.empleos.tests.postman;
 
 import co.edu.uniandes.csw.empleos.mappers.BusinessLogicExceptionMapper;
-import co.edu.uniandes.csw.empleos.dtos.TarjetaDeCreditoDTO;
-import co.edu.uniandes.csw.empleos.resources.TarjetaDeCreditoResource;
+import co.edu.uniandes.csw.empleos.dtos.TrabajoDTO;
+import co.edu.uniandes.csw.empleos.resources.TrabajoResource;
 import co.edu.uniandes.csw.postman.tests.PostmanTestBuilder;
 import java.io.File;
 import java.io.IOException;
@@ -45,9 +45,9 @@ import org.junit.runner.RunWith;
  * @author ISIS2603
  */
 @RunWith(Arquillian.class)
-public class TarjetaDeCreditoIT {
+public class TrabajoIT {
 
-    private static final String COLLECTION = "TarjetaDeCreditoResourceTest.postman_collection";
+    private static final String COLLECTION = "TrabajoResourceTest.postman_collection";
 
     @Deployment(testable = true)
     public static WebArchive createDeployment() {
@@ -57,8 +57,12 @@ public class TarjetaDeCreditoIT {
                         .importRuntimeDependencies().resolve()
                         .withTransitivity().asFile())
                 // Se agregan los compilados de los paquetes de servicios
-                .addPackage(TarjetaDeCreditoResource.class.getPackage()) //No importa cual recurso usar, lo importante es agregar el paquet
-                .addPackage(TarjetaDeCreditoDTO.class.getPackage()) //No importa cual dto usar, lo importante es agregar el paquete.
+                .addPackage(TrabajoResource.class.getPackage())
+                
+                //No importa cual recurso usar, lo importante es agregar el paquet
+                .addPackage(TrabajoDTO.class.getPackage())
+                
+                //No importa cual dto usar, lo importante es agregar el paquete.
                 .addPackage(BusinessLogicExceptionMapper.class.getPackage())
                 // El archivo que contiene la configuracion a la base de datos.
                 .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")

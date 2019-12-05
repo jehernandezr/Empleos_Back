@@ -41,9 +41,7 @@ public class ContratistaLogic {
         if (contratistaEntity.getNombre() == null || contratistaEntity.getNombre().trim().equals("")) {
             throw new BusinessLogicException("El nombre del contratista está vacío");
         }
-        
-        
-        
+   
         ContratistaEntity newContratistaEntity = persistence.create(contratistaEntity);
         LOGGER.log(Level.INFO, "Termina proceso de creación del contratista");
         return newContratistaEntity;

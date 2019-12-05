@@ -56,7 +56,7 @@ public class CuentaDeCobroContratistaLogic {
         CuentaDeCobroEntity cuentaEntity = cuentaPersistence.find(cuentasId);
         ContratistaEntity contratistaEntity = contratistaPersistence.find(cuentaEntity.getContratista().getId());
         cuentaEntity.setContratista(null);
-        contratistaEntity.getCuentaDeCobro().remove(cuentaEntity);
+        contratistaEntity.getCuentasDeCobro().remove(cuentaEntity);
         LOGGER.log(Level.INFO, "Termina proceso de borrar la Editorial del libro con id = {0}", cuentaEntity.getId());
     }
 }

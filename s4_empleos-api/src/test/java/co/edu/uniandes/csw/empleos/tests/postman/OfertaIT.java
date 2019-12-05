@@ -28,7 +28,7 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class OfertaIT {
 
-    private static final String COLLECTION = "OfertaResourceTest.postman_collection";
+    private static final String COLLECTION = "OfertaResurceTest.postman_collection";
 
     @Deployment(testable = true)
     public static WebArchive createDeployment() {

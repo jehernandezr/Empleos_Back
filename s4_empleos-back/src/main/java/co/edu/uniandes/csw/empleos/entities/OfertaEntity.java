@@ -1,7 +1,9 @@
 package co.edu.uniandes.csw.empleos.entities;
 
-import java.util.Comparator;
+
+import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -14,13 +16,13 @@ import uk.co.jemos.podam.common.PodamExclude;
  * @author je.berdugo10
  */
 @Entity
-public class OfertaEntity extends BaseEntity {
+public class OfertaEntity extends BaseEntity implements  Serializable{
 
     /**
      * Contratista que creo la oferta.
      */
     @PodamExclude
-    @ManyToOne()
+    @ManyToOne(cascade = CascadeType.PERSIST )
     private ContratistaEntity contratista;
 
     /**
@@ -110,7 +112,8 @@ public class OfertaEntity extends BaseEntity {
     @PodamExclude
     @OneToOne(
             mappedBy = "oferta",
-            fetch = FetchType.LAZY
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.PERSIST
     )
     private TrabajoEntity trabajo;
 

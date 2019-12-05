@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.empleos.entities;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 
 /**
@@ -12,7 +13,7 @@ import javax.persistence.Entity;
  * @author je.hernandezr
  */
 @Entity
-public class CredencialesEntity extends BaseEntity {
+public class CredencialesEntity extends BaseEntity implements  Serializable {
 
     private String correo;
 

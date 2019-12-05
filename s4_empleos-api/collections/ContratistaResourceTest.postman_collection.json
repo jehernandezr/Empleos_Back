@@ -1,32 +1,25 @@
 {
 	"info": {
-		"_postman_id": "3c018ca0-4d34-4bc1-bab1-6202a7c0c178",
-		"name": "CuentaBancariaResourceTest",
-		"description": "Cuenta Bancaria Resource Test",
+		"_postman_id": "9270e57a-19c6-47f7-bc4d-890b2ff4a778",
+		"name": "ContratistaResourceTest",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Crear un Token Primero",
+			"name": "Crear token para prueba.",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "2fce4f12-5e31-4fb6-b865-a2b1cbd20d2e",
+						"id": "fec9f6a4-54e6-4353-aa79-bfe3327063fc",
 						"exec": [
-							"tests[\"No genera error en el post\"] = responseCode.code===200;",
-							"console.log(responseBody);",
-							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"new_id_t\",data.id);"
+							"tests[\"No genera error en el post\"] = responseCode.code === 200;"
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
 			"request": {
-				"auth": {
-					"type": "noauth"
-				},
 				"method": "POST",
 				"header": [
 					{
@@ -38,7 +31,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"token\":\"Primero\",\n\t\"tipo\":\"Estudiante\"\n}",
+					"raw": "{\n\t\"token\":\"tokenPrueba\",\n\t\"tipo\":\"Contratista\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -62,26 +55,22 @@
 			"response": []
 		},
 		{
-			"name": "Crear un Token Segundo",
+			"name": "Crear contratista",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "2fce4f12-5e31-4fb6-b865-a2b1cbd20d2e",
+						"id": "3bb3e8ec-eb57-4da0-8cbc-2e39b550be3d",
 						"exec": [
-							"tests[\"No genera error en el post\"] = responseCode.code===200;",
-							"console.log(responseBody);",
 							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"new_id_t\",data.id);"
+							"postman.setGlobalVariable(\"new_id_e\", data.id);",
+							"tests[\"No genera error en el post\"] = responseCode.code === 200;"
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
 			"request": {
-				"auth": {
-					"type": "noauth"
-				},
 				"method": "POST",
 				"header": [
 					{
@@ -93,7 +82,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"token\":\"Segundo\",\n\t\"tipo\":\"Contratista\"\n}",
+					"raw": "\n{   \n\t\"esExterno\":true,\n\t\"nombre\":\"Bad Bunny\", \n\t\"email\":\"fff@mail.com\",\n\t\"rutaimagen\":\"ysuyl\",\n\t\"token\":\"tokenPrueba\"\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -101,7 +90,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/tokens",
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/contratistas",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -110,24 +99,23 @@
 					"path": [
 						"s4_empleos-api",
 						"api",
-						"tokens"
+						"contratistas"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "crear  estudiante prueba",
+			"name": "Crear contratista 2",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "5444bdef-9e19-4e11-ac21-9799147da29c",
+						"id": "f6f90bc3-7d57-4b9e-8c4b-06548b4bf9dc",
 						"exec": [
-							"console.log(responseBody);",
 							"var data = JSON.parse(responseBody);",
-							"tests[\"No genera error en elcreate estudiante prueba\"] = responseCode.code === 200;",
-							"postman.setGlobalVariable(\"new_id_e\",data.id);"
+							"postman.setGlobalVariable(\"new_id_e2\", data.id);",
+							"tests[\"No genera error en el post\"] = responseCode.code === 200;"
 						],
 						"type": "text/javascript"
 					}
@@ -145,7 +133,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"calificacionPromedio\": 2.0,\n    \"carrera\": \"Sistemas\",\n    \"horarioDeTrabajo\": \"a\",\n    \"correo\": \"aajkwdnakd@uniandes.edu.co\",\n    \"nombre\": \"David\",\n    \"semestre\": 4,\n    \"calificaciones\": [],\n    \"ofertas\": []\n}",
+					"raw": "{   \n\t\"esExterno\":true,\n\t\"nombre\":\"Anuel AA\", \n\t\"email\":\"masf@gmail.com\",\n\t\"rutaimagen\":\"Escritorio\",\n\t\"token\":\"tokenPrueba\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -153,7 +141,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/estudiantes/",
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/contratistas",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -162,25 +150,22 @@
 					"path": [
 						"s4_empleos-api",
 						"api",
-						"estudiantes",
-						""
+						"contratistas"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Crear una cuentaBancaria",
+			"name": "Crear contratista nombre vacio.",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "ae5942ab-4854-42d7-9bad-bffc6c2476a5",
+						"id": "e950791c-ddb0-4b34-8be5-5c9b1ad6ac7d",
 						"exec": [
-							"tests[\"No genera error\"] = responseCode.code===200;",
-							"console.log(responseBody);",
-							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"new_id_c\",data.id);"
+							"tests[\"No crea con nombre vacio\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto del error\"] = responseBody.has(\"El nombre del contratista está vacío\");"
 						],
 						"type": "text/javascript"
 					}
@@ -198,7 +183,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"numeroCuenta\": \"123456789123\",\n\t\"nombreBanco\":  \"Bancolombia\",\n\t\"estudiante\":{\n\t\t\"id\":\"{{new_id_e}}\"\n\t},\n\t\"tipoCuenta\" : \"Ahorros\",\n\t\"token\":\"Primero\"\n\t\n}",
+					"raw": "{   \n\t\"esExterno\":true,\n\t\"nombre\": \"\", \n\t\"email\":\"masrtf@gmail.com\",\n\t\"rutaimagen\":\"Documentos\",\n\t\"token\":\"tokenPrueba\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -206,7 +191,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/cuentaBancaria/",
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/contratistas",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -215,24 +200,22 @@
 					"path": [
 						"s4_empleos-api",
 						"api",
-						"cuentaBancaria",
-						""
+						"contratistas"
 					]
-				},
-				"description": "Crear una CuentaBancaria "
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "Crear una cuenta numero repetido",
+			"name": "Crear contratista nombre nulo.",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "a0509847-b8af-4213-9487-18eb86fb7a7e",
+						"id": "e950791c-ddb0-4b34-8be5-5c9b1ad6ac7d",
 						"exec": [
-							"tests[\"No crea una cuenta con numero repetido\"] = responseCode.code === 412;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has (\"Ya existe una cuenta Bancaria con ese numero de cuenta \");"
+							"tests[\"No crea con nombre nulo\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto del error\"] = responseBody.has(\"El nombre del contratista está vacío\");"
 						],
 						"type": "text/javascript"
 					}
@@ -250,7 +233,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"numeroCuenta\": \"123456789123\",\n\t\"nombreBanco\":  \"Bancolombia\",\n\t\"estudiante\":{\n\t\t\"id\":\"{{new_id_e}}\"\n\t},\n\t\"tipoCuenta\" : \"Ahorros\",\n\t\"token\":\"Primero\"\n\n}",
+					"raw": "{   \n\t\"esExterno\":true,\n\t\"nombre\": null, \n\t\"email\":\"masrtf@gmail.com\",\n\t\"rutaimagen\":\"Documentos\",\n\t\"token\":\"tokenPrueba\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -258,7 +241,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/cuentaBancaria/",
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/contratistas",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -267,23 +250,22 @@
 					"path": [
 						"s4_empleos-api",
 						"api",
-						"cuentaBancaria",
-						""
+						"contratistas"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Crear cuenta con numero vacio",
+			"name": "Crear contratista email invalido.",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "42389feb-0197-459e-9b36-04da0c24be7a",
+						"id": "e950791c-ddb0-4b34-8be5-5c9b1ad6ac7d",
 						"exec": [
-							"tests[\"No crea una cuenta con numero vacio\"] = responseCode.code === 412;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has (\"El numero de cuenta está vacío\");"
+							"tests[\"No crea con email invalido\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto del error\"] = responseBody.has(\"El correo no es valido \");"
 						],
 						"type": "text/javascript"
 					}
@@ -301,7 +283,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\n\t\"numeroCuenta\": null,\n\t\"nombreBanco\":  \"Bancolombia\",\n\t\"estudiante\":{\n\t\t\"id\":\"{{new_id_e}}\"\n\t},\n\t\"tipoCuenta\" : \"Ahorros\",\n\t\"token\":\"Primero\"\n\n}",
+					"raw": "{   \n\t\"esExterno\":true,\n\t\"nombre\": \"Maluma\", \n\t\"email\":\"masrtfgmail\",\n\t\"rutaimagen\":\"Documentos\",\n\t\"token\":\"tokenPrueba\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -309,7 +291,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/cuentaBancaria/",
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/contratistas",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -318,30 +300,28 @@
 					"path": [
 						"s4_empleos-api",
 						"api",
-						"cuentaBancaria",
-						""
+						"contratistas"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Crear cuenta numero negativo",
+			"name": "Actualizar contratista.",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "43fb6332-a634-4b3e-b271-ce803a283283",
+						"id": "a4635577-a0fa-449b-a6fc-86e22fedffa8",
 						"exec": [
-							"tests[\"No crea una cuenta con numero negativo\"] = responseCode.code === 412;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has (\"El numero de cuenta no puede contener caracteres diferentes  a un numero entero.\");"
+							"tests[\"No genera error en el put\"] = responseCode.code === 200;"
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
 			"request": {
-				"method": "POST",
+				"method": "PUT",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -352,7 +332,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"numeroCuenta\": \"-123456789123\",\n\t\"nombreBanco\":  \"Bancolombia\",\n\t\"estudiante\":{\n\t\t\"id\":\"{{new_id_e}}\"\n\t},\n\t\"tipoCuenta\" : \"Ahorros\",\n\t\"token\":\"Primero\"\n}",
+					"raw": "{   \n\t\"esExterno\":true,\n\t\"nombre\":\"Sia\", \n\t\"email\":\"masrtf@uniandes\",\n\t\"rutaimagen\":\"Imagenes\",\n\t\"token\":\"tokenPrueba\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -360,7 +340,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/cuentaBancaria/",
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/contratistas/{{new_id_e}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -369,34 +349,187 @@
 					"path": [
 						"s4_empleos-api",
 						"api",
-						"cuentaBancaria",
-						""
+						"contratistas",
+						"{{new_id_e}}"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "obtener una cuenta",
+			"name": "Actualizar contratista inexistente.",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "6e356148-eafe-4696-8c8b-31ee424472da",
+						"id": "a4635577-a0fa-449b-a6fc-86e22fedffa8",
 						"exec": [
-							"console.log(responseBody);",
-							"var data = JSON.parse(responseBody);",
-							"tests[\"No genera error en el Get\"] = responseCode.code === 200;"
+							"tests[\"No actualiza algo que no existe\"] = responseCode.code === 404;",
+							""
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \n\t\"esExterno\":true,\n\t\"nombre\":\"Chandelier\", \n\t\"email\":\"masrtf@uniandes\",\n\t\"rutaimagen\":\"Imagenes\",\n\t\"token\":\"tokenPrueba\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/contratistas/-1",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_empleos-api",
+						"api",
+						"contratistas",
+						"-1"
+					]
+				}
 			},
+			"response": []
+		},
+		{
+			"name": "Obtener todos los contratistas.",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5fcbcf5e-2ccc-45cf-b4c3-4bd4800fca60",
+						"exec": [
+							"tests[\"No genera error en el get\"] = responseCode.code === 200;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/contratistas/",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_empleos-api",
+						"api",
+						"contratistas",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener un contratista.",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5fcbcf5e-2ccc-45cf-b4c3-4bd4800fca60",
+						"exec": [
+							"tests[\"No genera error en el get\"] = responseCode.code === 200;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/contratistas/{{new_id_e}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_empleos-api",
+						"api",
+						"contratistas",
+						"{{new_id_e}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener un contratista inexistente.",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5fcbcf5e-2ccc-45cf-b4c3-4bd4800fca60",
+						"exec": [
+							"tests[\"No genera error en el get\"] = responseCode.code === 404;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/contratistas/-1",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_empleos-api",
+						"api",
+						"contratistas",
+						"-1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar contratista.",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5fcbcf5e-2ccc-45cf-b4c3-4bd4800fca60",
+						"exec": [
+							"tests[\"No genera error en el delete\"] = responseCode.code === 204;",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -415,7 +548,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/cuentaBancaria/{{new_id_c}}?token=Primero",
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/contratistas/{{new_id_e}}?token=tokenPrueba",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -424,13 +557,13 @@
 					"path": [
 						"s4_empleos-api",
 						"api",
-						"cuentaBancaria",
-						"{{new_id_c}}"
+						"contratistas",
+						"{{new_id_e}}"
 					],
 					"query": [
 						{
 							"key": "token",
-							"value": "Primero"
+							"value": "tokenPrueba"
 						}
 					]
 				}
@@ -438,109 +571,23 @@
 			"response": []
 		},
 		{
-			"name": "obtener cuenta con id falsa",
+			"name": "Borrar contratista inexistente.",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "71bfc3e4-ab95-4f21-8c50-1475aaa63aeb",
+						"id": "5fcbcf5e-2ccc-45cf-b4c3-4bd4800fca60",
 						"exec": [
-							"tests[\"No consulta con id que no existe\"] = responseCode.code === 412;",
-							"pm.environment.set(\"variable_key\", \"variable_value\");tests[\"Mensaje correcto de error\"] = responseBody.has(\"No existe una cuentabacaria Con esa id\");"
+							"tests[\"No genera error en el delete\"] = responseCode.code === 404;",
+							"",
+							""
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
 			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/cuentaBancaria/69",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s4_empleos-api",
-						"api",
-						"cuentaBancaria",
-						"69"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "editar una cuenta bancaria",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "373a20f6-408c-47b8-8ad8-4a7abf4ac92c",
-						"exec": [
-							"console.log(responseBody);",
-							"var data = JSON.parse(responseBody);",
-							"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"numeroCuenta\": \"123456789123\",\n\t\"nombreBanco\":  \"Bancolombia\",\n\t\"estudiante\":{\n\t\t\"id\":\"{{new_id_e}}\"\n\t},\n\t\"tipoCuenta\" : \"Corriente\",\n\t\"token\":\"Primero\"\n\t\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/cuentaBancaria/{{new_id_c}}",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s4_empleos-api",
-						"api",
-						"cuentaBancaria",
-						"{{new_id_c}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "editar una cuenta con id falsa",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "197b415a-ea1a-4d50-9837-dbb4f29e032a",
-						"exec": [
-							"tests[\"No actualiza con id que no existe\"] = responseCode.code === 412;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No existe una cuentabacaria Con esa id\");"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "PUT",
+				"method": "DELETE",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -551,7 +598,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\"numeroCuenta\": \"123456789123\",\n\t\"nombreBanco\":  \"Bancolombia\",\n\t\"estudiante\":{\n\t\t\"id\":\"{{new_id_e}}\"\n\t},\n\t\"tipoCuenta\" : \"Ahorros\",\n\t\"token\":\"Primero\"\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -559,7 +606,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/cuentaBancaria/69",
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/contratistas/-1?token=tokenPrueba",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -568,47 +615,13 @@
 					"path": [
 						"s4_empleos-api",
 						"api",
-						"cuentaBancaria",
-						"69"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Elimina una cuenta bancaria",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "a564f3e0-4bc2-4c77-8979-5c7022ad7b1a",
-						"exec": [
-							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/cuentaBancaria/{{new_id_c}}?token=Primero",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s4_empleos-api",
-						"api",
-						"cuentaBancaria",
-						"{{new_id_c}}"
+						"contratistas",
+						"-1"
 					],
 					"query": [
 						{
 							"key": "token",
-							"value": "Primero"
+							"value": "tokenPrueba"
 						}
 					]
 				}
@@ -616,15 +629,16 @@
 			"response": []
 		},
 		{
-			"name": "Eliminar una cuenta con id falsa",
+			"name": "Borrar contratista sin registrarse.",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "755978e5-c946-4ec0-9bf2-552a9c3cfc83",
+						"id": "5fcbcf5e-2ccc-45cf-b4c3-4bd4800fca60",
 						"exec": [
-							"tests[\"No borra con id que no existe\"] = responseCode.code === 412;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"No existe una cuentabacaria Con esa id\");"
+							"tests[\"No genera error en el delete\"] = responseCode.code === 412;",
+							"",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -632,9 +646,25 @@
 			],
 			"request": {
 				"method": "DELETE",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/cuentaBancaria/69",
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/contratistas/{{new_id_e}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -643,8 +673,8 @@
 					"path": [
 						"s4_empleos-api",
 						"api",
-						"cuentaBancaria",
-						"69"
+						"contratistas",
+						"{{new_id_e}}"
 					]
 				}
 			},

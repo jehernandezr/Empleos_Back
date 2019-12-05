@@ -99,7 +99,7 @@ public class ContratistaResource {
     @GET
     @Path("{id: \\d+}")
 
-    public ContratistaDTO getContratista(@PathParam("id") Long contratistaId) throws BusinessLogicException {
+    public ContratistaDetailDTO getContratista(@PathParam("id") Long contratistaId) throws BusinessLogicException {
 
         ContratistaEntity calEntity = contratistaLogic.getContratista(contratistaId);
         if (calEntity == null) {
@@ -107,7 +107,7 @@ public class ContratistaResource {
             throw new WebApplicationException(RECURSO + contratistaId + NO_EXISTE, 404);
         }
 
-        return new ContratistaDTO(calEntity);
+        return new ContratistaDetailDTO(calEntity);
 
     }
 
@@ -137,11 +137,11 @@ public class ContratistaResource {
             if (contratistaLogic.getContratista(id) == null) {
                 throw new WebApplicationException(RECURSO + id + NO_EXISTE, 404);
             }
-            ContratistaDetailDTO dto = new ContratistaDetailDTO(contratistaLogic.updateContratista(id, contratista.toEntity()));
-            return dto;
+            return new ContratistaDetailDTO(contratistaLogic.updateContratista(id, contratista.toEntity()));
+            
 
         } else {
-            throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
+            throw new WebApplicationException("No tiene permitido acceder a "+RECURSO);
         }
 
     }
@@ -149,6 +149,7 @@ public class ContratistaResource {
     /**
      * Borra el Estudiante con el id asociado recibido en la URL.
      *
+     * @param pToken
      * @param id Identificador del estudiante que se desea borrar. Este debe ser
      * una cadena de dígitos
      * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
@@ -157,19 +158,16 @@ public class ContratistaResource {
      */
     @DELETE
     @Path("{id: \\d+}")
-    public void deleteContratista(@PathParam("id") Long id) throws BusinessLogicException {
-
-        ContratistaEntity contratistaEntity = contratistaLogic.getContratista(id);
-        ContratistaDetailDTO estDTO = new ContratistaDetailDTO(contratistaEntity);
+    public void deleteContratista(@QueryParam("token") String pToken, @PathParam("id") Long id) throws BusinessLogicException {
 
         if (contratistaLogic.getContratista(id) == null) {
             throw new WebApplicationException(RECURSO + id + NO_EXISTE, 404);
         }
 
-        String token = estDTO.getToken();
+        String token = pToken;
         TokenEntity tok = tokenLogic.getTokenByToken(token);
+        
         if (tok == null) {
-
             throw new BusinessLogicException("No se encuentra Registrado");
         }
         if (!(tok.getTipo().equals("Contratista") || tok.getTipo().equals("Administrador"))) {
