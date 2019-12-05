@@ -5,9 +5,9 @@
  */
 package co.edu.uniandes.csw.empleos.tests.postman;
 
-import co.edu.uniandes.csw.empleos.dtos.OfertaDTO;
+import co.edu.uniandes.csw.empleos.dtos.CredencialDTO;
 import co.edu.uniandes.csw.empleos.mappers.BusinessLogicExceptionMapper;
-import co.edu.uniandes.csw.empleos.resources.OfertaResource;
+import co.edu.uniandes.csw.empleos.resources.CredencialesResource;
 import co.edu.uniandes.csw.postman.tests.PostmanTestBuilder;
 import java.io.File;
 import java.io.IOException;
@@ -26,11 +26,12 @@ import org.junit.runner.RunWith;
  * @author Juan Berdugo
  */
 @RunWith(Arquillian.class)
-public class OfertaIT {
-
-    private static final String COLLECTION = "OfertaResurceTest.postman_collection";
-
-    @Deployment(testable = true)
+public class CredencialesIT {
+    
+    
+    private static final String COLLECTION = "CredencialesResourceTest.postman_collection";
+    
+     @Deployment(testable = true)
     public static WebArchive createDeployment() {
         return ShrinkWrap.create(WebArchive.class, "s4_empleos-api.war")//War del modulo api
                 // Se agrega las dependencias
@@ -38,8 +39,8 @@ public class OfertaIT {
                         .importRuntimeDependencies().resolve()
                         .withTransitivity().asFile())
                 // Se agregan los compilados de los paquetes de servicios
-                .addPackage(OfertaResource.class.getPackage()) //No importa cual recurso usar, lo importante es agregar el paquet
-                .addPackage(OfertaDTO.class.getPackage()) //No importa cual dto usar, lo importante es agregar el paquete.
+                .addPackage(CredencialesResource.class.getPackage()) //No importa cual recurso usar, lo importante es agregar el paquet
+                .addPackage(CredencialDTO.class.getPackage()) //No importa cual dto usar, lo importante es agregar el paquete.
                 .addPackage(BusinessLogicExceptionMapper.class.getPackage())
                 // El archivo que contiene la configuracion a la base de datos.
                 .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
@@ -49,7 +50,7 @@ public class OfertaIT {
                 .setWebXML(new File("src/main/webapp/WEB-INF/web.xml"))
                 .addAsWebInfResource(new File("src/main/webapp/WEB-INF/glassfish-resources.xml"));
     }
-
+    
     @Test
     @RunAsClient
     public void postman() throws IOException {
@@ -64,5 +65,7 @@ public class OfertaIT {
 
         Assert.assertEquals("Error en Assertions de: " + COLLECTION, desiredResult, tp.getAssertions_failed());
     }
-
+    
+    
+    
 }

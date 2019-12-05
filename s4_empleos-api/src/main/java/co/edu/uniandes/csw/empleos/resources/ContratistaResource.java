@@ -25,6 +25,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 
 /**
@@ -132,6 +133,7 @@ public class ContratistaResource {
     /**
      * Borra el Estudiante con el id asociado recibido en la URL.
      *
+     * @param pToken
      * @param id Identificador del estudiante que se desea borrar. Este debe ser
      * una cadena de dígitos
      * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
@@ -140,19 +142,16 @@ public class ContratistaResource {
      */
     @DELETE
     @Path("{id: \\d+}")
-    public void deleteContratista(@PathParam("id") Long id) throws BusinessLogicException {
-
-        ContratistaEntity contratistaEntity = contratistaLogic.getContratista(id);
-        ContratistaDetailDTO estDTO = new ContratistaDetailDTO(contratistaEntity);
+    public void deleteContratista(@QueryParam("token") String pToken, @PathParam("id") Long id) throws BusinessLogicException {
 
         if (contratistaLogic.getContratista(id) == null) {
             throw new WebApplicationException(RECURSO + id + NO_EXISTE, 404);
         }
 
-        String token = estDTO.getToken();
+        String token = pToken;
         TokenEntity tok = tokenLogic.getTokenByToken(token);
+        
         if (tok == null) {
-
             throw new BusinessLogicException("No se encuentra Registrado");
         }
         if (!(tok.getTipo().equals("Contratista") || tok.getTipo().equals("Administrador"))) {
