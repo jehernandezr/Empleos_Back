@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "0fd43f4d-741e-4ea2-a902-d139ad2af3c8",
+		"_postman_id": "4e9ded97-66b2-4f03-9299-055da232eb76",
 		"name": "EstudianteResourceTest",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -144,7 +144,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"calificacionPromedio\": 2.0,\r\n    \"carrera\": \"Sistemas\",\r\n    \"horarioDeTrabajo\": \"a\",\r\n    \"correo\": \"aajkwdnakd@uniandes.edu.co\",\r\n    \"nombre\": \"David\",\r\n    \"semestre\": 4,\r\n    \"calificaciones\": [],\r\n    \"ofertas\": []\r\n}",
+					"raw": "{\r\n    \r\n    \"calificacionPromedio\": 2.0,\r\n    \"carrera\": \"Sistemas\",\r\n    \"horarioDeTrabajo\": \"a\",\r\n    \"token\":\"Primero\",\r\n    \"correo\": \"aajkwdnakd@uniandes.edu.co\",\r\n    \"nombre\": \"David\",\r\n    \"semestre\": 4,\r\n    \"idMedioDepago\":null,\r\n    \"calificaciones\": [],\r\n    \"ofertas\": [],\r\n    \"cuentaBancaria\":{}\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -670,7 +670,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/estudiantes/{{new_id_c}}",
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/estudiantes/{{new_id_c}}?token=Segundo",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -681,6 +681,12 @@
 						"api",
 						"estudiantes",
 						"{{new_id_c}}"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "Segundo"
+						}
 					]
 				}
 			},
@@ -768,7 +774,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"calificacionPromedio\": 4.5,\r\n    \"carrera\": \"Industrial\",\r\n    \"horarioDeTrabajo\": \"b\",\r\n    \"correo\": \"prueba@uniandes.edu.co\",\r\n    \"nombre\": \"David Dominguez\",\r\n    \"semestre\": 4,\r\n    \"calificaciones\": [],\r\n    \"ofertas\": []\r\n}",
+					"raw": "{\r\n    \"calificacionPromedio\": 4.0,\r\n    \"carrera\": \"Sistemas\",\r\n    \"horarioDeTrabajo\": \"a\",\r\n    \"token\":\"Primero\",\r\n    \"correo\": \"aajkwdnakd@uniandes.edu.co\",\r\n    \"nombre\": \"David\",\r\n    \"semestre\": 4,\r\n    \"idMedioDepago\":null,\r\n    \"calificaciones\": [],\r\n    \"ofertas\": [],\r\n    \"cuentaBancaria\":{}\r\n    \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -801,7 +807,7 @@
 						"id": "ae310e1e-5391-4d30-acc3-b9b563d9cea3",
 						"exec": [
 							"tests[\"No actualiza con id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /estudiante/0 no existe.\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /estudiantes/0 no existe.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -819,7 +825,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"calificacionPromedio\": 4.5,\r\n    \"carrera\": \"Industrial\",\r\n    \"horarioDeTrabajo\": \"b\",\r\n    \"correo\": \"prueba@uniandes.edu.co\",\r\n    \"nombre\": \"David Dominguez\",\r\n    \"semestre\": 4,\r\n    \"calificaciones\": [],\r\n    \"ofertas\": []\r\n}",
+					"raw": "{\r\n    \r\n    \"calificacionPromedio\": 5.0,\r\n    \"carrera\": \"Sistemas\",\r\n    \"horarioDeTrabajo\": \"a\",\r\n    \"token\":\"Primero\",\r\n    \"correo\": \"aajkwdnakd@uniandes.edu.co\",\r\n    \"nombre\": \"David\",\r\n    \"semestre\": 4,\r\n    \"idMedioDepago\":null,\r\n    \"calificaciones\": [],\r\n    \"ofertas\": [],\r\n    \"cuentaBancaria\":{}\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -877,7 +883,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/estudiantes/{{new_id_c}}",
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/estudiantes/{{new_id_c}}?token=Primero",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -888,6 +894,12 @@
 						"api",
 						"estudiantes",
 						"{{new_id_c}}"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "Primero"
+						}
 					]
 				}
 			},
