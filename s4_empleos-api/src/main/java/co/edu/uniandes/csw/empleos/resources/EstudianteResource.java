@@ -163,7 +163,6 @@ public class EstudianteResource {
 
         
         EstudianteEntity estudianteEntity = estudianteLogic.getEstudiante(estudianteId);
-        EstudianteDetailDTO estDTO = new EstudianteDetailDTO(estudianteEntity);
 
         if (estudianteLogic.getEstudiante(estudianteId) == null) {
             throw new WebApplicationException(RECURSO + estudianteId + NO_EXISTE, 404);

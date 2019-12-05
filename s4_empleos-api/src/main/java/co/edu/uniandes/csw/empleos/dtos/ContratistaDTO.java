@@ -81,7 +81,7 @@ public class ContratistaDTO implements Serializable{
     /**
      * @return the esExterno
      */
-    public Boolean EsExterno() {
+    public Boolean esExterno() {
         return esExterno;
     }
 

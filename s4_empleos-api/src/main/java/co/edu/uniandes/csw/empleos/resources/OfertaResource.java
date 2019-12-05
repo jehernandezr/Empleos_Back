@@ -91,6 +91,7 @@ public class OfertaResource {
      */
     @POST
     public OfertaDTO crearOferta(OfertaDetailDTO oferta) throws BusinessLogicException {
+        
         String token = oferta.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok.getTipo().equals("Contratista")) {

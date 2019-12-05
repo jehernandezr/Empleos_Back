@@ -37,6 +37,7 @@ import javax.ws.rs.WebApplicationException;
 @RequestScoped
 public class CalificacionResource {
 
+    private static final String CONTRATISTA = "Contratista";
     private static final String NO_EXISTE = " no existe.";
     private static final String RECURSO = "El recurso /calificaciones/";
 
@@ -54,7 +55,7 @@ public class CalificacionResource {
 
         String token = calificacion.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
-        if (tok.getTipo().equals("Contratista")) {
+        if (tok.getTipo().equals(CONTRATISTA)) {
             CalificacionEntity cl = calificacionLogic.createCalificacion(calificacion.toEntity());
             
             return new CalificacionDTO(cl);
@@ -129,7 +130,7 @@ public class CalificacionResource {
 
         String token = calif.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
-        if (tok.getTipo().equals("Contratista")) {
+        if (tok.getTipo().equals(CONTRATISTA)) {
             calif.setId(calId);
             if (calificacionLogic.getCalificacion(calId) == null) {
                 throw new WebApplicationException(RECURSO + calId + NO_EXISTE, 404);
@@ -171,7 +172,7 @@ public class CalificacionResource {
 
            throw new WebApplicationException("No tiene permitido acceder a "+RECURSO);
         }
-        if(tok.getTipo().equals("Contratista")){
+        if(tok.getTipo().equals(CONTRATISTA)){
         calificacionLogic.deleteCalificacion(calId);
         }
         

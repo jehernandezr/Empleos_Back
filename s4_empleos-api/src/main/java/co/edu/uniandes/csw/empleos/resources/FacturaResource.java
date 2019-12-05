@@ -36,6 +36,7 @@ import javax.ws.rs.WebApplicationException;
 @RequestScoped
 public class FacturaResource {
 
+    private static final String CONTRATISTA = "Contratista";
     private static final String NO_EXISTE = " no existe.";
     private static final String RECURSO = "El recurso /facturas/";
     @Inject
@@ -49,7 +50,7 @@ public class FacturaResource {
 
         String token = factura.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
-        if (tok.getTipo().equals("Contratista")) {
+        if (tok.getTipo().equals(CONTRATISTA)) {
             return new FacturaDTO(facturaLogic.createFactura(factura.toEntity()));
            
         } else {
@@ -121,7 +122,7 @@ public class FacturaResource {
 
         String token = factura.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
-        if (tok.getTipo().equals("Contratista")) {
+        if (tok.getTipo().equals(CONTRATISTA)) {
             factura.setId(factId);
             if (facturaLogic.getFactura(factId) == null) {
                 throw new WebApplicationException(RECURSO + factId + NO_EXISTE, 404);
@@ -159,7 +160,7 @@ public class FacturaResource {
 
             throw new WebApplicationException("No se encuentra registrado");
         }
-        if (!(tok.getTipo().equals("Contratista"))|| (tok.getTipo().equals("Estudiante"))) {
+        if (!(tok.getTipo().equals(CONTRATISTA))|| (tok.getTipo().equals("Estudiante"))) {
 
            throw new WebApplicationException("No tiene permitido acceder a "+RECURSO);
         }
