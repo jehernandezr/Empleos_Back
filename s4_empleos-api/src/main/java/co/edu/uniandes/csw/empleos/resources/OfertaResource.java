@@ -143,9 +143,9 @@ public class OfertaResource {
      * Error de lógica que se genera cuando no se encuentra la editorial.
      */
     @Path("{ofertaId: \\d+}/estudiantes")
-    public Class<EstudiantesOfertaResource> getEstudiantesOfertaResource(@PathParam("ofertaId") Long editorialsId) {
-        if (estudianteOfertasLogic.getEstudiantes(editorialsId) == null) {
-            throw new WebApplicationException(RECURSO + editorialsId + NO_EXISTE, 404);
+    public Class<EstudiantesOfertaResource> getEstudiantesOfertaResource(@PathParam("ofertaId") Long ofertaId) {
+        if (ofertaEL.getEstudiantes(ofertaId) == null) {
+            throw new WebApplicationException(RECURSO + ofertaId + NO_EXISTE, 404);
         }
         return EstudiantesOfertaResource.class;
     }
@@ -220,11 +220,12 @@ public class OfertaResource {
     
     @POST
     @Path("/aplicar")
-    public String aplicarOferta(EstudianteDTO estudiante, @QueryParam("idOferta") long idOferta) throws BusinessLogicException {
-        estudianteOL.addOferta(estudiante.getId(), idOferta);
-        ofertaEL.addEstudiante(idOferta,estudiante.getId());
+    public List<OfertaEntity> aplicarOferta(@QueryParam("idOferta") long idOferta, @QueryParam("idEstudiante") long idEstudiante) throws BusinessLogicException {
+        estudianteOL.addOferta(idEstudiante, idOferta);
+        ofertaEL.addEstudiante(idOferta,idEstudiante);
+
         //TODO: Registrar estudiante en ofertas
-        return "OK";
+        return estudianteOL.getOfertas(idEstudiante);
     }
 
     /**
