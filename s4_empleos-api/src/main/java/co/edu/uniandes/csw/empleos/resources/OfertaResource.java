@@ -16,6 +16,7 @@ import co.edu.uniandes.csw.empleos.entities.OfertaEntity;
 import co.edu.uniandes.csw.empleos.entities.TokenEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -50,7 +51,7 @@ public class OfertaResource {
     private TokenLogic tokenLogic;
 
     @Inject
-    private OfertaEstudianteLogic estudianteOfertasLogic;
+    private OfertaEstudianteLogic ofertaEL;
     
     @Inject
     private EstudianteOfertasLogic estudianteOL;
@@ -67,6 +68,8 @@ public class OfertaResource {
         return listEntity2DTO(logic.getOfertas());
 
     }
+    
+     
 
     /**
      * Busca y devuelve todos los autores que existen en la aplicacion.
@@ -140,9 +143,9 @@ public class OfertaResource {
      * Error de lógica que se genera cuando no se encuentra la editorial.
      */
     @Path("{ofertaId: \\d+}/estudiantes")
-    public Class<EstudiantesOfertaResource> getEstudiantesOfertaResource(@PathParam("ofertaId") Long editorialsId) {
-        if (estudianteOfertasLogic.getEstudiantes(editorialsId) == null) {
-            throw new WebApplicationException(RECURSO + editorialsId + NO_EXISTE, 404);
+    public Class<EstudiantesOfertaResource> getEstudiantesOfertaResource(@PathParam("ofertaId") Long ofertaId) {
+        if (ofertaEL.getEstudiantes(ofertaId) == null) {
+            throw new WebApplicationException(RECURSO + ofertaId + NO_EXISTE, 404);
         }
         return EstudiantesOfertaResource.class;
     }
@@ -219,6 +222,8 @@ public class OfertaResource {
     @Path("/aplicar")
     public String aplicarOferta(@QueryParam("idOferta") long idOferta, @QueryParam("idEstudiante") long idEstudiante) throws BusinessLogicException {
         estudianteOL.addOferta(idEstudiante, idOferta);
+        
+
         //TODO: Registrar estudiante en ofertas
         return "OK";
     }

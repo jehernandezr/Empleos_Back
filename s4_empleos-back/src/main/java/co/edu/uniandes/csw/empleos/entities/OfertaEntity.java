@@ -1,5 +1,6 @@
 package co.edu.uniandes.csw.empleos.entities;
 
+import java.util.Comparator;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -401,5 +402,8 @@ public class OfertaEntity extends BaseEntity {
     public int hashCode() {
         return super.hashCode();
     }
+    
+
+    
 
 }
