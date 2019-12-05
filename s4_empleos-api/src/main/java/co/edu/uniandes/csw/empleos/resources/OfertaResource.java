@@ -217,8 +217,8 @@ public class OfertaResource {
     
     @POST
     @Path("/aplicar")
-    public String aplicarOferta(EstudianteDTO estudiante, @QueryParam("idOferta") long idOferta) throws BusinessLogicException {
-        estudianteOL.addOferta(estudiante.getId(), idOferta);
+    public String aplicarOferta(@QueryParam("idOferta") long idOferta, @QueryParam("idEstudiante") long idEstudiante) throws BusinessLogicException {
+        estudianteOL.addOferta(idEstudiante, idOferta);
         //TODO: Registrar estudiante en ofertas
         return "OK";
     }
