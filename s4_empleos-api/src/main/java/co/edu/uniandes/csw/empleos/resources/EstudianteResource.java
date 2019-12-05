@@ -27,6 +27,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 
 /**
@@ -79,7 +80,7 @@ public class EstudianteResource {
      */
     @GET
     @Path("{estudiantesId: \\d+}")
-    public EstudianteDetailDTO getEstudiante(@PathParam("estudiantesId") Long estudianteId) throws BusinessLogicException {
+    public EstudianteDetailDTO getEstudiante(@PathParam("estudiantesId") Long estudianteId, @QueryParam("token") String token) throws BusinessLogicException {
         EstudianteEntity calEntity = estudianteLogic.getEstudiante(estudianteId);
 
         if (calEntity == null) {
@@ -88,7 +89,6 @@ public class EstudianteResource {
 
         EstudianteDetailDTO calDTO = new EstudianteDetailDTO(calEntity);
 
-        String token = calDTO.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok == null) {
 
