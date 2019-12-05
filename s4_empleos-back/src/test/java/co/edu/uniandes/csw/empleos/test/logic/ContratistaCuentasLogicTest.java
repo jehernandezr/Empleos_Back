@@ -155,7 +155,7 @@ public class ContratistaCuentasLogicTest {
         ContratistaEntity entity = factory.manufacturePojo(ContratistaEntity.class);
         CuentaDeCobroEntity cuentaEntity = factory.manufacturePojo(CuentaDeCobroEntity.class);
         cuentaEntity.setContratista(entity);
-        entity.setCuentaDeCobro(cuentasData);
+        entity.setCuentasDeCobro(cuentasData);
         try {
             utx.begin();
             em.persist(cuentaEntity);
@@ -164,7 +164,7 @@ public class ContratistaCuentasLogicTest {
             Logger.getLogger(ContratistaCuentasLogicTest.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        entity.getCuentaDeCobro().add(cuentaEntity);
+        entity.getCuentasDeCobro().add(cuentaEntity);
         try {
             utx.begin();
             em.persist(entity);
@@ -209,7 +209,7 @@ public class ContratistaCuentasLogicTest {
             contratistaCuentasLogic.replaceCuentas(entity.getId(), list);
 
             entity = contratistaLogic.getContratista(entity.getId());
-            Assert.assertFalse(entity.getCuentaDeCobro().contains(cuentasData.get(0)));
+            Assert.assertFalse(entity.getCuentasDeCobro().contains(cuentasData.get(0)));
         } catch (BusinessLogicException ex) {
             Logger.getLogger(ContratistaCuentasLogicTest.class.getName()).log(Level.SEVERE, null, ex);
         }

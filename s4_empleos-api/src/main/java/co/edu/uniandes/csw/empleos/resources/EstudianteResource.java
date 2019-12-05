@@ -27,6 +27,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 
 /**
@@ -69,7 +70,7 @@ public class EstudianteResource {
 
     /**
      * Busca el estudiante con el id asociado recibido en la URL y lo devuelve.
-     *
+  
      * @param estudianteId Identificador del estudiante que se esta buscando.
      * Este debe ser una cadena de dígitos.
      * @return JSON {@link EstudianteDTO} - El estudiante buscado
@@ -79,7 +80,7 @@ public class EstudianteResource {
      */
     @GET
     @Path("{estudiantesId: \\d+}")
-    public EstudianteDetailDTO getEstudiante(@PathParam("estudiantesId") Long estudianteId) throws BusinessLogicException {
+    public EstudianteDetailDTO getEstudiante(@QueryParam("token") String token,@PathParam("estudiantesId") Long estudianteId) throws BusinessLogicException {
         EstudianteEntity calEntity = estudianteLogic.getEstudiante(estudianteId);
 
         if (calEntity == null) {
@@ -88,7 +89,6 @@ public class EstudianteResource {
 
         EstudianteDetailDTO calDTO = new EstudianteDetailDTO(calEntity);
 
-        String token = calDTO.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok == null) {
 
@@ -159,7 +159,7 @@ public class EstudianteResource {
      */
     @DELETE
     @Path("{estudianteId: \\d+}")
-    public void deleteEstudiante(@PathParam("estudianteId") Long estudianteId) throws BusinessLogicException {
+    public void deleteEstudiante(@QueryParam("token") String token, @PathParam("estudianteId") Long estudianteId) throws BusinessLogicException {
 
         
         EstudianteEntity estudianteEntity = estudianteLogic.getEstudiante(estudianteId);
@@ -169,7 +169,6 @@ public class EstudianteResource {
             throw new WebApplicationException(RECURSO + estudianteId + NO_EXISTE, 404);
         }
 
-        String token = estDTO.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok == null) {
 

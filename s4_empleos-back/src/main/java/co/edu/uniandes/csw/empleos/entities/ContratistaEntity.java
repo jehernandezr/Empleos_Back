@@ -21,15 +21,11 @@ import uk.co.jemos.podam.common.PodamExclude;
  * @author je.berdugo10
  */
 @Entity
-public class ContratistaEntity extends BaseEntity implements  Serializable{
+public class ContratistaEntity extends BaseEntity implements Serializable {
 
     @PodamExclude
     @OneToMany(mappedBy = "contratista")
     private List<OfertaEntity> ofertas = new ArrayList<>();
-
-    @PodamExclude
-    @OneToOne(mappedBy = "contratista", orphanRemoval = true)
-    private TarjetaDeCreditoEntity tarjetaDeCredito;
 
     @PodamExclude
     @OneToMany(mappedBy = "contratista", orphanRemoval = true)
@@ -56,7 +52,7 @@ public class ContratistaEntity extends BaseEntity implements  Serializable{
     private String rutaImagen;
 
     @PodamExclude
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "contratista", orphanRemoval = true, fetch = FetchType.LAZY)
     private TarjetaDeCreditoEntity tarjetaCredito;
 
     /**
@@ -84,7 +80,6 @@ public class ContratistaEntity extends BaseEntity implements  Serializable{
         this.nombre = nombre;
     }
 
-
     /**
      * Devuelve si el contratista es externo.
      *
@@ -102,7 +97,6 @@ public class ContratistaEntity extends BaseEntity implements  Serializable{
     public void setEsExterno(Boolean esExterno) {
         this.esExterno = esExterno;
     }
-
 
     /**
      * Obetener el email del contratista.
@@ -151,14 +145,14 @@ public class ContratistaEntity extends BaseEntity implements  Serializable{
     /**
      * @return the cuentaDeCobro
      */
-    public List<CuentaDeCobroEntity> getCuentaDeCobro() {
+    public List<CuentaDeCobroEntity> getCuentasDeCobro() {
         return cuentaDeCobro;
     }
 
     /**
      * @param cuentaDeCobro the cuentaDeCobro to set
      */
-    public void setCuentaDeCobro(List<CuentaDeCobroEntity> cuentaDeCobro) {
+    public void setCuentasDeCobro(List<CuentaDeCobroEntity> cuentaDeCobro) {
         this.cuentaDeCobro = cuentaDeCobro;
     }
 
@@ -175,18 +169,15 @@ public class ContratistaEntity extends BaseEntity implements  Serializable{
     public void setTarjetaCredito(TarjetaDeCreditoEntity tarjetaCredito) {
         this.tarjetaCredito = tarjetaCredito;
     }
-    
+
     @Override
-    public boolean equals(Object obj)
-    {
+    public boolean equals(Object obj) {
         return super.equals(obj);
     }
-    
+
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return super.hashCode();
     }
 
-  
 }

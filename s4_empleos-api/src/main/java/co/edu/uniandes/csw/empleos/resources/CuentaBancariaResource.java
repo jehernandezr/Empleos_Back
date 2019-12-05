@@ -27,7 +27,7 @@ public class CuentaBancariaResource {
 
     private static final String NO_EXISTE = " no existe.";
     private static final String RECURSO = "El recurso /cuentaBancaria/";
-
+    private static final String NO_ENCUENTRA ="No se encuentra Registrado";
     @Inject
     private CuentaBancariaLogic logic;
     @Inject
@@ -50,24 +50,30 @@ public class CuentaBancariaResource {
 
     /**
      *
+     * @param pToken
      * @param cuentaId
      * @return
      * @throws BusinessLogicException
      */
     @GET
     @Path("{cuentaId: \\d+}")
-    public CuentaBancariaDTO getCuntaBancaria(@PathParam("cuentaId") Long cuentaId) throws BusinessLogicException {
+    public CuentaBancariaDTO getCuentaBancaria(@QueryParam("token") String pToken ,@PathParam("cuentaId") Long cuentaId) throws BusinessLogicException {
 
-        
         CuentaBancariaEntity cuentaEntity = logic.getCuentaBancaria(cuentaId);
+        CuentaBancariaDTO cuentaDTO = new CuentaBancariaDTO(cuentaEntity);
+        String token = pToken;
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok == null) {
 
+            throw new BusinessLogicException(NO_ENCUENTRA);
+        }
         if (cuentaEntity == null) {
 
             throw new WebApplicationException(RECURSO + cuentaId + NO_EXISTE, 404);
         }
-        CuentaBancariaDTO cuentaDTO = new CuentaBancariaDTO(cuentaEntity);
+       
 
-     
+       
         return cuentaDTO;
     }
 
@@ -97,8 +103,7 @@ public class CuentaBancariaResource {
                 throw new WebApplicationException(RECURSO + cuentaId + NO_EXISTE, 404);
             }
             return new CuentaBancariaDTO(logic.updateCuentaBancaria(cuentaId, cuenta.toEntity()));
-            
-
+           
         } else {
             throw new WebApplicationException("No tiene permitido acceder a "+RECURSO);
 
@@ -109,6 +114,7 @@ public class CuentaBancariaResource {
     /**
      * Borra el premio con el id asociado recibido en la URL.
      *
+     * @param pToken
      * @param cuentaId
      * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
      * @throws WebApplicationException {@link WebApplicationExceptionMapper}
@@ -116,8 +122,10 @@ public class CuentaBancariaResource {
      */
     @DELETE
     @Path("{cuentaId: \\d+}")
-    public void deleteCuenta(@PathParam("cuentaId") Long cuentaId) throws BusinessLogicException {
+    public void deleteCuenta(@QueryParam("token") String pToken, @PathParam("cuentaId") Long cuentaId) throws BusinessLogicException {
 
+        TokenEntity tok = tokenLogic.getTokenByToken(pToken);
+        
         CuentaBancariaEntity cuentaEntity = logic.getCuentaBancaria(cuentaId);
 
         if (cuentaEntity == null) {
@@ -125,8 +133,10 @@ public class CuentaBancariaResource {
             throw new WebApplicationException(RECURSO + cuentaId + NO_EXISTE, 404);
 
         }
+        if (tok == null) {
 
-
+            throw new BusinessLogicException(NO_ENCUENTRA);
+        }
         logic.delete(cuentaId);
     }
 }

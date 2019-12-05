@@ -23,6 +23,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 
 /**
@@ -68,7 +69,7 @@ public class FacturaResource {
      */
     @GET
     @Path("{facturasId: \\d+}")
-    public FacturaDTO getFactura(@PathParam("facturasId") Long facturaId) throws BusinessLogicException {
+    public FacturaDTO getFactura(@QueryParam("token") String token, @PathParam("facturasId") Long facturaId) throws BusinessLogicException {
         FacturaEntity facEntity = facturaLogic.getFactura(facturaId);
         if (facEntity == null) {
             throw new WebApplicationException(RECURSO + facturaId + NO_EXISTE, 404);
@@ -76,7 +77,6 @@ public class FacturaResource {
 
         FacturaDTO facDTO = new FacturaDTO(facEntity);
 
-        String token = facDTO.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok == null) {
 
@@ -138,6 +138,7 @@ public class FacturaResource {
     /**
      * Borra La factura con el id asociado recibido en la URL.
      *
+     * @param token
      * @param factId Identificador del La Factura que se desea borrar. Este debe
      * ser una cadena de dígitos
      * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
@@ -146,14 +147,22 @@ public class FacturaResource {
      */
     @DELETE
     @Path("{facturasId: \\d+}")
-    public void deleteFactura(@PathParam("facturasId") Long factId) throws BusinessLogicException {
+    public void deleteFactura(@QueryParam("token") String token,@PathParam("facturasId") Long factId) throws BusinessLogicException {
         FacturaEntity entity = facturaLogic.getFactura(factId);
         
         if (entity == null) {
             throw new WebApplicationException(RECURSO + factId + NO_EXISTE, 404);
         }
        
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok == null) {
 
+            throw new WebApplicationException("No se encuentra registrado");
+        }
+        if (!(tok.getTipo().equals("Contratista"))|| (tok.getTipo().equals("Estudiante"))) {
+
+           throw new WebApplicationException("No tiene permitido acceder a "+RECURSO);
+        }
         facturaLogic.deleteFactura(factId);
     }
 

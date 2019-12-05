@@ -24,6 +24,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 
 /**
@@ -68,6 +69,7 @@ public class CalificacionResource {
      * Busca la calificaciòn con el id asociado recibido en la URL y lo
      * devuelve.
      *
+     * @param token
      * @param calificacionId Identificador del libro que se esta buscando. Este
      * debe ser una cadena de dígitos.
      * @return JSON {@link BookDTO} - El libro buscado
@@ -76,11 +78,18 @@ public class CalificacionResource {
      */
     @GET
     @Path("{calificacionesId: \\d+}")
-    public CalificacionDTO getCalificacion(@PathParam("calificacionesId") Long calificacionId) throws BusinessLogicException {
+    public CalificacionDTO getCalificacion(@QueryParam("token")String token ,@PathParam("calificacionesId") Long calificacionId) throws BusinessLogicException {
+        
         CalificacionEntity calEntity = calificacionLogic.getCalificacion(calificacionId);
 
-        if (calEntity == null) {
+       if (calEntity == null) {
             throw new WebApplicationException(RECURSO + calificacionId + NO_EXISTE, 404);
+        }
+    
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok == null) {
+            throw new BusinessLogicException("No se encuentra Registrado");
+
         }
 
         return new CalificacionDTO(calEntity);
@@ -136,6 +145,7 @@ public class CalificacionResource {
     /**
      * Borra La Calificacion con el id asociado recibido en la URL.
      *
+     * @param token
      * @param calId Identificador del La Calificacion que se desea borrar. Este
      * debe ser una cadena de dígitos
      * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
@@ -144,16 +154,28 @@ public class CalificacionResource {
      */
     @DELETE
     @Path("{calificacionesId: \\d+}")
-    public void deleteCalificacion(@PathParam("calificacionesId") Long calId) throws BusinessLogicException {
+    public void deleteCalificacion(@QueryParam("token")String token, @PathParam("calificacionesId") Long calId) throws BusinessLogicException {
 
         CalificacionEntity calEntity = calificacionLogic.getCalificacion(calId);
-
         if (calEntity == null) {
 
             throw new WebApplicationException(RECURSO + calId + NO_EXISTE, 404);
         }
 
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok == null) {
+
+            throw new WebApplicationException("No se encuentra registrado");
+        }
+        if (tok.getTipo().equals("Estudiante")) {
+
+           throw new WebApplicationException("No tiene permitido acceder a "+RECURSO);
+        }
+        if(tok.getTipo().equals("Contratista")){
         calificacionLogic.deleteCalificacion(calId);
+        }
+        
+        
     }
 
     /**

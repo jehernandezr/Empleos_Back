@@ -33,21 +33,24 @@ public class CuentaBancariaLogic {
         if (cuentaBancaria.getNumeroCuenta() == null) {
             throw new BusinessLogicException("El numero de cuenta está vacío");
         }
+
+        if (cuentaBancaria.getNumeroCuenta().contains(",") || cuentaBancaria.getNumeroCuenta().contains(".") || cuentaBancaria.getNumeroCuenta().contains("-")) {
+            throw new BusinessLogicException("El numero de cuenta no puede contener caracteres diferentes  a un numero entero.");
+        } else if (cuentaBancaria.getNumeroCuenta().length() < 9 && cuentaBancaria.getNumeroCuenta().length() > 20) {
+            throw new BusinessLogicException("El numero de cuenta no cumple con la longitud de una cuenta");
+        } else if (Long.parseLong(cuentaBancaria.getNumeroCuenta()) < 0) {
+            throw new BusinessLogicException("El numero de cuenta no puede ser negativo");
+
+        }
         CuentaBancariaEntity ent = persistence.findByNumero(cuentaBancaria.getNumeroCuenta());
         if (ent != null) {
             throw new BusinessLogicException("Ya existe una cuenta Bancaria con ese numero de cuenta ");
-        }
-        if (cuentaBancaria.getNumeroCuenta().contains(",") || cuentaBancaria.getNumeroCuenta().contains(".") || cuentaBancaria.getNumeroCuenta().contains("-")) {
-            throw new BusinessLogicException("El numero de cuenta no puede contener caracteres diferentes  a un numero entero.");
-        } else if (Long.parseLong(cuentaBancaria.getNumeroCuenta()) < 0) {
-            throw new BusinessLogicException("El numero de cuenta no puede ser negativo");
-        } else if (cuentaBancaria.getNumeroCuenta().length() < 9 && cuentaBancaria.getNumeroCuenta().length() > 20) {
-            throw new BusinessLogicException("El numero de cuenta no cumple con la longitud de una cuenta");
         } else if (cuentaBancaria.getNombreBanco() == null) {
             throw new BusinessLogicException("el nombre de banco no puede ser null");
         } else if (cuentaBancaria.getNombreBanco().equals("")) {
             throw new BusinessLogicException("el nombre de banco no puede ser vacío");
-        } else if (cuentaBancaria.getTipoCuenta() == 0) {
+        }
+        if (!((cuentaBancaria.getTipoCuenta().equals("Ahorros")) || (cuentaBancaria.getTipoCuenta().equals("Corriente")))) {
             throw new BusinessLogicException("El tipo de cuenta debe ser Ahorros o Corriente");
         }
 
@@ -103,7 +106,7 @@ public class CuentaBancariaLogic {
         if (cuentaBancoEntity.getNumeroCuenta().contains(".")) {
             throw new BusinessLogicException("El numero de cuenta no puede contener puntos.");
         }
-        if (cuentaBancoEntity.getNumeroCuenta().length() < 9 && cuentaBancoEntity.getNumeroCuenta().length() > 20) {
+        if (cuentaBancoEntity.getNumeroCuenta().length() < 9 || cuentaBancoEntity.getNumeroCuenta().length() > 20) {
             throw new BusinessLogicException("El numero de cuenta no cumple con la longitud de una cuenta");
         }
         if (cuentaBancoEntity.getNumeroCuenta().contains(",") || cuentaBancoEntity.getNumeroCuenta().contains("-")) {
@@ -112,7 +115,7 @@ public class CuentaBancariaLogic {
         if (Long.parseLong(cuentaBancoEntity.getNumeroCuenta()) < 0) {
             throw new BusinessLogicException("El numero de cuenta no puede ser negativo");
         }
-        if (cuentaBancoEntity.getTipoCuenta() == 0) {
+        if (!((cuentaBancoEntity.getTipoCuenta().equals("Ahorros")) || (cuentaBancoEntity.getTipoCuenta().equals("Corriente")))) {
             throw new BusinessLogicException("El tipo de cuenta debe ser Ahorros o Corriente");
         }
         if (cuentaBancoEntity.getNombreBanco() == null) {
@@ -121,8 +124,6 @@ public class CuentaBancariaLogic {
         if (cuentaBancoEntity.getNombreBanco().equals("")) {
             throw new BusinessLogicException("el nombre de banco no puede ser vacío");
         }
-
-        
 
         return persistence.update(cuentaBancoEntity);
     }
