@@ -116,6 +116,73 @@
 			"response": []
 		},
 		{
+			"name": "crear contratista",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ef09f0b6-04ab-43ff-8dfa-9679e6620645",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en elcreate estudiante prueba\"] = responseCode.code === 200;",
+							"postman.setGlobalVariable(\"new_id_f\",data.idLog);",
+							"postman.setGlobalVariable(\"new_id_t\",data.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Prueba\",\n    \"carrera\": \"Algo\",\n    \"email\": \"algo2@uniandes.edu.co\",\n    \"horarioDeTrabajo\": \"algo\",\n    \"semestre\": 1,\n    \"calificacionPromedio\": 0,\n    \"idMedioDepago\": 0,\n    \"rutaImagen\": \"https://www.dzoom.org.es/wp-content/uploads/2013/02/portada-programas-edicion-imagenes-online-ordenador-402x268.jpg\",\n    \"esExterno\": true,\n    \"id\": 0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/credenciales?correo=algo38@uniandes.edu.co&pass=contrasenia&tipo=Contratista",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_empleos-api",
+						"api",
+						"credenciales"
+					],
+					"query": [
+						{
+							"key": "correo",
+							"value": "algo38@uniandes.edu.co"
+						},
+						{
+							"key": "pass",
+							"value": "contrasenia"
+						},
+						{
+							"key": "tipo",
+							"value": "Contratista"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Crear una oferta",
 			"event": [
 				{
@@ -144,7 +211,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n   \"tipoOferta\": 1  ,\n   \"numeroDeVacantes\":  2 ,\n   \"pagoPorHora\": 50000   ,\n   \"nombre\":   \"Nicolas\"  ,\n   \"descripcion\":   \"loool\"  ,\n   \"categoria\":   \"Express\"  ,\n   \"tiempoMaximoAplicacion\":   2  ,\n   \"porcentajePagoAdicional\":  20  ,\n   \"estaAbierta\":   true    ,\n   \"requisitos\":  \"Ninguno\"    ,\n   \"horario\":  \"20:04\"  ,\n   \"horasDeTrabajo\":  5 ,\n   \"rutaImagen\": \"hola.png\",\n   \"trabajo\": {},\n   \"estudiantes\":[],\n   \"token\":\"Segundo\",\n   \"contratista\":{}\n   \n}",
+					"raw": "{\n   \"tipoOferta\": 1  ,\n   \"numeroDeVacantes\":  2 ,\n   \"pagoPorHora\": 50000   ,\n   \"nombre\":   \"Nicolas\"  ,\n   \"descripcion\":   \"loool\"  ,\n   \"categoria\":   \"Express\"  ,\n   \"tiempoMaximoAplicacion\":   2  ,\n   \"porcentajePagoAdicional\":  20  ,\n   \"estaAbierta\":   true    ,\n   \"requisitos\":  \"Ninguno\"    ,\n   \"horario\":  \"20:04\"  ,\n   \"horasDeTrabajo\":  5 ,\n   \"rutaImagen\": \"hola.png\",\n   \"trabajo\": {},\n   \"estudiantes\":[],\n   \"token\":\"{{new_id_t}}\",\n   \"contratista\":{}\n   \n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -152,7 +219,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/ofertas",
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/ofertas?idCon={{new_id_f}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -162,58 +229,12 @@
 						"s4_empleos-api",
 						"api",
 						"ofertas"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Crear una oferta 2.",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "982a7cd7-bcaf-43f1-8ef0-d6dd7fe88f6f",
-						"exec": [
-							"tests[\"No genera error en el post\"] = responseCode.code===200;",
-							"console.log(responseBody);",
-							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"new_id_o2\",data.id);"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n   \"tipoOferta\": 1  ,\n   \"numeroDeVacantes\":  10 ,\n   \"pagoPorHora\": 5000   ,\n   \"nombre\":   \"Marco\"  ,\n   \"descripcion\":   \"Oferta de Prueba\"  ,\n   \"categoria\":   \"Express\"  ,\n   \"tiempoMaximoAplicacion\":   10  ,\n   \"porcentajePagoAdicional\":  25  ,\n   \"estaAbierta\":   \"true\"    ,\n   \"requisitos\":  \"Ninguno\"    ,\n   \"horario\":  \"20:04\"  ,\n   \"horasDeTrabajo\": 2 ,\n   \"rutaImagen\": \"hola.png\",\n   \"trabajo\": {},\n   \"estudiantes\":[],\n    \"token\":\"Segundo\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/ofertas",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
 					],
-					"port": "{{puerto}}",
-					"path": [
-						"s4_empleos-api",
-						"api",
-						"ofertas"
+					"query": [
+						{
+							"key": "idCon",
+							"value": "{{new_id_f}}"
+						}
 					]
 				}
 			},

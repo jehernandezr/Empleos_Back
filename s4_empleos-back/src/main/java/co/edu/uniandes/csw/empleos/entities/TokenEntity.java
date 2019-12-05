@@ -17,6 +17,7 @@ public class TokenEntity  extends BaseEntity implements Serializable {
         
     private String token;
     private String tipo;
+    private Long idLog;
     
     public TokenEntity(){
         //Constructor vacio
@@ -55,6 +56,20 @@ public class TokenEntity  extends BaseEntity implements Serializable {
         this.tipo = tipo;
     }
     
+    
+    /**
+     * @return the idLog
+     */
+    public Long getIdLog() {
+        return idLog;
+    }
+
+    /**
+     * @param idLog the correo to set
+     */
+    public void setIdLog(Long idLog) {
+        this.idLog = idLog;
+    }
     
     @Override
     public int hashCode()

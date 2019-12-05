@@ -7,10 +7,12 @@ package co.edu.uniandes.csw.empleos.resources;
 
 import co.edu.uniandes.csw.empleos.dtos.ContratistaDTO;
 import co.edu.uniandes.csw.empleos.dtos.ContratistaDetailDTO;
+import co.edu.uniandes.csw.empleos.dtos.OfertaDTO;
 import co.edu.uniandes.csw.empleos.ejb.ContratistaLogic;
 import co.edu.uniandes.csw.empleos.ejb.ContratistaOfertasLogic;
 import co.edu.uniandes.csw.empleos.ejb.TokenLogic;
 import co.edu.uniandes.csw.empleos.entities.ContratistaEntity;
+import co.edu.uniandes.csw.empleos.entities.OfertaEntity;
 import co.edu.uniandes.csw.empleos.entities.TokenEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import java.util.ArrayList;
@@ -48,7 +50,7 @@ public class ContratistaResource {
     // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
     @Inject
 
-    private ContratistaOfertasLogic contratistaOfertasLogic;
+    private ContratistaOfertasLogic contratistaOL;
 
     @Inject
     private TokenLogic tokenLogic;
@@ -68,6 +70,20 @@ public class ContratistaResource {
     @GET
     public List<ContratistaDetailDTO> getContratistas() {
         return listEntity2DTO(contratistaLogic.getContratistas());
+    }
+    
+     /**
+     * Busca y devuelve todas las editoriales que existen en la aplicacion.
+     *
+     * @return JSONArray {@link EditorialDetailDTO} - Las editoriales
+     * encontradas en la aplicación. Si no hay ninguna retorna una lista vacía.
+     */
+    @GET
+    @Path("/ofertas")
+    public List<OfertaDTO> getOfertas(@QueryParam("idCon") long idOferta){
+    
+    return listEntity2DTOOfer(contratistaOL.getOfertas(idOferta));
+        
     }
 
     /**
@@ -181,6 +197,14 @@ public class ContratistaResource {
         }
         return list;
     }
+    private List<OfertaDTO> listEntity2DTOOfer(List<OfertaEntity> entityList) {
+        List<OfertaDTO> list = new ArrayList<>();
+        for (OfertaEntity entity : entityList) {
+            list.add(new OfertaDTO(entity));
+        }
+        return list;
+    }
+    
     
 
 }
