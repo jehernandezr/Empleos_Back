@@ -38,14 +38,14 @@ public class CredencialesLogic {
         if (credencial != null) {
 
             if (credencial.getTipo() == null) {
-                throw new BusinessLogicException(NULO);
+                throw new BusinessLogicException("a"+NULO);
             }
             if (credencial.getCorreo() == null) {
-                throw new BusinessLogicException(NULO);
+                throw new BusinessLogicException("b"+NULO);
 
             }
             if (credencial.getContrasenia() == null) {
-                throw new BusinessLogicException(NULO);
+                throw new BusinessLogicException("c"+NULO);
 
             }
             if (credencial.getTipo().equals("")) {

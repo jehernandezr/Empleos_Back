@@ -14,6 +14,7 @@ import co.edu.uniandes.csw.empleos.entities.OfertaEntity;
 import co.edu.uniandes.csw.empleos.entities.TokenEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -61,6 +62,8 @@ public class OfertaResource {
         return listEntity2DTO(logic.getOfertas());
 
     }
+    
+     
 
     /**
      * Busca y devuelve todos los autores que existen en la aplicacion.
