@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.empleos.resources;
 import co.edu.uniandes.csw.empleos.dtos.EstudianteDTO;
 import co.edu.uniandes.csw.empleos.dtos.OfertaDTO;
 import co.edu.uniandes.csw.empleos.dtos.OfertaDetailDTO;
+import co.edu.uniandes.csw.empleos.ejb.ContratistaOfertasLogic;
 import co.edu.uniandes.csw.empleos.ejb.EstudianteOfertasLogic;
 import co.edu.uniandes.csw.empleos.ejb.OfertaEstudianteLogic;
 import co.edu.uniandes.csw.empleos.ejb.OfertaLogic;
@@ -55,6 +56,9 @@ public class OfertaResource {
     
     @Inject
     private EstudianteOfertasLogic estudianteOL;
+    
+    @Inject
+    private ContratistaOfertasLogic contratistaOL;
 
     /**
      * Busca y devuelve todos los autores que existen en la aplicacion.
@@ -94,11 +98,11 @@ public class OfertaResource {
      * @throws BusinessLogicException
      */
     @POST
-    public OfertaDTO crearOferta(OfertaDetailDTO oferta) throws BusinessLogicException {
+    public OfertaDTO crearOferta(OfertaDetailDTO oferta, @QueryParam("idCon") long idCon) throws BusinessLogicException {
         String token = oferta.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok.getTipo().equals("Contratista")) {
-
+contratistaOL.addOferta(idCon, oferta.getId());
             OfertaEntity ofertaEntity = oferta.toEntity();
             ofertaEntity = logic.createOferta(ofertaEntity);
             return new OfertaDetailDTO(ofertaEntity);
