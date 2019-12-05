@@ -38,6 +38,20 @@ public class ContratistaOfertasLogic {
         ContratistaEntity contratistaEntity = contratistaPersistence.find(contratistaId);
         OfertaEntity ofertaEntity = ofertaPersistance.find(ofertasId);
         contratistaEntity.getOfertas().add(ofertaEntity);
+        ofertaEntity.setContratista(contratistaEntity);
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
 
         return ofertaEntity;

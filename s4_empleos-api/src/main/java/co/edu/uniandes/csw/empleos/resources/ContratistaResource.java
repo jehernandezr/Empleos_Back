@@ -99,7 +99,7 @@ public class ContratistaResource {
     @GET
     @Path("{id: \\d+}")
 
-    public ContratistaDTO getContratista(@PathParam("id") Long contratistaId) throws BusinessLogicException {
+    public ContratistaDetailDTO getContratista(@PathParam("id") Long contratistaId) throws BusinessLogicException {
 
         ContratistaEntity calEntity = contratistaLogic.getContratista(contratistaId);
         if (calEntity == null) {
@@ -107,7 +107,7 @@ public class ContratistaResource {
             throw new WebApplicationException(RECURSO + contratistaId + NO_EXISTE, 404);
         }
 
-        return new ContratistaDTO(calEntity);
+        return new ContratistaDetailDTO(calEntity);
 
     }
 
