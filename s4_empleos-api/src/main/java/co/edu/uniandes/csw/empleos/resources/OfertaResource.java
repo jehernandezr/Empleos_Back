@@ -5,8 +5,11 @@
  */
 package co.edu.uniandes.csw.empleos.resources;
 
+import co.edu.uniandes.csw.empleos.dtos.EstudianteDTO;
 import co.edu.uniandes.csw.empleos.dtos.OfertaDTO;
 import co.edu.uniandes.csw.empleos.dtos.OfertaDetailDTO;
+import co.edu.uniandes.csw.empleos.ejb.ContratistaOfertasLogic;
+import co.edu.uniandes.csw.empleos.ejb.EstudianteOfertasLogic;
 import co.edu.uniandes.csw.empleos.ejb.OfertaEstudianteLogic;
 import co.edu.uniandes.csw.empleos.ejb.OfertaLogic;
 import co.edu.uniandes.csw.empleos.ejb.TokenLogic;
@@ -48,7 +51,13 @@ public class OfertaResource {
     private TokenLogic tokenLogic;
 
     @Inject
-    private OfertaEstudianteLogic estudianteOfertasLogic;
+    private OfertaEstudianteLogic ofertaEL;
+    
+    @Inject
+    private EstudianteOfertasLogic estudianteOL;
+    
+    @Inject
+    private ContratistaOfertasLogic contratistaOL;
 
     /**
      * Busca y devuelve todos los autores que existen en la aplicacion.
@@ -62,6 +71,8 @@ public class OfertaResource {
         return listEntity2DTO(logic.getOfertas());
 
     }
+    
+     
 
     /**
      * Busca y devuelve todos los autores que existen en la aplicacion.
@@ -85,20 +96,23 @@ public class OfertaResource {
     /**
      *
      * @param oferta
+     * @param idCon
      *
      * @return
      * @throws BusinessLogicException
      */
     @POST
-    public OfertaDTO crearOferta(OfertaDetailDTO oferta) throws BusinessLogicException {
-        
+
+    public OfertaDTO crearOferta(OfertaDetailDTO oferta, @QueryParam("idCon") Long idCon) throws BusinessLogicException {
+
         String token = oferta.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
-        if (tok.getTipo().equals("Contratista")) {
-
+        if (tok != null && tok.getTipo().equals("Contratista")) {
             OfertaEntity ofertaEntity = oferta.toEntity();
             ofertaEntity = logic.createOferta(ofertaEntity);
-            return new OfertaDetailDTO(ofertaEntity);
+            contratistaOL.addOferta(idCon, ofertaEntity.getId());
+            
+            return new OfertaDTO(ofertaEntity);
 
         } else {
             throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
@@ -133,16 +147,14 @@ public class OfertaResource {
      * dependen de la editorial, es una redirección al servicio que maneja el
      * segmento de la URL que se encarga de los libros de una editorial.
      *
-     * @param editorialsId El ID de la editorial con respecto a la cual se
-     * accede al servicio.
-     * @return El servicio de libros para esta editorial en paricular.
+       * @return El servicio de libros para esta editorial en paricular.
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra la editorial.
      */
     @Path("{ofertaId: \\d+}/estudiantes")
-    public Class<EstudiantesOfertaResource> getEstudiantesOfertaResource(@PathParam("ofertaId") Long editorialsId) {
-        if (estudianteOfertasLogic.getEstudiantes(editorialsId) == null) {
-            throw new WebApplicationException(RECURSO + editorialsId + NO_EXISTE, 404);
+    public Class<EstudiantesOfertaResource> getEstudiantesOfertaResource(@PathParam("ofertaId") Long ofertaId) {
+        if (ofertaEL.getEstudiantes(ofertaId) == null) {
+            throw new WebApplicationException(RECURSO + ofertaId + NO_EXISTE, 404);
         }
         return EstudiantesOfertaResource.class;
     }
@@ -212,6 +224,22 @@ public class OfertaResource {
         }
 
         logic.deleteOferta(ofertaId);
+    }
+    
+    @POST
+    @Path("/aplicar")
+    public EstudianteDTO aplicarOferta(@QueryParam("idOferta") long idOferta, @QueryParam("idEstudiante") long idEstudiante, @QueryParam("token") String token) throws BusinessLogicException {
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok == null) {
+            throw new BusinessLogicException("No se encuentra Registrado");
+        }
+        if (tok.getTipo().equals("Estudiante")) {
+            estudianteOL.addOferta(idEstudiante, idOferta);
+            //TODO: Registrar estudiante en ofertas
+            return new EstudianteDTO();
+        } else {
+            throw new BusinessLogicException("No tiene permiso para esto");
+        }
     }
 
     /**

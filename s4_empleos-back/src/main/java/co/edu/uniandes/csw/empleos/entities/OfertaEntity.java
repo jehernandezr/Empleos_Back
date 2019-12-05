@@ -1,5 +1,6 @@
 package co.edu.uniandes.csw.empleos.entities;
 
+
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -404,5 +405,8 @@ public class OfertaEntity extends BaseEntity implements  Serializable{
     public int hashCode() {
         return super.hashCode();
     }
+    
+
+    
 
 }

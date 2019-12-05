@@ -15,7 +15,9 @@ import co.edu.uniandes.csw.empleos.ejb.CredencialesLogic;
 import co.edu.uniandes.csw.empleos.ejb.EstudianteLogic;
 import co.edu.uniandes.csw.empleos.ejb.TokenLogic;
 import co.edu.uniandes.csw.empleos.ejb.Tokenizer;
+import co.edu.uniandes.csw.empleos.entities.ContratistaEntity;
 import co.edu.uniandes.csw.empleos.entities.CredencialesEntity;
+import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
 import co.edu.uniandes.csw.empleos.entities.TokenEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import java.util.List;
@@ -74,6 +76,7 @@ public class CredencialesResource {
         TokenEntity tokenE = new TokenEntity();
         tokenE.setTipo(tipo);
         tokenE.setToken(token);
+        
         TokenDTO nuevoTokenDTO = new TokenDTO(tokenLogic.createToken(tokenE));
         
         if(type.equals("Estudiante")) {
@@ -86,7 +89,9 @@ public class CredencialesResource {
             estudiante.setSemestre(usuario.getSemestre());
             estudiante.setHorarioDeTrabajo(usuario.getHorarioDeTrabajo()); 
             estudiante.setCorreo(usuario.getEmail());
-            estudianteLogic.crearEstudiante(estudiante.toEntity());
+            EstudianteEntity ee = estudianteLogic.crearEstudiante(estudiante.toEntity());
+            tokenE.setIdLog(ee.getId());
+            nuevoTokenDTO.setIdLog(tokenE.getIdLog());
         } else if (type.equals("Contratista")) {
             ContratistaDTO contratista = new ContratistaDTO();
             contratista.setId(usuario.getId());
@@ -94,7 +99,9 @@ public class CredencialesResource {
             contratista.setNombre(usuario.getNombre());
             contratista.setEmail(usuario.getEmail());
             contratista.setRutaImagen(usuario.getRutaImagen());
-            contratistaLogic.createContratista(contratista.toEntity());
+            ContratistaEntity e = contratistaLogic.createContratista(contratista.toEntity());
+            tokenE.setIdLog(e.getId());
+            nuevoTokenDTO.setIdLog(tokenE.getIdLog());
         }
         
         return nuevoTokenDTO;
@@ -122,11 +129,26 @@ public class CredencialesResource {
             return null;
         } else {
             String tipo = credencialUsuario.getTipo();
+            long id = -1;
+            if(tipo.equals("Estudiante")) {
+                List<EstudianteEntity> ee = estudianteLogic.getEstudiantes();
+                for(EstudianteEntity e : ee) if (e.getCorreo().equals(correo)) {
+                    id = e.getId();
+                    break;
+                }
+            } else {
+                List<ContratistaEntity> ee = contratistaLogic.getContratistas();
+                for(ContratistaEntity e : ee) if (e.getEmail().equals(correo)) {
+                    id = e.getId();
+                    break;
+                }
+            }
             String token = Tokenizer.getToken();
 
             TokenEntity tokenE = new TokenEntity();
             tokenE.setTipo(tipo);
             tokenE.setToken(token);
+            tokenE.setIdLog(id);
             return new TokenDTO(tokenLogic.createToken(tokenE));
  
         }

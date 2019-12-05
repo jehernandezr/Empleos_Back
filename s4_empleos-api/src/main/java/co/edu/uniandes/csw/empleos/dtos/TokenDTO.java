@@ -17,6 +17,7 @@ public class TokenDTO implements Serializable {
     private String token;
     private String tipo;
     private Long id;
+    private Long idLog;
 
     public TokenDTO() {
         //Constructor vacío Token
@@ -27,8 +28,22 @@ public class TokenDTO implements Serializable {
             this.id = e.getId();
             this.token = e.getToken();
             this.tipo = e.getTipo();
-
+            this.idLog = e.getIdLog();
         }
+    }
+    
+    /**
+     * @return the idLog
+     */
+    public Long getIdLog() {
+        return idLog;
+    }
+
+    /**
+     * @param idLog the idLog to set
+     */
+    public void setIdLog(Long idLog) {
+        this.idLog = idLog;
     }
 
     /**
@@ -78,6 +93,7 @@ public class TokenDTO implements Serializable {
         e.setToken(token);
         e.setTipo(tipo);
         e.setId(id);
+        e.setIdLog(idLog);
         return e;
     }
 
