@@ -7,6 +7,57 @@
 	},
 	"item": [
 		{
+			"name": "crear cuenta sin permisos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "aa15daf3-7463-483d-ba3f-01d6199a5d50",
+						"exec": [
+							"tests[\"si se solicita la autorizacion\"] = responseCode.code === 401;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"numeroCuentaDeCobro\": 1,\n    \"fecha\": \"2019-02-23T00:00:00-00:00\",\n    \"valor\":  1111,\n    \"nombreEstudiante\": \"benito\",\n    \"concepto\": \"Barridos\",\n    \"contratista\": {\n    \t\"id\":\"9\"\n    },\n    \"token\":\"Pro\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/cuentasDeCobro/",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_empleos-api",
+						"api",
+						"cuentasDeCobro",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Crear un Token Primero",
 			"event": [
 				{
@@ -391,7 +442,7 @@
 						"id": "71bfc3e4-ab95-4f21-8c50-1475aaa63aeb",
 						"exec": [
 							"tests[\"No obtiene con id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /cuentas/\"+25+\"no existe.\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /cuentas/\"+30000+\"no existe.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -401,7 +452,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/cuentasDeCobro/25",
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/cuentasDeCobro/30000?token=Primero",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -411,7 +462,86 @@
 						"s4_empleos-api",
 						"api",
 						"cuentasDeCobro",
-						"25"
+						"30000"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "Primero"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "solicitar cuentas sin autorizacion",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6120c1d1-0067-4201-b0d6-adaf6ff1f7e4",
+						"exec": [
+							"tests[\"No solicita si auth\"] = responseCode.code === 412;",
+							"tests[\"Se obliga autorizar\"] == responseBody.has(\"No se encuentra Registrado\");",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/cuentasDeCobro/{{new_id_c}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_empleos-api",
+						"api",
+						"cuentasDeCobro",
+						"{{new_id_c}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pedir todos las cuentas",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "12d32979-2d9a-41ea-8f90-83da0e83d64b",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get all\"] = responseCode.code === 200;",
+							"tests[\"cuentas count\"] = data.length >= 1;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/cuentasDeCobro/",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_empleos-api",
+						"api",
+						"cuentasDeCobro",
+						""
 					]
 				}
 			},
@@ -478,7 +608,7 @@
 						"id": "197b415a-ea1a-4d50-9837-dbb4f29e032a",
 						"exec": [
 							"tests[\"No actualiza con id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /cuentasDeCobro/80 no existe.\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /cuentasDeCobro/30000 no existe.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -504,7 +634,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/cuentasDeCobro/80",
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/cuentasDeCobro/30000",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -514,7 +644,57 @@
 						"s4_empleos-api",
 						"api",
 						"cuentasDeCobro",
-						"80"
+						"30000"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "editar una cuenta de cobro sin autorizacion",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d08f4f9a-470f-40f0-a571-0eefdb420162",
+						"exec": [
+							"tests[\"No actualiza sin autorizacion\"] = responseCode.code === 401;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"numeroCuentaDeCobro\": 2,\n    \"fecha\": \"2019-02-23T00:00:00-00:00\",\n    \"valor\":  1111,\n    \"nombreEstudiante\": \"benito\",\n    \"concepto\": \"Barridos\",\n    \"contratista\": {\n    \t\"id\":\"{{new_id_f}}\"\n    },\n    \"token\":\"Pri\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/cuentasDeCobro/{{new_id_c}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_empleos-api",
+						"api",
+						"cuentasDeCobro",
+						"{{new_id_c}}"
 					]
 				}
 			},
@@ -569,7 +749,7 @@
 						"id": "755978e5-c946-4ec0-9bf2-552a9c3cfc83",
 						"exec": [
 							"tests[\"No borra con id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /cuentasDeCobro/28 no existe.\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /cuentasDeCobro/3000 no existe.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -579,7 +759,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/cuentasDeCobro/28",
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/cuentasDeCobro/3000",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -589,7 +769,7 @@
 						"s4_empleos-api",
 						"api",
 						"cuentasDeCobro",
-						"28"
+						"3000"
 					]
 				}
 			},
