@@ -396,7 +396,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/calificaciones/{{new_id_c}}",
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/calificaciones/{{new_id_c}}?token=Segundo",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -407,6 +407,12 @@
 						"api",
 						"calificaciones",
 						"{{new_id_c}}"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "Segundo"
+						}
 					]
 				}
 			},
@@ -619,7 +625,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/calificaciones/{{new_id_c}}",
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/calificaciones/{{new_id_c}}?token=Segundo",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -630,6 +636,12 @@
 						"api",
 						"calificaciones",
 						"{{new_id_c}}"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "Segundo"
+						}
 					]
 				}
 			},
