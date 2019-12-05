@@ -98,11 +98,25 @@ public class OfertaDetailDTO extends OfertaDTO implements Serializable {
         if (contratista != null) {
             ofertaEntity.setContratista(contratista.toEntity());
         }
-        if (trabajo != null) {
-            ofertaEntity.setTrabajo(trabajo.toEntity());
+        if (getTrabajo() != null) {
+            ofertaEntity.setTrabajo(getTrabajo().toEntity());
         }
 
         return ofertaEntity;
+    }
+
+    /**
+     * @return the trabajo
+     */
+    public TrabajoDTO getTrabajo() {
+        return trabajo;
+    }
+
+    /**
+     * @param trabajo the trabajo to set
+     */
+    public void setTrabajo(TrabajoDTO trabajo) {
+        this.trabajo = trabajo;
     }
 
 }

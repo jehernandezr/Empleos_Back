@@ -103,8 +103,7 @@ public class CuentaBancariaResource {
                 throw new WebApplicationException(RECURSO + cuentaId + NO_EXISTE, 404);
             }
             return new CuentaBancariaDTO(logic.updateCuentaBancaria(cuentaId, cuenta.toEntity()));
-            
-
+           
         } else {
             throw new WebApplicationException("No tiene permitido acceder a "+RECURSO);
 

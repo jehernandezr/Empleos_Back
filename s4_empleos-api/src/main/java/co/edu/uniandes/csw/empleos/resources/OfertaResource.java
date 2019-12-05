@@ -74,6 +74,10 @@ public class OfertaResource {
     @Path("{palabra}")
     public List<OfertaDetailDTO> getOfertasPalabraClave(@PathParam("palabra") String palabra) {
 
+        if(logic.getOfertasPalabraClave(palabra.toLowerCase())==null)
+        {
+            throw new WebApplicationException("oferta with id: " + palabra+ " does not exists", 404);
+        }
         return listEntity2DTO(logic.getOfertasPalabraClave(palabra.toLowerCase()));
 
     }
