@@ -15,7 +15,9 @@ import co.edu.uniandes.csw.empleos.ejb.CredencialesLogic;
 import co.edu.uniandes.csw.empleos.ejb.EstudianteLogic;
 import co.edu.uniandes.csw.empleos.ejb.TokenLogic;
 import co.edu.uniandes.csw.empleos.ejb.Tokenizer;
+import co.edu.uniandes.csw.empleos.entities.ContratistaEntity;
 import co.edu.uniandes.csw.empleos.entities.CredencialesEntity;
+import co.edu.uniandes.csw.empleos.entities.EstudianteEntity;
 import co.edu.uniandes.csw.empleos.entities.TokenEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import java.util.List;
@@ -74,6 +76,7 @@ public class CredencialesResource {
         TokenEntity tokenE = new TokenEntity();
         tokenE.setTipo(tipo);
         tokenE.setToken(token);
+        tokenE.setIdLog(usuario.getId());
         TokenDTO nuevoTokenDTO = new TokenDTO(tokenLogic.createToken(tokenE));
         
         if(type.equals("Estudiante")) {
@@ -123,11 +126,26 @@ public class CredencialesResource {
             return null;
         } else {
             String tipo = credencialUsuario.getTipo();
+            long id = -1;
+            if(tipo.equals("Estudiante")) {
+                List<EstudianteEntity> ee = estudianteLogic.getEstudiantes();
+                for(EstudianteEntity e : ee) if (e.getCorreo().equals(correo)) {
+                    id = e.getId();
+                    break;
+                }
+            } else {
+                List<ContratistaEntity> ee = contratistaLogic.getContratistas();
+                for(ContratistaEntity e : ee) if (e.getEmail().equals(correo)) {
+                    id = e.getId();
+                    break;
+                }
+            }
             String token = Tokenizer.getToken();
 
             TokenEntity tokenE = new TokenEntity();
             tokenE.setTipo(tipo);
             tokenE.setToken(token);
+            tokenE.setIdLog(id);
             return new TokenDTO(tokenLogic.createToken(tokenE));
  
         }
