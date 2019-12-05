@@ -276,7 +276,7 @@ public class OfertaDTO implements Serializable {
     /**
      * @return the estaAbierta
      */
-    public boolean isEstaAbierta() {
+    public Boolean isEstaAbierta() {
         return estaAbierta;
     }
 

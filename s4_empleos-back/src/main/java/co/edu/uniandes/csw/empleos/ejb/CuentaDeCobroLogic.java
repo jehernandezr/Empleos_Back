@@ -23,7 +23,7 @@ public class CuentaDeCobroLogic {
     @Inject
     private CuentaDeCobroPersistence persistence;
     
-    public List<CuentaDeCobroEntity> getCuentasDeCobro;
+    private List<CuentaDeCobroEntity> getCuentasDeCobro;
 
     public CuentaDeCobroEntity createCuentaDeCobro(CuentaDeCobroEntity cuentaDeCobro) throws BusinessLogicException {
         
@@ -71,7 +71,7 @@ public class CuentaDeCobroLogic {
      *
      * @return Lista de las entidades del tipo calificacion.
      */
-    public List<CuentaDeCobroEntity> getCuentasDeCobro() {
+    public List<CuentaDeCobroEntity> getCuentassDeCobro() {
     
         return persistence.findAll();
     }

@@ -70,9 +70,7 @@ public class CredencialesLogic {
      * @return Lista de las entidades del tipo token.
      */
     public List<CredencialesEntity> getCredenciales() {
-        List<CredencialesEntity> token = persistence.findAll();
-        return token;
-
+        return persistence.findAll();
     }
 
     /**
@@ -82,9 +80,7 @@ public class CredencialesLogic {
      * @return La token encontrada, null si no se encuentra.
      */
     public CredencialesEntity getCredencial(Long tokenId) {
-        CredencialesEntity credencialEntity = persistence.find(tokenId);
-
-        return credencialEntity;
+        return persistence.find(tokenId);
     }
 
     /**

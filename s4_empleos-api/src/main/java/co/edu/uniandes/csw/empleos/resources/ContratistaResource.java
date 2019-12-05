@@ -54,8 +54,19 @@ public class ContratistaResource {
 
     @POST
     public ContratistaDTO createContratista(ContratistaDTO contratista) throws BusinessLogicException {
-        ContratistaDTO contratistaFinal = new ContratistaDTO(contratistaLogic.createContratista(contratista.toEntity()));
-        return contratistaFinal;
+        return new ContratistaDTO(contratistaLogic.createContratista(contratista.toEntity()));
+     
+    }
+    
+     /**
+     * Busca y devuelve todas las editoriales que existen en la aplicacion.
+     *
+     * @return JSONArray {@link EditorialDetailDTO} - Las editoriales
+     * encontradas en la aplicación. Si no hay ninguna retorna una lista vacía.
+     */
+    @GET
+    public List<ContratistaDetailDTO> getContratistas() {
+        return listEntity2DTO(contratistaLogic.getContratistas());
     }
 
     /**
@@ -78,9 +89,8 @@ public class ContratistaResource {
 
             throw new WebApplicationException(RECURSO + contratistaId + NO_EXISTE, 404);
         }
-        ContratistaDTO calDTO = new ContratistaDTO(calEntity);
 
-        return calDTO;
+        return new ContratistaDTO(calEntity);
 
     }
 
@@ -154,6 +164,7 @@ public class ContratistaResource {
 
     }
 
+    
     /**
      * Convierte una lista de entidades a DTO.
      *
@@ -171,5 +182,6 @@ public class ContratistaResource {
         }
         return list;
     }
+    
 
 }
