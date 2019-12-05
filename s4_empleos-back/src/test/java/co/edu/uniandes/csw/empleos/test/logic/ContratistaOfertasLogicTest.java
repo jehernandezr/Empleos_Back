@@ -124,7 +124,7 @@ public class ContratistaOfertasLogicTest {
      * Prueba para asociar una oferta existente a un contratista.
      */
     @Test
-    public void addOfertasTest() {
+    public void addOfertasTest() throws BusinessLogicException {
         ContratistaEntity entity = data.get(0);
         OfertaEntity ofertaEntity = ofertasData.get(1);
         OfertaEntity response = contratistaOfertasLogic.addOferta(entity.getId(),ofertaEntity.getId() );
