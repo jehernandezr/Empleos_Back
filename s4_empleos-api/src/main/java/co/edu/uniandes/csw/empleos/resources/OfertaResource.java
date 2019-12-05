@@ -5,8 +5,10 @@
  */
 package co.edu.uniandes.csw.empleos.resources;
 
+import co.edu.uniandes.csw.empleos.dtos.EstudianteDTO;
 import co.edu.uniandes.csw.empleos.dtos.OfertaDTO;
 import co.edu.uniandes.csw.empleos.dtos.OfertaDetailDTO;
+import co.edu.uniandes.csw.empleos.ejb.EstudianteOfertasLogic;
 import co.edu.uniandes.csw.empleos.ejb.OfertaEstudianteLogic;
 import co.edu.uniandes.csw.empleos.ejb.OfertaLogic;
 import co.edu.uniandes.csw.empleos.ejb.TokenLogic;
@@ -26,6 +28,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 
 /**
@@ -49,6 +52,9 @@ public class OfertaResource {
 
     @Inject
     private OfertaEstudianteLogic estudianteOfertasLogic;
+    
+    @Inject
+    private EstudianteOfertasLogic estudianteOL;
 
     /**
      * Busca y devuelve todos los autores que existen en la aplicacion.
@@ -210,6 +216,14 @@ public class OfertaResource {
         }
 
         logic.deleteOferta(ofertaId);
+    }
+    
+    @POST
+    @Path("/aplicar")
+    public String aplicarOferta(EstudianteDTO estudiante, @QueryParam("idOferta") long idOferta) throws BusinessLogicException {
+        estudianteOL.addOferta(estudiante.getId(), idOferta);
+        //TODO: Registrar estudiante en ofertas
+        return "OK";
     }
 
     /**
