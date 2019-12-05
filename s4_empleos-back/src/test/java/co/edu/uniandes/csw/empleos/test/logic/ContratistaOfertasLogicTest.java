@@ -7,7 +7,6 @@ package co.edu.uniandes.csw.empleos.test.logic;
 
 import co.edu.uniandes.csw.empleos.ejb.ContratistaLogic;
 import co.edu.uniandes.csw.empleos.ejb.ContratistaOfertasLogic;
-import co.edu.uniandes.csw.empleos.ejb.OfertaLogic;
 import co.edu.uniandes.csw.empleos.entities.ContratistaEntity;
 import co.edu.uniandes.csw.empleos.entities.OfertaEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
