@@ -25,6 +25,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 
 /**
@@ -187,21 +188,20 @@ public class OfertaResource {
      */
     @DELETE
     @Path("{ofertaId: \\d+}")
-    public void deleteOferta(@PathParam("ofertaId") Long ofertaId) throws BusinessLogicException {
+    public void deleteOferta(@QueryParam("token") String pToken, @PathParam("ofertaId") Long ofertaId) throws BusinessLogicException {
 
-        OfertaEntity calEntity = logic.getOferta(ofertaId);
-        OfertaDTO calDTO = new OfertaDTO(calEntity);
+        
         if (logic.getOferta(ofertaId) == null) {
             throw new WebApplicationException(RECURSO + ofertaId + NO_EXISTE, 404);
         }
 
-        String token = calDTO.getToken();
+        String token = pToken;
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok == null) {
 
             throw new BusinessLogicException("No se encuentra Registrado");
         }
-        if (tok.getTipo().equals("Enstutdiante")) {
+        if (tok.getTipo().equals("Estudiante")) {
 
             throw new BusinessLogicException("No tiene permiso para esto");
         }
