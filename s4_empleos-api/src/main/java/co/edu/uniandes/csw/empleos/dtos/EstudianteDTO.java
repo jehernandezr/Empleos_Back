@@ -70,8 +70,15 @@ public class EstudianteDTO implements Serializable {
     /**
      * @param id the id to set
      */
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+    
+     /**
+     * @return the horarioDeTrabajo
+     */
+    public String getHorarioDeTrabajo() {
+        return horarioDeTrabajo;
     }
 
     /**
@@ -102,6 +109,13 @@ public class EstudianteDTO implements Serializable {
         this.nombre = nombre;
     }
 
+     /**
+     * @param calificacionPromedio the calificacionPromedio to set
+     */
+    public void setCalificacionPromedio(Double calificacionPromedio) {
+        this.calificacionPromedio = calificacionPromedio;
+    }
+    
     /**
      * @return the carrera
      */
@@ -137,19 +151,9 @@ public class EstudianteDTO implements Serializable {
         return calificacionPromedio;
     }
 
-    /**
-     * @param calificacionPromedio the calificacionPromedio to set
-     */
-    public void setCalificacionPromedio(Double calificacionPromedio) {
-        this.calificacionPromedio = calificacionPromedio;
-    }
+   
 
-    /**
-     * @return the semestre
-     */
-    public Integer getSemestre() {
-        return semestre;
-    }
+   
 
     /**
      * @param semestre the semestre to set
@@ -158,12 +162,7 @@ public class EstudianteDTO implements Serializable {
         this.semestre = semestre;
     }
 
-    /**
-     * @return the horarioDeTrabajo
-     */
-    public String getHorarioDeTrabajo() {
-        return horarioDeTrabajo;
-    }
+   
 
     /**
      * @param horarioDeTrabajo the horarioDeTrabajo to set
@@ -190,6 +189,13 @@ public class EstudianteDTO implements Serializable {
         estudianteEntity.setSemestre(this.semestre);
         estudianteEntity.setIdMedioDepago(this.idMedioDepago);
         return estudianteEntity;
+    }
+    
+     /**
+     * @return the semestre
+     */
+    public Integer getSemestre() {
+        return semestre;
     }
 
 }

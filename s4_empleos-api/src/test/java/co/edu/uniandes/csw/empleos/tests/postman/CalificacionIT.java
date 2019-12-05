@@ -39,6 +39,7 @@ public class CalificacionIT {
                         .importRuntimeDependencies().resolve()
                         .withTransitivity().asFile())
                 // Se agregan los compilados de los paquetes de servicios
+                .addPackage(RestConfig.class.getPackage())
                 .addPackage(CalificacionResource.class.getPackage()) //No importa cual recurso usar, lo importante es agregar el paquet
                 .addPackage(CalificacionDTO.class.getPackage()) //No importa cual dto usar, lo importante es agregar el paquete.
                 .addPackage(BusinessLogicExceptionMapper.class.getPackage())

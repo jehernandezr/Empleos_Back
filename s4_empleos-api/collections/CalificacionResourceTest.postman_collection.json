@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "d98ecf2d-0fd2-44cd-8cfb-4d6db9b256ec",
+		"_postman_id": "0b9a3756-cc9b-46f5-bb8f-1c2c458882f3",
 		"name": "CalificacionResourceTest",
 		"description": "Calificacion Resource Test",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -326,7 +326,7 @@
 						"exec": [
 							"var data= JSON.parse(responseBody);",
 							"tests[\"No genera error en el Get all\"] = responseCode.code === 200;",
-							"tests[\"calificaciones count\"] = data.length > 1;"
+							"tests[\"calificaciones count\"] = data.length >= 1;"
 						],
 						"type": "text/javascript"
 					}
@@ -396,7 +396,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/calificaciones/{{new_id_c}}",
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/calificaciones/{{new_id_c}}?token=Segundo",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -407,6 +407,12 @@
 						"api",
 						"calificaciones",
 						"{{new_id_c}}"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "Segundo"
+						}
 					]
 				}
 			},
@@ -619,7 +625,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/calificaciones/{{new_id_c}}",
+					"raw": "http://{{ip}}:{{puerto}}/s4_empleos-api/api/calificaciones/{{new_id_c}}?token=Segundo",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -630,6 +636,12 @@
 						"api",
 						"calificaciones",
 						"{{new_id_c}}"
+					],
+					"query": [
+						{
+							"key": "token",
+							"value": "Segundo"
+						}
 					]
 				}
 			},

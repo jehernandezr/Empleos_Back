@@ -17,7 +17,6 @@ import co.edu.uniandes.csw.empleos.entities.OfertaEntity;
 import co.edu.uniandes.csw.empleos.entities.TokenEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -86,6 +85,10 @@ public class OfertaResource {
     @Path("{palabra}")
     public List<OfertaDetailDTO> getOfertasPalabraClave(@PathParam("palabra") String palabra) {
 
+        if(logic.getOfertasPalabraClave(palabra.toLowerCase())==null)
+        {
+            throw new WebApplicationException("oferta with id: " + palabra+ " does not exists", 404);
+        }
         return listEntity2DTO(logic.getOfertasPalabraClave(palabra.toLowerCase()));
 
     }
@@ -93,12 +96,15 @@ public class OfertaResource {
     /**
      *
      * @param oferta
+     * @param idCon
      *
      * @return
      * @throws BusinessLogicException
      */
     @POST
+
     public OfertaDTO crearOferta(OfertaDetailDTO oferta, @QueryParam("idCon") long idCon) throws BusinessLogicException {
+
         String token = oferta.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok != null && tok.getTipo().equals("Contratista")) {
@@ -141,9 +147,7 @@ public class OfertaResource {
      * dependen de la editorial, es una redirección al servicio que maneja el
      * segmento de la URL que se encarga de los libros de una editorial.
      *
-     * @param editorialsId El ID de la editorial con respecto a la cual se
-     * accede al servicio.
-     * @return El servicio de libros para esta editorial en paricular.
+       * @return El servicio de libros para esta editorial en paricular.
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra la editorial.
      */
@@ -181,11 +185,11 @@ public class OfertaResource {
                 throw new WebApplicationException(RECURSO + ofertaId + NO_EXISTE, 404);
             }
 
-            OfertaDetailDTO dto = new OfertaDetailDTO(logic.updateOferta(ofertaId, oferta.toEntity()));
-            return dto;
+            return new OfertaDetailDTO(logic.updateOferta(ofertaId, oferta.toEntity()));
+            
 
         } else {
-            throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
+            throw new WebApplicationException("No tiene permitido acceder a "+RECURSO);
         }
 
     }
@@ -201,15 +205,14 @@ public class OfertaResource {
      */
     @DELETE
     @Path("{ofertaId: \\d+}")
-    public void deleteOferta(@PathParam("ofertaId") Long ofertaId) throws BusinessLogicException {
+    public void deleteOferta(@QueryParam("token") String pToken, @PathParam("ofertaId") Long ofertaId) throws BusinessLogicException {
 
-        OfertaEntity calEntity = logic.getOferta(ofertaId);
-        OfertaDTO calDTO = new OfertaDTO(calEntity);
+        
         if (logic.getOferta(ofertaId) == null) {
             throw new WebApplicationException(RECURSO + ofertaId + NO_EXISTE, 404);
         }
 
-        String token = calDTO.getToken();
+        String token = pToken;
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok == null) {
 

@@ -10,7 +10,6 @@ import co.edu.uniandes.csw.empleos.dtos.CuentaDeCobroDTO;
 import co.edu.uniandes.csw.empleos.mappers.BusinessLogicExceptionMapper;
 
 import co.edu.uniandes.csw.empleos.resources.CuentaDeCobroResource;
-import co.edu.uniandes.csw.empleos.resources.RestConfig;
 import co.edu.uniandes.csw.postman.tests.PostmanTestBuilder;
 import java.io.File;
 import java.io.IOException;

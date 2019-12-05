@@ -19,6 +19,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 
 /**
@@ -31,6 +32,9 @@ import javax.ws.rs.WebApplicationException;
 @RequestScoped
 public class CuentaDeCobroResource {
 
+    private static final String NO_EXISTE = " no existe.";
+    private static final String RECURSO = "El recurso /cuentasDeCobro/";
+    private static final String NO_ENCUENTRA ="No se encuentra Registrado";
     @Inject
     private TokenLogic tokenLogic;
 
@@ -43,8 +47,7 @@ public class CuentaDeCobroResource {
         String token = cuenta.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok.getTipo().equals("Contratista")) {
-            CuentaDeCobroDTO nuevacuentaDTO = new CuentaDeCobroDTO(cuentaDeCobroLogic.createCuentaDeCobro(cuenta.toEntity()));
-            return nuevacuentaDTO;
+            return new CuentaDeCobroDTO(cuentaDeCobroLogic.createCuentaDeCobro(cuenta.toEntity()));
 
         } else {
             throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
@@ -64,22 +67,20 @@ public class CuentaDeCobroResource {
      */
     @GET
     @Path("{cuentasId: \\d+}")
-    public CuentaDeCobroDTO getCuentaDeCobro(@PathParam("cuentasId") Long cuentaId) throws BusinessLogicException {
+    public CuentaDeCobroDTO getCuentaDeCobro(@QueryParam("token")String token, @PathParam("cuentasId") Long cuentaId) throws BusinessLogicException {
 
         CuentaDeCobroEntity entity = cuentaDeCobroLogic.getCuenta(cuentaId);
-
         if (entity == null) {
             throw new WebApplicationException("El recurso /cuentas/" + cuentaId + "no existe.", 404);
         }
-
         CuentaDeCobroDTO cuentaDTO = new CuentaDeCobroDTO(entity);
 
-        String token = cuentaDTO.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok == null) {
-            throw new BusinessLogicException("No se encuentra Registrado");
+            throw new BusinessLogicException(NO_ENCUENTRA);
 
         }
+
 
         return cuentaDTO;
 
@@ -122,13 +123,12 @@ public class CuentaDeCobroResource {
         if (tok.getTipo().equals("Contratista")) {
             calif.setId(calId);
             if (cuentaDeCobroLogic.getCuenta(calId) == null) {
-                throw new WebApplicationException("El recurso /cuentas/" + calId + " no existe.", 404);
+                throw new WebApplicationException(RECURSO + calId + NO_EXISTE, 404);
             }
-            CuentaDeCobroDTO detailDTO = new CuentaDeCobroDTO(cuentaDeCobroLogic.updateCuentaDeCobro(calId, calif.toEntity()));
-            return detailDTO;
+            return new CuentaDeCobroDTO(cuentaDeCobroLogic.updateCuentaDeCobro(calId, calif.toEntity()));
 
         } else {
-            throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
+           throw new WebApplicationException("No tiene permitido acceder a "+RECURSO);
         }
 
     }
@@ -136,6 +136,7 @@ public class CuentaDeCobroResource {
     /**
      * Borra La Calificacion con el id asociado recibido en la URL.
      *
+     * @param token
      * @param calId Identificador del La Calificacion que se desea borrar. Este
      * debe ser una cadena de dígitos
      * @throws co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException
@@ -144,22 +145,21 @@ public class CuentaDeCobroResource {
      */
     @DELETE
     @Path("{cuentasId: \\d+}")
-    public void deleteCuentaDeCobro(@PathParam("cuentasId") Long calId) throws BusinessLogicException {
+    public void deleteCuentaDeCobro(@QueryParam("token") String token, @PathParam("cuentasId") Long calId) throws BusinessLogicException {
         CuentaDeCobroEntity calEntity = cuentaDeCobroLogic.getCuenta(calId);
-        CuentaDeCobroDTO calDTO = new CuentaDeCobroDTO(calEntity);
 
         if (calEntity == null) {
-            throw new WebApplicationException("El recurso /cuentasDeCobro/" + calId + " no existe.", 404);
+            throw new WebApplicationException(RECURSO + calId + NO_EXISTE, 404);
         }
-        String token = calDTO.getToken();
+      
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok == null) {
 
-            throw new BusinessLogicException("No se encuentra Registrado");
+            throw new WebApplicationException(NO_ENCUENTRA);
         }
-        if (tok.getTipo().equals("Enstutdiante")) {
+        if (tok.getTipo().equals("Estudiante")) {
 
-            throw new BusinessLogicException("No tiene permiso para esto");
+           throw new WebApplicationException("No tiene permitido acceder a "+RECURSO);
         }
         cuentaDeCobroLogic.deleteCuentaDeCobro(calId);
     }

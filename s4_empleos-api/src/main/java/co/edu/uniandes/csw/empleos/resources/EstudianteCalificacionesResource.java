@@ -6,19 +6,13 @@
 package co.edu.uniandes.csw.empleos.resources;
 
 import co.edu.uniandes.csw.empleos.dtos.CalificacionDTO;
-import co.edu.uniandes.csw.empleos.ejb.CalificacionEstudianteLogic;
 import co.edu.uniandes.csw.empleos.ejb.CalificacionLogic;
 import co.edu.uniandes.csw.empleos.ejb.EstudianteCalificacionesLogic;
-import co.edu.uniandes.csw.empleos.ejb.EstudianteLogic;
 import co.edu.uniandes.csw.empleos.entities.CalificacionEntity;
 import co.edu.uniandes.csw.empleos.exceptions.BusinessLogicException;
 import javax.enterprise.context.RequestScoped;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -28,7 +22,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.MediaType;
 
 /**
  * Clase que implementa el recurso "estudiantes/{id}/calificaciones".
@@ -45,6 +38,9 @@ class EstudianteCalificacionesResource {
 
     @Inject
     private CalificacionLogic calificacionLogic;
+    
+    
+    private static final String NO_EXISTE = " no existe.";
 
     /**
      * Guarda un libro dentro de una editorial con la informacion que recibe el
@@ -62,10 +58,9 @@ class EstudianteCalificacionesResource {
     @Path("{calificacionesId: \\d+}")
     public CalificacionDTO addCalificacion(@PathParam("estudiantesId") Long estudiantesId, @PathParam("calificacionesId") Long calificacionesId) {
         if (calificacionLogic.getCalificacion(calificacionesId) == null) {
-            throw new WebApplicationException("El recurso /calificaciones/" + calificacionesId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /calificaciones/" + calificacionesId + NO_EXISTE, 404);
         }
-        CalificacionDTO bookDTO = new CalificacionDTO(estudianteCalificacionesLogic.addCalificacion(calificacionesId, estudiantesId));
-        return bookDTO;
+        return new CalificacionDTO(estudianteCalificacionesLogic.addCalificacion(calificacionesId, estudiantesId));
     }
 
     /**
@@ -78,8 +73,8 @@ class EstudianteCalificacionesResource {
      */
     @GET
     public List<CalificacionDTO> getCalificaciones(@PathParam("estudiantesId") Long estudiantesId) {
-        List<CalificacionDTO> listaDTOs = calificacionesListEntity2DTO(estudianteCalificacionesLogic.getCalificaciones(estudiantesId));
-        return listaDTOs;
+        return calificacionesListEntity2DTO(estudianteCalificacionesLogic.getCalificaciones(estudiantesId));
+        
     }
 
     /**
@@ -100,10 +95,9 @@ class EstudianteCalificacionesResource {
     @Path("{calificacionesId: \\d+}")
     public CalificacionDTO getCalificacion(@PathParam("estudiantesId") Long estudiantesId, @PathParam("calificacionesId") Long calificacionesId) throws BusinessLogicException {
         if (calificacionLogic.getCalificacion(calificacionesId) == null) {
-            throw new WebApplicationException("El recurso /estudaintes/" + estudiantesId + "/calificaciones/" + calificacionesId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /estudaintes/" + estudiantesId + "/calificaciones/" + calificacionesId + NO_EXISTE, 404);
         }
-        CalificacionDTO calificacionDTO = new CalificacionDTO(estudianteCalificacionesLogic.getCalificacion(estudiantesId, calificacionesId));
-        return calificacionDTO;
+        return new CalificacionDTO(estudianteCalificacionesLogic.getCalificacion(estudiantesId, calificacionesId));
     }
 
     /**
@@ -122,12 +116,12 @@ class EstudianteCalificacionesResource {
     public List<CalificacionDTO> replaceCalificaciones(@PathParam("estudiantesId") Long estudiantesId, List<CalificacionDTO> calificaciones) {
         for (CalificacionDTO calificacion : calificaciones) {
             if (calificacionLogic.getCalificacion(calificacion.getId()) == null) {
-                throw new WebApplicationException("El recurso /calificaciones/" + calificacion.getId() + " no existe.", 404);
+                throw new WebApplicationException("El recurso /calificaciones/" + calificacion.getId() + NO_EXISTE, 404);
             }
 
         }
-        List<CalificacionDTO> listaDetailDTOs = calificacionesListEntity2DTO(estudianteCalificacionesLogic.replaceCalificaciones(estudiantesId, calificacionesListDTO2Entity(calificaciones)));
-        return listaDetailDTOs;
+        return calificacionesListEntity2DTO(estudianteCalificacionesLogic.replaceCalificaciones(estudiantesId, calificacionesListDTO2Entity(calificaciones)));
+        
     }
     
     /**

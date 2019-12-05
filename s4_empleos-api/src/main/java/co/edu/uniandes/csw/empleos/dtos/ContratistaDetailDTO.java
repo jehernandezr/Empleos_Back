@@ -55,9 +55,9 @@ public class ContratistaDetailDTO extends ContratistaDTO implements Serializable
                 }
             }
 
-            if (contratistaEntity.getCuentaDeCobro() != null) {
+            if (contratistaEntity.getCuentasDeCobro() != null) {
                 cuentaDeCobro = new ArrayList<>();
-                for (CuentaDeCobroEntity entityBook : contratistaEntity.getCuentaDeCobro()) {
+                for (CuentaDeCobroEntity entityBook : contratistaEntity.getCuentasDeCobro()) {
                     cuentaDeCobro.add(new CuentaDeCobroDTO(entityBook));
                 }
             }
@@ -77,7 +77,7 @@ public class ContratistaDetailDTO extends ContratistaDTO implements Serializable
             for (CuentaDeCobroDTO dtoCuentas : cuentaDeCobro) {
                 cuentaDeCobroEntity.add(dtoCuentas.toEntity());
             }
-            contratistaEntity.setCuentaDeCobro(cuentaDeCobroEntity);
+            contratistaEntity.setCuentasDeCobro(cuentaDeCobroEntity);
         }
         if (ofertas != null) {
             List<OfertaEntity> ofertasEntity = new ArrayList<>();
@@ -124,7 +124,7 @@ public class ContratistaDetailDTO extends ContratistaDTO implements Serializable
      * @return the cuentaDeCobro
      */
 
-    public List<CuentaDeCobroDTO> getCuentaDeCobro() {
+    public List<CuentaDeCobroDTO> getCuentasDeCobro() {
         return cuentaDeCobro;
     }
 
@@ -132,7 +132,7 @@ public class ContratistaDetailDTO extends ContratistaDTO implements Serializable
      * @param cuentaDeCobro the cuentaDeCobro to set
      */
 
-    public void setCuentaDeCobro(List<CuentaDeCobroDTO> cuentaDeCobro) {
+    public void setCuentasDeCobro(List<CuentaDeCobroDTO> cuentaDeCobro) {
         this.cuentaDeCobro = cuentaDeCobro;
     }
 

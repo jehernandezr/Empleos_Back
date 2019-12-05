@@ -64,13 +64,13 @@ public class EstudianteResource {
 
     @POST
     public EstudianteDTO createEstudiante(EstudianteDTO estudiante) throws BusinessLogicException {
-        System.out.println("**** Arrive here");
+       
         return new EstudianteDTO(estudianteLogic.crearEstudiante(estudiante.toEntity()));
     }
 
     /**
      * Busca el estudiante con el id asociado recibido en la URL y lo devuelve.
-     *
+  
      * @param estudianteId Identificador del estudiante que se esta buscando.
      * Este debe ser una cadena de dígitos.
      * @return JSON {@link EstudianteDTO} - El estudiante buscado
@@ -80,7 +80,7 @@ public class EstudianteResource {
      */
     @GET
     @Path("{estudiantesId: \\d+}")
-    public EstudianteDetailDTO getEstudiante(@PathParam("estudiantesId") Long estudianteId, @QueryParam("token") String token) throws BusinessLogicException {
+    public EstudianteDetailDTO getEstudiante(@QueryParam("token") String token,@PathParam("estudiantesId") Long estudianteId) throws BusinessLogicException {
         EstudianteEntity calEntity = estudianteLogic.getEstudiante(estudianteId);
 
         if (calEntity == null) {
@@ -139,11 +139,11 @@ public class EstudianteResource {
             if (estudianteLogic.getEstudiante(estudianteId) == null) {
                 throw new WebApplicationException(RECURSO + estudianteId + NO_EXISTE, 404);
             }
-            EstudianteDetailDTO dto = new EstudianteDetailDTO(estudianteLogic.updateEstudiante(estudiante.toEntity()));
-            return dto;
+            return new EstudianteDetailDTO(estudianteLogic.updateEstudiante(estudiante.toEntity()));
+            
 
         } else {
-            throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
+            throw new WebApplicationException("No tiene permitido acceder a "+RECURSO);
         }
 
     }
@@ -159,19 +159,13 @@ public class EstudianteResource {
      */
     @DELETE
     @Path("{estudianteId: \\d+}")
-    public void deleteEstudiante(@PathParam("estudianteId") Long estudianteId) throws BusinessLogicException {
+    public void deleteEstudiante(@QueryParam("token") String token, @PathParam("estudianteId") Long estudianteId) throws BusinessLogicException {
 
-        //estudianteCalificacionesLogic.removeCalificaciones(estudianteId); 
-        //estudianteOfertasLogic.removeOfertas(estudianteId);
-        //estudianteCuentaBancariaLogic.removeCuentaBancaria(estudianteId); 
-        EstudianteEntity estudianteEntity = estudianteLogic.getEstudiante(estudianteId);
-        EstudianteDetailDTO estDTO = new EstudianteDetailDTO(estudianteEntity);
-
+        
         if (estudianteLogic.getEstudiante(estudianteId) == null) {
             throw new WebApplicationException(RECURSO + estudianteId + NO_EXISTE, 404);
         }
 
-        String token = estDTO.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok == null) {
 
@@ -179,7 +173,7 @@ public class EstudianteResource {
         }
         if (!(tok.getTipo().equals("Estudiante") || tok.getTipo().equals("Administrador"))) {
 
-            throw new BusinessLogicException("No tiene permiso para esto");
+            throw new WebApplicationException("No tiene permitido acceder a "+RECURSO);
         }
 
         estudianteLogic.deleteEstudiante(estudianteId);

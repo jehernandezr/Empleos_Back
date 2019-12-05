@@ -6,26 +6,26 @@
 package co.edu.uniandes.csw.empleos.tests.postman;
 
 import co.edu.uniandes.csw.empleos.dtos.EstudianteDTO;
-import co.edu.uniandes.csw.empleos.dtos.FacturaDTO;
 import co.edu.uniandes.csw.empleos.mappers.BusinessLogicExceptionMapper;
 import co.edu.uniandes.csw.empleos.resources.EstudianteResource;
-import co.edu.uniandes.csw.empleos.resources.FacturaResource;
-import co.edu.uniandes.csw.empleos.resources.RestConfig;
 import co.edu.uniandes.csw.postman.tests.PostmanTestBuilder;
 import java.io.File;
 import java.io.IOException;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
+import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  *
  * @author David Dominguez
  */
+@RunWith(Arquillian.class)
 public class EstudianteIT {
 
     private static final String COLLECTION = "EstudianteResourceTest.postman_collection";

@@ -25,59 +25,63 @@ public class UsuarioDTO implements Serializable {
     private String horarioDeTrabajo;
 
     public UsuarioDTO() {
-        
+        //Constructor vacio
+    }
+ public Integer getSemestre() {
+        return semestre;
     }
 
+ 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+   
+    public void setRutaImagen(String rutaImagen) {
+        this.rutaImagen = rutaImagen;
     }
 
     public Boolean getEsExterno() {
         return esExterno;
     }
 
-    public void setEsExterno(Boolean esExterno) {
-        this.esExterno = esExterno;
+    public void setIdMedioDepago(Long idMedioDepago) {
+        this.idMedioDepago = idMedioDepago;
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public String getHorarioDeTrabajo() {
+        return horarioDeTrabajo;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    
 
     public String getRutaImagen() {
         return rutaImagen;
     }
 
-    public void setRutaImagen(String rutaImagen) {
-        this.rutaImagen = rutaImagen;
-    }
 
     public Long getIdMedioDepago() {
         return idMedioDepago;
     }
-
-    public void setIdMedioDepago(Long idMedioDepago) {
-        this.idMedioDepago = idMedioDepago;
+    
+public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
+   
 
     public String getCarrera() {
         return carrera;
+    }
+     public void setEsExterno(Boolean esExterno) {
+        this.esExterno = esExterno;
     }
 
     public void setCarrera(String carrera) {
@@ -87,22 +91,24 @@ public class UsuarioDTO implements Serializable {
     public Double getCalificacionPromedio() {
         return calificacionPromedio;
     }
+    
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public void setCalificacionPromedio(Double calificacionPromedio) {
         this.calificacionPromedio = calificacionPromedio;
     }
-
-    public Integer getSemestre() {
-        return semestre;
+     public void setId(Long id) {
+        this.id = id;
     }
 
+   
     public void setSemestre(Integer semestre) {
         this.semestre = semestre;
     }
 
-    public String getHorarioDeTrabajo() {
-        return horarioDeTrabajo;
-    }
+    
 
     public void setHorarioDeTrabajo(String horarioDeTrabajo) {
         this.horarioDeTrabajo = horarioDeTrabajo;

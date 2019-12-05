@@ -179,7 +179,7 @@ public class EstudianteCuentaBancariaLogicTest {
         estudiante.setCarrera(estudiante.getCarrera() + "a");
         estudianteLogic.updateEstudiante(estudiante);
         CuentaBancariaEntity cuenta = factory.manufacturePojo(CuentaBancariaEntity.class);
-        cuenta.setTipoCuenta("AHORROS");
+        cuenta.setTipoCuenta("Ahorros");
         cuenta.setEstudiante(estudiante);
         cuentaBancariaLogic.createCuentaBancaria(cuenta);
         CuentaBancariaEntity cuentaEntity = estudianteCuentaBancariaLogic.addCuentaBancaria(estudiante.getId(), cuenta.getId());

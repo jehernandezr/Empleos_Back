@@ -135,7 +135,9 @@ public class CuentaDeCobroContratistaLogicTest {
     @Test
     public void removeCuentasTest() throws BusinessLogicException {
         cuentaContratistaLogic.removeContratista(cuentasData.get(0).getId());
-        CuentaDeCobroEntity response = cuentaLogic.getCuenta(cuentasData.get(0).getId());
-        Assert.assertNull(response.getContratista());
+        CuentaDeCobroEntity deleted = em.find(CuentaDeCobroEntity.class, cuentasData.get(0).getId());
+        
+        Assert.assertNull(deleted);
+
     }
 }

@@ -1,7 +1,9 @@
 package co.edu.uniandes.csw.empleos.entities;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 import uk.co.jemos.podam.common.PodamExclude;
 
@@ -18,11 +20,11 @@ public class TrabajoEntity extends BaseEntity implements Serializable {
     private Boolean verificado;
 
     @PodamExclude
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private FacturaEntity factura;   
    
     @PodamExclude
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private OfertaEntity oferta;
     
     //Constructor vacío.

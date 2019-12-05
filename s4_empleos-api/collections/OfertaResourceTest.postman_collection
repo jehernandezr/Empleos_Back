@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "d87affb3-de09-47bd-9017-ffece4073734",
+		"_postman_id": "8631a00e-e68c-45ca-a930-0c52ee8d5b3f",
 		"name": "OfertaResurceTest",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -144,7 +144,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n   \"tipoOferta\": 1  ,\n   \"numeroDeVacantes\":  2 ,\n   \"pagoPorHora\": 50000   ,\n   \"nombre\":   \"Nicolas\"  ,\n   \"descripcion\":   \"loool\"  ,\n   \"categoria\":   \"Express\"  ,\n   \"tiempoMaximoAplicacion\":   2  ,\n   \"porcentajePagoAdicional\":  20  ,\n   \"estaAbierta\":   true    ,\n   \"requisitos\":  \"Ninguno\"    ,\n   \"horario\":  \"20:04\"  ,\n   \"horasDeTrabajo\":  5 ,\n   \"rutaImagen\": \"hola.png\",\n   \"trabajo\": {},\n   \"estudiantes\":[],\n   \"token\":\"Segundo\",\n   \"contratista\":{}\n   \n}",
+					"raw": "{\n   \"tipoOferta\": 1  ,\n   \"numeroDeVacantes\":  2 ,\n   \"pagoPorHora\": 50000   ,\n   \"nombre\":   \"Nicolas\"  ,\n   \"descripcion\":   \"loool\"  ,\n   \"categoria\":   \"Express\"  ,\n   \"tiempoMaximoAplicacion\":   2  ,\n   \"porcentajePagoAdicional\":  20  ,\n   \"estaAbierta\":   true    ,\n   \"requisitos\":  \"Ninguno\"    ,\n   \"horario\":  \"20:04\"  ,\n   \"horasDeTrabajo\":  5 ,\n   \"rutaImagen\": \"hola.png\",\n   \"trabajo\": {},\n   \"estudiantes\":[],\n   \"token\":\"Segundo\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"

@@ -55,7 +55,7 @@ public class ContratistaCuentasLogic {
      */
     public List<CuentaDeCobroEntity> getCuentas(Long contratistasId) {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar las cuentas asociadas al contratista con id = {0}", contratistasId);
-        return contratistaPersistence.find(contratistasId).getCuentaDeCobro();
+        return contratistaPersistence.find(contratistasId).getCuentasDeCobro();
     }
 
     /**
@@ -69,7 +69,7 @@ public class ContratistaCuentasLogic {
      */
     public CuentaDeCobroEntity getCuenta(Long contratistasId, Long cuentaId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, String.format("Inicia proceso de consultar la cuenta con id = {0} de el contratista con id = %s", contratistasId), cuentaId);
-        List<CuentaDeCobroEntity> cuentas = contratistaPersistence.find(contratistasId).getCuentaDeCobro();
+        List<CuentaDeCobroEntity> cuentas = contratistaPersistence.find(contratistasId).getCuentasDeCobro();
         CuentaDeCobroEntity cuentaEntity = cuentaPersistence.find(cuentaId);
         int index = cuentas.indexOf(cuentaEntity);
         LOGGER.log(Level.INFO, String.format("Termina proceso de consultar la cuenta con id = {0} de el contratista con id = %s", contratistasId), cuentaId);

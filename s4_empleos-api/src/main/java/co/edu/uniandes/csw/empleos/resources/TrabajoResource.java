@@ -26,6 +26,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 
 /**
@@ -62,9 +63,7 @@ public class TrabajoResource {
         String token = trabajo.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok.getTipo().equals("Contratista")) {
-            TrabajoDTO t = new TrabajoDTO(trabajoLogic.crearTrabajo(trabajo.toEntity()));
-            return t;
-
+            return new TrabajoDTO(trabajoLogic.crearTrabajo(trabajo.toEntity()));
         } else {
             throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
         }
@@ -73,6 +72,7 @@ public class TrabajoResource {
     /**
      * Busca el trabajo con el id asociado recibido en la URL y lo devuelve.
      *
+     * @param pToken
      * @param trabajoId Identificador del trabajo que se esta buscando. Este
      * debe ser una cadena de dígitos.
      * @return JSON {@link TrabajoDTO} - El trabajo buscado
@@ -82,14 +82,15 @@ public class TrabajoResource {
      */
     @GET
     @Path("{trabajoId: \\d+}")
-    public TrabajoDetailDTO getTrabajo(@PathParam("trabajoId") Long trabajoId) throws BusinessLogicException {
+    public TrabajoDetailDTO getTrabajo(@QueryParam("token") String pToken, @PathParam("trabajoId") Long trabajoId) throws BusinessLogicException {
+        
         TrabajoEntity calEntity = trabajoLogic.getTrabajo(trabajoId);
         if (calEntity == null) {
             throw new WebApplicationException(RECURSO + trabajoId + NO_EXISTE, 404);
         }
         TrabajoDetailDTO calDTO = new TrabajoDetailDTO(calEntity);
 
-        String token = calDTO.getToken();
+        String token = pToken;
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok == null) {
 
@@ -135,16 +136,17 @@ public class TrabajoResource {
             if (trabajoLogic.getTrabajo(trabajoId) == null) {
                 throw new WebApplicationException(RECURSO + trabajoId + NO_EXISTE, 404);
             }
-            TrabajoDetailDTO dto = new TrabajoDetailDTO(trabajoLogic.updateTrabajo(trabajo.toEntity()));
-            return dto;
-        } else {
-            throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
+            return new TrabajoDetailDTO(trabajoLogic.updateTrabajo(trabajo.toEntity()));
+        } 
+        else {
+           throw new WebApplicationException("No tiene permitido acceder a "+RECURSO);
         }
     }
 
     /**
      * Borra el Estudiante con el id asociado recibido en la URL.
      *
+     * @param pToken
      * @param trabajoId
      * @param calId Identificador del estudiante que se desea borrar. Este debe
      * ser una cadena de dígitos
@@ -154,19 +156,18 @@ public class TrabajoResource {
      */
     @DELETE
     @Path("{trabajoId: \\d+}")
-    public void deleteTrabajo(@PathParam("trabajoId") Long trabajoId) throws BusinessLogicException {
-        TrabajoEntity traEntity = trabajoLogic.getTrabajo(trabajoId);
-        TrabajoDTO traDTO = new TrabajoDTO(traEntity);
+    public void deleteTrabajo(@QueryParam("token") String pToken, @PathParam("trabajoId") Long trabajoId) throws BusinessLogicException {
+        
         if (trabajoLogic.getTrabajo(trabajoId) == null) {
             throw new WebApplicationException(RECURSO + trabajoId + NO_EXISTE, 404);
         }
-        String token = traDTO.getToken();
+        String token = pToken;
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok == null) {
 
             throw new BusinessLogicException("No se encuentra Registrado");
         }
-        if (tok.getTipo().equals("Enstutdiante")) {
+        if (tok.getTipo().equals("Estudiante")) {
 
             throw new BusinessLogicException("No tiene permiso para esto");
         }
