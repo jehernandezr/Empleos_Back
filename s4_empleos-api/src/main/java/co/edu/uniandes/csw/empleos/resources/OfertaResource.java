@@ -103,7 +103,7 @@ public class OfertaResource {
      */
     @POST
 
-    public OfertaDTO crearOferta(OfertaDetailDTO oferta, @QueryParam("idCon") long idCon) throws BusinessLogicException {
+    public OfertaDTO crearOferta(OfertaDetailDTO oferta, @QueryParam("idCon") Long idCon) throws BusinessLogicException {
 
         String token = oferta.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);

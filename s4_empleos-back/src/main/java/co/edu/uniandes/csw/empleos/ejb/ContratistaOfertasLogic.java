@@ -33,13 +33,14 @@ public class ContratistaOfertasLogic {
      * @param ofertasId
      * @return Instancia de OfertaEntity asociada a un contratista.
      */
-    public OfertaEntity addOferta(Long contratistaId, Long ofertasId) {
+    public OfertaEntity addOferta(Long contratistaId, Long ofertasId) throws BusinessLogicException {
 
         ContratistaEntity contratistaEntity = contratistaPersistence.find(contratistaId);
-        OfertaEntity ofertaEntity = ofertaPersistance.find(ofertasId);
+        if(contratistaEntity==null){
+        throw  new BusinessLogicException("el contratista debe existir");
+        }
+OfertaEntity ofertaEntity = ofertaPersistance.find(ofertasId);
         contratistaEntity.getOfertas().add(ofertaEntity);
-        
-
         return ofertaEntity;
     }
 
