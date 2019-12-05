@@ -220,12 +220,12 @@ public class OfertaResource {
     
     @POST
     @Path("/aplicar")
-    public List<OfertaEntity> aplicarOferta(@QueryParam("idOferta") long idOferta, @QueryParam("idEstudiante") long idEstudiante) throws BusinessLogicException {
+    public String aplicarOferta(@QueryParam("idOferta") long idOferta, @QueryParam("idEstudiante") long idEstudiante) throws BusinessLogicException {
         estudianteOL.addOferta(idEstudiante, idOferta);
-        ofertaEL.addEstudiante(idOferta,idEstudiante);
+        
 
         //TODO: Registrar estudiante en ofertas
-        return estudianteOL.getOfertas(idEstudiante);
+        return "OK";
     }
 
     /**
