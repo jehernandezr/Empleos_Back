@@ -225,7 +225,7 @@ public class OfertaResource {
     
     @POST
     @Path("/aplicar")
-    public String aplicarOferta(@QueryParam("idOferta") long idOferta, @QueryParam("idEstudiante") long idEstudiante, @QueryParam("token") String token) throws BusinessLogicException {
+    public EstudianteDTO aplicarOferta(@QueryParam("idOferta") long idOferta, @QueryParam("idEstudiante") long idEstudiante, @QueryParam("token") String token) throws BusinessLogicException {
         TokenEntity tok = tokenLogic.getTokenByToken(token);
         if (tok == null) {
             throw new BusinessLogicException("No se encuentra Registrado");
@@ -233,7 +233,7 @@ public class OfertaResource {
         if (tok.getTipo().equals("Estudiante")) {
             estudianteOL.addOferta(idEstudiante, idOferta);
             //TODO: Registrar estudiante en ofertas
-            return "OK";
+            return new EstudianteDTO();
         } else {
             throw new BusinessLogicException("No tiene permiso para esto");
         }
