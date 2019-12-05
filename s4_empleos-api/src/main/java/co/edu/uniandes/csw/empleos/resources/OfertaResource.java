@@ -51,7 +51,7 @@ public class OfertaResource {
     private TokenLogic tokenLogic;
 
     @Inject
-    private OfertaEstudianteLogic estudianteOfertasLogic;
+    private OfertaEstudianteLogic ofertaEL;
     
     @Inject
     private EstudianteOfertasLogic estudianteOL;
@@ -222,6 +222,7 @@ public class OfertaResource {
     @Path("/aplicar")
     public String aplicarOferta(EstudianteDTO estudiante, @QueryParam("idOferta") long idOferta) throws BusinessLogicException {
         estudianteOL.addOferta(estudiante.getId(), idOferta);
+        ofertaEL.addEstudiante(idOferta,estudiante.getId());
         //TODO: Registrar estudiante en ofertas
         return "OK";
     }
