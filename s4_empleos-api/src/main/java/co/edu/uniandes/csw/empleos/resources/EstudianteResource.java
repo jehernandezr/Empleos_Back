@@ -162,8 +162,6 @@ public class EstudianteResource {
     public void deleteEstudiante(@QueryParam("token") String token, @PathParam("estudianteId") Long estudianteId) throws BusinessLogicException {
 
         
-        EstudianteEntity estudianteEntity = estudianteLogic.getEstudiante(estudianteId);
-
         if (estudianteLogic.getEstudiante(estudianteId) == null) {
             throw new WebApplicationException(RECURSO + estudianteId + NO_EXISTE, 404);
         }
