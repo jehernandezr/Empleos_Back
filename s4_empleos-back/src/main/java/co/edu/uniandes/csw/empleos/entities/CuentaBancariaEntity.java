@@ -7,7 +7,6 @@
 package co.edu.uniandes.csw.empleos.entities;
 
 import co.edu.uniandes.csw.empleos.podam.NumeroStringStrategy;
-import co.edu.uniandes.csw.empleos.podam.TipoCuentaStrategy;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -21,10 +20,6 @@ import uk.co.jemos.podam.common.PodamStrategyValue;
 @Entity
 public class CuentaBancariaEntity extends BaseEntity implements  Serializable {
 
-    private static final Integer CUENTA_AHORROS = 2;
-
-    private static final Integer CUENTA_CORRIENTE = 3;
-
     @PodamStrategyValue(NumeroStringStrategy.class)
     private String numeroCuenta;
 
@@ -34,8 +29,7 @@ public class CuentaBancariaEntity extends BaseEntity implements  Serializable {
     @OneToOne(mappedBy = "cuentaBancaria", fetch = FetchType.LAZY)
     private EstudianteEntity estudiante;
 
-    @PodamStrategyValue(TipoCuentaStrategy.class)
-    private Integer tipoCuenta;
+    private String tipoCuenta;
 
     public CuentaBancariaEntity() {
         //Constructor vacío para evitar fallos en compilacion. Se asignan valores a los parámetros a través de los metodos set
@@ -73,7 +67,7 @@ public class CuentaBancariaEntity extends BaseEntity implements  Serializable {
     /**
      * @return the tipoCuenta
      */
-    public int getTipoCuenta() {
+    public String getTipoCuenta() {
         return tipoCuenta;
     }
 
@@ -82,13 +76,7 @@ public class CuentaBancariaEntity extends BaseEntity implements  Serializable {
      */
     public void setTipoCuenta(String pTipoCuenta) {
 
-        if (pTipoCuenta.equalsIgnoreCase("Ahorros")) {
-            tipoCuenta = CUENTA_AHORROS;
-        } else if (pTipoCuenta.equalsIgnoreCase("Corriente")) {
-            tipoCuenta = CUENTA_CORRIENTE;
-        } else {
-            tipoCuenta = 0;
-        }
+        this.tipoCuenta=pTipoCuenta;
 
     }
     

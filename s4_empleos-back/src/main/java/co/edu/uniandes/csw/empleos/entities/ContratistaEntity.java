@@ -151,14 +151,14 @@ public class ContratistaEntity extends BaseEntity implements  Serializable{
     /**
      * @return the cuentaDeCobro
      */
-    public List<CuentaDeCobroEntity> getCuentaDeCobro() {
+    public List<CuentaDeCobroEntity> getCuentasDeCobro() {
         return cuentaDeCobro;
     }
 
     /**
      * @param cuentaDeCobro the cuentaDeCobro to set
      */
-    public void setCuentaDeCobro(List<CuentaDeCobroEntity> cuentaDeCobro) {
+    public void setCuentasDeCobro(List<CuentaDeCobroEntity> cuentaDeCobro) {
         this.cuentaDeCobro = cuentaDeCobro;
     }
 

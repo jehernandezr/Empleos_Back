@@ -26,7 +26,7 @@ public class CuentaBancariaDTO implements Serializable {
 
     private EstudianteDTO estudiante;
     
-    private Integer tipoCuenta;
+    private String tipoCuenta;
 
     private String token;
     
@@ -39,18 +39,7 @@ public class CuentaBancariaDTO implements Serializable {
             this.nombreBanco = cuentaBancariaEntity.getNombreBanco();
             this.numeroCuenta = cuentaBancariaEntity.getNumeroCuenta();
             this.token=null;
-            String type = "";
-            switch (cuentaBancariaEntity.getTipoCuenta()) {
-                case 2:
-                    type = AHORROS;
-                    break;
-                case 3:
-                    type = CORRIENTE;
-                    break;
-                default:
-                    type = "gggg";
-            }
-            this.setTipoCuenta(type);
+            this.setTipoCuenta(cuentaBancariaEntity.getTipoCuenta());
             this.estudiante= new EstudianteDTO(cuentaBancariaEntity.getEstudiante());
         }
     }
@@ -105,41 +94,14 @@ public class CuentaBancariaDTO implements Serializable {
         this.nombreBanco = nombreBanco;
     }
 
-    /**
-     * @return the tipoCuenta
-     */
-    public Integer getTipoCuenta() {
-        return tipoCuenta;
-    }
-
-    public void setTipoCuenta(String pTipoCuenta) {
-
-        if (pTipoCuenta.equalsIgnoreCase(AHORROS)) {
-            tipoCuenta = 2;
-        } else if (pTipoCuenta.equalsIgnoreCase(CORRIENTE)) {
-            tipoCuenta = 3;
-        } else {
-            tipoCuenta = 0;
-        }
-    }
+   
 
     public CuentaBancariaEntity toEntity() {
         CuentaBancariaEntity cuentaBancaria = new CuentaBancariaEntity();
         cuentaBancaria.setId(this.getId());
         cuentaBancaria.setNombreBanco(this.getNombreBanco());
         cuentaBancaria.setNumeroCuenta(this.getNumeroCuenta());
-        String tipo = "";
-        switch (this.getTipoCuenta()) {
-            case 2:
-                tipo = AHORROS;
-                break;
-            case 3:
-                tipo = CORRIENTE;
-                break;
-            default:
-                tipo = "ffff";
-        }
-        cuentaBancaria.setTipoCuenta(tipo);
+       cuentaBancaria.setTipoCuenta(this.getTipoCuenta());
         if (this.getEstudiante() != null) {
             cuentaBancaria.setEstudiante(this.getEstudiante().toEntity());
         }
@@ -159,5 +121,19 @@ public class CuentaBancariaDTO implements Serializable {
      */
     public void setEstudiante(EstudianteDTO estudiante) {
         this.estudiante = estudiante;
+    }
+
+    /**
+     * @return the tipoCuenta
+     */
+    public String getTipoCuenta() {
+        return tipoCuenta;
+    }
+
+    /**
+     * @param tipoCuenta the tipoCuenta to set
+     */
+    public void setTipoCuenta(String tipoCuenta) {
+        this.tipoCuenta = tipoCuenta;
     }
 }

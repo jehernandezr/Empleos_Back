@@ -79,9 +79,19 @@ public class CalificacionResource {
     public CalificacionDTO getCalificacion(@PathParam("calificacionesId") Long calificacionId) throws BusinessLogicException {
         CalificacionEntity calEntity = calificacionLogic.getCalificacion(calificacionId);
 
-        if (calEntity == null) {
+        
+       if (calEntity == null) {
             throw new WebApplicationException(RECURSO + calificacionId + NO_EXISTE, 404);
         }
+        
+        CalificacionDTO cuentaDTO = new CalificacionDTO(calEntity);
+        String token = cuentaDTO.getToken();
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok == null) {
+            throw new BusinessLogicException("No se encuentra Registrado");
+
+        }
+       
 
         return new CalificacionDTO(calEntity);
 
@@ -147,13 +157,26 @@ public class CalificacionResource {
     public void deleteCalificacion(@PathParam("calificacionesId") Long calId) throws BusinessLogicException {
 
         CalificacionEntity calEntity = calificacionLogic.getCalificacion(calId);
-
+        CalificacionDTO calDTO = new CalificacionDTO(calEntity);
         if (calEntity == null) {
 
             throw new WebApplicationException(RECURSO + calId + NO_EXISTE, 404);
         }
 
+        String token = calDTO.getToken();
+        TokenEntity tok = tokenLogic.getTokenByToken(token);
+        if (tok == null) {
+
+            throw new WebApplicationException("No se encuentra registrado");
+        }
+        if (tok.getTipo().equals("Enstutdiante")) {
+
+           throw new WebApplicationException("No tiene permitido acceder a "+RECURSO);
+        }
         calificacionLogic.deleteCalificacion(calId);
+        
+        
+        
     }
 
     /**

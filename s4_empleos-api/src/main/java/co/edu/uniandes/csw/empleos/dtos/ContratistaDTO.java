@@ -62,6 +62,7 @@ public class ContratistaDTO implements Serializable{
         if (contratistaEntity != null) {
             this.id = contratistaEntity.getId();
             this.nombre = contratistaEntity.getNombre();
+            this.esExterno= contratistaEntity.getEsExterno();
             this.email = contratistaEntity.getEmail();
             this.rutaImagen = contratistaEntity.getRutaImagen();
             this.token = null;
@@ -80,7 +81,7 @@ public class ContratistaDTO implements Serializable{
     /**
      * @return the esExterno
      */
-    public Boolean isEsExterno() {
+    public Boolean EsExterno() {
         return esExterno;
     }
 

@@ -72,7 +72,7 @@ public class TokenResource {
      * encontradas en la aplicación. Si no hay ninguna retorna una lista vacía.
      */
     @GET
-    public List<TokenDTO> getCalificaciones() {
+    public List<TokenDTO> getTokens() {
         
         return listEntity2DTO(tokenLogic.getTokens());
     }
