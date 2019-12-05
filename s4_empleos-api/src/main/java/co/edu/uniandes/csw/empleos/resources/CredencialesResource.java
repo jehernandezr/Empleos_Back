@@ -76,7 +76,7 @@ public class CredencialesResource {
         TokenEntity tokenE = new TokenEntity();
         tokenE.setTipo(tipo);
         tokenE.setToken(token);
-        tokenE.setIdLog(usuario.getId());
+        
         TokenDTO nuevoTokenDTO = new TokenDTO(tokenLogic.createToken(tokenE));
         
         if(type.equals("Estudiante")) {
@@ -89,7 +89,8 @@ public class CredencialesResource {
             estudiante.setSemestre(usuario.getSemestre());
             estudiante.setHorarioDeTrabajo(usuario.getHorarioDeTrabajo()); 
             estudiante.setCorreo(usuario.getEmail());
-            estudianteLogic.crearEstudiante(estudiante.toEntity());
+            EstudianteEntity ee = estudianteLogic.crearEstudiante(estudiante.toEntity());
+            tokenE.setIdLog(ee.getId());
         } else if (type.equals("Contratista")) {
             ContratistaDTO contratista = new ContratistaDTO();
             contratista.setId(usuario.getId());
@@ -97,7 +98,8 @@ public class CredencialesResource {
             contratista.setNombre(usuario.getNombre());
             contratista.setEmail(usuario.getEmail());
             contratista.setRutaImagen(usuario.getRutaImagen());
-            contratistaLogic.createContratista(contratista.toEntity());
+            ContratistaEntity e = contratistaLogic.createContratista(contratista.toEntity());
+            tokenE.setIdLog(e.getId());
         }
         
         return nuevoTokenDTO;

@@ -101,11 +101,12 @@ public class OfertaResource {
     public OfertaDTO crearOferta(OfertaDetailDTO oferta, @QueryParam("idCon") long idCon) throws BusinessLogicException {
         String token = oferta.getToken();
         TokenEntity tok = tokenLogic.getTokenByToken(token);
-        if (tok.getTipo().equals("Contratista")) {
-contratistaOL.addOferta(idCon, oferta.getId());
+        if (tok != null && tok.getTipo().equals("Contratista")) {
             OfertaEntity ofertaEntity = oferta.toEntity();
             ofertaEntity = logic.createOferta(ofertaEntity);
-            return new OfertaDetailDTO(ofertaEntity);
+            contratistaOL.addOferta(idCon, ofertaEntity.getId());
+            
+            return new OfertaDTO(ofertaEntity);
 
         } else {
             throw new BusinessLogicException("No se le tiene permitido acceder a este recurso");
@@ -227,7 +228,7 @@ contratistaOL.addOferta(idCon, oferta.getId());
     public String aplicarOferta(@QueryParam("idOferta") long idOferta, @QueryParam("idEstudiante") long idEstudiante) throws BusinessLogicException {
         estudianteOL.addOferta(idEstudiante, idOferta);
         
-
+        
         //TODO: Registrar estudiante en ofertas
         return "OK";
     }
